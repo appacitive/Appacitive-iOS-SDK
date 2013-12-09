@@ -1,0 +1,1 @@
+appledoc --no-repeat-first-par --project-name Appacitve-iOS-SDK --project-company "Appacitive software" --company-id com.appactivie --output Documentation/ --no-create-docset Appacitive-iOS-SDK/Classes/

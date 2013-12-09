@@ -1,0 +1,11 @@
+//
+// Prefix header for all source files of the 'Appacitive_iOS_AsyncTests' target in the 'Appacitive_iOS_AsyncTests' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "Kiwi.h"
+#endif
+
+#define API_KEY @"+MmuqVgHVYH7Q+5imsGc4497fiuBAbBeCGYRkiQSCfY="
