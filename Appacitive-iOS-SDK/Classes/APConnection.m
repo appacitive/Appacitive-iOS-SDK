@@ -7,23 +7,23 @@
 //
 
 #import "APConnection.h"
-#import "Appacitive.h"
 #import "APObject.h"
 #import "APError.h"
 #import "APHelperMethods.h"
 #import "NSString+APString.h"
+#import "APNetworking.h"
 
 @implementation APConnection
 
-#define CONNECTION_PATH @"connection/"
+#define CONNECTION_PATH @"v1.0/connection/"
 
 #pragma mark initialization methods
 
-+ (id) connectionWithRelationType:(NSString*)relationType {
++ (instancetype) connectionWithRelationType:(NSString*)relationType {
     return [[APConnection alloc] initWithRelationType:relationType];
 }
 
-- (id) initWithRelationType:(NSString*)relationType {
+- (instancetype) initWithRelationType:(NSString*)relationType {
     self = [super init];
     if(self) {
         self.relationType = relationType;
@@ -31,127 +31,6 @@
     return self;
 }
 
-#pragma mark search methods
-
-+ (void) searchForAllConnectionsWithRelationType:(NSString*)relationType successHandler:(APResultSuccessBlock)successBlock {
-    [APConnection searchForAllConnectionsWithRelationType:relationType successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) searchForAllConnectionsWithRelationType:(NSString*)relationType successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [APConnection searchForConnectionsWithRelationType:relationType withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
-}
-
-+ (void) searchForConnectionsWithRelationType:(NSString*)relationType withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock {
-    [APConnection searchForConnectionsWithRelationType:relationType withQueryString:queryString successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) searchForConnectionsWithRelationType:(NSString*)relationType withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/find/all", relationType];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        if (queryString) {
-            path = [path stringByAppendingFormat:@"&%@",queryString];
-        }
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation){
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy != nil) {
-                    successBlockCopy(completedOperation.responseJSON);
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-
-        } onError:^(NSError *error) {
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appacitive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
-    }
-}
-
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds {
-    [APConnection searchAllConnectionsFromObjectId:objectId toObjectIds:objectIds withSuccessHandler:nil failureHandler:nil];
-}
-
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds withSuccessHandler:(APResultSuccessBlock)successBlock {
-    [APConnection searchAllConnectionsFromObjectId:objectId toObjectIds:objectIds withSuccessHandler:successBlock failureHandler:nil];
-}
-
-
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds withSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [CONNECTION_PATH stringByAppendingString:@"interconnects"];
-        
-        NSMutableDictionary *postParams = [[NSMutableDictionary alloc] init];
-        postParams[@"article1id"] = [NSString stringWithFormat:@"%lld",objectId.longLongValue];
-        postParams[@"article2ids"] = objectIds;
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:postParams httpMethod:@"POST" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation){
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy != nil) {
-                    successBlockCopy(completedOperation.responseJSON);
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-            
-        } onError:^(NSError *error) {
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appacitive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
-    }
-}
 
 #pragma mark create connection methods
 
@@ -164,49 +43,32 @@
 }
 
 - (void) createConnectionWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
     
-    if (sharedObject.session) {
-        APSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [CONNECTION_PATH stringByAppendingString:self.relationType];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:[self parameters] httpMethod:@"PUT" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                [self setNewPropertyValuesFromDictionary:completedOperation.responseJSON];
-                if (successBlockCopy != nil) {
-                    successBlockCopy();
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error) {
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appacitive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+    NSString *path = [CONNECTION_PATH stringByAppendingString:self.relationType];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    [urlRequest setHTTPBody:requestBody];
+    [urlRequest setHTTPMethod:@"PUT"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            [self setPropertyValuesFromDictionary:result];
+            successBlock();
         }
-    }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
 - (void) createConnectionWithObjectA:(APObject*)objectA objectB:(APObject*)objectB {
@@ -218,10 +80,10 @@
 }
 
 - (void) createConnectionWithObjectA:(APObject*)objectA objectB:(APObject*)objectB successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    self.articleAId = objectA.objectId;
-    self.articleBId = objectB.objectId;
-    self.labelA = objectA.schemaType;
-    self.labelB = objectB.schemaType;
+    self.objectAId = objectA.objectId;
+    self.objectBId = objectB.objectId;
+    self.labelA = objectA.type;
+    self.labelB = objectB.type;
     [self createConnectionWithSuccessHandler:successBlock failureHandler:failureBlock];
 }
 
@@ -234,27 +96,149 @@
 }
 
 - (void) createConnectionWithObjectA:(APObject*)objectA objectB:(APObject*)objectB labelA:(NSString*)labelA labelB:(NSString*)labelB successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    self.articleAId = objectA.objectId;
-    self.articleBId = objectB.objectId;
+    self.objectAId = objectA.objectId;
+    self.objectBId = objectB.objectId;
     self.labelA = labelA;
     self.labelB = labelB;
     [self createConnectionWithSuccessHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) createConnectionWithObjectAId:(NSNumber*)objectAId objectBId:(NSNumber*)objectBId labelA:(NSString*)labelA labelB:(NSString*)labelB {
+- (void) createConnectionWithObjectAId:(NSString *)objectAId objectBId:(NSString *)objectBId labelA:(NSString *)labelA labelB:(NSString *)labelB {
     [self createConnectionWithObjectAId:objectAId objectBId:objectBId labelA:labelA labelB:labelB successHandler:nil failureHandler:nil];
 }
 
-- (void) createConnectionWithObjectAId:(NSNumber*)objectAId objectBId:(NSNumber*)objectBId labelA:(NSString*)labelA labelB:(NSString*)labelB failureHandler:(APFailureBlock)failureBlock {
+- (void) createConnectionWithObjectAId:(NSString *)objectAId objectBId:(NSString *)objectBId labelA:(NSString *)labelA labelB:(NSString *)labelB failureHandler:(APFailureBlock)failureBlock {
     [self createConnectionWithObjectAId:objectAId objectBId:objectBId labelA:labelA labelB:labelB successHandler:nil failureHandler:failureBlock];
 }
 
-- (void) createConnectionWithObjectAId:(NSNumber*)objectAId objectBId:(NSNumber*)objectBId labelA:(NSString*)labelA labelB:(NSString*)labelB successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    self.articleAId = objectAId;
-    self.articleBId = objectBId;
+- (void) createConnectionWithObjectAId:(NSString *)objectAId objectBId:(NSString *)objectBId labelA:(NSString *)labelA labelB:(NSString *)labelB successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [CONNECTION_PATH stringByAppendingString:self.relationType];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    NSError *jsonError = nil;
+    self.objectAId = objectAId;
+    self.objectBId = objectBId;
     self.labelA = labelA;
     self.labelB = labelB;
-    [self createConnectionWithSuccessHandler:successBlock failureHandler:failureBlock];
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    [urlRequest setHTTPBody:requestBody];
+    [urlRequest setHTTPMethod:@"PUT"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            [self setPropertyValuesFromDictionary:result];
+            successBlock();
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+- (void) createConnectionWithObjectA:(APObject*)objectA objectBId:(NSString*)objectBId labelA:(NSString*)labelA labelB:(NSString*)labelB {
+    [self createConnectionWithObjectA:objectA objectBId:objectBId labelA:labelA labelB:labelB successHandler:nil failureHandler:nil];
+}
+
+- (void) createConnectionWithObjectA:(APObject *)objectA objectBId:(NSString *)objectBId labelA:(NSString *)labelA labelB:(NSString *)labelB failureHandler:(APFailureBlock)failureBlock {
+    [self createConnectionWithObjectA:objectA objectBId:objectBId labelA:labelA labelB:labelB successHandler:nil failureHandler:failureBlock];
+}
+
+- (void) createConnectionWithObjectA:(APObject *)objectA objectBId:(NSString *)objectBId labelA:(NSString *)labelA labelB:(NSString *)labelB successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock
+{
+    __block NSString *path = [CONNECTION_PATH stringByAppendingString:self.relationType];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [objectA saveObjectWithSuccessHandler:^(NSDictionary *result) {
+        [objectA setPropertyValuesFromDictionary:result];
+        path = [HOST_NAME stringByAppendingPathComponent:path];
+        NSURL *url = [NSURL URLWithString:path];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+        NSError *jsonError = nil;
+        self.objectAId = objectA.objectId;
+        self.objectBId = objectBId;
+        self.labelA = labelA;
+        self.labelB = labelB;
+        NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
+        if(jsonError != nil)
+            DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [urlRequest setHTTPBody:requestBody];
+        [urlRequest setHTTPMethod:@"PUT"];
+        
+        [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+            if (successBlock != nil) {
+                [self setPropertyValuesFromDictionary:result];
+                successBlock();
+            }
+        } failureHandler:^(APError *error) {
+            DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+            if (failureBlock != nil) {
+                failureBlock(error);
+            }
+        }];
+    } failureHandler:^(APError *error) {
+        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+- (void) createConnectionWithObjectAId:(NSString*)objectAId objectB:(APObject*)objectB labelA:(NSString*)labelA labelB:(NSString*)labelB {
+    [self createConnectionWithObjectAId:objectAId objectB:objectB labelA:labelA labelB:labelB successHandler:nil failureHandler:nil];
+}
+
+
+- (void) createConnectionWithObjectAId:(NSString*)objectAId objectB:(APObject*)objectB labelA:(NSString*)labelA labelB:(NSString*)labelB failureHandler:(APFailureBlock)failureBlock {
+    [self createConnectionWithObjectAId:objectAId objectB:objectB labelA:labelA labelB:labelB successHandler:nil failureHandler:failureBlock];
+}
+
+
+- (void) createConnectionWithObjectAId:(NSString*)objectAId objectB:(APObject*)objectB labelA:(NSString*)labelA labelB:(NSString*)labelB successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    __block NSString *path = [CONNECTION_PATH stringByAppendingString:self.relationType];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [objectB saveObjectWithSuccessHandler:^(NSDictionary *result) {
+        [objectB setPropertyValuesFromDictionary:result];
+        path = [HOST_NAME stringByAppendingPathComponent:path];
+        NSURL *url = [NSURL URLWithString:path];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+        NSError *jsonError = nil;
+        self.objectAId = objectAId;
+        self.objectBId = objectB.objectId;
+        self.labelA = labelA;
+        self.labelB = labelB;
+        NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
+        if(jsonError != nil)
+            DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [urlRequest setHTTPBody:requestBody];
+        [urlRequest setHTTPMethod:@"PUT"];
+        
+        [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+            if (successBlock != nil) {
+                [self setPropertyValuesFromDictionary:result];
+                successBlock();
+            }
+        } failureHandler:^(APError *error) {
+            DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+            if (failureBlock != nil) {
+                failureBlock(error);
+            }
+        }];
+    } failureHandler:^(APError *error) {
+        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
 #pragma mark update connection methods
@@ -268,115 +252,34 @@
 }
 
 - (void) updateConnectionWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
     
-    if (sharedObject.session) {
-        APSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@", self.relationType, self.objectId.description];
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:[self postParamertersUpdate] httpMethod:@"POST" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                [self setNewPropertyValuesFromDictionary:completedOperation.responseJSON];
-                
-                if (successBlockCopy != nil) {
-                    successBlockCopy();
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error){
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+    NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@", self.relationType, self.objectId.description];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParamertersUpdate] options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    [urlRequest setHTTPBody:requestBody];
+    [urlRequest setHTTPMethod:@"POST"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            [self setPropertyValuesFromDictionary:result];
+            successBlock();
         }
-    }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
 #pragma mark fetch connection methods
-
-+ (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSNumber*)objectId successHandler:(APResultSuccessBlock)successBlock {
-    [APConnection fetchConnectionsWithRelationType:relationType objectIds:@[objectId] successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSNumber*)objectId successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [APConnection fetchConnectionsWithRelationType:relationType objectIds:@[objectId] successHandler:successBlock failureHandler:failureBlock];
-}
-
-+ (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APResultSuccessBlock)successBlock {
-    [APConnection fetchConnectionsWithRelationType:relationType objectIds:objectIds successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        __block NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/multiget/", relationType];
-        
-        [objectIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSNumber *number = (NSNumber*) obj;
-            path = [path stringByAppendingFormat:@"%lld", number.longLongValue];
-            if (idx != objectIds.count - 1) {
-                path = [path stringByAppendingString:@","];
-            }
-        }];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy) {
-                    successBlockCopy(completedOperation.responseJSON);
-                }
-            } else {
-                if (failureBlockCopy) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error) {
-            if (failureBlockCopy) {
-                failureBlockCopy((APError*) error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appacitive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
-    }
-}
 
 - (void) fetchConnection {
     [self fetchConnectionWithSuccessHandler:nil failureHandler:nil];
@@ -387,106 +290,30 @@
 }
 
 - (void) fetchConnectionWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
     
-    if (sharedObject.session) {
-        APSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@", self.relationType, self.objectId.description];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                [self setNewPropertyValuesFromDictionary:completedOperation.responseJSON];
-                if (successBlockCopy) {
-                    successBlockCopy();
-                }
-            } else {
-                if (failureBlockCopy) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error) {
-            if (failureBlockCopy) {
-                failureBlockCopy((APError*) error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appacitive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+    NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@", self.relationType, self.objectId.description];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            [self setPropertyValuesFromDictionary:result];
+            successBlock();
         }
-    }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
 #pragma mark delete methods
-
-+ (void) deleteConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds {
-    [APConnection deleteConnectionsWithRelationType:relationType objectIds:objectIds successHandler:nil failureHandler:nil];
-}
-
-+ (void) deleteConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds failureHandler:(APFailureBlock)failureBlock {
-    [APConnection deleteConnectionsWithRelationType:relationType objectIds:objectIds successHandler:nil failureHandler:nil];
-}
-
-+ (void) deleteConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/bulkdelete", relationType];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:objectIds forKey:@"idlist"];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:params httpMethod:@"POST" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completionOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completionOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy) {
-                    successBlockCopy();
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error) {
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*) error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appacitive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
-    }
-
-}
 
 - (void) deleteConnection {
     [self deleteConnectionWithSuccessHandler:nil failureHandler:nil];
@@ -497,47 +324,26 @@
 }
 
 - (void) deleteConnectionWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
     
-    if (sharedObject.session) {
-        APSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%lld", self.relationType, self.objectId.longLongValue];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:nil httpMethod:@"DELETE" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation){
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy != nil) {
-                    successBlockCopy();
-                }
-            } else {
-                if (failureBlockCopy!= nil) {
-                    failureBlockCopy(error);
-                }
-            }
-
-        } onError:^(NSError *error){
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appacitive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+    NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@", self.relationType, self.objectId];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"DELETE"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            successBlock();
         }
-    }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
 #pragma mark add properties method
@@ -563,7 +369,8 @@
 }
 
 - (void) removeAttributeWithKey:(NSString*) keyName {
-    [_attributes setObject:[NSNull null] forKey:keyName];
+    [_attributes removeObjectForKey:keyName];
+    //[_attributes setObject:[NSNull null] forKey:keyName];
 }
 
 #pragma mark update properties method
@@ -592,7 +399,7 @@
 
 #pragma mark retrieve property
 
-- (id) getPropertyWithKey:(NSString*) keyName {
+- (instancetype) getPropertyWithKey:(NSString*) keyName {
     __block id property;
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
@@ -604,18 +411,43 @@
     return property;
 }
 
+#pragma mark methods to add/remove tags
+
+- (void) addTag:(NSString*)tag
+{
+    if(tag != nil)
+    {
+        [self.tagsToAdd addObject:[tag lowercaseString]];
+    }
+}
+
+- (void) removeTag:(NSString*)tag
+{
+    if(tag != nil)
+    {
+        [self.tagsToRemove addObject:[tag lowercaseString]];
+        [self.tagsToAdd minusSet:self.tagsToRemove];
+    }
+}
+
 #pragma mark private methods
 
-- (void) setNewPropertyValuesFromDictionary:(NSDictionary*) dictionary {
-    NSDictionary *connection = dictionary[@"connection"];
-    _articleAId = (NSNumber*) connection[@"__endpointa"][@"articleid"];
-    _articleBId = (NSNumber*) connection[@"__endpointb"][@"articleid"];
+- (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
+    NSDictionary *connection = [[NSDictionary alloc] init];
+    if([[dictionary allKeys] containsObject:@"connection"])
+        connection = dictionary[@"connection"];
+    else
+        connection = dictionary;
+    _objectAId = (NSString*)connection[@"__endpointa"][@"objectid"];
+    _objectBId = (NSString*)connection[@"__endpointb"][@"objectid"];
     _createdBy = (NSString*) connection[@"__createdby"];
-    _objectId = (NSNumber*) connection[@"__id"];
+    _objectId = (NSString*) connection[@"__id"];
     _labelA = (NSString*) connection[@"__endpointa"][@"label"];
     _labelB = (NSString*) connection[@"__endpointb"][@"label"];
+    _typeA = (NSString*) connection[@"__endpointa"][@"type"];
+    _typeB = (NSString*) connection[@"__endpointb"][@"type"];
     _lastModifiedBy = (NSString*) connection[@"__lastmodifiedby"];
-    _relationId = (NSNumber*) connection[@"__relationid"];
+    _relationId = (NSString*) connection[@"__relationid"];
     _relationType = (NSString*) connection[@"__relationtype"];
     _revision = (NSNumber*) connection[@"__revision"];
     _tags = connection[@"__tags"];
@@ -628,18 +460,18 @@
 
 - (NSMutableDictionary*) parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    if (self.articleAId) {
+    if (self.objectAId) {
         if (!parameters[@"__endpointa"]) {
             parameters[@"__endpointa"] = [NSMutableDictionary dictionary];
         }
-        parameters[@"__endpointa"][@"articleid"] = [NSString stringWithFormat:@"%lld", self.articleAId.longLongValue];
+        parameters[@"__endpointa"][@"objectid"] = [NSString stringWithFormat:@"%@", self.objectAId];
     }
-
-    if (self.articleBId) {
+    
+    if (self.objectBId) {
         if (!parameters[@"__endpointb"]) {
             parameters[@"__endpointb"] = [NSMutableDictionary dictionary];
         }
-        parameters[@"__endpointb"][@"articleid"] = [NSString stringWithFormat:@"%lld", self.articleBId.longLongValue];
+        parameters[@"__endpointb"][@"objectid"] = [NSString stringWithFormat:@"%@", self.objectBId];
     }
     
     if (self.attributes)
@@ -669,6 +501,20 @@
         parameters[@"__endpointb"][@"label"] = self.labelB;
     }
     
+    if (self.typeA) {
+        if (!parameters[@"__endpointa"]) {
+            parameters[@"__endpointa"] = [NSMutableDictionary dictionary];
+        }
+        parameters[@"__endpointa"][@"type"] = self.typeA;
+    }
+    
+    if (self.typeB) {
+        if (!parameters[@"__endpointb"]) {
+            parameters[@"__endpointb"] = [NSMutableDictionary dictionary];
+        }
+        parameters[@"__endpointb"][@"type"] = self.typeB;
+    }
+    
     if (self.relationType)
         parameters[@"__relationtype"] = self.relationType;
     
@@ -692,10 +538,219 @@
             *stop = YES;
         }];
     }
+    
+    if (self.tagsToAdd)
+        postParams[@"addtags"] = [self.tagsToAdd allObjects];
+    
+    if (self.tagsToRemove)
+        postParams[@"removetags"] = [self.tagsToRemove allObjects];
+    
     return postParams;
 }
 
 - (NSString*) description {
-    return [NSString stringWithFormat:@"ArticleAId:%lld, ArticleBId:%lld, Attributes:%@, CreatedBy:%@, Connection Id:%lld, LabelA:%@, LabelB:%@, LastUpdatedBy:%@, Properties:%@, RelationId:%d, Relation Type:%@, Revision:%d, Tags:%@, UtcDateCreated:%@, UtcLastUpdatedDate:%@", [self.articleAId longLongValue], [self.articleBId longLongValue], self.attributes, self.createdBy, [self.objectId longLongValue], self.labelA, self.labelB, self.lastModifiedBy, self.properties, [self.relationId intValue], self.relationType, [self.revision intValue], self.tags ,self.utcDateCreated, self.utcLastModifiedDate];
+    return [NSString stringWithFormat:@"ObjectAId:%@, ObjectBId:%@, Attributes:%@, CreatedBy:%@, Connection Id:%@, LabelA:%@, LabelB:%@, LastUpdatedBy:%@, Properties:%@, RelationId:%@, Relation Type:%@, Revision:%d, Tags:%@, UtcDateCreated:%@, UtcLastUpdatedDate:%@", self.objectAId, self.objectBId, self.attributes, self.createdBy, self.objectId, self.labelA, self.labelB, self.lastModifiedBy, self.properties, self.relationId, self.relationType, [self.revision intValue], self.tags ,self.utcDateCreated, self.utcLastModifiedDate];
 }
+@end
+
+
+@implementation APConnections
+
+#define CONNECTION_PATH @"v1.0/connection/"
+
+#pragma mark search methods
+
++ (void) searchForAllConnectionsWithRelationType:(NSString*)relationType successHandler:(APResultSuccessBlock)successBlock {
+    [APConnections searchForAllConnectionsWithRelationType:relationType successHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchForAllConnectionsWithRelationType:(NSString*)relationType successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [APConnections searchForConnectionsWithRelationType:relationType withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
++ (void) searchForConnectionsWithRelationType:(NSString*)relationType withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock {
+    [APConnections searchForConnectionsWithRelationType:relationType withQueryString:queryString successHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchForConnectionsWithRelationType:(NSString*)relationType withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/find/all", relationType];
+    
+    if (queryString) {
+        path = [path stringByAppendingFormat:@"?%@",queryString];
+    }
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
++ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectAId toObjectId:(NSNumber *)objectBId {
+    [APConnections searchAllConnectionsFromObjectId:objectAId toObjectId:objectBId withSuccessHandler:nil failureHandler:nil];
+}
+
++ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectAId toObjectId:(NSNumber *)objectBId withSuccessHandler:(APResultSuccessBlock)successBlock {
+    [APConnections searchAllConnectionsFromObjectId:objectAId toObjectId:objectBId withSuccessHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectAId toObjectId:(NSNumber *)objectBId withSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [CONNECTION_PATH stringByAppendingString:[NSString stringWithFormat:@"find/%@/%@",objectAId,objectBId]];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
++ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds {
+    [APConnections searchAllConnectionsFromObjectId:objectId toObjectIds:objectIds withSuccessHandler:nil failureHandler:nil];
+}
+
++ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds withSuccessHandler:(APResultSuccessBlock)successBlock {
+    [APConnections searchAllConnectionsFromObjectId:objectId toObjectIds:objectIds withSuccessHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds withSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [CONNECTION_PATH stringByAppendingString:@"interconnects"];
+    
+    NSMutableDictionary *postParams = [[NSMutableDictionary alloc] init];
+    postParams[@"object1id"] = [NSString stringWithFormat:@"%@",objectId];
+    postParams[@"object2ids"] = objectIds;
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:postParams options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    [urlRequest setHTTPBody:requestBody];
+    [urlRequest setHTTPMethod:@"POST"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark fetch methods
+
++ (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSString*)objectId successHandler:(APResultSuccessBlock)successBlock {
+    [APConnections fetchConnectionsWithRelationType:relationType objectIds:@[objectId] successHandler:successBlock failureHandler:nil];
+}
+
++ (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSString*)objectId successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [APConnections fetchConnectionsWithRelationType:relationType objectIds:@[objectId] successHandler:successBlock failureHandler:failureBlock];
+}
+
++ (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APResultSuccessBlock)successBlock {
+    [APConnections fetchConnectionsWithRelationType:relationType objectIds:objectIds successHandler:successBlock failureHandler:nil];
+}
+
++ (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    __block NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/multiget/", relationType];
+    
+    [objectIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *string = (NSString*) obj;
+        path = [path stringByAppendingFormat:@"%@", string];
+        if (idx != objectIds.count - 1) {
+            path = [path stringByAppendingString:@","];
+        }
+    }];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark delete methods
+
++ (void) deleteConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds {
+    [APConnections deleteConnectionsWithRelationType:relationType objectIds:objectIds successHandler:nil failureHandler:nil];
+}
+
++ (void) deleteConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds failureHandler:(APFailureBlock)failureBlock {
+    [APConnections deleteConnectionsWithRelationType:relationType objectIds:objectIds successHandler:nil failureHandler:nil];
+}
+
++ (void) deleteConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/bulkdelete", relationType];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:objectIds forKey:@"idlist"];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:params options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    [urlRequest setHTTPBody:requestBody];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            successBlock();
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
 @end

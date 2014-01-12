@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Appacitive Software Pvt. Ltd. All rights reserved.
 //
 
-@class APError, APUser, UIImage;
+@class APError, APUser, UIImage, APDevice, APGraphNode;
 
 /**
  Success block that returns nothing.
@@ -37,3 +37,13 @@ typedef void (^APUserSuccessBlock)(APUser* user);
  Block parameter expected for image download
  */
 typedef void (^APImageBlock) (UIImage* fetchedImage, NSURL* url, BOOL isInCache);
+
+/**
+ Block paramter expected for a success response which returns a 'APDevice'.
+ */
+typedef void (^APDeviceSuccessBlock)(APDevice* device);
+
+/**
+ Block paramter expected for a success response which returns a 'APGraphNode'.
+ */
+typedef void (^APGraphNodeSuccessBlock)(APGraphNode* node);

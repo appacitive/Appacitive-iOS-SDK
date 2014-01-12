@@ -51,7 +51,7 @@
                                       @"Successful", @"Message",
                                       @"9e56903c-0b68-4ee9-afbc-c045ab4a708a", @"ReferenceId", nil];
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                nil, @"Article",
+                                nil, @"Object",
                                 statusDictionary, @"Status", nil];
     APError *error = [APHelperMethods checkForErrorStatus:dictionary];
     STAssertNil(error, @"Test case for valid response object failed");

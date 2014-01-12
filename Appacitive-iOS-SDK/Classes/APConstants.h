@@ -9,15 +9,8 @@
 #ifndef Appacitive_iOS_SDK_APConstants_h
 #define Appacitive_iOS_SDK_APConstants_h
 
-#ifdef DEBUG
-#   define DLog(fmt, ...) {NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);}
-#   define ELog(err) {if(err) DLog(@"%@", err)}
-#else
-#   define DLog(...)
-#   define ELog(err)
-#endif
-
 #define SessionHeaderKey @"Appacitive-Session"
 #define EnvironmentHeaderKey @"Appacitive-Environment"
 #define UserAuthHeaderKey @"Appacitive-User-Auth"
+#define APIkeyHeaderKey @"Appacitive-Apikey"
 #endif

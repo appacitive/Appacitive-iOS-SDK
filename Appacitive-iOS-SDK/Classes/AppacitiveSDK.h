@@ -12,11 +12,12 @@
 #import "APFile.h"
 #import "APQuery.h"
 #import "APUser.h"
-#import "APUserDetails.h"
 #import "APResponseBlocks.h"
+#import "APEmail.h"
 
 //error
 #import "APError.h"
 
 #import "APHelperMethods.h"
 #import "Appacitive.h"
+#import "APNetworking.h"

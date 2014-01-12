@@ -9,10 +9,9 @@
 #import "APHelperMethods.h"
 #import "APError.h"
 #import "Appacitive.h"
-#import "APConstants.h"
 #import "APUser.h"
 
-#define ERROR_DOMAIN @"appyoda.appacitive.com"
+#define ERROR_DOMAIN @"apis.appacitive.com"
 
 @implementation APHelperMethods
 
@@ -40,18 +39,10 @@
     return nil;
 }
 
-+ (APError*) errorForSessionNotCreated {
-    NSString *errorMessage = [NSString stringWithFormat:@"Appacitive object does not have a session. Either you have not initialized the Appacitive object or you are calling SDK methods before the SessionReceivedNotification notification has been raised"];
-    NSDictionary *dictionary = @{NSLocalizedDescriptionKey: errorMessage};
-    
-    APError *error = [APError errorWithDomain:ERROR_DOMAIN code:8002 userInfo:dictionary];
-    return error;
-}
-
 + (NSArray*) arrayOfPropertiesFromJSONResponse:(id)response {
     if (response) {
         __block NSMutableArray *properties;
-        [response enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+        [response enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             if (![[key substringWithRange:NSMakeRange(0, 2)] isEqualToString:@"__"]) {
                 if (!properties) {
                     properties = [NSMutableArray array];
@@ -92,14 +83,4 @@
     return [dateFormatter stringFromDate:date];
 }
 
-//+(void) addHeadersToMKNetworkOperation:(MKNetworkOperation *)operation {
-//    Appacitive *sharedObject = [Appacitive sharedObject];
-//    [operation addHeaders:
-//        @{EnvironmentHeaderKey:[sharedObject environmentToUse],
-//          SessionHeaderKey:sharedObject.session}];
-//    
-//    if ([APUser currentUser] != nil) {
-//        [operation addHeaders:@{UserAuthHeaderKey:[APUser currentUser].userToken}];
-//    }
-//}
 @end

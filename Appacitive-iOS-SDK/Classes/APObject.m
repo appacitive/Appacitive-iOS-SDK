@@ -7,151 +7,51 @@
 //
 
 #import "APObject.h"
-#import "Appacitive.h"
 #import "APError.h"
 #import "APHelperMethods.h"
 #import "NSString+APString.h"
+#import "APNetworking.h"
+#import "APUser.h"
+#import "APDevice.h"
+#import "Appacitive.h"
 
 @implementation APObject
 
-NSString *const ARTICLE_PATH = @"article/";
+NSString *const OBJECT_PATH = @"v1.0/object/";
 
 #define SEARCH_PATH @"search/"
 
 #pragma mark initialization methods
 
-+ (id) objectWithSchemaName:(NSString*)schemaName {
-    APObject *object = [[APObject alloc] initWithSchemaName:schemaName];
-    return object;
-}
-
-- (id) initWithSchemaName:(NSString*)schemaName {
-    self = [super init];
-    if (self) {
-        self.schemaType = schemaName;
-    }
-    return self;
-}
-
-#pragma mark search method
-
-+ (void) searchAllObjectsWithSchemaName:(NSString*) schemaName successHandler:(APResultSuccessBlock)successBlock {
-    [APObject searchAllObjectsWithSchemaName:schemaName successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) searchAllObjectsWithSchemaName:(NSString*) schemaName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [APObject searchObjectsWithSchemaName:schemaName withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
-}
-
-+ (void) searchObjectsWithSchemaName:(NSString*)schemaName withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock {
-    [APObject searchObjectsWithSchemaName:schemaName withQueryString:queryString successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) searchObjectsWithSchemaName:(NSString*)schemaName withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [ARTICLE_PATH stringByAppendingFormat:@"%@/find/all", schemaName];
-        
-        NSMutableDictionary *queryParams = [NSMutableDictionary dictionary];
-        [queryParams setObject:NSStringFromBOOL(sharedObject.enableDebugForEachRequest) forKey:@"debug"];
-        
-        if (queryString) {
-            NSDictionary *queryStringParams = [queryString queryParameters];
-            [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-                [queryParams setObject:obj forKey:key];
-            }];
+- (instancetype) initWithTypeName:(NSString*)typeName {
+    if ([[self class] conformsToProtocol:@protocol(APObjectPropertyMapping)]) {
+        self = [super init];
+        if (self) {
+            self.type = typeName;
+            
+            NSMutableDictionary *typeMapping;
+            NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            filePath = [filePath stringByAppendingPathComponent:@"typeMapping.plist"];
+            if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+                typeMapping = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
+            else
+                typeMapping = [@{ @"APObject":@"APObject", @"APUser":@"APUser", @"APDevice":@"APDevice", @"APConnection":@"APConnection" } mutableCopy];
+            
+            [typeMapping setObject:NSStringFromClass([self superclass]) forKey:NSStringFromClass([self class])];
+            [typeMapping writeToFile:filePath atomically:YES];
+            
         }
-        
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation){
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy) {
-                    successBlockCopy(completedOperation.responseJSON);
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-
-        } onError:^(NSError *error){
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*) error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
+        return self;
     } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
+        NSException* myException = [NSException
+                                    exceptionWithName:[NSString stringWithFormat:@"%@ Subclass does not conform to the APObjectPropertyMapping protocol.",[self class]]
+                                    reason:@"In order to be able to subclass APObject, the subclass must conform to the APObjectPropertyMapping protocol and must implement all the methods marked as required."
+                                    userInfo:nil];
+        @throw myException;
     }
 }
 
 #pragma mark delete methods
-
-+ (void) deleteObjectsWithIds:(NSArray*)objectIds schemaName:(NSString*)schemaName failureHandler:(APFailureBlock)failureBlock {
-    [APObject deleteObjectsWithIds:objectIds schemaName:schemaName successHandler:nil failureHandler:failureBlock];
-}
-
-+ (void) deleteObjectsWithIds:(NSArray*)objectIds schemaName:(NSString*)schemaName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [ARTICLE_PATH stringByAppendingFormat:@"%@/bulkdelete", schemaName];
-        
-        NSDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)};
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:objectIds forKey:@"idlist"];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:params httpMethod:@"POST" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completionOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completionOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy) {
-                    successBlockCopy();
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error) {
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*) error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
-    }
-}
 
 - (void) deleteObject {
     [self deleteObjectWithSuccessHandler:nil failureHandler:nil];
@@ -179,104 +79,32 @@ NSString *const ARTICLE_PATH = @"article/";
 
 - (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock deleteConnectingConnections:(BOOL)deleteConnections {
     
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
+    NSString *path = [[NSString alloc] init];
     
-    if (sharedObject.session) {
-        APSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [ARTICLE_PATH stringByAppendingFormat:@"%@/%lld", self.schemaType, [self.objectId longLongValue]];
-        
-        NSDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest), @"deleteconnections":deleteConnections?@"true":@"false"};
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:nil httpMethod:@"DELETE" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy != nil) {
-                    successBlockCopy();
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error) {
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+    path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId];
+    
+    NSDictionary *queryParams = @{@"deleteconnections":deleteConnections?@"true":@"false"};
+    path = [path stringByAppendingQueryParameters:queryParams];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    [urlRequest setHTTPMethod:@"DELETE"];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if(successBlock != nil) {
+            successBlock();
         }
-    }
+    } failureHandler:^(APError *error) {
+        if(failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
 #pragma mark fetch methods
-
-+ (void) fetchObjectWithObjectId:(NSNumber*)objectId schemaName:(NSString*)schemaName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [APObject fetchObjectsWithObjectIds:@[objectId] schemaName:schemaName successHandler:successBlock failureHandler:failureBlock];
-}
-
-+ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds schemaName:(NSString *)schemaName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        __block NSString *path = [ARTICLE_PATH stringByAppendingFormat:@"%@/multiget/", schemaName];
-        
-        [objectIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSNumber *number = (NSNumber*) obj;
-            path = [path stringByAppendingFormat:@"%lld", number.longLongValue];
-            if (idx != objectIds.count - 1) {
-                path = [path stringByAppendingString:@","];
-            }
-        }];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy) {
-                    successBlockCopy(completedOperation.responseJSON);
-                }
-            } else {
-                if (failureBlockCopy) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error) {
-            if (failureBlockCopy) {
-                failureBlockCopy((APError*) error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
-    }
-}
 
 - (void) fetch {
     [self fetchWithFailureHandler:nil];
@@ -287,45 +115,26 @@ NSString *const ARTICLE_PATH = @"article/";
 }
 
 - (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
     
-    if (sharedObject.session) {
-        NSString *path = [ARTICLE_PATH stringByAppendingFormat:@"%@/%lld", self.schemaType, [self.objectId longLongValue]];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                [self setNewPropertyValuesFromDictionary:completedOperation.responseJSON];
-                if (successBlock != nil) {
-                    successBlock();
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error) {
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+    NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        [self setPropertyValuesFromDictionary:result];
+        if (successBlock != nil) {
+            successBlock();
         }
-    }
+    } failureHandler:^(APError *error) {
+        if(failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
 #pragma mark save methods
@@ -339,49 +148,29 @@ NSString *const ARTICLE_PATH = @"article/";
 }
 
 - (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
+    NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@", self.type];
     
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [ARTICLE_PATH stringByAppendingFormat:@"%@", self.schemaType];
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-                
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:[self postParamerters] httpMethod:@"PUT" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                [self setNewPropertyValuesFromDictionary:completedOperation.responseJSON];
-                
-                if (successBlockCopy != nil) {
-                    successBlockCopy(completedOperation.responseJSON);
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error){
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"PUT"];
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParameters] options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    [urlRequest setHTTPBody:requestBody];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        [self setPropertyValuesFromDictionary:result];
+        if(successBlock != nil) {
+            successBlock(result);
         }
-    }
+    } failureHandler:^(APError *error) {
+        if(failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
 #pragma mark update methods
@@ -395,161 +184,29 @@ NSString *const ARTICLE_PATH = @"article/";
 }
 
 - (void) updateObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
     
-    if (sharedObject.session) {
-        APSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [ARTICLE_PATH stringByAppendingFormat:@"%@/%@", self.schemaType, self.objectId.description];
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:[self postParamertersUpdate] httpMethod:@"POST" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                [self setNewPropertyValuesFromDictionary:completedOperation.responseJSON];
-                
-                if (successBlockCopy != nil) {
-                    successBlockCopy();
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error){
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
-    }
-}
-
-#pragma mark graph query method
-
-+ (void) applyFilterGraphQuery:(NSString*)query successHandler:(APResultSuccessBlock)successBlock {
-    [APObject applyFilterGraphQuery:query successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) applyFilterGraphQuery:(NSString*)query successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
+    NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId.description];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParametersUpdate] options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    [urlRequest setHTTPBody:requestBody];
     
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [SEARCH_PATH stringByAppendingString:@"filter"];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        NSError *error;
-        NSMutableDictionary *postParams = [NSJSONSerialization JSONObjectWithData:[query dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-        if (error) {
-            DLog(@"Error creating JSON, please check the syntax of the graph query");
-            return;
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        [self setPropertyValuesFromDictionary:result];
+        if(successBlock != nil) {
+            successBlock(result);
         }
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:postParams httpMethod:@"POST" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy != nil) {
-                    successBlockCopy(completedOperation.responseJSON);
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error){
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+    } failureHandler:^(APError *error) {
+        if(failureBlock != nil) {
+            failureBlock(error);
         }
-    }
-}
-
-+ (void) applyProjectionGraphQuery:(NSString*)query successHandler:(APResultSuccessBlock)successBlock {
-    [APObject applyProjectionGraphQuery:query successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) applyProjectionGraphQuery:(NSString *)query successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSString *path = [SEARCH_PATH stringByAppendingString:@"project"];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest)}.mutableCopy;
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        NSError *error;
-        NSMutableDictionary *postParams = [NSJSONSerialization JSONObjectWithData:[query dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-        if (error) {
-            DLog(@"Error created JSON, please check the syntax of the graph query");
-            return;
-        }
-        MKNetworkOperation *op = [sharedObject operationWithPath:path params:postParams httpMethod:@"POST" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:op];
-        
-        op.postDataEncoding = MKNKPostDataEncodingTypeJSON;
-        
-        [op onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                if (successBlockCopy != nil) {
-                    successBlockCopy(completedOperation.responseJSON);
-                }
-            } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
-                }
-            }
-        } onError:^(NSError *error){
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        [sharedObject enqueueOperation:op];
-    } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
-    }
+    }];
 }
 
 #pragma mark add properties method
@@ -587,7 +244,7 @@ NSString *const ARTICLE_PATH = @"article/";
 
 #pragma mark retrieve property
 
-- (id) getPropertyWithKey:(NSString*) keyName {
+- (instancetype) getPropertyWithKey:(NSString*) keyName {
     __block id property;
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
@@ -613,32 +270,58 @@ NSString *const ARTICLE_PATH = @"article/";
 }
 
 - (void) removeAttributeWithKey:(NSString*) keyName {
-    [_attributes setObject:[NSNull null] forKey:keyName];
+    [_attributes removeObjectForKey:keyName];
+    //[_attributes setObject:[NSNull null] forKey:keyName];
 }
 
 - (NSString*) description {
-    return [NSString stringWithFormat:@"Object Id:%lld, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, SchemaId:%d, SchemaType:%@, Tag:%@", [self.objectId longLongValue], self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, [self.schemaId intValue], self.schemaType, self.tags];
+    NSString *description = [NSString stringWithFormat:@"Object Id:%@, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, TypeId:%d, type:%@, Tag:%@", self.objectId, self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, [self.typeId intValue], self.type, self.tags];
+    
+    return description;
+}
+
+- (void) addTag:(NSString*)tag
+{
+    if(tag != nil)
+    {
+        [self.tagsToAdd addObject:[tag lowercaseString]];
+    }
+}
+
+- (void) removeTag:(NSString*)tag
+{
+    if(tag != nil)
+    {
+        [self.tagsToRemove addObject:[tag lowercaseString]];
+        [self.tagsToAdd minusSet:self.tagsToRemove];
+    }
 }
 
 #pragma mark private methods
 
-- (void) setNewPropertyValuesFromDictionary:(NSDictionary*) dictionary {
-    NSDictionary *article = dictionary[@"article"];
-    _createdBy = (NSString*) article[@"__createdby"];
-    _objectId = (NSNumber*) article[@"__id"];
-    _lastModifiedBy = (NSString*) article[@"__lastmodifiedby"];
-    _revision = (NSNumber*) article[@"__revision"];
-    _schemaId = (NSNumber*) article[@"__schemaid"];
-    _utcDateCreated = [APHelperMethods deserializeJsonDateString:article[@"__utcdatecreated"]];
-    _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:article[@"__utclastupdateddate"]];
-    _attributes = [article[@"__attributes"] mutableCopy];
-    _tags = article[@"__tags"];
-    _schemaType = article[@"__schematype"];
+- (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
+    NSDictionary *object = [[NSDictionary alloc] init];
+    if([[dictionary allKeys] containsObject:@"object"])
+        object = dictionary[@"object"];
+    else
+        object = dictionary;
     
-    _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:article].mutableCopy;
+    _createdBy = (NSString*) object[@"__createdby"];
+    _objectId = object[@"__id"];
+    _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
+    _revision = (NSNumber*) object[@"__revision"];
+    _typeId = object[@"__typeid"];
+    _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
+    _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
+    _attributes = [object[@"__attributes"] mutableCopy];
+    _tags = object[@"__tags"];
+    _type = object[@"__type"];
+    
+    _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:object].mutableCopy;
 }
 
-- (NSMutableDictionary*) postParamerters {
+
+- (NSMutableDictionary*) postParameters {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
     
     if (self.objectId)
@@ -652,7 +335,7 @@ NSString *const ARTICLE_PATH = @"article/";
     
     if (self.revision)
         postParams[@"__revision"] = self.revision;
-
+    
     for(NSDictionary *prop in self.properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
             [postParams setObject:obj forKey:key];
@@ -660,15 +343,15 @@ NSString *const ARTICLE_PATH = @"article/";
         }];
     }
     
-    if (self.schemaType)
-        postParams[@"__schematype"] = self.schemaType;
-
+    if (self.type)
+        postParams[@"__type"] = self.type;
+    
     if (self.tags)
         postParams[@"__tags"] = self.tags;
     return postParams;
 }
 
-- (NSMutableDictionary*) postParamertersUpdate {
+- (NSMutableDictionary*) postParametersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
     
     if (self.attributes && [self.attributes count] > 0)
@@ -680,6 +363,143 @@ NSString *const ARTICLE_PATH = @"article/";
             *stop = YES;
         }];
     }
+    
+    if(self.tagsToAdd && [self.tagsToAdd count] > 0)
+        postParams[@"__addtags"] = [self.tagsToAdd allObjects];
+    
+    if(self.tagsToRemove && [self.tagsToRemove count] > 0)
+        postParams[@"__removetags"] = [self.tagsToRemove allObjects];
+    
     return postParams;
 }
+
 @end
+
+# pragma mark - APObjects Class Implementation
+
+@implementation APObjects
+
+#pragma mark initialization
+
++ (APObject*) objectWithTypeName:(NSString*)typeName {
+    APObject *object = [[APObject alloc] initWithTypeName:typeName];
+    return object;
+}
+
+#pragma mark search method
+
++ (void) searchAllObjectsWithTypeName:(NSString*) typeName successHandler:(APResultSuccessBlock)successBlock {
+    [APObjects searchAllObjectsWithTypeName:typeName successHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchAllObjectsWithTypeName:(NSString*) typeName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [APObjects searchObjectsWithTypeName:typeName withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
++ (void) searchObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock {
+    [APObjects searchObjectsWithTypeName:typeName withQueryString:queryString successHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/find/all", typeName];
+    
+    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
+    
+    if (queryString) {
+        NSDictionary *queryStringParams = [queryString queryParameters];
+        [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+            [queryParams setObject:obj forKey:key];
+        }];
+    }
+    
+    path = [path stringByAppendingQueryParameters:queryParams];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if(successBlock != nil) {
+            successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+        if(failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark delete methods
+
++ (void) deleteObjectsWithIds:(NSArray*)objectIds typeName:(NSString*)typeName failureHandler:(APFailureBlock)failureBlock {
+    [APObjects deleteObjectsWithIds:objectIds typeName:typeName successHandler:nil failureHandler:failureBlock];
+}
+
++ (void) deleteObjectsWithIds:(NSArray*)objectIds typeName:(NSString*)typeName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/bulkdelete", typeName];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:objectIds forKey:@"idlist"];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:params options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    [urlRequest setHTTPBody:requestBody];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if(successBlock != nil) {
+            successBlock();
+        }
+    } failureHandler:^(APError *error) {
+        if(failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark fetch methods
+
++ (void) fetchObjectWithObjectId:(NSString*)objectId typeName:(NSString*)typeName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [APObjects fetchObjectsWithObjectIds:@[objectId] typeName:typeName successHandler:successBlock failureHandler:failureBlock];
+}
+
++ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    __block NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/multiget/", typeName];
+    
+    [objectIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *string= (NSString*) obj;
+        path = [path stringByAppendingFormat:@"%@", string];
+        if (idx != objectIds.count - 1) {
+            path = [path stringByAppendingString:@","];
+        }
+    }];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if(successBlock != nil) {
+            successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+        if(failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+
+@end
+

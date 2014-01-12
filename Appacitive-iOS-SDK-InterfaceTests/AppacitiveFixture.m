@@ -21,26 +21,20 @@
  @purpose Test for nil API_KEY and DEPLOYMENT_ID
  @expected Appacitive object should be nil
  */
-- (void) testInitMethodForNilApiKeyAndDeploymentId {
-    Appacitive *yoda = [Appacitive appacitiveWithApiKey:nil deploymentId:nil];
-    STAssertNil(yoda, @"Test case for nil api key and deployment id failed");
-}
+//- (void) testInitMethodForNilApiKeyAndDeploymentId {
+//    Appacitive *yoda = [Appacitive appacitiveWithApiKey:nil];
+//    STAssertNil(yoda, @"Test case for nil api key and deployment id failed");
+//}
 
 /**
  @purpose Test for nil API_KEY
  @expected Appacitive object should be nil
  */
 - (void) testInitMethodForNilApiKey {
-    Appacitive *yoda = [Appacitive appacitiveWithApiKey:nil deploymentId:DEPLOYMENT_ID];
-    STAssertNil(yoda, @"Test case for nil api key failed");
+    [Appacitive initWithAPIKey:nil];
+    NSString *key = [Appacitive getApiKey];
+//    Appacitive *yoda = [Appacitive appacitiveWithApiKey:nil];
+    STAssertNil(key, @"Test case for nil api key failed");
 }
 
-/**
- @purpose Test for nil DEPLOYMENT_ID
- @expected Appacitive object should be nil
- */
-- (void) testInitMethodForNilDeploymentKey {
-    Appacitive *yoda = [Appacitive appacitiveWithApiKey:API_KEY deploymentId:nil];
-    STAssertNil(yoda, @"Test case for nil deploment id failed");
-}
 @end

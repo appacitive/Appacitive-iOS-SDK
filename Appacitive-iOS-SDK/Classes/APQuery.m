@@ -8,53 +8,274 @@
 
 #import "APQuery.h"
 
+#pragma mark - SimpleQuery
+
+@implementation APSimpleQuery
+
+- (NSString*) stringForm {
+    if(self.fieldName != nil && self.fieldType != nil && self.operation != nil && self.value != nil)
+        return [NSString stringWithFormat:@"%@ %@ %@",
+                [self getFormattedFieldNameFor:self.fieldName  WithFieldType:self.fieldType],
+                self.operation,
+                self.value];
+    return nil;
+}
+
+- (NSString*) getFormattedFieldNameFor:(NSString*)name WithFieldType:(NSString*)type {
+    if ([type isEqualToString:@"attribute"])
+        return [NSString stringWithFormat:@"@%@",name];
+    else if ([type isEqualToString:@"aggregate"])
+        return [NSString stringWithFormat:@"$%@",name];
+    else
+        return [NSString stringWithFormat:@"*%@",name];
+}
+
+@end
+
+#pragma mark - CompundQuery
+
+@implementation APCompoundQuery
+
+- (instancetype) init {
+    _innerQueries = [[NSMutableArray alloc] init];
+    return self;
+}
+
+- (NSString*) stringForm {
+    NSString *query = [[NSString alloc] init];
+    query = @"(";
+    for(int i =0; i<self.innerQueries.count-1; i++)
+        if(self.boolOperator == kAnd)
+            query = [query stringByAppendingString:[NSString stringWithFormat:@"%@ AND ",[self.innerQueries[i] stringForm]]];
+        else {
+            query = [query stringByAppendingString:[NSString stringWithFormat:@"%@ OR ",[self.innerQueries[i] stringForm]]];
+        }
+    query = [query stringByAppendingString:[NSString stringWithFormat:@"%@)",[[self.innerQueries lastObject] stringForm]]];
+    return query;
+}
+
+@end
+
+#pragma mark - QueryExpression
+
+@implementation APQueryExpression
+
+- (instancetype) initWithProperty:(NSString*)name ofType:(NSString*)type {
+    _type = type;
+    _name = name;
+    return self;
+}
+
+- (APSimpleQuery *) isEqualTo:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"==";
+        query.value = [NSString stringWithFormat:@"'%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+
+- (APSimpleQuery *) isEqualToDate:(NSDate*)date {
+    if(date != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"==";
+        query.value = [NSString stringWithFormat:@"date('%@')",date];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isNotEqualTo:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"<>";
+        query.value = [NSString stringWithFormat:@"'%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isNotEqualToDate:(NSDate*)date {
+    if(date != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"<>";
+        query.value = [NSString stringWithFormat:@"date('%@')",date];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isLike:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"like";
+        query.value = [NSString stringWithFormat:@"'%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) startsWith:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"like";
+        query.value = [NSString stringWithFormat:@"'%@*'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) endsWith:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"like";
+        query.value = [NSString stringWithFormat:@"'*%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) matches:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"match";
+        query.value = [NSString stringWithFormat:@"'%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isGreaterThan:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @">";
+        query.value = [NSString stringWithFormat:@"'%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isLessThan:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"<";
+        query.value = [NSString stringWithFormat:@"'%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isGreaterThanOrEqualTo:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @">=";
+        query.value = [NSString stringWithFormat:@"'%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isLessThanOrEqualTo:(NSString*)value {
+    if (value != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"<=";
+        query.value = [NSString stringWithFormat:@"'%@'",value];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isBetween:(NSString*)value1 and:(NSString*)value2 {
+    if (value1 != nil && value2 != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"between";
+        query.value = [NSString stringWithFormat:@"('%@','%@')",value1,value2];
+        return query;
+    }
+    return nil;
+}
+
+@end
+
+#pragma mark - Query
+
 @implementation APQuery
 
-+ (NSString*) queryStringForEqualCondition:(NSString*)propertyName propertyValue:(NSString*)propertyValue {
-    if (propertyName != nil && propertyValue != nil) {
-        return [NSString stringWithFormat:@"*%@ == '%@'", propertyName, propertyValue];
-    }
-    return nil;
++ (APQueryExpression*) queryExpressionWithProperty:(NSString*)propertyName {
+    return [[APQueryExpression alloc] initWithProperty:propertyName ofType:@"property"];
 }
 
-+ (NSString*) queryStringForEqualCondition:(NSString*)propertyName date:(NSDate*)date {
-    if(propertyName != nil && date != nil) {
-        return [NSString stringWithFormat:@"*%@ == date('%@')", propertyName, date.description];
-    }
-    return nil;
++ (APQueryExpression*) queryExpressionWithAttribute:(NSString*)attributeName {
+    return [[APQueryExpression alloc] initWithProperty:attributeName ofType:@"attribute"];
 }
 
-+ (NSString*) queryStringForLikeCondition:(NSString*)propertyName propertyValue:(NSString*)propertyValue {
-    if (propertyName != nil && propertyValue != nil) {
-        return [NSString stringWithFormat:@"*%@ like '%@'", propertyName, propertyValue];
-    }
-    return nil;
++ (APQueryExpression*) queryExpressionWithAggregate:(NSString*)aggregateName {
+    return [[APQueryExpression alloc] initWithProperty:aggregateName ofType:@"aggergate"];
 }
 
-+ (NSString*) queryStringForGreaterThanCondition:(NSString*)propertyName propertyValue:(NSString*)propertyValue {
-    if (propertyName != nil && propertyValue != nil) {
-        return [NSString stringWithFormat:@"*%@ > '%@'", propertyName, propertyValue];
-    }
-    return nil;
++ (APCompoundQuery *) booleanAnd:(NSArray*)queries {
+    APCompoundQuery* compoundQuery = [[APCompoundQuery alloc] init];
+    compoundQuery.boolOperator = kAnd;
+    [[compoundQuery innerQueries] addObjectsFromArray:queries];
+    return compoundQuery;
 }
 
-+ (NSString*) queryStringForLessThanCondition:(NSString*)propertyName propertyValue:(NSString*)propertyValue {
-    if (propertyName != nil && propertyValue != nil) {
-        return [NSString stringWithFormat:@"*%@ < '%@'", propertyName, propertyValue];
-    }
-    return nil;
++ (APCompoundQuery *) booleanOr:(NSArray*)queries {
+    APCompoundQuery* compoundQuery = [[APCompoundQuery alloc] init];
+    compoundQuery.boolOperator = kOr;
+    [[compoundQuery innerQueries] addObjectsFromArray:queries];
+    return compoundQuery;
 }
 
-+ (NSString*) queryStringForPageSize:(NSUInteger)pageSize {
++ (NSString *) queryWithPageSize:(NSUInteger)pageSize {
     return [NSString stringWithFormat:@"psize=%d", pageSize];
 }
 
-+ (NSString*) queryStringForPageNumber:(NSUInteger)pageNumber {
++ (NSString *) queryWithPageNumber:(NSUInteger)pageNumber {
     return [NSString stringWithFormat:@"pnum=%d", pageNumber];
 }
 
-+ (NSString*) queryStringForGeoCodeProperty:(NSString*)propertyName location:(CLLocation*)location distance:(DistanceMetric)distanceMetric raduis:(NSNumber*)radius {
-    if(propertyName != nil && location != nil && radius != nil) {
++ (NSString *) queryWithFields:(NSArray*)fields {
+    NSString *queryString = [NSString stringWithFormat:@"fields="];
+    if(fields != nil)
+    {
+        for(int i = 0; i < fields.count; i++) {
+            queryString = [queryString stringByAppendingString:[fields[i] stringValue]];
+        }
+    }
+    return queryString;
+}
+
++ (NSString *) queryWithGeoCodeSearchForProperty:(NSString*)propertyName location:(CLLocation*)location distance:(DistanceMetric)distanceMetric raduis:(NSNumber*)radius {
+    if(location != nil && radius != nil) {
         NSString *queryString = [NSString stringWithFormat:@"*%@ within_circle ", propertyName];
         queryString = [queryString stringByAppendingFormat:@"%lf, %lf, %lf", location.coordinate.latitude, location.coordinate.longitude, radius.doubleValue];
         if (distanceMetric == kKilometers) {
@@ -67,8 +288,8 @@
     return nil;
 }
 
-+ (NSString*) queryStringForPolygonSearch:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates {
-    if (propertyName != nil && coordinates != nil && coordinates.count >= 3) {
++ (NSString *) queryWithPolygonSearchForProperty:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates {
+    if (coordinates != nil && coordinates.count >= 3) {
         __block NSString *query = [NSString stringWithFormat:@"*%@ within_polygon ", propertyName];
         
         [coordinates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -85,7 +306,7 @@
     return nil;
 }
 
-+ (NSString*) queryStringForSearchWithOneOrMoreTags:(NSArray*)tags {
++ (NSString *) queryWithSearchUsingOneOrMoreTags:(NSArray*)tags {
     if (tags != nil) {
         __block NSString *queryString = @"tagged_with_one_or_more ('";
         [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -103,7 +324,7 @@
     return nil;
 }
 
-+ (NSString*) queryStringForSearchWithAllTags:(NSArray*)tags {
++ (NSString *) queryWithSearchUsingAllTags:(NSArray*)tags {
     if (tags != nil) {
         __block NSString *queryString = @"tagged_with_all ('";
         [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -121,7 +342,7 @@
     return nil;
 }
 
-+ (NSString*) queryStringForSearchWithFreeText:(NSArray*)freeTextTokens {
++ (NSString *) queryWithSearchUsingFreeText:(NSArray*)freeTextTokens {
     if (freeTextTokens != nil && freeTextTokens.count > 0) {
         __block NSString *queryString = @"freeText=";
         [freeTextTokens enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -136,4 +357,6 @@
     }
     return nil;
 }
+
 @end
+

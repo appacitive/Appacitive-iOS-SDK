@@ -13,6 +13,14 @@
 
 #define NSStringFromBOOL(aBOOL) aBOOL ? @"YES" : @"NO"
 
+#ifdef DEBUG
+#   define DLog(fmt, ...) {NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);}
+#   define ELog(err) {if(err) DLog(@"%@", err)}
+#else
+#   define DLog(...)
+#   define ELog(err)
+#endif
+
 /**
  Helper method used to check for any errors.
  
@@ -23,7 +31,7 @@
 /**
  Helper method used to create an error for the case when a session has not been retrieved and API calls are made.
  */
-+ (APError*) errorForSessionNotCreated;
+//+ (APError*) errorForSessionNotCreated;
 
 /**
  Helper method to parse the properties from a json response
@@ -57,10 +65,5 @@
  */
 + (NSString*) jsonDateStringFromDate:(NSDate*)date;
 
-///**
-// Helper method to add the session id and environment to the request headers.
-// 
-// @param operation The operation to add the headers to.
-// */
-//+(void) addHeadersToMKNetworkOperation:(MKNetworkOperation *)operation;
+
 @end

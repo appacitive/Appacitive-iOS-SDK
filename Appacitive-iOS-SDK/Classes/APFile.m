@@ -12,407 +12,286 @@
 #import "APError.h"
 #import "NSString+APString.h"
 #import "APConstants.h"
+#import "APNetworking.h"
 
-//#define FILE_PATH @"file/"
+#define FILE_PATH @"v1.0/file/"
+
+APResultSuccessBlock proxySuccessBlock;
+APFileDownloadSuccessBlock proxyDownloadSuccessBlock;
+APFailureBlock proxyFailureBlock;
+NSString *requestContentType = nil;
+NSMutableData *requestData = nil;
+NSURL *uploadURL;
+NSDictionary *uploadDict;
+BOOL isDownloadData = NO;
 
 @implementation APFile
 
 #pragma mark UPLOAD_METHODS
 
-+ (void) uploadFileWithName:(NSString *)name data:(NSData *)data validUrlForTime:(NSNumber *)minutes {
-    [APFile uploadFileWithName:name data:data validUrlForTime:minutes contentType:nil successHandler:nil failureHandler:nil];
+- (void) uploadFileWithName:(NSString *)name data:(NSData *)fileData validUrlForTime:(NSNumber *)minutes {
+    [self uploadFileWithName:name data:fileData validUrlForTime:minutes contentType:nil successHandler:nil failureHandler:nil];
 }
 
-+ (void) uploadFileWithName:(NSString *)name data:(NSData *)data validUrlForTime:(NSNumber *)minutes contentType:(NSString *)contentType {
-    [APFile uploadFileWithName:name data:data validUrlForTime:minutes contentType:contentType successHandler:nil failureHandler:nil];
+- (void) uploadFileWithName:(NSString *)name data:(NSData *)fileData validUrlForTime:(NSNumber *)minutes contentType:(NSString *)contentType {
+    [self uploadFileWithName:name data:fileData validUrlForTime:minutes contentType:contentType successHandler:nil failureHandler:nil];
 }
 
-+ (void) uploadFileWithName:(NSString *)name data:(NSData *)data validUrlForTime:(NSNumber *)minutes contentType:(NSString *)contentType successHandler:(APResultSuccessBlock)successBlock {
-    [APFile uploadFileWithName:name data:data validUrlForTime:minutes contentType:contentType successHandler:successBlock failureHandler:nil];
+- (void) uploadFileWithName:(NSString *)name data:(NSData *)fileData validUrlForTime:(NSNumber *)minutes contentType:(NSString *)contentType successHandler:(APResultSuccessBlock)successBlock {
+    [self uploadFileWithName:name data:fileData validUrlForTime:minutes contentType:contentType successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) uploadFileWithName:(NSString *)name data:(NSData *)data validUrlForTime:(NSNumber *)minutes contentType:(NSString *)contentType successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APResultSuccessBlock successBlockCopy = [successBlock copy];
-        
-        NSURL *url = [NSURL URLWithString:@"https://apis.appacitive.com/file/uploadurl"];
-        
-        NSMutableDictionary *params = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest),
-                                             @"filename":name,
-                                             @"expires":minutes,
-                                             @"apiKey":[Appacitive getApiKey]}.mutableCopy;
-        
-        if(contentType) {
-            [params setObject:contentType forKey:@"contenttype"];
-        }
-        
-        if(NSClassFromString(@"NSURLSession")) {
-            NSURLSessionConfiguration *sessionConfig =
-            [NSURLSessionConfiguration defaultSessionConfiguration];
-            sessionConfig.allowsCellularAccess = YES;
-            [sessionConfig setHTTPAdditionalHeaders: params];
-            sessionConfig.timeoutIntervalForRequest = 30.0;
-            sessionConfig.timeoutIntervalForResource = 60.0;
-            sessionConfig.HTTPMaximumConnectionsPerHost = 1;
-            
-            NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig];
-            
-            [[session dataTaskWithURL:url
-                    completionHandler:^(NSData *data,
-                                        NSURLResponse *response,
-                                        NSError *error) {
-                        if(!error) {
-                            NSError *jsonError;
-                            NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                            if(!jsonError) {
-                                APError *error = [APHelperMethods checkForErrorStatus:response];
-                                
-                                BOOL isErrorPresent = (error != nil);
-                                
-                                if (!isErrorPresent) {
-                                    NSDictionary *fetchUploadUrlResponse = response;
-                                    NSString *url = [fetchUploadUrlResponse objectForKey:@"url"];
-                                    
-                                    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-                                    [request setURL:[NSURL URLWithString:url]];
-                                    [request setHTTPMethod:@"PUT"];
-                                    
-                                    NSString *stringContentType = @"application/octet-stream";
-                                    if (contentType) {
-                                        stringContentType = contentType;
-                                    }
-                                    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-                                    
-                                    NSMutableData *body = [NSMutableData data];
-                                    [body appendData:[NSData dataWithData:data]];
-                                    [request setHTTPBody:body];
-                                    
-                                    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-                                    
-                                    [NSURLConnection sendAsynchronousRequest:request
-                                                                       queue:queue completionHandler:^(NSURLResponse *res, NSData *data, NSError *error){
-                                                                           NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)res;
-                                                                           if ([httpResponse statusCode] == 200 && successBlockCopy != nil) {
-                                                                               successBlockCopy(response);
-                                                                           }
-                                                                       }];
-                                } else {
-                                    if (failureBlockCopy != nil) {
-                                        failureBlockCopy(error);
-                                    }
-                                }                            } else {
-                                DLog(@"%@", jsonError);
-                                if (failureBlockCopy != nil) {
-                                    failureBlockCopy((APError*) error);
-                                }
-                            }
-                        } else {
-                            DLog(@"%@", error);
-                            if (failureBlockCopy != nil) {
-                                failureBlockCopy((APError*) error);
-                            }
-                        }
-                    }] resume];
-        } else {
-            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-            NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-            [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                if(!error) {
-                    NSError *jsonError;
-                    NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                    if(!jsonError) {
-                        APError *error = [APHelperMethods checkForErrorStatus:response];
-                        
-                        BOOL isErrorPresent = (error != nil);
-                        
-                        if (!isErrorPresent) {
-                            NSDictionary *fetchUploadUrlResponse = response;
-                            NSString *url = [fetchUploadUrlResponse objectForKey:@"url"];
-                            
-                            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-                            [request setURL:[NSURL URLWithString:url]];
-                            [request setHTTPMethod:@"PUT"];
-                            
-                            NSString *stringContentType = @"application/octet-stream";
-                            if (contentType) {
-                                stringContentType = contentType;
-                            }
-                            [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-                            
-                            NSMutableData *body = [NSMutableData data];
-                            [body appendData:[NSData dataWithData:data]];
-                            [request setHTTPBody:body];
-                            
-                            NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-                            
-                            [NSURLConnection sendAsynchronousRequest:request
-                                                               queue:queue completionHandler:^(NSURLResponse *res, NSData *data, NSError *error){
-                                                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)res;
-                                                                   if ([httpResponse statusCode] == 200 && successBlockCopy != nil) {
-                                                                       successBlockCopy(response);
-                                                                   }
-                                                               }];
-                        } else {
-                            if (failureBlockCopy != nil) {
-                                failureBlockCopy(error);
-                            }
-                        }                    } else {
-                        DLog(@"%@", jsonError);
-                        if (failureBlockCopy != nil) {
-                            failureBlockCopy((APError*) error);
-                        }
-                    }
-                } else {
-                    DLog(@"%@", error);
-                    if (failureBlockCopy != nil) {
-                        failureBlockCopy((APError*) error);
-                    }
-                }
-            }];
-        }
-        
-//        //Using MKNetworkKit
-//        NSString *path = [FILE_PATH stringByAppendingString:@"uploadurl"];
-//        
-//        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest),
-//                                             @"filename":name,
-//                                             @"expires":minutes}.mutableCopy;
-//        if(contentType) {
-//            [queryParams setObject:contentType forKey:@"contenttype"];
-//        }
-//        path = [path stringByAppendingQueryParameters:queryParams];
-//        
-//        MKNetworkOperation *fetchUploadUrl = [sharedObject operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
-//        [APHelperMethods addHeadersToMKNetworkOperation:fetchUploadUrl];
-//        
-//        [fetchUploadUrl onCompletion:^(MKNetworkOperation *completedOperation) {
-//            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-//            
-//            BOOL isErrorPresent = (error != nil);
-//            
-//            if (!isErrorPresent) {
-//                NSDictionary *fetchUploadUrlResponse = completedOperation.responseJSON;
-//                NSString *url = [fetchUploadUrlResponse objectForKey:@"url"];
-//        
-//                NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-//                [request setURL:[NSURL URLWithString:url]];
-//                [request setHTTPMethod:@"PUT"];
-//                
-//                NSString *stringContentType = @"application/octet-stream";
-//                if (contentType) {
-//                    stringContentType = contentType;
-//                }
-//                [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-//                
-//                NSMutableData *body = [NSMutableData data];
-//                [body appendData:[NSData dataWithData:data]];
-//                [request setHTTPBody:body];
-//                
-//                NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-//                
-//                [NSURLConnection sendAsynchronousRequest:request
-//                                 queue:queue completionHandler:^(NSURLResponse *res, NSData *data, NSError *error){
-//                                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)res;
-//                                     if ([httpResponse statusCode] == 200 && successBlockCopy != nil) {
-//                                         successBlockCopy(completedOperation.responseJSON);
-//                                     }
-//                                 }];
-//            } else {
-//                if (failureBlockCopy != nil) {
-//                    failureBlockCopy(error);
-//                }
-//            }
-//
-//        } onError:^(NSError *error) {
-//            if (failureBlockCopy != nil) {
-//                failureBlockCopy((APError*)error);
-//            }
-//        }];
-//        
-//        [sharedObject enqueueOperation:fetchUploadUrl];
-
+- (void) uploadFileWithName:(NSString *)name data:(NSData *)fileData validUrlForTime:(NSNumber *)minutes contentType:(NSString *)contentType successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/v1.0/file/uploadurl?contenttype=%@&filename=%@&expires=%@",contentType,name,minutes]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    urlRequest.HTTPMethod = @"GET";
+    if([[[UIDevice currentDevice] systemVersion] intValue] >=7 ) {
+        NSURLSession *urlSession = [APNetworking getSharedURLSession];
+        [[urlSession dataTaskWithRequest:urlRequest
+                       completionHandler:^(NSData *data,
+                                           NSURLResponse *response,
+                                           NSError *error) {
+                           if(!error) {
+                               NSError *jsonError = nil;
+                               NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+                               if(!jsonError) {
+                                   APError *error = [APHelperMethods checkForErrorStatus:responseJSON];
+                                   BOOL isErrorPresent = (error != nil);
+                                   if (!isErrorPresent) {
+                                       NSDictionary *fetchUploadUrlResponse = responseJSON;
+                                       NSURL *fileUploadURL = [NSURL URLWithString:[fetchUploadUrlResponse objectForKey:@"url"]];
+                                       NSMutableURLRequest *fileUploadRequest = [NSMutableURLRequest requestWithURL:fileUploadURL];
+                                       [fileUploadRequest setHTTPMethod:@"PUT"];
+                                       NSString *stringContentType = @"application/octet-stream";
+                                       if (contentType) {
+                                           stringContentType = contentType;
+                                       }
+                                       [fileUploadRequest addValue:stringContentType forHTTPHeaderField: @"Content-Type"];
+                                       NSMutableData *body = [NSMutableData data];
+                                       [body appendData:[NSData dataWithData:fileData]];
+                                       [fileUploadRequest setHTTPBody:body];
+                                       [[urlSession uploadTaskWithRequest:fileUploadRequest fromData:body completionHandler:^(NSData *data, NSURLResponse *res, NSError *error) {
+                                           NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)res;
+                                           if ([httpResponse statusCode] == 200 && successBlock != nil) {
+                                               successBlock(responseJSON);
+                                           }
+                                       }] resume];
+                                   } else {
+                                       DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                                       if (failureBlock != nil) {
+                                           failureBlock(error);
+                                       }
+                                   }                            } else {
+                                       DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@", jsonError);
+                                       if (failureBlock != nil) {
+                                           failureBlock((APError*) error);
+                                       }
+                                   }
+                           } else {
+                               DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                               if (failureBlock != nil) {
+                                   failureBlock((APError*) error);
+                               }
+                           }
+                       }] resume];
     } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
-        }
+        NSMutableDictionary *headerParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                             [Appacitive getApiKey], APIkeyHeaderKey,
+                                             [Appacitive environmentToUse], EnvironmentHeaderKey,
+                                             @"application/json", @"Content-Type",
+                                             nil];
+        [urlRequest setAllHTTPHeaderFields:headerParams];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+        proxySuccessBlock = successBlock;
+        proxyFailureBlock = failureBlock;
+        requestContentType = contentType;
+        requestData = [fileData mutableCopy];
+        [connection start];
     }
 }
 
 #pragma mark DOWNLOAD_METHODS
 
-+ (void) downloadFileWithName:(NSString*)name validUrlForTime:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock {
-    [APFile downloadFileWithName:name validUrlForTime:minutes successHandler:successBlock failureHandler:nil];
+- (void) downloadFileWithName:(NSString*)name validUrlForTime:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock {
+    [self downloadFileWithName:name validUrlForTime:minutes successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) downloadFileWithName:(NSString*)name validUrlForTime:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
-    
-    Appacitive *sharedObject = [Appacitive sharedObject];
-    APFailureBlock failureBlockCopy = [failureBlock copy];
-    
-    if (sharedObject.session) {
-        APFileDownloadSuccessBlock successBlockCopy = [successBlock copy];
-        
-        
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/file/download/%@",name]];
-        
-        NSMutableDictionary *params = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest),
-                                        @"expires":minutes,
-                                        @"apiKey":[Appacitive getApiKey]}.mutableCopy;
-        
-        if(NSClassFromString(@"NSURLSession")) {
-            NSURLSessionConfiguration *sessionConfig =
-            [NSURLSessionConfiguration defaultSessionConfiguration];
-            sessionConfig.allowsCellularAccess = YES;
-            [sessionConfig setHTTPAdditionalHeaders: params];
-            sessionConfig.timeoutIntervalForRequest = 30.0;
-            sessionConfig.timeoutIntervalForResource = 60.0;
-            sessionConfig.HTTPMaximumConnectionsPerHost = 1;
-            
-            NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig];
-            
-            [[session downloadTaskWithURL:url completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-                        if(!error) {
-                            NSError *jsonError;
-                            NSDictionary *response = [NSJSONSerialization JSONObjectWithData:location options:NSJSONReadingAllowFragments error:&jsonError];
-                            if(!jsonError) {
-                                APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-                                
-                                BOOL isErrorPresent = (error != nil);
-                                
-                                if (!isErrorPresent) {
-                                    NSDictionary *result = completedOperation.responseJSON;
-                                    NSString *uri = [result objectForKey:@"uri"];
-                                    
-                                    
-                                } else {
-                                    if (failureBlockCopy != nil) {
-                                        failureBlockCopy(error);
-                                    }
-                                }                            } else {
-                                    DLog(@"%@", jsonError);
-                                    if (failureBlockCopy != nil) {
-                                        failureBlockCopy((APError*) error);
-                                    }
+- (void) downloadFileWithName:(NSString*)name validUrlForTime:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/v1.0/file/download/%@?expires=%@",name,minutes]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    if([[[UIDevice currentDevice] systemVersion] intValue] >=7 ) {
+        NSURLSession *urlSession = [APNetworking getSharedURLSession];
+        [[urlSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            if(!error) {
+                BOOL isErrorPresent = (error != nil);
+                NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+                NSError *jsonError = nil;
+                dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+                if(jsonError != nil)
+                    DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+                NSString *uri = [dictionary objectForKey:@"uri"];
+                if(uri) {
+                    if (!isErrorPresent) {
+                        NSMutableURLRequest *fileDownloadRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[dictionary objectForKey:@"uri"]]];
+                        [fileDownloadRequest setHTTPMethod:@"GET"];
+                        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+                        sessionConfig.allowsCellularAccess = YES;
+                        sessionConfig.timeoutIntervalForRequest = 30.0;
+                        sessionConfig.timeoutIntervalForResource = 60.0;
+                        NSURLSession *downloadSession = [NSURLSession sessionWithConfiguration:sessionConfig];
+                        [[downloadSession downloadTaskWithRequest:fileDownloadRequest completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                            if(!error) {
+                                if (successBlock) {
+                                    successBlock([NSData dataWithContentsOfURL:location]);
                                 }
-                        } else {
-                            DLog(@"%@", error);
-                            if (failureBlockCopy != nil) {
-                                failureBlockCopy((APError*) error);
                             }
+                            else {
+                                DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                                if(failureBlock != nil) {
+                                    failureBlock((APError*)error);
+                                }
+                            }
+                        }] resume];
+                    } else {
+                        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                        if (failureBlock != nil) {
+                            failureBlock((APError*)error);
                         }
-                    }] resume];
-        } else {
-            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-            NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-            [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                if(!error) {
-                    NSError *jsonError;
-                    NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
-                    if(!jsonError) {
-                        APError *error = [APHelperMethods checkForErrorStatus:response];
-                        
-                        BOOL isErrorPresent = (error != nil);
-                        
-                        if (!isErrorPresent) {
-                            NSDictionary *fetchUploadUrlResponse = response;
-                            NSString *url = [fetchUploadUrlResponse objectForKey:@"url"];
-                            
-                            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-                            [request setURL:[NSURL URLWithString:url]];
-                            [request setHTTPMethod:@"PUT"];
-                            
-                            NSString *stringContentType = @"application/octet-stream";
-                            if (contentType) {
-                                stringContentType = contentType;
-                            }
-                            [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-                            
-                            NSMutableData *body = [NSMutableData data];
-                            [body appendData:[NSData dataWithData:data]];
-                            [request setHTTPBody:body];
-                            
-                            NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-                            
-                            [NSURLConnection sendAsynchronousRequest:request
-                                                               queue:queue completionHandler:^(NSURLResponse *res, NSData *data, NSError *error){
-                                                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)res;
-                                                                   if ([httpResponse statusCode] == 200 && successBlockCopy != nil) {
-                                                                       successBlockCopy(response);
-                                                                   }
-                                                               }];
-                        } else {
-                            if (failureBlockCopy != nil) {
-                                failureBlockCopy(error);
-                            }
-                        }                    } else {
-                            DLog(@"%@", jsonError);
-                            if (failureBlockCopy != nil) {
-                                failureBlockCopy((APError*) error);
-                            }
-                        }
-                } else {
-                    DLog(@"%@", error);
-                    if (failureBlockCopy != nil) {
-                        failureBlockCopy((APError*) error);
                     }
                 }
-            }];
-        }
-        
-        //Using MKNetworkKit
-        NSString *path = [FILE_PATH stringByAppendingFormat:@"download/%@", name];
-        
-        NSMutableDictionary *queryParams = @{@"debug":NSStringFromBOOL(sharedObject.enableDebugForEachRequest),
-                                            @"expires":minutes}.mutableCopy;
-
-        path = [path stringByAppendingQueryParameters:queryParams];
-        
-        MKNetworkOperation *downloadOperation = [sharedObject operationWithPath:path params:nil httpMethod:@"GET" ssl:YES];
-        [APHelperMethods addHeadersToMKNetworkOperation:downloadOperation];
-        
-        [downloadOperation onCompletion:^(MKNetworkOperation *completedOperation) {
-            APError *error = [APHelperMethods checkForErrorStatus:completedOperation.responseJSON];
-            
-            BOOL isErrorPresent = (error != nil);
-            
-            if (!isErrorPresent) {
-                NSDictionary *result = completedOperation.responseJSON;
-                NSString *uri = [result objectForKey:@"uri"];
-                
-                MKNetworkOperation *downloadDataRequest = [[MKNetworkOperation alloc] initWithURLString:uri params:nil httpMethod:@"GET"];
-                [downloadDataRequest onCompletion:^(MKNetworkOperation *completedOperation) {
-                    if (successBlockCopy) {
-                        successBlockCopy(completedOperation.responseData);
-                    }
-                } onError:^(NSError *error) {
-                    if (failureBlockCopy != nil) {
-                        failureBlockCopy((APError*)error);
-                    }
-                }];
-                [sharedObject enqueueOperation:downloadDataRequest];
             } else {
-                if (failureBlockCopy != nil) {
-                    failureBlockCopy(error);
+                DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                if (failureBlock != nil) {
+                    failureBlock((APError*)error);
                 }
             }
-            
-        } onError:^(NSError *error) {
-            if (failureBlockCopy != nil) {
-                failureBlockCopy((APError*)error);
-            }
-        }];
-        
-        [sharedObject enqueueOperation:downloadOperation];
+        }] resume];
     } else {
-        DLog(@"Initialize the Appactive object with your API_KEY in the - application: didFinishLaunchingWithOptions: method of the AppDelegate");
-        if (failureBlockCopy != nil) {
-            failureBlockCopy([APHelperMethods errorForSessionNotCreated]);
+        NSMutableDictionary *headerParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                             [Appacitive getApiKey], APIkeyHeaderKey,
+                                             [Appacitive environmentToUse], EnvironmentHeaderKey,
+                                             @"application/json", @"Content-Type",
+                                             nil];
+        [urlRequest setAllHTTPHeaderFields:headerParams];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+        proxyDownloadSuccessBlock = successBlock;
+        proxyFailureBlock = failureBlock;
+        [connection start];
+    }
+}
+
+#pragma mark delete file methods
+
++ (void) deleteFileWithName:(NSString *)name {
+    [self deleteFileWithName:name successHandler:nil failureHandler:nil];
+}
+
++ (void) deleteFileWithName:(NSString *)name successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/v1.0/delete/%@",name]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+[nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock) {
+            successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark NSURLConnection delegate methods
+
+- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+    [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+    
+}
+
+- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+    [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    
+    NSError *jsonError = nil;
+    NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+    if(!jsonError) {
+        APError *error = [APHelperMethods checkForErrorStatus:responseDict];
+        BOOL isErrorPresent = (error != nil);
+        if (!isErrorPresent) {
+            if([[responseDict allKeys ]containsObject:@"url"])
+            {
+                uploadDict = responseDict;
+                NSURL *fileUploadURL = [NSURL URLWithString:[responseDict objectForKey:@"url"]];
+                uploadURL = fileUploadURL;
+                NSMutableURLRequest *fileUploadRequest = [NSMutableURLRequest requestWithURL:fileUploadURL];
+                [fileUploadRequest setHTTPMethod:@"PUT"];
+                NSString *stringContentType = @"application/octet-stream";
+                if (requestContentType) {
+                    stringContentType = requestContentType;
+                }
+                [fileUploadRequest addValue:stringContentType forHTTPHeaderField: @"Content-Type"];
+                NSMutableData *body = requestData;
+                [fileUploadRequest setHTTPBody:body];
+                
+                NSURLConnection *uploadConnection = [[NSURLConnection alloc] initWithRequest:fileUploadRequest delegate:self];
+                [uploadConnection start];
+            }
+            else if([[responseDict allKeys ] containsObject:@"uri"])
+            {
+                NSURL *url = [NSURL URLWithString:[responseDict objectForKey:@"uri"]];
+                NSMutableURLRequest *downloadRequest = [NSMutableURLRequest requestWithURL:url];
+                [downloadRequest setHTTPMethod:@"GET"];
+                NSURLConnection *downloadConnection = [[NSURLConnection alloc] initWithRequest:downloadRequest delegate:self];
+                [downloadConnection start];
+                isDownloadData = YES;
+            }
+        } else {
+            DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+            if(proxyFailureBlock)
+                proxyFailureBlock(error);
+        }
+    } else {
+        if(isDownloadData) {
+            proxyDownloadSuccessBlock(data);
+            isDownloadData = NO;
+        } else {
+            DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@", jsonError);
+            if (proxyFailureBlock != nil) {
+                proxyFailureBlock((APError*) jsonError);
+            }
         }
     }
 }
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    if(error)
+        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+    if (proxyFailureBlock != nil) {
+        proxyFailureBlock((APError*) error);
+    }
+}
+
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    if(response){
+        DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
+        if(response.URL == uploadURL) {
+            proxySuccessBlock(uploadDict);
+        }
+    }
+}
+
 @end
