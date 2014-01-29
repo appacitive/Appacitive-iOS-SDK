@@ -19,6 +19,11 @@ typedef void (^APSuccessBlock)();
 typedef void (^APResultSuccessBlock)(NSDictionary *result);
 
 /**
+ Block parmaeter expected for a success response which returns an 'NSArray'.
+ */
+typedef void (^APObjectsSuccessBlock)(NSArray *objects);
+
+/**
  Block parameter expected for a success response which returns a 'NSData'.
  */
 typedef void (^APFileDownloadSuccessBlock)(NSData *data);
@@ -39,11 +44,7 @@ typedef void (^APUserSuccessBlock)(APUser* user);
 typedef void (^APImageBlock) (UIImage* fetchedImage, NSURL* url, BOOL isInCache);
 
 /**
- Block paramter expected for a success response which returns a 'APDevice'.
- */
-typedef void (^APDeviceSuccessBlock)(APDevice* device);
-
-/**
  Block paramter expected for a success response which returns a 'APGraphNode'.
  */
 typedef void (^APGraphNodeSuccessBlock)(APGraphNode* node);
+

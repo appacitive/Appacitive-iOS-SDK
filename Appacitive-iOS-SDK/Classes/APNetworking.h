@@ -10,6 +10,11 @@
 
 #define HOST_NAME @"https://apis.appacitive.com"
 
+/**
+ The APNetworking class is the networking API for the appacitive SDK that allows the SDK to make network requests to the Appacitive API and receive a response from the server. 
+ @note All the network requests are asynchronous.
+ */
+
 @interface APNetworking : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
     APResultSuccessBlock proxySuccessBlock;
@@ -18,7 +23,7 @@
 /**
  Method to get a shared NSURLSession for network data tasks.
  
- @return NSURLSESSION object
+ @return NSURLSession object
  */
 + (NSURLSession*) getSharedURLSession;
 

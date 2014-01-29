@@ -27,7 +27,7 @@ BOOL isDownloadData = NO;
 
 @implementation APFile
 
-#pragma mark UPLOAD_METHODS
+#pragma mark - Uplaod file methods
 
 - (void) uploadFileWithName:(NSString *)name data:(NSData *)fileData validUrlForTime:(NSNumber *)minutes {
     [self uploadFileWithName:name data:fileData validUrlForTime:minutes contentType:nil successHandler:nil failureHandler:nil];
@@ -110,7 +110,7 @@ BOOL isDownloadData = NO;
     }
 }
 
-#pragma mark DOWNLOAD_METHODS
+#pragma mark - Download file methods
 
 - (void) downloadFileWithName:(NSString*)name validUrlForTime:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock {
     [self downloadFileWithName:name validUrlForTime:minutes successHandler:successBlock failureHandler:nil];
@@ -181,7 +181,7 @@ BOOL isDownloadData = NO;
     }
 }
 
-#pragma mark delete file methods
+#pragma mark - delete file methods
 
 + (void) deleteFileWithName:(NSString *)name {
     [self deleteFileWithName:name successHandler:nil failureHandler:nil];
@@ -206,7 +206,7 @@ BOOL isDownloadData = NO;
     }];
 }
 
-#pragma mark NSURLConnection delegate methods
+#pragma mark - NSURLConnection delegate methods
 
 - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
     return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];

@@ -13,7 +13,6 @@
 
 @interface Appacitive: NSObject
 
-@property (nonatomic, strong, readonly) NSString *session;
 @property (nonatomic, readwrite) BOOL enableDebugForEachRequest;
 
 /**
@@ -25,7 +24,6 @@
  Sets the APIkey
  */
 + (void) initWithAPIKey:(NSString*)apiKey;
-
 
 /**
  By default the environment is set to sandbox. To change to live set the enableLiveEnvironment property of the Appacitive object.

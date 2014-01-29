@@ -1,6 +1,7 @@
 //#import "Appacitive.h"
 //#import "APGraphNode.h"
 //#import "APError.h"
+//#import "APDevice.h"
 //
 //SPEC_BEGIN(APGraphNodeFixture)
 //
@@ -16,13 +17,13 @@
 //    afterAll(^(){
 //    });
 //
-//#pragma mark GRAPH_QUERY_TESTS
+//#pragma mark - GRAPH_QUERY_TESTS
 //
-//    it(@"should not return an error for a valid filter graph query", ^{
+//    it(@"valid filter graph query", ^{
 //        __block BOOL isFilterQuerySuccessful = NO;
 //
-//        [APGraphNode applyFilterGraphQuery:@"sdktest" usingPlaceHolders:nil successHandler:^(NSDictionary *result) {
-//            NSLog(@"%@",result);
+//        [APGraphNode applyFilterGraphQuery:@"sdktest" usingPlaceHolders:nil successHandler:^(NSArray *objects) {
+//            NSLog(@"%@",objects);
 //            isFilterQuerySuccessful = YES;
 //        } failureHandler:^(APError *error) {
 //            isFilterQuerySuccessful = NO;
@@ -30,8 +31,8 @@
 //        [[expectFutureValue(theValue(isFilterQuerySuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    
-//    it(@"should not return an error for a valid projection graph query", ^{
+//
+//    it(@"valid projection graph query", ^{
 //        __block BOOL isProjectionQuerySuccessful = NO;
 //        APGraphNode *node = [[APGraphNode alloc] init];
 //        [node applyProjectionGraphQuery:@"deals_for_user" usingPlaceHolders:nil forObjectsIds:[NSArray arrayWithObjects:@"43248934317064873", nil] successHandler:^(APGraphNode *node) {

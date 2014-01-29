@@ -9,7 +9,7 @@
 #import "Appacitive.h"
 #import "APConstants.h"
 #import "APHelperMethods.h"
-
+#import "APdevice.h"
 static NSString* _apiKey;
 static BOOL enableLiveEnvironment = NO;
 
@@ -22,22 +22,34 @@ static BOOL enableLiveEnvironment = NO;
     return @"sandbox";
 }
 
-+ (void) useLiveEnvironment:(BOOL)answer
-{
++ (void) useLiveEnvironment:(BOOL)answer {
     if(answer == YES)
         enableLiveEnvironment = YES;
     else
         enableLiveEnvironment = NO;
 }
 
-+ (NSString*) getApiKey
-{
++ (NSString*) getApiKey {
     return _apiKey;
 }
 
-+ (void) initWithAPIKey:(NSString*)apiKey
-{
++ (void) initWithAPIKey:(NSString*)apiKey {
     _apiKey = apiKey;
+    if([[NSUserDefaults standardUserDefaults] valueForKey:@"appacitive-device-guid"] == nil) {
+        NSString* deviceGUID = [self GetUUID];
+        APDevice *device = [[APDevice alloc]initWithDeviceToken:deviceGUID deviceType:@"ios"];
+        [[NSUserDefaults standardUserDefaults] setObject:deviceGUID forKey:@"appacitive-device-guid"];
+    }
+}
+
+#pragma mark - Private Methods
+
++ (NSString *)GetUUID
+{
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    return (__bridge NSString *)string;
 }
 
 @end

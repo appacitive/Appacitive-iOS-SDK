@@ -22,13 +22,12 @@
 //    afterAll(^(){
 //    });
 //
-//#pragma mark AUTHENTICATE_TEST
+//#pragma mark - AUTHENTICATE_TEST
 //    
-//    it(@"should not return an error for retrieving a user with a valid user id", ^{
+//    it(@"authenticating a user with a valid user id", ^{
 //        __block BOOL isUserAuthenticateSuccesful = NO;
 //
-//        [APUser authenticateUserWithUserName:@"ppatel"
-//                password:@"1qaz1qaz"
+//        [APUser authenticateUserWithUserName:@"ppatel" password:@"1qaz1qaz"
 //                successHandler:^(APUser* user) {
 //                    isUserAuthenticateSuccesful = YES;
 //                } failureHandler:^(APError *error) {
@@ -37,7 +36,7 @@
 //        [[expectFutureValue(theValue(isUserAuthenticateSuccesful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"should not return an error for validating user session with a valid user token", ^{
+//    it(@"validating user session with a valid user token", ^{
 //        __block BOOL isUserAuthenticateSuccesful = NO;
 //        
 //        [APUser authenticateUserWithUserName:@"ppatel"
@@ -52,16 +51,16 @@
 //        [[expectFutureValue(theValue(isUserAuthenticateSuccesful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"should not return an error for logging out a user", ^{
+//    it(@"logging out a user", ^{
 //        __block BOOL isUserLoggedOut = NO;
 //        
 //        [APUser authenticateUserWithUserName:@"ppatel"
 //                                    password:@"1qaz1qaz"
 //                              successHandler:^(APUser *user) {
-//                                  [APUser logoutCurrentlyLoggedInUserWithSuccessHandler:^{
+//                                  [APUser logOutCurrentUserWithSuccessHandler:^{
 //                                      if([APUser currentUser] == nil)
 //                                          isUserLoggedOut = YES;
-//                                  } failuderHandler:^(APError *error) {
+//                                  } failureHandler:^(APError *error) {
 //                                      isUserLoggedOut = NO;
 //                                  }];
 //                              }
@@ -71,7 +70,7 @@
 //        [[expectFutureValue(theValue(isUserLoggedOut)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"should not return an error for authenticating with a valid facebook id", ^{
+//    it(@"authenticating with a valid facebook id", ^{
 //        __block BOOL isUserAuthenticateSuccesful = NO;
 //
 //        [APUser authenticateUserWithFacebook:@"CAADCQgMXRJ8BAJtHbFwoISRl6bANKbQG479K1jRxNCnZC0leDZCTEYxVqzc1gtRPY0jVoVHgkZBG8X5KDJBoSgYoWNgiQUXZBwq6PIBbRBCWPZCnFtGZBfNC4hzN56EZBsSnZCSUFxa2eQJqeiGDZB2lrekk4C8fQoBKAQUmfW4UceAssUkdMuoQQnHq6Te0ecEwZD"
@@ -83,7 +82,7 @@
 //        [[expectFutureValue(theValue(isUserAuthenticateSuccesful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"should not return an error for authenticating with a valid twitter oauth token and oauth secret", ^{
+//    it(@"authenticating with a valid twitter oauth token and oauth secret", ^{
 //        __block BOOL isUserAuthenticateSuccesful = NO;
 //        
 //        [APUser authenticateUserWithTwitter:@"86197729-p6a3vPdCxWnzcXGdCc61Fn792b8P7vvsCcHbMS2oe"
@@ -97,7 +96,7 @@
 //        [[expectFutureValue(theValue(isUserAuthenticateSuccesful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"should not return an error for authenticating with a valid twitter oauth token, oauth secret, consumer key and consumer secret", ^{
+//    it(@"authenticating with a valid twitter oauth token, oauth secret, consumer key and consumer secret", ^{
 //        __block BOOL isUserAuthenticateSuccesful = NO;
 //        
 //        [APUser authenticateUserWithTwitter:@"86197729-p6a3vPdCxWnzcXGdCc61Fn792b8P7vvsCcHbMS2oe"
@@ -109,131 +108,133 @@
 //                                } failureHandler:^(APError *error) {
 //                                    isUserAuthenticateSuccesful = NO;
 //                                }];
-//        
+//
 //        [[expectFutureValue(theValue(isUserAuthenticateSuccesful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//#pragma mark CREATE_USER
+//#pragma mark - CREATE_USER
 //    
-//    it(@"should not return an error for creating a user", ^{
+//    it(@"creating a user", ^{
 //        __block BOOL isUserCreated = NO;
+//        APUser *user = [[APUser alloc] init];
+//        [user addPropertyWithKey:@"testProp" value:@"testPropVal"];
+//        [user addAttributeWithKey:@"testAttr" value:@"testAttrVal"];
+//        [user setTags:@[@"testUSer", @"dummyUser"]];
+//        user.username = @"aTestUser";
+//        user.birthDate = @"1982-11-17";
+//        user.firstName = @"aTest";
+//        user.lastName = @"User";
+//        user.email = @"aTestUser@appacitive.com";
+//        user.password = @"secretPhrase";
+//        user.phone = @"9090909090";
 //        
-//        APUserDetails *userDetails = [[APUserDetails alloc] init];
-//        userDetails.username = @"test12";
-//        userDetails.birthDate = @"1982-11-17";
-//        userDetails.firstName = @"giles";
-//        userDetails.lastName = @"giles";
-//        userDetails.email = @"giles@test.com";
-//        userDetails.password = @"test123";
-//        userDetails.phone = @"1234";
-//        
-//        [APUser createUserWithDetails:userDetails
-//                successHandler:^(APUser* user) {
-//                    isUserCreated = YES;
-//                    [user deleteUser];
-//                } failuderHandler:^(APError* error) {
-//                    isUserCreated = NO;
-//                }];
+//        [user saveObjectWithSuccessHandler:^(NSDictionary *result) {
+//            isUserCreated = YES;
+//            [user deleteObject];
+//        } failureHandler:^(APError *error) {
+//             isUserCreated = NO;
+//        }];
+//
 //        [[expectFutureValue(theValue(isUserCreated)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
-//    
-//    it(@"should not return an error for deleting a user", ^{
+//
+//    it(@"deleting a user", ^{
 //        __block BOOL isUserDeleted = NO;
 //        
-//        APUserDetails *userDetails = [[APUserDetails alloc] init];
-//        userDetails.username = @"test123";
-//        userDetails.birthDate = @"1982-11-17";
-//        userDetails.firstName = @"giles1";
-//        userDetails.lastName = @"giles1";
-//        userDetails.email = @"giles1@test.com";
-//        userDetails.password = @"test1234";
-//        userDetails.phone = @"12345";
+//        APUser *user = [[APUser alloc] init];
+//        user.username = @"test123";
+//        user.birthDate = @"1982-11-17";
+//        user.firstName = @"giles1";
+//        user.lastName = @"giles1";
+//        user.email = @"giles1@test.com";
+//        user.password = @"test1234";
+//        user.phone = @"12345";
 //        
-//        [APUser createUserWithDetails:userDetails successHandler:^(APUser* user) {
-//            [user deleteUserWithSuccessHandler:^{
+//        [user createUserWithSuccessHandler:^() {
+//            [user deleteObjectWithSuccessHandler:^{
 //                isUserDeleted = YES;
-//            } failuderHandler:^(APError* error) {
+//            } failureHandler:^(APError* error) {
 //                isUserDeleted = NO;
 //            }];
-//        } failuderHandler:^(APError* error) {
+//        } failureHandler:^(APError* error) {
 //            isUserDeleted = NO;
 //        }];
 //        [[expectFutureValue(theValue(isUserDeleted)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //   
-//    it(@"should not return an error for checkin-in a user to a location", ^{
+//    it(@"checkin-in a user to a location", ^{
 //        __block BOOL isLocationSet = NO;
 //        
-//        APUserDetails *userDetails = [[APUserDetails alloc] init];
-//        userDetails.username = @"test1234";
-//        userDetails.birthDate = @"1982-11-17";
-//        userDetails.firstName = @"giles1";
-//        userDetails.lastName = @"giles1";
-//        userDetails.email = @"giles1@test.com";
-//        userDetails.password = @"test1234";
-//        userDetails.phone = @"12345";
+//        APUser *user = [[APUser alloc] init];
+//        user.username = @"test1234";
+//        user.birthDate = @"1982-11-17";
+//        user.firstName = @"giles1";
+//        user.lastName = @"giles1";
+//        user.email = @"giles1@test.com";
+//        user.password = @"test1234";
+//        user.phone = @"12345";
 //        
-//        [APUser createUserWithDetails:userDetails successHandler:^(APUser* user) {
+//        [user createUserWithSuccessHandler:^() {
 //            [APUser setUserLocationToLatitude:@"2" longitude:@"2" forUserWithUserId:user.objectId successHandler:^{
 //                isLocationSet = YES;
-//                [user deleteUser];
-//            } failuderHandler:^(APError* error) {
+//                [user deleteObject];
+//            } failureHandler:^(APError* error) {
 //                isLocationSet = NO;
-//                [user deleteUser];
+//                [user deleteObject];
 //            }];
-//        } failuderHandler:^(APError* error) {
+//        } failureHandler:^(APError* error) {
 //            isLocationSet = NO;
 //        }];
 //        [[expectFutureValue(theValue(isLocationSet)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"should not return an error for resetting a user's password", ^{
+//    it(@"resetting a user's password", ^{
 //        __block BOOL isPasswordReset = NO;
 //        
-//        APUserDetails *userDetails = [[APUserDetails alloc] init];
-//        userDetails.username = @"test123456";
-//        userDetails.birthDate = @"1982-11-17";
-//        userDetails.firstName = @"giles1";
-//        userDetails.lastName = @"giles1";
-//        userDetails.email = @"giles1@test.com";
-//        userDetails.password = @"test1234";
-//        userDetails.phone = @"12345";
+//        APUser *user = [[APUser alloc] init];
+//        user.username = @"test123456";
+//        user.birthDate = @"1982-11-17";
+//        user.firstName = @"giles1";
+//        user.lastName = @"giles1";
+//        user.email = @"giles1@test.com";
+//        user.password = @"test1234";
+//        user.phone = @"12345";
 //        
-//        [APUser createUserWithDetails:userDetails successHandler:^(APUser* user) {
-//            [APUser sendResetPasswordEmailWithEmailSubject:@"YourNewPassword" successHandler:^{
+//        [user createUserWithSuccessHandler:^() {
+//            [user sendResetPasswordEmailWithSubject:@"YourNewPassword" successHandler:^{
 //                isPasswordReset = YES;
-//                [user deleteUser];
+//                [user deleteObject];
 //            } failureHandler:^(APError *error) {
 //                isPasswordReset = NO;
-//                [user deleteUser];
+//                [user deleteObject];
 //            }];
-//        } failuderHandler:^(APError* error) {
+//        } failureHandler:^(APError* error) {
 //            isPasswordReset = NO;
 //        }];
 //        [[expectFutureValue(theValue(isPasswordReset)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"should not return an error for changing a user's password", ^{
+//    it(@"changing a user's password", ^{
 //        __block BOOL isPasswordChanged = NO;
 //        
-//        APUserDetails *userDetails = [[APUserDetails alloc] init];
-//        userDetails.username = @"test12345";
-//        userDetails.birthDate = @"1982-11-17";
-//        userDetails.firstName = @"giles1";
-//        userDetails.lastName = @"giles1";
-//        userDetails.email = @"giles1@test.com";
-//        userDetails.password = @"test1234";
-//        userDetails.phone = @"12345";
-//        
-//        [APUser createUserWithDetails:userDetails successHandler:^(APUser* user) {
+//        APUser *user = [[APUser alloc] init];
+//        user.username = @"test12345";
+//        user.birthDate = @"1982-11-17";
+//        user.firstName = @"giles1";
+//        user.lastName = @"giles1";
+//        user.email = @"giles1@test.com";
+//        user.password = @"test1234";
+//        user.phone = @"12345";
+//                             
+//        [user createUserWithSuccessHandler:^() {
 //            [user changePasswordFromOldPassword:@"test1234" toNewPassPassword:@"newpass123" successHandler:^{
 //                isPasswordChanged = YES;
-//                [user deleteUser];
+//                [user deleteObject];
 //            } failureHandler:^(APError *error) {
 //                isPasswordChanged = NO;
-//                [user deleteUser];
+//                [user deleteObject];
 //            }];
-//        } failuderHandler:^(APError* error) {
+//        } failureHandler:^(APError* error) {
 //            isPasswordChanged = NO;
 //        }];
 //        [[expectFutureValue(theValue(isPasswordChanged)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
@@ -242,4 +243,4 @@
 //});
 //
 //SPEC_END
-
+//

@@ -14,10 +14,8 @@
 #import "APUser.h"
 #import "APResponseBlocks.h"
 #import "APEmail.h"
-
 //error
 #import "APError.h"
-
 #import "APHelperMethods.h"
 #import "Appacitive.h"
 #import "APNetworking.h"

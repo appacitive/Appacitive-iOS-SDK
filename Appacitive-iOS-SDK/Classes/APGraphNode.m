@@ -22,7 +22,7 @@ static NSMutableArray *parentIdStack;
 static NSMutableArray *parentTypeStack;
 static NSMutableArray *nodeStack;
 
-#pragma mark get children method
+#pragma mark - Get children method
 
 - (NSArray*) getChildrenOf:(NSString*)objectId {
     
@@ -59,13 +59,13 @@ static NSMutableArray *nodeStack;
     _connection = connection;
 }
 
-#pragma mark graph query method
+#pragma mark - Graph query method
 
-+ (void) applyFilterGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary*)placeHolders successHandler:(APResultSuccessBlock)successBlock {
++ (void) applyFilterGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary*)placeHolders successHandler:(APObjectsSuccessBlock)successBlock {
     [APGraphNode applyFilterGraphQuery:query usingPlaceHolders:placeHolders successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) applyFilterGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary*)placeHolders successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) applyFilterGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary*)placeHolders successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [SEARCH_PATH stringByAppendingString:[NSString stringWithFormat:@"%@/filter",query]];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -84,7 +84,7 @@ static NSMutableArray *nodeStack;
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
-            successBlock(result);
+            successBlock([result objectForKey:@"ids"]);
         }
     } failureHandler:^(APError *error) {
 		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
@@ -119,15 +119,16 @@ static NSMutableArray *nodeStack;
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
-            
             NSMutableDictionary *dict = [result mutableCopy];
             [dict removeObjectForKey:@"status"];
             NSArray *objs = [dict allValues];
             NSArray *subDicts = [[objs lastObject] valueForKey:@"values"];
-            
             APGraphNode *node = [[APGraphNode alloc] init];
             [node parseProjectionQueryResult:subDicts];
             node = [nodeStack lastObject];
+            nodeStack = nil;
+            parentIdStack = nil;
+            parentTypeStack = nil;
             successBlock(node);
         }
     } failureHandler:^(APError *error) {
@@ -138,113 +139,65 @@ static NSMutableArray *nodeStack;
     }];
 }
 
-#pragma mark private methods
+#pragma mark - Private methods
 
 - (void) parseProjectionQueryResult:(NSArray*)objs{
-    
     NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
     filePath = [filePath stringByAppendingPathComponent:@"typeMapping.plist"];
-    
     NSDictionary *typeMapping = [NSDictionary dictionaryWithContentsOfFile:filePath];
-
     for (id result in objs) {
-        
         if(parentIdStack == nil)
             parentIdStack = [[NSMutableArray alloc] init];
-        
         if(parentTypeStack == nil)
             parentTypeStack = [[NSMutableArray alloc] init];
-        
         if(nodeStack == nil)
             nodeStack = [[NSMutableArray alloc] init];
-        
         APGraphNode *node;
         if(node == nil) {
             node = [[APGraphNode alloc] init];
             node.map = [[NSMutableDictionary alloc] init];
         }
-        
         if([[result allKeys] containsObject:@"__edge"]) {
-            
             NSDictionary *edge = [result objectForKey:@"__edge"];
-            
             NSMutableDictionary *endPointA = [[NSMutableDictionary alloc] init];
             [endPointA setObject:[result objectForKey:@"__id"] forKey:@"objectid"];
             [endPointA setObject:[edge objectForKey:@"__label"] forKey:@"type"];
             [endPointA setObject:[edge objectForKey:@"__label"] forKey:@"label"];
-            
             NSMutableDictionary *endPointB = [[NSMutableDictionary alloc] init];
             [endPointB setObject:[parentIdStack lastObject] forKey:@"objectid"];
             [endPointB setObject:[parentTypeStack lastObject] forKey:@"type"];
             [endPointB setObject:[parentTypeStack lastObject] forKey:@"label"];
-            
             NSMutableDictionary *connectionDict = [[NSMutableDictionary alloc] init];
             [connectionDict setObject:[edge objectForKey:@"__id"] forKey:@"__id"];
             [connectionDict setObject:[edge objectForKey:@"__relationtype"] forKey:@"__relationtype"];
             [connectionDict setObject:endPointA forKey:@"__endpointa"];
             [connectionDict setObject:endPointB forKey:@"__endpointb"];
-            
             node.connection = [[APConnection alloc] init];
             [node.connection setPropertyValuesFromDictionary:connectionDict];
-            
         }
-        
         if([[result allKeys] containsObject:@"__type"]) {
-            
-//            if([[result valueForKey:@"__type"] isEqualToString:@"user"]) {
-//                APUser *user = [[APUser alloc] init];
-//                [user setPropertyValuesFromDictionary:result];
-//                node.object = user;
-//                [parentIdStack addObject:user.objectId];
-//                [parentTypeStack addObject:user.type];
-//            }
-//            
-//            else if([[result valueForKey:@"__type"] isEqualToString:@"device"]) {
-//                APDevice *device = [[APDevice alloc] init];
-//                [device setPropertyValuesFromDictionary:result];
-//                node.object = device;
-//                [parentIdStack addObject:device.objectId];
-//                [parentTypeStack addObject:device.type];
-//            }
-//            
-//            else {
-                APObject *object = [[APObject alloc] init];
-                if([typeMapping objectForKey:[result valueForKey:@"__type"]] != nil)
-                    object = [[NSClassFromString([typeMapping objectForKey:[result valueForKey:@"__type"]]) alloc] init];
-                [object setPropertyValuesFromDictionary:result];
-                node.object = object;
-                [parentIdStack addObject:object.objectId];
-                [parentTypeStack addObject:object.type];
-//            }
+            APObject *object = [[APObject alloc] init];
+            if([typeMapping objectForKey:[result valueForKey:@"__type"]] != nil)
+                object = [[NSClassFromString([typeMapping objectForKey:[result valueForKey:@"__type"]]) alloc] init];
+            [object setPropertyValuesFromDictionary:result];
+            node.object = object;
+            [parentIdStack addObject:object.objectId];
+            [parentTypeStack addObject:object.type];
         }
-        
         if([[result allKeys] containsObject:@"__children"]) {
-            
             NSMutableArray *children = [[NSMutableArray alloc] init];
-            
             [node.map setValue:[children mutableCopy] forKey:[[[result valueForKey:@"__children"] allKeys] lastObject]];
-            
             [nodeStack addObject:node];
-            
             [self parseProjectionQueryResult:[[[[result valueForKey:@"__children"] allValues] lastObject] valueForKey:@"values"]];
-            
             if([nodeStack count] > 1)
                 [nodeStack removeObject:[nodeStack lastObject]];
-            
             [parentIdStack removeObject:[parentIdStack lastObject]];
-            
             [parentTypeStack removeObject:[parentTypeStack lastObject]];
-            
         }
-        
         if([nodeStack lastObject] != nil) {
             [[[((APGraphNode*)[nodeStack lastObject]).map allValues] lastObject] addObject:node];
         }
-        
     }
-    
 }
-
 
 @end

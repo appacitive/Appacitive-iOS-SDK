@@ -27,6 +27,9 @@ typedef enum {
 @property (strong, nonatomic) NSString *operation;
 @property (strong, nonatomic) NSString *value;
 
+/**
+ Method to generate a formatted string from the query object.
+ */
 - (NSString*) stringForm;
 
 @end
@@ -38,8 +41,14 @@ typedef enum {
 @property (nonatomic) BooleanOperator boolOperator;
 @property (nonatomic, strong, readonly) NSMutableArray *innerQueries;
 
+/**
+ Method to initialize an APCompoundQuery object.
+ */
 - (instancetype) init;
 
+/**
+ Method to generate a formatted string from the query object.
+ */
 - (NSString*) stringForm;
 
 @end
@@ -54,22 +63,16 @@ typedef enum {
 /**
  Helper method to generate an equal to query string.
  
- @param propertyName name of the property to search for.
- @param propertyValue the value of the property to equate to.
- 
- Example query would be +[APQuery queryForEqualCondition:@"hotelName" propertyValue:@"Le Meridian"]
- This would return "*hotelName == 'Le Meridian'" which is the format Appacitive understands.
- */
+ @param propertyName Name of the property to search for.
+ @param propertyValue The value of the property to equate to.
+*/
 - (APSimpleQuery *) isEqualTo:(NSString*)value;
 
 /**
- Helper method to generate an equal to query string.
+ Helper method to generate an equal to query string for Date type.
  
- @param propertyName name of the property to search for
- @param date the date to equate to.
- 
- Example query would be +[APQuery queryForEqualCondition:@"checkinDate" date:someDate]
- This would return "*checkinDate == date(someDate.description)'" which is the format Appacitive understands
+ @param propertyName Name of the property to search for
+ @param date The date to equate to.
  */
 - (APSimpleQuery *) isEqualToDate:(NSDate*)date;
 
@@ -78,10 +81,7 @@ typedef enum {
  
  @param propertyName name of the property to search for.
  @param propertyValue the value of the property to equate to.
- 
- Example query would be +[APQuery queryForNotEqualCondition:@"hotelName" propertyValue:@"Le Meridian"]
- This would return "*hotelName != 'Le Meridian'" which is the format Appacitive understands.
- */
+  */
 - (APSimpleQuery *) isNotEqualTo:(NSString*)value;
 
 /**
@@ -89,9 +89,6 @@ typedef enum {
  
  @param propertyName name of the property to search for
  @param date the date to equate to.
- 
- Example query would be +[APQuery queryForNotEqualCondition:@"checkinDate" date:someDate]
- This would return "*checkinDate != date(someDate.description)'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) isNotEqualToDate:(NSDate*)date;
 
@@ -100,9 +97,6 @@ typedef enum {
  
  @param propertyName name of the property to search for
  @param propertyValue value that the property should be greater than.
- 
- Example query would be +[APQuery queryForGreaterThanCondition:@"cost" propertyValue:[NSString stringWithFormat@"%d", 123]]
- This would return "*cost > '123'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) isGreaterThan:(NSString*)value;
 
@@ -111,9 +105,6 @@ typedef enum {
  
  @param propertyName name of the property to search for
  @param propertyValue the value the property should be less than.
- 
- Example query would be +[APQuery queryForLessThanCondition:@"cost" propertyValue:[NSString stringWithFormat@"%d", 123]]
- This would return "*cost < '123'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) isLessThan:(NSString*)value;
 
@@ -122,9 +113,6 @@ typedef enum {
  
  @param propertyName name of the property to search for
  @param propertyValue value that the property should be greater than or equal to.
- 
- Example query would be +[APQuery queryForGreaterThanOrEqualToCondition:@"cost" propertyValue:[NSString stringWithFormat@"%d", 123]]
- This would return "*cost >= '123'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) isGreaterThanOrEqualTo:(NSString*)value;
 
@@ -133,20 +121,46 @@ typedef enum {
  
  @param propertyName name of the property to search for
  @param propertyValue the value the property should be less than or equal to.
- 
- Example query would be +[APQuery queryForLessThanOrEqualToCondition:@"cost" propertyValue:[NSString stringWithFormat@"%d", 123]]
- This would return "*cost <= '123'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) isLessThanOrEqualTo:(NSString*)value;
+
+/**
+ Helper method to generate a greater than query string.
+ 
+ @param propertyName name of the property to search for
+ @param propertyValue value that the property should be greater than.
+ */
+- (APSimpleQuery *) isGreaterThanDate:(NSDate*)date;
+
+/**
+ Helper method to generate a less than query string.
+ 
+ @param propertyName name of the property to search for
+ @param propertyValue the value the property should be less than.
+ */
+- (APSimpleQuery *) isLessThanDate:(NSDate*)date;
+
+/**
+ Helper method to generate a greater than or eqal to query string.
+ 
+ @param propertyName name of the property to search for
+ @param propertyValue value that the property should be greater than or equal to.
+ */
+- (APSimpleQuery *) isGreaterThanOrEqualToDate:(NSDate*)date;
+
+/**
+ Helper method to generate a less than or equal to query string.
+ 
+ @param propertyName name of the property to search for
+ @param propertyValue the value the property should be less than or equal to.
+ */
+- (APSimpleQuery *) isLessThanOrEqualToDate:(NSDate*)date;
 
 /**
  Helper method to generate a query string for like condition.
  
  @param propertyName name of the property to search for
  @param propertyValue the value of the property.
- 
- Example query would be +[APQuery queryForLikeCondition:@"hotelName" propertyValue:@"Le Meridian"]
- This would return "*hotelName like 'Le Meridian'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) isLike:(NSString*)Value;
 
@@ -155,9 +169,6 @@ typedef enum {
  
  @param propertyName name of the property to search for
  @param propertyValue the value of the property.
- 
- Example query would be +[APQuery queryForLikeCondition:@"hotelName" propertyValue:@"Le*"]
- This would return "*hotelName like 'Le*'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) startsWith:(NSString*)value;
 
@@ -167,9 +178,6 @@ typedef enum {
  
  @param propertyName name of the property to search for
  @param propertyValue the value of the property.
- 
- Example query would be +[APQuery queryForLikeCondition:@"hotelName" propertyValue:@"*Meridian"]
- This would return "*hotelName like '*Meridian'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) endsWith:(NSString*)value;
 
@@ -178,9 +186,6 @@ typedef enum {
  
  @param propertyName name of the property to search for
  @param propertyValue the value of the property.
- 
- Example query would be +[APQuery queryForLikeCondition:@"hotelName" propertyValue:@"Le Meridian"]
- This would return "*hotelName match 'Le Meridian'" which is the format Appacitive understands
  */
 - (APSimpleQuery *) matches:(NSString*)value;
 
@@ -190,12 +195,17 @@ typedef enum {
  @param propertyName name of the property to search for
  @param propertyValue1 the lower end value of the property
  @param propertyValue2 the higher end value of the property
- 
- Example query would be +[APQuery queryForBetweenCondition:@"cost" propertyValue1:[NSString stringWithFormat@"%d", 100] propertyValue2:[NSString stringWithFormat:@"%d",200]];
- This would return "*cost between ('100','200')" which is the format Appacitive understands
  */
 - (APSimpleQuery *) isBetween:(NSString*)value1 and:(NSString*)value2;
 
+/**
+ Helper method to generate a between query string.
+ 
+ @param propertyName name of the property to search for
+ @param propertyValue1 the lower end value of the property
+ @param propertyValue2 the higher end value of the property
+ */
+- (APSimpleQuery *) isBetweenDates:(NSDate*)date1 and:(NSDate*)date2;
 
 - (instancetype) initWithProperty:(NSString*)name ofType:(NSString*)type;
 
@@ -205,14 +215,39 @@ typedef enum {
 
 @interface APQuery : APSimpleQuery
 
+/**
+ Method to crete a query expression with query operand as a property of an APObject.
+ 
+ @param property Name of the property that you wish to use as an operand of the query.
+ */
 + (APQueryExpression*) queryExpressionWithProperty:(NSString*)property;
 
+/**
+ Method to crete a query expression with query operand as an attribute of an APObject.
+ 
+ @param property Name of the attribute that you wish to use as an operand of the query.
+ */
 + (APQueryExpression*) queryExpressionWithAttribute:(NSString*)attribute;
 
+/**
+ Method to crete a query expression with query operand as an aggregate of an APObject.
+ 
+ @param property Name of the aggregate that you wish to use as an operand of the query.
+ */
 + (APQueryExpression*) queryExpressionWithAggregate:(NSString*)aggregate;
 
+/**
+ Method to crete a compound query by boolean ANDing all the operands in the queries array.
+ 
+ @param queries Array of operands for the boolean AND operation.
+ */
 + (APCompoundQuery *) booleanAnd:(NSArray*)queries;
 
+/**
+ Method to crete a compound query by boolean ORing all the operands in the queries array.
+ 
+ @param queries Array of operands for the boolean OR operation.
+ */
 + (APCompoundQuery *) booleanOr:(NSArray*)queries;
 
 /**
@@ -236,17 +271,28 @@ typedef enum {
 + (NSString *) queryWithPageNumber:(NSUInteger)pageNumber;
 
 /**
+ Helper method to generate a query string for page size and page number.
+ 
+ @param property the property to be used for sorting
+ @param isAscending ascending or descending order for sorting
+ 
+ Example query would be +[APQuery queryWithOrderBy:@"name" isAscending:NO]
+ This would return "orderBy='name'&isAsc=false" which is the format Appacitive understands
+ */
++ (NSString *) queryWithOrderBy:(NSString*)property isAscending:(BOOL)isAscending;
+
+/**
  Helper method to generate a query string for geocode search.
  
  @param propertyName name of the property to search for
- @param location the geocode to search for
- @param distanceMetric the distance either in km or miles
- @param radius the radios around the location to look for
+ @param nearLocation the geocode to search for
+ @param usingDistanceMetric the distance either in km or miles
+ @param withinRadius the radios around the location to look for
  
- Example query would be +[APQuery queryForGeoCodeProperty:@"location" location:{123, 123} distance:kilometers raduis:12]
+ Example query would be +[APQuery queryForGeoCodeProperty:@"location" nearLocation:{123, 123} distanceMetric:kilometers radius:12]
  This would return "*location within_circle 123,123,12" which is the format Appacitive understands.
  */
-+ (NSString *) queryWithGeoCodeSearchForProperty:(NSString*)propertyName location:(CLLocation*)location distance:(DistanceMetric)distanceMetric raduis:(NSNumber*)radius;
++ (NSString *) queryWithRadialSearchForProperty:(NSString*)propertyName nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric;
 
 /**
  Helper method to generate a query string for polygon search.

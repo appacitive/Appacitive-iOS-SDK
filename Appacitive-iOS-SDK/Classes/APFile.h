@@ -10,6 +10,11 @@
 
 @class APResponceBlocks;
 
+/**
+ The APFile class allows you to make file operations on Appacitive.
+ You can Upload, Download, Update and Delete files on the Appacitive portal.
+ */
+
 @interface APFile : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 /** @name Uploading data methods */

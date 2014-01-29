@@ -16,9 +16,9 @@
     NSDictionary *_map;
 }
 
-@property (strong, nonatomic, readonly) APObject* object;
-@property (strong, nonatomic, readonly) APConnection* connection;
-@property (strong, nonatomic, readonly) NSDictionary* map;
+@property (strong, nonatomic) APObject* object;
+@property (strong, nonatomic) APConnection* connection;
+@property (strong, nonatomic) NSDictionary* map;
 
 - (NSArray*) getChildrenOf:(NSString*)objectId;
 
@@ -27,18 +27,18 @@
 /**
  @see applyFilterGraphQuery:successHandler:failureHandler:
  */
-+ (void) applyFilterGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary*)placeHolders successHandler:(APResultSuccessBlock)successBlock;
++ (void) applyFilterGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary*)placeHolders successHandler:(APObjectsSuccessBlock)successBlock;
 
 /**
  Searches for APObjects that satisfy the filter graph query.
  
  A filter query is a kind that does not have a starting point in the graph. All the APObjects that satisfy the query will be returned. To know more visit http://wwww.appacitive.com
  
- @param query A string representing the filter graph query.
+ @param query A string representing the filter graph query or name of a saved projection query from the Appacitive portal.
  @param successBlock Block invoked when query is successfully executed.
  @param failureBlock Block invoked when query execution fails.
  */
-+ (void) applyFilterGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary*)placeHolders successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
++ (void) applyFilterGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary*)placeHolders successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see applyProjectionGraphQuery:successHandler:failureHandler:
@@ -50,7 +50,7 @@
  
  A projection query will search for results from a starting node in the graph. To know more visit http://wwww.appacitive.com
  
- @param query A string representing the projection graph query.
+ @param query A string representing the projection graph query or name of a saved projection query from the Appacitive portal.
  @param successBlock Block invoked when query is successfully executed.
  @param failureBlock Block invoked when query execution fails.
  */

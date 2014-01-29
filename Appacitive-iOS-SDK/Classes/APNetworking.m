@@ -33,11 +33,9 @@ static NSDictionary *headerParams = nil;
     return sharedURLSession;
 }
 
-- (void) makeAsyncRequestWithURLRequest:(NSMutableURLRequest*)urlRequest successHandler:(APResultSuccessBlock)requestSuccessBlock failureHandler:(APFailureBlock)requestFailureBlock;
-{
+- (void) makeAsyncRequestWithURLRequest:(NSMutableURLRequest*)urlRequest successHandler:(APResultSuccessBlock)requestSuccessBlock failureHandler:(APFailureBlock)requestFailureBlock {
     if([[[UIDevice currentDevice] systemVersion] intValue] >= 7) {
-        if(!sharedURLSession)
-        {
+        if(!sharedURLSession) {
             [APNetworking getSharedURLSession];
         }
         [[sharedURLSession dataTaskWithRequest:urlRequest
@@ -50,7 +48,6 @@ static NSDictionary *headerParams = nil;
                                      if(!jsonError) {
                                          APError *error = [APHelperMethods checkForErrorStatus:responseJSON];
                                          BOOL isErrorPresent = (error != nil);
-                                         
                                          if (!isErrorPresent) {
                                              if(requestSuccessBlock)
                                                  requestSuccessBlock(responseJSON);
@@ -82,8 +79,7 @@ static NSDictionary *headerParams = nil;
                                  }
                              }]
          resume];
-    }
-    else {
+    } else {
         [urlRequest setValue:[Appacitive getApiKey] forHTTPHeaderField:APIkeyHeaderKey];
         [urlRequest setValue:[Appacitive environmentToUse] forHTTPHeaderField:EnvironmentHeaderKey];
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -94,7 +90,6 @@ static NSDictionary *headerParams = nil;
                 if(!jsonError) {
                     APError *error = [APHelperMethods checkForErrorStatus:responseJSON];
                     BOOL isErrorPresent = (error != nil);
-                    
                     if (!isErrorPresent) {
                         if(requestSuccessBlock)
                             requestSuccessBlock(responseJSON);
@@ -134,7 +129,7 @@ static NSDictionary *headerParams = nil;
     }
 }
 
-//#pragma mark NSURLConnection delegate methods
+//#pragma mark - NSURLConnection delegate methods
 //
 //- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
 //    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];

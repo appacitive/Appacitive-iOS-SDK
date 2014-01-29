@@ -8,8 +8,17 @@
 
 #import "APResponseBlocks.h"
 
+/**
+ The APEmail class allows you to send requests to the appactive API to send out emails.
+ Appacitive offers two types of emails. 
+ The simple email is a type of an email where you create the email body content on you own.
+ The templated email is a type of an email where you create an email template on the Appacitive portal with placeholders and then use tht template name to send the email to recipients by customizing the placeholders of the template.
+ Appacitive also provides you with an option to use your own SMTP server configuration if you wish top use an SMTP server that is different than the one provided by Appacitive.
+ */
+
 @interface APEmail : NSObject
 
+@property (nonatomic, strong) NSMutableDictionary* templateBody;
 @property (nonatomic, strong) NSArray* toRecipients;
 @property (nonatomic, strong) NSArray* ccRecipients;
 @property (nonatomic, strong) NSArray* bccRecipients;
@@ -18,10 +27,9 @@
 @property (nonatomic, strong) NSString* subjectText;
 @property (nonatomic, strong) NSString* bodyText;
 @property (nonatomic) BOOL isHTMLBody;
-@property (nonatomic, strong) NSMutableDictionary* templateBody;
 
 /**
- Method to initiate an email object with minimum number of requierd properties.
+ Method to instantiate an email object with minimum number of requierd properties.
  
  @param recipients An array of email addresses of the recipients of the email.
  @param subject Subject for the email.
@@ -35,7 +43,7 @@
 - (void) sendEmail;
 
 /**
- Method to send a simple email
+ Method to send a simple email.
  
  @param successBlock Block invoked when the email sending operation is successful.
  @param failureBlock Block invoked when the email sending operation is unsuccessful.
@@ -56,7 +64,7 @@
  @param failureBlock Block invoked when the email sending operation is unsuccessful.
  @note To send an email the following properties of the email object MUST be set: @b toRecipients, @b subjectText, @b bodyText.
  
- To make a SMTP configuration dictionary, use the 'getSMTPConfigurationDictionaryWithUsername:password:host:port:enableSSL:' method.
+ To make a SMTP configuration dictionary, use the 'makeSMTPConfigurationDictionaryWithUsername:password:host:port:enableSSL:' method.
  */
 - (void) sendEmailUsingSMTPConfig:(NSDictionary*)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
@@ -77,7 +85,7 @@
 
 
 /**
- Mehtod to send a templated email
+ Mehtod to send a templated email.
  
  @param templateName name of the template configured on the Appacitive portal.
  
@@ -87,7 +95,7 @@
 /**
  Helper method to create a dictionary object properties and save it to configDictObject
  */
-+ (NSDictionary*) getSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL;
++ (NSDictionary*) makeSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL;
 
 
 @end

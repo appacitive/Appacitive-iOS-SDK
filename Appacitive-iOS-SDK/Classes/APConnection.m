@@ -12,12 +12,13 @@
 #import "APHelperMethods.h"
 #import "NSString+APString.h"
 #import "APNetworking.h"
+#import "APGraphNode.h"
 
 @implementation APConnection
 
 #define CONNECTION_PATH @"v1.0/connection/"
 
-#pragma mark initialization methods
+#pragma mark - Initialization methods
 
 + (instancetype) connectionWithRelationType:(NSString*)relationType {
     return [[APConnection alloc] initWithRelationType:relationType];
@@ -32,7 +33,7 @@
 }
 
 
-#pragma mark create connection methods
+#pragma mark - Create connection methods
 
 - (void) create {
     [self createConnectionWithSuccessHandler:nil failureHandler:nil];
@@ -241,19 +242,28 @@
     }];
 }
 
-#pragma mark update connection methods
+#pragma mark - Update connection methods
 
 - (void) updateConnection {
-    [self updateConnectionWithSuccessHandler:nil failureHandler:nil];
+    [self updateConnectionWithRevisionNumber:nil successHandler:nil failureHandler:nil];
 }
 
 - (void) updateConnectionWithFailureHandler:(APFailureBlock)failureBlock {
-    [self updateConnectionWithSuccessHandler:nil failureHandler:failureBlock];
+    [self updateConnectionWithRevisionNumber:nil successHandler:nil failureHandler:failureBlock];
 }
 
-- (void) updateConnectionWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void)updateConnectionWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [self updateConnectionWithRevisionNumber:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
+- (void) updateConnectionWithRevisionNumber:(NSNumber*)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
-    NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@", self.relationType, self.objectId.description];
+    NSString *path = [[NSString alloc] init];
+    if(revision != nil)
+        path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@?revision=%@", self.relationType, self.objectId.description,revision];
+    else
+        path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@", self.relationType, self.objectId.description];
+    
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -267,8 +277,8 @@
     
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        [self setPropertyValuesFromDictionary:result];
         if (successBlock != nil) {
-            [self setPropertyValuesFromDictionary:result];
             successBlock();
         }
     } failureHandler:^(APError *error) {
@@ -279,7 +289,7 @@
     }];
 }
 
-#pragma mark fetch connection methods
+#pragma mark - Fetch connection methods
 
 - (void) fetchConnection {
     [self fetchConnectionWithSuccessHandler:nil failureHandler:nil];
@@ -313,7 +323,7 @@
     }];
 }
 
-#pragma mark delete methods
+#pragma mark - Delete methods
 
 - (void) deleteConnection {
     [self deleteConnectionWithSuccessHandler:nil failureHandler:nil];
@@ -331,8 +341,7 @@
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    
-    
+
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -346,7 +355,7 @@
     }];
 }
 
-#pragma mark add properties method
+#pragma mark - Add properties method
 
 - (void) addPropertyWithKey:(NSString*) keyName value:(id) object {
     if (!self.properties) {
@@ -355,7 +364,7 @@
     [_properties addObject:@{keyName: object}];
 }
 
-#pragma mark add attributes method
+#pragma mark - Add attributes method
 
 - (void) addAttributeWithKey:(NSString*) keyName value:(id) object {
     if (!self.attributes) {
@@ -369,11 +378,10 @@
 }
 
 - (void) removeAttributeWithKey:(NSString*) keyName {
-    [_attributes removeObjectForKey:keyName];
-    //[_attributes setObject:[NSNull null] forKey:keyName];
+    [_attributes setObject:[NSNull null] forKey:keyName];
 }
 
-#pragma mark update properties method
+#pragma mark - Update properties method
 
 - (void) updatePropertyWithKey:(NSString*) keyName value:(id) object {
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -385,7 +393,7 @@
     }];
 }
 
-#pragma mark delete property
+#pragma mark - Delete property
 
 - (void) removePropertyWithKey:(NSString*) keyName {
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -397,7 +405,7 @@
     }];
 }
 
-#pragma mark retrieve property
+#pragma mark - Retrieve property
 
 - (instancetype) getPropertyWithKey:(NSString*) keyName {
     __block id property;
@@ -411,7 +419,7 @@
     return property;
 }
 
-#pragma mark methods to add/remove tags
+#pragma mark - Methods to add/remove tags
 
 - (void) addTag:(NSString*)tag
 {
@@ -430,7 +438,8 @@
     }
 }
 
-#pragma mark private methods
+#pragma mark - Private methods
+
 
 - (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
     NSDictionary *connection = [[NSDictionary alloc] init];
@@ -553,26 +562,33 @@
 }
 @end
 
-
 @implementation APConnections
 
 #define CONNECTION_PATH @"v1.0/connection/"
 
-#pragma mark search methods
+#pragma mark - Search methods
 
-+ (void) searchForAllConnectionsWithRelationType:(NSString*)relationType successHandler:(APResultSuccessBlock)successBlock {
-    [APConnections searchForAllConnectionsWithRelationType:relationType successHandler:successBlock failureHandler:nil];
++ (void) searchAllConnectionsWithRelationType:(NSString*)relationType successHandler:(APObjectsSuccessBlock)successBlock {
+    [APConnections searchAllConnectionsWithRelationType:relationType successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) searchForAllConnectionsWithRelationType:(NSString*)relationType successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [APConnections searchForConnectionsWithRelationType:relationType withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
++ (void) searchAllConnectionsWithRelationType:(NSString*)relationType successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [APConnections searchAllConnectionsWithRelationType:relationType withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-+ (void) searchForConnectionsWithRelationType:(NSString*)relationType withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock {
-    [APConnections searchForConnectionsWithRelationType:relationType withQueryString:queryString successHandler:successBlock failureHandler:nil];
++ (void) searchAllConnectionsWithRelationType:(NSString*)relationType byObjectId:(NSString*)objectId withLabel:(NSString*)label successHandler:(APObjectsSuccessBlock)successBlock {
+    [self searchAllConnectionsWithRelationType:relationType withQueryString:[NSString stringWithFormat:@"objectid=%@&label=%@",objectId,label] successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) searchForConnectionsWithRelationType:(NSString*)relationType withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) searchAllConnectionsWithRelationType:(NSString*)relationType byObjectId:(NSString*)objectId withLabel:(NSString*)label successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [self searchAllConnectionsWithRelationType:relationType withQueryString:[NSString stringWithFormat:@"objectid=%@&label=%@",objectId,label] successHandler:successBlock failureHandler:failureBlock];
+}
+
++ (void) searchAllConnectionsWithRelationType:(NSString*)relationType withQueryString:(NSString*)queryString successHandler:(APObjectsSuccessBlock)successBlock {
+    [APConnections searchAllConnectionsWithRelationType:relationType withQueryString:queryString successHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchAllConnectionsWithRelationType:(NSString*)relationType withQueryString:(NSString*)queryString successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/find/all", relationType];
     
@@ -585,11 +601,16 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
-            successBlock(result);
+            NSMutableArray *objects = [[NSMutableArray alloc] init];
+            for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
+                APConnection *connection = [[APConnection alloc] init];
+                [connection setPropertyValuesFromDictionary:[[result objectForKey:@"connections"] objectAtIndex:i]];
+                [objects addObject:connection];
+            }
+            successBlock(objects);
         }
     } failureHandler:^(APError *error) {
 		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
@@ -599,15 +620,43 @@
     }];
 }
 
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectAId toObjectId:(NSNumber *)objectBId {
-    [APConnections searchAllConnectionsFromObjectId:objectAId toObjectId:objectBId withSuccessHandler:nil failureHandler:nil];
++ (void) searchAllConnectionsWithRelationType:(NSString*)relationType fromObjectId:(NSString *)objectAId toObjectId:(NSString *)objectBId successHandler:(APObjectsSuccessBlock)successBlock {
+    [APConnections searchAllConnectionsWithRelationType:relationType fromObjectId:objectAId toObjectId:objectBId successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectAId toObjectId:(NSNumber *)objectBId withSuccessHandler:(APResultSuccessBlock)successBlock {
-    [APConnections searchAllConnectionsFromObjectId:objectAId toObjectId:objectBId withSuccessHandler:successBlock failureHandler:nil];
++ (void) searchAllConnectionsWithRelationType:(NSString*)relationType fromObjectId:(NSString *)objectAId toObjectId:(NSString *)objectBId successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [CONNECTION_PATH stringByAppendingString:[NSString stringWithFormat:@"%@/find/%@/%@",relationType,objectAId,objectBId]];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            NSMutableArray *objects = [[NSMutableArray alloc] init];
+            for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
+                APConnection *connection = [[APConnection alloc] init];
+                [connection setPropertyValuesFromDictionary:[[result objectForKey:@"connections"] objectAtIndex:i]];
+                [objects addObject:connection];
+            }
+            successBlock(objects);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
 }
 
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectAId toObjectId:(NSNumber *)objectBId withSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) searchAllConnectionsFromObjectId:(NSString *)objectAId toObjectId:(NSString *)objectBId successHandler:(APObjectsSuccessBlock)successBlock {
+    [APConnections searchAllConnectionsFromObjectId:objectAId toObjectId:objectBId successHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchAllConnectionsFromObjectId:(NSString *)objectAId toObjectId:(NSString *)objectBId successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [CONNECTION_PATH stringByAppendingString:[NSString stringWithFormat:@"find/%@/%@",objectAId,objectBId]];
     
@@ -616,11 +665,16 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
-            successBlock(result);
+            NSMutableArray *objects = [[NSMutableArray alloc] init];
+            for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
+                APConnection *connection = [[APConnection alloc] init];
+                [connection setPropertyValuesFromDictionary:[[result objectForKey:@"connections"] objectAtIndex:i]];
+                [objects addObject:connection];
+            }
+            successBlock(objects);
         }
     } failureHandler:^(APError *error) {
 		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
@@ -630,15 +684,11 @@
     }];
 }
 
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds {
-    [APConnections searchAllConnectionsFromObjectId:objectId toObjectIds:objectIds withSuccessHandler:nil failureHandler:nil];
++ (void) searchAllConnectionsFromObjectId:(NSString *)objectId toObjectIds:(NSArray *)objectIds successHandler:(APObjectsSuccessBlock)successBlock {
+    [APConnections searchAllConnectionsFromObjectId:objectId toObjectIds:objectIds successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds withSuccessHandler:(APResultSuccessBlock)successBlock {
-    [APConnections searchAllConnectionsFromObjectId:objectId toObjectIds:objectIds withSuccessHandler:successBlock failureHandler:nil];
-}
-
-+ (void) searchAllConnectionsFromObjectId:(NSNumber *)objectId toObjectIds:(NSArray *)objectIds withSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) searchAllConnectionsFromObjectId:(NSString *)objectId toObjectIds:(NSArray *)objectIds successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [CONNECTION_PATH stringByAppendingString:@"interconnects"];
     
@@ -660,7 +710,13 @@
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
-            successBlock(result);
+            NSMutableArray *objects = [[NSMutableArray alloc] init];
+            for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
+                APConnection *connection = [[APConnection alloc] init];
+                [connection setPropertyValuesFromDictionary:[[result objectForKey:@"connections"] objectAtIndex:i]];
+                [objects addObject:connection];
+            }
+            successBlock(objects);
         }
     } failureHandler:^(APError *error) {
 		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
@@ -670,21 +726,21 @@
     }];
 }
 
-#pragma mark fetch methods
+#pragma mark - Fetch methods
 
-+ (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSString*)objectId successHandler:(APResultSuccessBlock)successBlock {
++ (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSString*)objectId successHandler:(APObjectsSuccessBlock)successBlock {
     [APConnections fetchConnectionsWithRelationType:relationType objectIds:@[objectId] successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSString*)objectId successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSString*)objectId successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     [APConnections fetchConnectionsWithRelationType:relationType objectIds:@[objectId] successHandler:successBlock failureHandler:failureBlock];
 }
 
-+ (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APResultSuccessBlock)successBlock {
++ (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APObjectsSuccessBlock)successBlock {
     [APConnections fetchConnectionsWithRelationType:relationType objectIds:objectIds successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     __block NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/multiget/", relationType];
     
@@ -701,11 +757,16 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
-            successBlock(result);
+            NSMutableArray *objects = [[NSMutableArray alloc] init];
+            for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
+                APConnection *connection = [[APConnection alloc] init];
+                [connection setPropertyValuesFromDictionary:[[result objectForKey:@"connections"] objectAtIndex:i]];
+                [objects addObject:connection];
+            }
+            successBlock(objects);
         }
     } failureHandler:^(APError *error) {
 		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
@@ -715,7 +776,68 @@
     }];
 }
 
-#pragma mark delete methods
++ (void) fetchConnectedObjectsOfType:(NSString*)objectType withObjectId:(NSString*)objectId withRelationType:(NSString*)relationType successHandler:(APObjectsSuccessBlock)successBlock {
+    [self fetchConnectedObjectsOfType:objectType withObjectId:objectId withRelationType:relationType successHandler:successBlock failureHandler:nil];
+}
+
++ (void) fetchConnectedObjectsOfType:(NSString*)objectType withObjectId:(NSString*)objectId withRelationType:(NSString*)relationType successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/%@/%@/find", relationType, objectType, objectId];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            filePath = [filePath stringByAppendingPathComponent:@"typeMapping.plist"];
+            NSDictionary *typeMapping = [NSDictionary dictionaryWithContentsOfFile:filePath];
+            NSMutableArray *nodes = [[NSMutableArray alloc] init];
+            for (int i=0; i<[[result valueForKey:@"nodes"] count]; i++) {
+                APGraphNode *node = [[APGraphNode alloc] init];
+                NSDictionary *nodeDict = [[result valueForKey:@"nodes"] objectAtIndex:i];
+                if([[nodeDict allKeys] containsObject:@"__type"]) {
+                    APObject *object = [[APObject alloc] init];
+                    if([typeMapping objectForKey:[result valueForKey:@"__type"]] != nil)
+                        object = [[NSClassFromString([typeMapping objectForKey:[nodeDict valueForKey:@"__type"]]) alloc] init];
+                    [object setPropertyValuesFromDictionary:result];
+                    node.object = object;
+                }
+                if([[nodeDict allKeys] containsObject:@"__edge"]) {
+                    NSDictionary *edge = [nodeDict objectForKey:@"__edge"];
+                    NSMutableDictionary *endPointA = [[NSMutableDictionary alloc] init];
+                    [endPointA setObject:[nodeDict objectForKey:@"__id"] forKey:@"objectid"];
+                    [endPointA setObject:[edge objectForKey:@"__label"] forKey:@"type"];
+                    [endPointA setObject:[edge objectForKey:@"__label"] forKey:@"label"];
+                    NSMutableDictionary *endPointB = [[NSMutableDictionary alloc] init];
+                    [endPointB setObject:objectId forKey:@"objectid"];
+                    [endPointB setObject:objectType forKey:@"type"];
+                    [endPointB setObject:objectType forKey:@"label"];
+                    NSMutableDictionary *connectionDict = [[NSMutableDictionary alloc] init];
+                    [connectionDict setObject:[edge objectForKey:@"__id"] forKey:@"__id"];
+                    [connectionDict setObject:[edge objectForKey:@"__relationtype"] forKey:@"__relationtype"];
+                    [connectionDict setObject:[edge objectForKey:@"__relationid"] forKey:@"__relationid"];
+                    [connectionDict setObject:endPointA forKey:@"__endpointa"];
+                    [connectionDict setObject:endPointB forKey:@"__endpointb"];
+                    node.connection = [[APConnection alloc] init];
+                    [node.connection setPropertyValuesFromDictionary:connectionDict];
+                }
+                [nodes addObject:node];
+            }
+            successBlock(nodes);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark - Delete methods
 
 + (void) deleteConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds {
     [APConnections deleteConnectionsWithRelationType:relationType objectIds:objectIds successHandler:nil failureHandler:nil];

@@ -17,9 +17,9 @@
 //    afterAll(^(){
 //    });
 //    
-//#pragma mark UPLOAD_TESTS
+//#pragma mark - UPLOAD_TESTS
 //    
-//    it(@"should not return an error for uploading a file with a valid mime type", ^{
+//    it(@"uploading a file with a valid mime type", ^{
 //        __block BOOL isUploadSuccessful = NO;
 //        
 //        NSBundle *myBundle = [NSBundle bundleForClass:[self class]];
@@ -39,9 +39,9 @@
 //        [[expectFutureValue(theValue(isUploadSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//#pragma mark DOWNLOAD_TESTS
+//#pragma mark - DOWNLOAD_TESTS
 //    
-//    it(@"should not return an error for downloading a file with a valid url", ^{
+//    it(@"downloading a file with a valid url", ^{
 //        __block BOOL isDownloadSuccesful = NO;
 //        
 //        APFile *apFile = [[APFile alloc] init];

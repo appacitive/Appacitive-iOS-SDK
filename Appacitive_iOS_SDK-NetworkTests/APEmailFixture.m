@@ -15,9 +15,9 @@
 //    afterAll(^(){
 //    });
 //
-//#pragma mark SEND_MAIL_TESTS
+//#pragma mark - SEND_MAIL_TESTS
 //    
-//    it(@"should not return an error for sending a simple email", ^{
+//    it(@"sending a simple email", ^{
 //        __block BOOL isMailSent = NO;
 //        
 //        APEmail *myMail = [[APEmail alloc] init];
@@ -26,7 +26,7 @@
 //        myMail.subjectText = @"TestMail";
 //        myMail.bodyText = @"Test mail from Appacitive API";
 //        
-//        [myMail sendEmailWithSucessHandler:^{
+//        [myMail sendEmailWithSuccessHandler:^{
 //            isMailSent = YES;
 //        } failureHandler:^(APError *error) {
 //            isMailSent = NO;
@@ -34,7 +34,7 @@
 //        [[expectFutureValue(theValue(isMailSent)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"should not return an error for sending a templated email", ^{
+//    it(@"sending a templated email", ^{
 //        __block BOOL isMailSent = NO;
 //        
 //        APEmail *myTemplatedEmail = [[APEmail alloc] init];
@@ -59,7 +59,7 @@
 //    });
 //    
 //
-//    it(@"should not return an error for sending a simple email with smtp config", ^{
+//    it(@"sending a simple email with smtp config", ^{
 //        __block BOOL isMailSent = NO;
 //
 //        APEmail *myMail = [[APEmail alloc] init];
@@ -68,7 +68,7 @@
 //        myMail.subjectText = @"TestMail";
 //        myMail.bodyText = @"Test mail from Appacitive API";
 //        
-//        [myMail sendEmailUsingSMTPConfig:[APEmail getSMTPConfigurationDictionaryWithUsername:@"theodore.bagwell123@gmail.com" password:@"l10nk1n6" host:@"smtp.gmail.com" port:@465 enableSSL:YES]
+//        [myMail sendEmailUsingSMTPConfig:[APEmail makeSMTPConfigurationDictionaryWithUsername:@"theodore.bagwell123@gmail.com" password:@"l10nk1n6" host:@"smtp.gmail.com" port:@465 enableSSL:YES]
 //                          successHandler:^{
 //            isMailSent = YES;
 //        } failureHandler:^(APError *error) {
@@ -78,7 +78,7 @@
 //    });
 //    
 //    
-//    it(@"should not return an error for sending a templated email with smtp config", ^{
+//    it(@"sending a templated email with smtp config", ^{
 //        __block BOOL isMailSent = NO;
 //
 //        APEmail *myTemplatedEmail = [[APEmail alloc] init];
@@ -94,7 +94,7 @@
 //                                         @"DealHunter",@"applicationName", nil];
 //
 //        [myTemplatedEmail sendTemplatedEmailUsingTemplate:@"newmailtemplate"
-//                                          usingSMTPConfig:[APEmail getSMTPConfigurationDictionaryWithUsername:@"theodore.bagwell123@gmail.com" password:@"l10nk1n6" host:@"smtp.gmail.com" port:@465 enableSSL:YES] successHandler:^() {
+//                                          usingSMTPConfig:[APEmail makeSMTPConfigurationDictionaryWithUsername:@"theodore.bagwell123@gmail.com" password:@"l10nk1n6" host:@"smtp.gmail.com" port:@465 enableSSL:YES] successHandler:^() {
 //            isMailSent = YES;
 //        }failureHandler:^(APError *error) {
 //            isMailSent = NO;
@@ -105,4 +105,4 @@
 //    
 //});
 //SPEC_END
-
+//

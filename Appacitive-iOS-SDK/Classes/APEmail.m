@@ -15,8 +15,7 @@
 @implementation APEmail
 
 -(instancetype) initWithRecipients:(NSArray *)recipients subject:(NSString *)subject body:(NSString *)body {
-    if(recipients != nil && recipients.count > 0 && subject != nil && body != nil)
-    {
+    if(recipients != nil && recipients.count > 0 && subject != nil && body != nil) {
         self.toRecipients = recipients;
         self.subjectText = subject;
         self.bodyText = body;
@@ -37,14 +36,11 @@
 }
 
 -(void)sendEmailUsingSMTPConfig:(NSDictionary *)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    
     NSString *path = [EMAIL_PATH stringByAppendingFormat:@"send/"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
-    
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    
     NSMutableDictionary *requestData = [[NSMutableDictionary alloc] init];
     if(self.toRecipients != nil)
         [requestData setObject:self.toRecipients forKey:@"to"];
@@ -60,19 +56,13 @@
         [requestData setObject:self.replyToEmail forKey:@"replyTo"];
     if(self.bodyText != nil)
         [requestData setObject:[NSDictionary dictionaryWithObjectsAndKeys:self.bodyText, @"content:", self.isHTMLBody, @"ishtml", nil] forKey:@"body"];
-    
-    
-    if(smtpConfig != nil)
-    {
+    if(smtpConfig != nil) {
         [requestData addEntriesFromDictionary:[NSMutableDictionary dictionaryWithObjectsAndKeys:smtpConfig,@"smtp", nil]];
     }
-    
     NSError *jsonError = nil;
-    
     [urlRequest setHTTPBody:[NSJSONSerialization dataWithJSONObject:requestData options:0 error:&jsonError]];
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
-    
     
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
@@ -100,20 +90,16 @@
 }
 
 -(void) sendTemplatedEmailUsingTemplate:(NSString *)templateName usingSMTPConfig:(NSDictionary *)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    
     NSString *path = [EMAIL_PATH stringByAppendingFormat:@"send/"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
-    
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    
     NSMutableDictionary *template = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                      templateName,@"templatename",
                                      self.templateBody,@"data",
                                      @YES,@"ishtml",
                                      nil];
-    
     NSMutableDictionary *requestData = [[NSMutableDictionary alloc] init];
     if(self.toRecipients != nil)
         [requestData setObject:self.toRecipients forKey:@"to"];
@@ -129,16 +115,13 @@
         [requestData setObject:self.replyToEmail forKey:@"replyTo"];
     if(self.bodyText != nil)
         [requestData setObject:template forKey:@"body"];
-    
-    if(smtpConfig != nil)
-    {
+    if(smtpConfig != nil) {
         [requestData addEntriesFromDictionary:[NSMutableDictionary dictionaryWithObjectsAndKeys:smtpConfig,@"smtp", nil]];
     }
     NSError *jsonError = nil;
     [urlRequest setHTTPBody:[NSJSONSerialization dataWithJSONObject:requestData options:0 error:&jsonError]];
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock) {
@@ -152,11 +135,8 @@
     }];
 }
 
-
-+ (NSDictionary*) getSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL
-{
++ (NSDictionary*) makeSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL {
     NSNumber *sslSwitch = [NSNumber numberWithBool:enableSSL];
-    
     return [NSDictionary dictionaryWithObjectsAndKeys:
             username, @"username",
             password, @"password",

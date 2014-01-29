@@ -15,14 +15,14 @@
 //    
 //    afterAll(^(){
 //    });
+//
+//#pragma mark - SEARCH_TESTS
 //    
-//#pragma mark SEARCH_TESTS
-//    
-//    it(@"should return non-nil for search API call with valid type name", ^{
+//    it(@"search API call with valid type name", ^{
 //        __block BOOL isSearchSuccessful = NO;
 //        
-//        [APObjects searchAllObjectsWithTypeName:@"sdktest"
-//                                     successHandler:^(NSDictionary *result){
+//        [APObject searchAllObjectsWithTypeName:@"sdktest"
+//                                     successHandler:^(NSArray *objects){
 //                                         isSearchSuccessful = YES;
 //                                     }failureHandler:^(APError *error){
 //                                         isSearchSuccessful = NO;
@@ -30,11 +30,11 @@
 //        [[expectFutureValue(theValue(isSearchSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"should return an error for search API call with invalid type name", ^{
+//    it(@"search API call with invalid type name", ^{
 //        
 //        __block BOOL isSearchUnsuccessful = NO;
-//        [APObjects searchAllObjectsWithTypeName:@"invalidTypeName"
-//                                     successHandler:^(NSDictionary *result){
+//        [APObject searchAllObjectsWithTypeName:@"invalidTypeName"
+//                                     successHandler:^(NSArray *objects){
 //                                         isSearchUnsuccessful = NO;
 //                                     }failureHandler:^(APError *error){
 //                                         isSearchUnsuccessful = YES;
@@ -42,11 +42,11 @@
 //        [[expectFutureValue(theValue(isSearchUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"should return an error for search API call with nil type name", ^{
+//    it(@"search API call with nil type name", ^{
 //        
 //        __block BOOL isSearchUnsuccessful = NO;
-//        [APObjects searchAllObjectsWithTypeName:nil
-//                                     successHandler:^(NSDictionary *result){
+//        [APObject searchAllObjectsWithTypeName:nil
+//                                     successHandler:^(NSArray *objects){
 //                                         isSearchUnsuccessful = NO;
 //                                     }failureHandler:^(APError *error){
 //                                         isSearchUnsuccessful = YES;
@@ -54,12 +54,12 @@
 //        [[expectFutureValue(theValue(isSearchUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"should not return an error for search API call with valid query string", ^(){
+//    it(@"search API call with valid query string", ^(){
 //        __block BOOL isSearchSuccessful = NO;
 //        NSString *query = [APQuery queryWithPageNumber:1];
-//        [APObjects searchObjectsWithTypeName:@"sdktest"
+//        [APObject searchAllObjectsWithTypeName:@"sdktest"
 //                               withQueryString:query
-//                               successHandler:^(NSDictionary *result) {
+//                               successHandler:^(NSArray *objects) {
 //                                   isSearchSuccessful = YES;
 //                               } failureHandler:^(APError *error) {
 //                                   isSearchSuccessful = NO;
@@ -67,11 +67,11 @@
 //        [[expectFutureValue(theValue(isSearchSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"should return an error for search API call with invalid query string", ^(){
+//    it(@"search API call with invalid query string", ^(){
 //        __block BOOL isSearchUnSuccessful = NO;
-//        [APObjects searchObjectsWithTypeName:@"sdktest"
+//        [APObject searchAllObjectsWithTypeName:@"sdktest"
 //                              withQueryString:@"query=++1"
-//                               successHandler:^(NSDictionary *result) {
+//                               successHandler:^(NSArray *objects) {
 //                                   isSearchUnSuccessful = NO;
 //                               } failureHandler:^(APError *error) {
 //                                   isSearchUnSuccessful = YES;
@@ -80,9 +80,9 @@
 //
 //    });
 //    
-//#pragma mark FETCH_TESTS
+//#pragma mark - FETCH_TESTS
 //
-//    it(@"should return valid object for fetch API call with valid objectId and valid type name", ^{
+//    it(@"fetch API call with valid objectId and valid type name", ^{
 //       __block BOOL isFetchSuccessful = NO;
 //        __block NSString *objectId;
 //        NSString *pnumString = [APQuery queryWithPageNumber:1];
@@ -90,13 +90,11 @@
 //        
 //        NSString *query = [NSString stringWithFormat:@"%@&%@", pnumString, psizeString];
 //        
-//        [APObjects searchObjectsWithTypeName:@"sdktest" withQueryString:query
-//                                  successHandler:^(NSDictionary *result){
-//                                      NSArray *objects = result[@"objects"];
-//                                      NSDictionary *dict = [objects lastObject];
-//                                      objectId = dict[@"__id"];
-//                                      [APObjects fetchObjectWithObjectId:objectId typeName:@"sdktest"
-//                                                successHandler:^(NSDictionary *result){
+//        [APObject searchAllObjectsWithTypeName:@"sdktest" withQueryString:query
+//                                  successHandler:^(NSArray *objects){
+//                                      objectId = ((APObject*)[objects lastObject]).objectId;
+//                                      [APObject fetchObjectWithObjectId:objectId typeName:@"sdktest"
+//                                                successHandler:^(NSArray *objects){
 //                                                    isFetchSuccessful = YES;
 //                                                }failureHandler:^(APError *error){
 //                                                    isFetchSuccessful = NO;
@@ -107,23 +105,19 @@
 //        [[expectFutureValue(theValue(isFetchSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"should return valid object for fetch API call with valid object with specified fields", ^{
+//    it(@"fetch API call with valid object with specified fields", ^{
 //        __block BOOL isFetchSuccessful = NO;
-//        __block NSString *objectId;
-//        
+//        __block APObject *object;
 //        NSString *pnumString = [APQuery queryWithPageNumber:1];
 //        NSString *psizeString = [APQuery queryWithPageSize:1];
 //        NSString *fields = [APQuery queryWithFields:[NSArray arrayWithObjects:@"name",nil]];
+//        __block NSString *queryString = [NSString stringWithFormat:@"%@&%@&%@", pnumString, psizeString, fields];
 //        
-//        NSString *queryString = [NSString stringWithFormat:@"%@&%@&%@", pnumString, psizeString, fields];
-//        
-//        [APObjects searchObjectsWithTypeName:@"sdktest" withQueryString:queryString
-//                              successHandler:^(NSDictionary *result){
-//                                  NSArray *objects = result[@"objects"];
-//                                  NSDictionary *dict = [objects lastObject];
-//                                  objectId = dict[@"__id"];
-//                                  [APObjects fetchObjectWithObjectId:objectId typeName:@"sdktest"
-//                                                      successHandler:^(NSDictionary *result){
+//        [APObject searchAllObjectsWithTypeName:@"sdktest" withQueryString:queryString
+//                              successHandler:^(NSArray *objects){
+//                                  object = [objects lastObject];
+//                                  [object fetchWithQueryString:queryString
+//                                                      successHandler:^(){
 //                                                          isFetchSuccessful = YES;
 //                                                      }failureHandler:^(APError *error){
 //                                                          isFetchSuccessful = NO;
@@ -133,13 +127,13 @@
 //                              }];
 //        [[expectFutureValue(theValue(isFetchSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
-//    
-//    it(@"should return an error for fetch API call with invalid objectId and invalid type name", ^{
+//
+//    it(@"fetch API call with invalid objectId and invalid type name", ^{
 //        
 //        __block BOOL isFetchUnsuccessful = NO;
 //        
-//        [APObjects fetchObjectWithObjectId:@"0" typeName:@"typeThatDoesNotExist"
-//                           successHandler:^(NSDictionary *result){
+//        [APObject fetchObjectWithObjectId:@"0" typeName:@"typeThatDoesNotExist"
+//                           successHandler:^(NSArray *objects){
 //                               isFetchUnsuccessful = NO;
 //                           }failureHandler:^(APError *error){
 //                               isFetchUnsuccessful = YES;
@@ -147,22 +141,21 @@
 //        [[expectFutureValue(theValue(isFetchUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"should not return an error for muti fetch API call with valid object ids and valid type name", ^(){
+//    it(@"muti fetch API call with valid object ids and valid type name", ^(){
 //        __block BOOL isMultiFetchSuccessful = NO;
 //        
 //        NSString *query = [APQuery queryWithPageSize:2];
-//        [APObjects searchObjectsWithTypeName:@"sdktest"
+//        [APObject searchAllObjectsWithTypeName:@"sdktest"
 //                                  withQueryString:query
-//                                  successHandler:^(NSDictionary *result){
-//                                      NSArray *objects = result[@"objects"];
+//                                  successHandler:^(NSArray *objects){
 //                                      NSMutableArray *objectIds = [NSMutableArray arrayWithCapacity:objects.count];
-//                                      for(NSDictionary *dict in objects) {
-//                                          [objectIds addObject:dict[@"__id"]];
+//                                      for(APObject *obj in objects) {
+//                                          [objectIds addObject:obj.objectId];
 //                                      }
 //                                      
-//                                      [APObjects fetchObjectsWithObjectIds:objectIds
+//                                      [APObject fetchObjectsWithObjectIds:objectIds
 //                                                         typeName:@"sdktest"
-//                                                         successHandler:^(NSDictionary *result){
+//                                                         successHandler:^(NSArray *objects){
 //                                                             isMultiFetchSuccessful = YES;
 //                                                         } failureHandler:^(APError *error) {
 //                                                             isMultiFetchSuccessful = NO;
@@ -172,12 +165,12 @@
 //                                  }];
 //        [[expectFutureValue(theValue(isMultiFetchSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
-//    
-//    it(@"should return an error for multi fetch for invalid object ids and invalid type name", ^(){
+//
+//    it(@"multi fetch for invalid object ids and invalid type name", ^(){
 //        __block BOOL isMultiFetchUnsuccessful = NO;
-//        [APObjects fetchObjectsWithObjectIds:@[@-123, @-1]
+//        [APObject fetchObjectsWithObjectIds:@[@"-123", @"-1"]
 //                             typeName:@"sdktest"
-//                             successHandler:^(NSDictionary *result){
+//                             successHandler:^(NSArray *objects){
 //                                 isMultiFetchUnsuccessful = NO;
 //                             } failureHandler:^(APError *error){
 //                                 isMultiFetchUnsuccessful = YES;
@@ -185,68 +178,57 @@
 //        [[expectFutureValue(theValue(isMultiFetchUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"should not return an error for fetch API call with valid object id", ^(){
-//        
+//    it(@"fetch API call with valid object id", ^(){
+//        __block BOOL isFetchSuccessful= NO;
 //        __block APObject *object;
 //        NSString *query = [APQuery queryWithPageSize:1];
 //        
-//        [APObjects searchObjectsWithTypeName:@"sdktest"
+//        [APObject searchAllObjectsWithTypeName:@"sdktest"
 //                            withQueryString:query
-//                            successHandler:^(NSDictionary *result) {
-//                                NSArray *objects = result[@"objects"];
-//                                NSDictionary *dict = objects[0];
-//                                
-//                                NSString *objectId = dict[@"__id"];
-//                                
-//                                object = [APObjects objectWithTypeName:@"sdktest"];
-//                                object.objectId = objectId;
-//                                [object fetch];
+//                            successHandler:^(NSArray *objects) {
+//                                APObject *object = [objects lastObject];
+//                                [object fetchWithSuccessHandler:^{
+//                                    if(object.properties == nil)
+//                                        isFetchSuccessful = NO;
+//                                    else
+//                                        isFetchSuccessful = YES;
+//                                } failureHandler:^(APError *error) {
+//                                    isFetchSuccessful = NO;
+//                                }];
 //                            } failureHandler:^(APError *error){
 //                                object = nil;
 //                            }];
-//        [[expectFutureValue(object.properties) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
+//        [[expectFutureValue(theValue(isFetchSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //        
 //    });
-//    
-//    it(@"should return an error for fetch API call with invalid object id", ^(){
+//
+//    it(@"fetch API call with invalid object id", ^(){
 //        __block BOOL isFetchUnsuccessful = NO;
 //        
-//        APObject *object = [APObjects objectWithTypeName:@"sdktest"];
-//        object.objectId = @"-200";
+//        APObject *object = [APObject objectWithTypeName:@"sdktest" objectId:@"-200"];
 //        [object fetchWithFailureHandler:^(APError *error) {
 //            isFetchUnsuccessful = YES;
 //        }];
 //        [[expectFutureValue(theValue(isFetchUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//#pragma mark TESTING_GET_PROPERTIES_METHOD
+//#pragma mark - TESTING_GET_PROPERTIES_METHOD
 //    
-//    it(@"should not return an error for retrieving a valid property with key", ^{
+//    it(@"retrieving a valid property with key", ^{
 //        
-//        APObject *object = [APObjects objectWithTypeName:@"sdktest"];
+//        APObject *object = [APObject objectWithTypeName:@"sdktest"];
 //        [object addPropertyWithKey:@"test" value:@"Another test"];
 //        
 //        id property = [object getPropertyWithKey:@"test"];
 //        [property shouldNotBeNil];
 //    });
 //    
-//#pragma mark TESTING_UPDATE_PROPERTIES_METHOD
-//    
-//    it(@"should return an error for updating an empty object", ^{
-//        __block BOOL isUpdateUnsuccessful;
-//        APObject *newObject = [[APObject alloc] initWithTypeName:@"NewObject"];
-//        [newObject updateObjectWithSuccessHandler:^{
-//            isUpdateUnsuccessful = NO;
-//        } failureHandler:^(APError *error) {
-//            isUpdateUnsuccessful = YES;
-//        }];
-//       [[expectFutureValue(theValue(isUpdateUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
-//    });
-//    
-//    
-//    it(@"should not return an error for updating a property of an APObject", ^{
+//#pragma mark - TESTING_UPDATE_PROPERTIES_METHOD
+//
+//    it(@"updating a property of an APObject", ^{
 //        
 //        __block BOOL isUpdateSuccessful = NO;
+//        
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
 //        [object setCreatedBy:@"Sandeep Dhull"];
 //        [object addPropertyWithKey:@"__id" value:@"12345"];
@@ -260,19 +242,22 @@
 //            [object updatePropertyWithKey:@"name" value:@"TestName"];
 //            [object updateObjectWithSuccessHandler:^() {
 //                isUpdateSuccessful = YES;
+//                [object deleteObject];
 //            } failureHandler:^(APError *error) {
+//                [object deleteObject];
 //                isUpdateSuccessful = NO;
 //            }];
 //        }failureHandler:^(APError *error){
+//            [object deleteObject];
 //            isUpdateSuccessful = NO;
 //        }];
 //        
 //        [[expectFutureValue(theValue(isUpdateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//#pragma mark TESTING_DELETE_PROPERTIES_METHOD
+//#pragma mark - TESTING_DELETE_PROPERTIES_METHOD
 //    
-//    it(@"should not return an error for deleting a property of an APObject", ^{
+//    it(@"deleting a property of an APObject", ^{
 //        
 //        __block BOOL isDeleteSuccessful = NO;
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
@@ -286,20 +271,23 @@
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
 //            [object removePropertyWithKey:@"address"];
 //            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
+//                [object deleteObject];
 //                isDeleteSuccessful = YES;
 //            } failureHandler:^(APError *error) {
+//                [object deleteObject];
 //                isDeleteSuccessful = NO;
 //            }];
 //        }failureHandler:^(APError *error){
+//            [object deleteObject];
 //            isDeleteSuccessful = NO;
 //        }];
 //        
 //        [[expectFutureValue(theValue(isDeleteSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//#pragma mark TESTING_UPDATE_ATTRIBUTES_METHOD
+//#pragma mark - TESTING_UPDATE_ATTRIBUTES_METHOD
 //    
-//    it(@"should not return an error for updating an attribute of an APObject", ^{
+//    it(@"updating an attribute of an APObject", ^{
 //        
 //        __block BOOL isUpdateSuccessful = NO;
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
@@ -317,19 +305,22 @@
 //            [object updateAttributeWithKey:@"Test" value:@"value3"];
 //            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
 //                isUpdateSuccessful = YES;
+//                [object deleteObject];
 //            } failureHandler:^(APError *error) {
 //                isUpdateSuccessful = NO;
+//                [object deleteObject];
 //            }];
 //        }failureHandler:^(APError *error){
 //            isUpdateSuccessful = NO;
+//            [object deleteObject];
 //        }];
 //        
 //        [[expectFutureValue(theValue(isUpdateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//#pragma mark TESTING_DELETE_ATTRIBUTES_METHOD
+//#pragma mark - TESTING_DELETE_ATTRIBUTES_METHOD
 //    
-//    it(@"should not return an error for updating an attribute of an APObject", ^{
+//    it(@"deleting an attribute of an APObject", ^{
 //        
 //        __block BOOL isDeleteSuccessful = NO;
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
@@ -339,40 +330,89 @@
 //        [object addPropertyWithKey:@"Description" value:@"Tavisca artists works here"];
 //        [object addPropertyWithKey:@"Address" value:@"Eon It Park Kharadi"];
 //        [object addPropertyWithKey:@"GeoCodes" value:@"18.551678,73.954275"];
-//        
+//
 //        [object addAttributeWithKey:@"Test" value:@"value"];
 //        [object addAttributeWithKey:@"Test2" value:@"value"];
 //        
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
 //            [object removeAttributeWithKey:@"test"];
 //            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
+//                [object deleteObject];
 //                isDeleteSuccessful = YES;
 //            } failureHandler:^(APError *error) {
+//                [object deleteObject];
 //                isDeleteSuccessful = NO;
 //            }];
 //        }failureHandler:^(APError *error){
+//            [object deleteObject];
 //            isDeleteSuccessful = NO;
 //        }];
 //        
 //        [[expectFutureValue(theValue(isDeleteSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//#pragma mark UPDATE_TESTS
+//#pragma mark - UPDATE_TESTS
 //    
-//    it(@"Should return an error for updating an empty object", ^{
-//        __block BOOL isSaveUnsuccessful = NO;
+//    it(@"updating an empty object", ^{
+//        __block BOOL isUpdateSuccessful = YES;
+//        __block APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
+//        [object setCreatedBy:@"Sandeep Dhull"];
+//        [object addPropertyWithKey:@"Name" value:@"Tavisca"];
+//        [object addPropertyWithKey:@"Category" value:@"arts"];
+//        [object addPropertyWithKey:@"Description" value:@"Tavisca artists works here"];
+//        [object addPropertyWithKey:@"Address" value:@"Eon It Park Kharadi"];
+//        [object addPropertyWithKey:@"GeoCodes" value:@"18.551678,73.954275"];
 //        
-//        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
-//        
-//        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
-//            isSaveUnsuccessful = NO;
-//        }failureHandler:^(APError *error){
-//            isSaveUnsuccessful = YES;
+//        [object addAttributeWithKey:@"Test" value:@"value"];
+//        [object addAttributeWithKey:@"Test2" value:@"value"];
+//        [object saveObjectWithSuccessHandler:^(NSDictionary *result) {
+//            object = [[APObject alloc] initWithTypeName:@"sdktest"];
+//            [object updateObjectWithSuccessHandler:^{
+//                isUpdateSuccessful = YES;
+//                [object deleteObject];
+//            } failureHandler:^(APError *error) {
+//                isUpdateSuccessful = NO;
+//                [object deleteObject];
+//            }];
+//        } failureHandler:^(APError *error) {
+//            isUpdateSuccessful = NO;
+//            [object deleteObject];
 //        }];
-//        [[expectFutureValue(theValue(isSaveUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
+//        
+//        [[expectFutureValue(theValue(isUpdateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(NO)];
 //    });
 //    
-//    it(@"Should not return an error for updating a non null value object with null value property", ^{
+//    it(@"updating a non null value object with null value property", ^{
+//        __block BOOL isSaveSuccessful = NO;
+//        
+//        __block APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
+//        [object setCreatedBy:@"Sandeep Dhull"];
+//        [object addPropertyWithKey:@"Name" value:@"Sandeep"];
+//        [object addPropertyWithKey:@"Category" value:@"Dhull"];
+//        [object addPropertyWithKey:@"Description" value:@"desc"];
+//        [object addPropertyWithKey:@"Address" value:@"address"];
+//        [object addPropertyWithKey:@"GeoCodes" value:@"18.551678,73.954275"];
+//        
+//        [object addAttributeWithKey:@"Test" value:@"value"];
+//        [object addAttributeWithKey:@"Test2" value:@"value"];
+//        
+//        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
+//            [[object properties] setValue:[NSNull null] forKey:@"Name"];
+//            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
+//                isSaveSuccessful = YES;
+//                [object deleteObject];
+//            } failureHandler:^(APError *error) {
+//                isSaveSuccessful = NO;
+//                [object deleteObject];
+//            }];
+//        }failureHandler:^(APError *error){
+//            isSaveSuccessful = NO;
+//            [object deleteObject];
+//        }];
+//        [[expectFutureValue(theValue(isSaveSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
+//    });
+//
+//    it(@"updating an object with a valid revision number", ^{
 //        __block BOOL isSaveSuccessful = NO;
 //        
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
@@ -383,76 +423,104 @@
 //        [object addPropertyWithKey:@"Address" value:@"address"];
 //        [object addPropertyWithKey:@"GeoCodes" value:@"18.551678,73.954275"];
 //        
-//        [object addAttributeWithKey:@"Test" value:nil];
-//        [object addAttributeWithKey:@"Test2" value:nil];
-//        
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
-//            [object setValue:nil forKey:@"Name"];
-//            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
+//            [[object properties] setValue:[NSNull null] forKey:@"Name"];
+//            [object updateObjectWithRevisionNumber:@1 successHandler:^(NSDictionary *result){
 //                isSaveSuccessful = YES;
+//                [object deleteObject];
 //            } failureHandler:^(APError *error) {
 //                isSaveSuccessful = NO;
+//                [object deleteObject];
 //            }];
 //        }failureHandler:^(APError *error){
 //            isSaveSuccessful = NO;
+//            [object deleteObject];
 //        }];
 //        [[expectFutureValue(theValue(isSaveSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"Should not return an error for updating a null property object with null value property", ^{
+//    it(@"updating an object with an invalid revision number", ^{
 //        __block BOOL isSaveSuccessful = NO;
 //        
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
 //        [object setCreatedBy:@"Sandeep Dhull"];
-//        [object addPropertyWithKey:@"Name" value:nil];
-//        [object addPropertyWithKey:@"Category" value:nil];
-//        [object addPropertyWithKey:@"Description" value:nil];
-//        [object addPropertyWithKey:@"Address" value:nil];
-//        [object addPropertyWithKey:@"GeoCodes" value:nil];
-//        
-//        [object addAttributeWithKey:@"Test" value:nil];
-//        [object addAttributeWithKey:@"Test2" value:nil];
+//        [object addPropertyWithKey:@"Name" value:@"Sandeep"];
+//        [object addPropertyWithKey:@"Category" value:@"Dhull"];
+//        [object addPropertyWithKey:@"Description" value:@"desc"];
+//        [object addPropertyWithKey:@"Address" value:@"address"];
+//        [object addPropertyWithKey:@"GeoCodes" value:@"18.551678,73.954275"];
 //        
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
-//            [object setValue:nil forKey:@"Name"];
-//            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
+//            [[object properties] setValue:[NSNull null] forKey:@"Name"];
+//            [object updateObjectWithRevisionNumber:@-99 successHandler:^(NSDictionary *result){
 //                isSaveSuccessful = YES;
+//                [object deleteObject];
 //            } failureHandler:^(APError *error) {
 //                isSaveSuccessful = NO;
+//                [object deleteObject];
 //            }];
 //        }failureHandler:^(APError *error){
 //            isSaveSuccessful = NO;
+//            [object deleteObject];
+//        }];
+//        [[expectFutureValue(theValue(isSaveSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(NO)];
+//    });
+//    
+//    it(@"updating a null property object with null value property", ^{
+//        __block BOOL isSaveSuccessful = NO;
+//        
+//        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
+//        [object setCreatedBy:@"Sandeep Dhull"];
+//        [object addPropertyWithKey:@"Name" value:[NSNull null]];
+//        [object addPropertyWithKey:@"Category" value:[NSNull null]];
+//        [object addPropertyWithKey:@"Description" value:[NSNull null]];
+//        [object addPropertyWithKey:@"Address" value:[NSNull null]];
+//        [object addPropertyWithKey:@"GeoCodes" value:[NSNull null]];
+//        
+//        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
+//            [[object properties] setValue:[NSNull null] forKey:@"Name"];
+//            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
+//                isSaveSuccessful = YES;
+//                [object deleteObject];
+//            } failureHandler:^(APError *error) {
+//                isSaveSuccessful = NO;
+//                [object deleteObject];
+//            }];
+//        }failureHandler:^(APError *error){
+//            isSaveSuccessful = NO;
+//            [object deleteObject];
 //        }];
 //        [[expectFutureValue(theValue(isSaveSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
-//    
-//    it(@"Should not return an error for updating tags", ^{
+//
+//    it(@"updating tags", ^{
 //        __block BOOL isSaveSuccessful = NO;
 //        
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
 //        [object setCreatedBy:@"Sandeep Dhull"];
 //        [object addPropertyWithKey:@"Name" value:@"name"];
 //        [object addTag:@"tag1"];
-//        [object addAttributeWithKey:@"Test" value:nil];
-//        [object addAttributeWithKey:@"Test2" value:nil];
 //        
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
 //            [object removeTag:@"tag1"];
 //            [object addTag:@"tag2"];
 //            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
 //                isSaveSuccessful = YES;
+//                [object deleteObject];
 //            } failureHandler:^(APError *error) {
 //                isSaveSuccessful = NO;
+//                [object deleteObject];
 //            }];
 //        }failureHandler:^(APError *error){
 //            isSaveSuccessful = NO;
+//            [object deleteObject];
 //        }];
 //        [[expectFutureValue(theValue(isSaveSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//#pragma mark SAVE_TESTS
+//#pragma mark - SAVE_TESTS
 //    
-//    it(@"should not return an error for save API call with valid type name", ^{
+//    it(@"save API call with valid type name", ^{
 //        
 //        __block BOOL isSaveSuccessful = NO;
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
@@ -465,14 +533,16 @@
 //        
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
 //            isSaveSuccessful = YES;
+//            [object deleteObject];
 //        }failureHandler:^(APError *error){
 //            isSaveSuccessful = NO;
+//            [object deleteObject];
 //        }];
 //        
 //        [[expectFutureValue(theValue(isSaveSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
-//    
-//    it(@"Test case for saving an APObject with improper type name Failed", ^{
+//
+//    it(@"saving an object with improper type name", ^{
 //        __block BOOL isSaveUnsuccessful = NO;
 //        APObject *object = [[APObject alloc] initWithTypeName:@"typeThatDoesNotExist"];
 //        
@@ -486,18 +556,20 @@
 //        
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
 //            isSaveUnsuccessful = NO;
+//            [object deleteObject];
 //        }failureHandler:^(APError *error){
 //            isSaveUnsuccessful = YES;
+//            [object deleteObject];
 //        }];
 //        [[expectFutureValue(theValue(isSaveUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//#pragma mark DELETE_TESTS
+//#pragma mark - DELETE_TESTS
 //    
-//    it(@"should return an error for delete API call with improper type name", ^{
+//    it(@"delete API call with improper type name", ^{
 //        __block BOOL isDeleteUnsuccessful = NO;
 //        APObject *object = [[APObject alloc] initWithTypeName:@"typeThatDoesNotExist"];
-//        [object setObjectId:@"2319381902900"];
+//        [object addPropertyWithKey:@"something" value:@"2319381902900"];
 //        [object deleteObjectWithSuccessHandler:^(void){
 //            isDeleteUnsuccessful = NO;
 //        }failureHandler:^(APError *error){
@@ -506,20 +578,34 @@
 //        [[expectFutureValue(theValue(isDeleteUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//    it(@"should not return an error for delete call for a proper object id", ^{
+//    it(@"delete call for a proper object id", ^{
 //        __block BOOL isDeleteSuccessful = NO;
 //        
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
 //        
-//        [object setObjectId:@"12345"];
+//        [object setCreatedBy:@"Sandeep Dhull"];
+//        [object setCreatedBy:@"Sandeep Dhull"];
+//        [object addPropertyWithKey:@"Name" value:@"Tavisca"];
+//        [object addPropertyWithKey:@"Category" value:@"arts"];
+//        [object addPropertyWithKey:@"Description" value:@"Tavisca artists works here"];
+//        [object addPropertyWithKey:@"Address" value:@"Eon It Park Kharadi"];
+//        [object addPropertyWithKey:@"GeoCodes" value:@"18.551678,73.954275"];
 //        
-//        [object deleteObjectWithConnectingConnectionsSuccessHandler:^(){
-//            isDeleteSuccessful = YES;
-//        } failureHandler:^(APError *error) {
+//        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
+//            [object deleteObjectWithSuccessHandler:^{
+//                isDeleteSuccessful = YES;
+//                [object deleteObject];
+//            } failureHandler:^(APError *error) {
+//                isDeleteSuccessful = NO;
+//                [object deleteObject];
+//            }];
+//        }failureHandler:^(APError *error){
 //            isDeleteSuccessful = NO;
+//            [object deleteObject];
 //        }];
 //        [[expectFutureValue(theValue(isDeleteSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //    
-//
+//});
+//SPEC_END
 //

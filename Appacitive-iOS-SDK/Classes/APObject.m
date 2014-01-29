@@ -18,26 +18,29 @@
 @implementation APObject
 
 NSString *const OBJECT_PATH = @"v1.0/object/";
-
 #define SEARCH_PATH @"search/"
 
-#pragma mark initialization methods
+#pragma mark - Initialization methods
 
-- (instancetype) initWithTypeName:(NSString*)typeName {
+- (instancetype) initWithTypeName:(NSString*)typeName objectId:(NSString*)objectId {
     if ([[self class] conformsToProtocol:@protocol(APObjectPropertyMapping)]) {
         self = [super init];
         if (self) {
             self.type = typeName;
+            if(objectId != nil) {
+                _objectId = objectId;
+            }
             
             NSMutableDictionary *typeMapping;
             NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             filePath = [filePath stringByAppendingPathComponent:@"typeMapping.plist"];
+            
             if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
                 typeMapping = [NSMutableDictionary dictionaryWithContentsOfFile:filePath];
             else
-                typeMapping = [@{ @"APObject":@"APObject", @"APUser":@"APUser", @"APDevice":@"APDevice", @"APConnection":@"APConnection" } mutableCopy];
+                typeMapping = [@{ @"object":@"APObject", @"user":@"APUser", @"device":@"APDevice", @"connection":@"APConnection" } mutableCopy];
             
-            [typeMapping setObject:NSStringFromClass([self superclass]) forKey:NSStringFromClass([self class])];
+            [typeMapping setObject:NSStringFromClass([self class]) forKey:typeName];
             [typeMapping writeToFile:filePath atomically:YES];
             
         }
@@ -49,9 +52,24 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
                                     userInfo:nil];
         @throw myException;
     }
+
 }
 
-#pragma mark delete methods
+- (instancetype) initWithTypeName:(NSString*)typeName {
+    return [self initWithTypeName:typeName objectId:nil];
+}
+
++ (APObject*) objectWithTypeName:(NSString*)typeName {
+    APObject *object = [[APObject alloc] initWithTypeName:typeName];
+    return object;
+}
+
++ (APObject*) objectWithTypeName:(NSString*)typeName objectId:(NSString*)objectId {
+    APObject *object = [[APObject alloc] initWithTypeName:typeName objectId:objectId];
+    return object;
+}
+
+#pragma mark - Delete methods
 
 - (void) deleteObject {
     [self deleteObjectWithSuccessHandler:nil failureHandler:nil];
@@ -104,25 +122,38 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     }];
 }
 
-#pragma mark fetch methods
+#pragma mark - Fetch methods
 
 - (void) fetch {
-    [self fetchWithFailureHandler:nil];
+    [self fetchWithQueryString:nil successHandler:nil failureHandler:nil];
 }
 
 - (void) fetchWithFailureHandler:(APFailureBlock)failureBlock {
-    [self fetchWithSuccessHandler:nil failureHandler:failureBlock];
+    [self fetchWithQueryString:nil successHandler:nil failureHandler:failureBlock];
 }
 
 - (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [self fetchWithQueryString:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
+- (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId];
     
+    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
+    
+    if (queryString) {
+        NSDictionary *queryStringParams = [queryString queryParameters];
+        [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+            [queryParams setObject:obj forKey:key];
+        }];
+    }
+    
+    path = [path stringByAppendingQueryParameters:queryParams];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    
     
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
@@ -137,8 +168,48 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     }];
 }
 
-#pragma mark save methods
++ (void) fetchObjectWithObjectId:(NSString*)objectId typeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [self fetchObjectsWithObjectIds:@[objectId] typeName:typeName successHandler:successBlock failureHandler:failureBlock];
+}
 
++ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    __block NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/multiget/", typeName];
+    
+    [objectIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString *string= (NSString*) obj;
+        path = [path stringByAppendingFormat:@"%@", string];
+        if (idx != objectIds.count - 1) {
+            path = [path stringByAppendingString:@","];
+        }
+    }];
+    
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if(successBlock != nil) {
+            NSMutableArray *objects = [[NSMutableArray alloc] init];
+            for (int i=0; i<[[result objectForKey:@"objects"] count]; i++)
+            {
+                APObject *tempObject = [[APObject alloc] init];
+                [tempObject setPropertyValuesFromDictionary:[[result objectForKey:@"objects"] objectAtIndex:i]];
+                [objects addObject:tempObject];
+            }
+            successBlock(objects);
+        }
+    } failureHandler:^(APError *error) {
+        if(failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark - Save methods
 - (void) saveObject {
     [self saveObjectWithSuccessHandler:nil failureHandler:nil];
 }
@@ -173,19 +244,29 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     }];
 }
 
-#pragma mark update methods
+#pragma mark - Update methods
 
 - (void) updateObject {
-    [self updateObjectWithSuccessHandler:nil failureHandler:nil];
+    [self updateObjectWithRevisionNumber:nil successHandler:nil failureHandler:nil];
 }
 
 - (void) updateObjectWithFailureHandler:(APFailureBlock)failureBlock {
-    [self updateObjectWithSuccessHandler:nil failureHandler:failureBlock];
+    [self updateObjectWithRevisionNumber:nil successHandler:nil failureHandler:failureBlock];
 }
 
 - (void) updateObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [self updateObjectWithRevisionNumber:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
+- (void) updateObjectWithRevisionNumber:(NSNumber*)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
-    NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId.description];
+    NSString *path = [[NSString alloc] init];
+    
+    if(revision != nil)
+        path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@?revision=%@", self.type, self.objectId.description,revision];
+    else
+        path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId.description];
+    
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -199,8 +280,56 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
+        
         if(successBlock != nil) {
             successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+        
+        if(failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark - Search method
+
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock {
+    [APObject searchAllObjectsWithTypeName:typeName successHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [APObject searchAllObjectsWithTypeName:typeName withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APObjectsSuccessBlock)successBlock {
+    [APObject searchAllObjectsWithTypeName:typeName withQueryString:queryString successHandler:successBlock failureHandler:nil];
+}
+
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/find/all", typeName];
+    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
+    if (queryString) {
+        NSDictionary *queryStringParams = [queryString queryParameters];
+        [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+            [queryParams setObject:obj forKey:key];
+        }];
+    }
+    path = [path stringByAppendingQueryParameters:queryParams];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if(successBlock != nil) {
+            NSMutableArray *objects = [[NSMutableArray alloc] init];
+            for (int i=0; i<[[result objectForKey:@"objects"] count]; i++) {
+                APObject *tempObject = [[APObject alloc] init];
+                [tempObject setPropertyValuesFromDictionary:[[result objectForKey:@"objects"] objectAtIndex:i]];
+                [objects addObject:tempObject];
+            }
+            successBlock(objects);
         }
     } failureHandler:^(APError *error) {
         if(failureBlock != nil) {
@@ -209,16 +338,15 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     }];
 }
 
-#pragma mark add properties method
+#pragma mark - Add properties method
 
 - (void) addPropertyWithKey:(NSString*) keyName value:(id) object {
-    if (!self.properties) {
+    if (!self.properties)
         _properties = [NSMutableArray array];
-    }
     [_properties addObject:@{keyName: object}.mutableCopy];
 }
 
-#pragma mark update properties method
+#pragma mark - Update properties method
 
 - (void) updatePropertyWithKey:(NSString*) keyName value:(id) object {
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -230,7 +358,7 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     }];
 }
 
-#pragma mark delete property
+#pragma mark - Delete property
 
 - (void) removePropertyWithKey:(NSString*) keyName {
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -242,7 +370,7 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     }];
 }
 
-#pragma mark retrieve property
+#pragma mark - Retrieve property
 
 - (instancetype) getPropertyWithKey:(NSString*) keyName {
     __block id property;
@@ -256,7 +384,7 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     return property;
 }
 
-#pragma mark add attributes method
+#pragma mark - Add attributes method
 
 - (void) addAttributeWithKey:(NSString*) keyName value:(id) object {
     if (!self.attributes) {
@@ -270,34 +398,31 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 }
 
 - (void) removeAttributeWithKey:(NSString*) keyName {
-    [_attributes removeObjectForKey:keyName];
-    //[_attributes setObject:[NSNull null] forKey:keyName];
+    [_attributes setObject:[NSNull null] forKey:keyName];
 }
 
 - (NSString*) description {
     NSString *description = [NSString stringWithFormat:@"Object Id:%@, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, TypeId:%d, type:%@, Tag:%@", self.objectId, self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, [self.typeId intValue], self.type, self.tags];
-    
     return description;
 }
 
 - (void) addTag:(NSString*)tag
 {
-    if(tag != nil)
-    {
+    if(tag != nil) {
         [self.tagsToAdd addObject:[tag lowercaseString]];
     }
 }
 
 - (void) removeTag:(NSString*)tag
 {
-    if(tag != nil)
-    {
+    if(tag != nil) {
         [self.tagsToRemove addObject:[tag lowercaseString]];
         [self.tagsToAdd minusSet:self.tagsToRemove];
     }
 }
 
-#pragma mark private methods
+#pragma mark - Private methods
+
 
 - (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
     NSDictionary *object = [[NSDictionary alloc] init];
@@ -305,7 +430,6 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
         object = dictionary[@"object"];
     else
         object = dictionary;
-    
     _createdBy = (NSString*) object[@"__createdby"];
     _objectId = object[@"__id"];
     _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
@@ -316,36 +440,28 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     _attributes = [object[@"__attributes"] mutableCopy];
     _tags = object[@"__tags"];
     _type = object[@"__type"];
-    
     _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:object].mutableCopy;
 }
 
 
 - (NSMutableDictionary*) postParameters {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
-    
-    if (self.objectId)
-        postParams[@"__id"] = self.objectId.description;
-    
+    if (self.objectId != nil)
+        postParams[@"__id"] = self.objectId;
     if (self.attributes)
         postParams[@"__attributes"] = self.attributes;
-    
     if (self.createdBy)
         postParams[@"__createdby"] = self.createdBy;
-    
     if (self.revision)
         postParams[@"__revision"] = self.revision;
-    
     for(NSDictionary *prop in self.properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
             [postParams setObject:obj forKey:key];
             *stop = YES;
         }];
     }
-    
     if (self.type)
         postParams[@"__type"] = self.type;
-    
     if (self.tags)
         postParams[@"__tags"] = self.tags;
     return postParams;
@@ -353,23 +469,18 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 
 - (NSMutableDictionary*) postParametersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
-    
     if (self.attributes && [self.attributes count] > 0)
         postParams[@"__attributes"] = self.attributes;
-    
     for(NSDictionary *prop in self.properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
             [postParams setObject:obj forKey:key];
             *stop = YES;
         }];
     }
-    
     if(self.tagsToAdd && [self.tagsToAdd count] > 0)
         postParams[@"__addtags"] = [self.tagsToAdd allObjects];
-    
     if(self.tagsToRemove && [self.tagsToRemove count] > 0)
         postParams[@"__removetags"] = [self.tagsToRemove allObjects];
-    
     return postParams;
 }
 
@@ -379,67 +490,13 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 
 @implementation APObjects
 
-#pragma mark initialization
-
-+ (APObject*) objectWithTypeName:(NSString*)typeName {
-    APObject *object = [[APObject alloc] initWithTypeName:typeName];
-    return object;
-}
-
-#pragma mark search method
-
-+ (void) searchAllObjectsWithTypeName:(NSString*) typeName successHandler:(APResultSuccessBlock)successBlock {
-    [APObjects searchAllObjectsWithTypeName:typeName successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) searchAllObjectsWithTypeName:(NSString*) typeName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [APObjects searchObjectsWithTypeName:typeName withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
-}
-
-+ (void) searchObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock {
-    [APObjects searchObjectsWithTypeName:typeName withQueryString:queryString successHandler:successBlock failureHandler:nil];
-}
-
-+ (void) searchObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    
-    NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/find/all", typeName];
-    
-    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
-    
-    if (queryString) {
-        NSDictionary *queryStringParams = [queryString queryParameters];
-        [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [queryParams setObject:obj forKey:key];
-        }];
-    }
-    
-    path = [path stringByAppendingQueryParameters:queryParams];
-    path = [HOST_NAME stringByAppendingPathComponent:path];
-    NSURL *url = [NSURL URLWithString:path];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    [urlRequest setHTTPMethod:@"GET"];
-    
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if(successBlock != nil) {
-            successBlock(result);
-        }
-    } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
-            failureBlock(error);
-        }
-    }];
-}
-
-#pragma mark delete methods
+#pragma mark - Delete methods
 
 + (void) deleteObjectsWithIds:(NSArray*)objectIds typeName:(NSString*)typeName failureHandler:(APFailureBlock)failureBlock {
     [APObjects deleteObjectsWithIds:objectIds typeName:typeName successHandler:nil failureHandler:failureBlock];
 }
 
 + (void) deleteObjectsWithIds:(NSArray*)objectIds typeName:(NSString*)typeName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    
     NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/bulkdelete", typeName];
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:objectIds forKey:@"idlist"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -451,7 +508,6 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if(successBlock != nil) {
@@ -463,43 +519,6 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
         }
     }];
 }
-
-#pragma mark fetch methods
-
-+ (void) fetchObjectWithObjectId:(NSString*)objectId typeName:(NSString*)typeName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [APObjects fetchObjectsWithObjectIds:@[objectId] typeName:typeName successHandler:successBlock failureHandler:failureBlock];
-}
-
-+ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    
-    __block NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/multiget/", typeName];
-    
-    [objectIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSString *string= (NSString*) obj;
-        path = [path stringByAppendingFormat:@"%@", string];
-        if (idx != objectIds.count - 1) {
-            path = [path stringByAppendingString:@","];
-        }
-    }];
-    
-    path = [HOST_NAME stringByAppendingPathComponent:path];
-    NSURL *url = [NSURL URLWithString:path];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPMethod:@"GET"];
-    
-    
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if(successBlock != nil) {
-            successBlock(result);
-        }
-    } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
-            failureBlock(error);
-        }
-    }];
-}
-
 
 @end
 

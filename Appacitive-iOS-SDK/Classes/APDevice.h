@@ -9,17 +9,11 @@
 #import "APObject.h"
 #import "APResponseBlocks.h"
 
-typedef enum {
-    Toast,
-    Tile,
-    Raw
-} WPNotificationType;
+#pragma mark - APDevice Interface
 
-typedef enum {
-    Flip,
-    Cyclic,
-    Iconic
-} WPTileType;
+/**
+ An APDevice class helps you in managing the devices that use your app on Appacitive.
+ */
 
 @interface APDevice : APObject <APObjectPropertyMapping>
 
@@ -29,7 +23,9 @@ typedef enum {
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSString *timeZone;
 @property (nonatomic, strong) NSString* isAvctive;
+@property (nonatomic, strong) NSString* badge;
 
+- (instancetype) init;
 /** Create a basic instance of an APDevice Object with deviceToken and deviceType
  @param deviceToken device token provided by Appacitive
 */
@@ -43,267 +39,124 @@ typedef enum {
 /**
  Method to register a device to Appacitive
  
+ @param successBlock Block ivoked on successful registration of the device.
+ @param failureBlock Block invoked in case the device registration fails.
+ 
  @note On successfull registration, a device Object will be returned in the successblock
  */
-- (void) registerDeviceWithSuccessHandler:(APDeviceSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) registerDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Save APObjects */
 
 /**
- @see deleteDeviceWithSuccessHandler:failureHandler:
+ @see saveObjectWithSuccessHandler:failureHandler:
  */
-- (void) deleteDevice;
+- (void) saveObject;
 
 /**
- @see deleteDeviceWithSuccessHandler:failureHandler:
+ @see saveObjectWithSuccessHandler:failureHandler:
  */
-- (void) deleteDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) saveObjectWithFailureHandler:(APFailureBlock)failureBlock;
 
 /**
- Method to delete device form Appacitive
+ Save the object on the remote server.
  
- @param deleteConnections if set to yes, will delete all the coonections connecting to the deleted device
+ This method will save an object in the background. If save is successful the properties will be updated and the successBlock will be invoked. If not the failure block is invoked.
+ 
+ @param successBlock Block invoked when the save operation is successful
+ @param failureBlock Block invoked when the save operation fails.
+ 
  */
-- (void) deleteDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock deleteConnectingConnections:(BOOL)deleteConnections;
+- (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see deleteObjectWithSuccessHandler:failureHandler:
+ */
+- (void) deleteObject;
+
+/**
+ @see deleteObjectWithSuccessHandler:failureHandler:
+ */
+- (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see deleteObjectWithSuccessHandler:failureHandler:
+ */
+- (void) deleteObjectWithFailureHandler:(APFailureBlock)failureBlock;
 
 
 /**
- @see updateDeviceWithSuccessHandler:failureHandler:
+ @see deleteObjectWithConnectingConnectionsSuccessHandler:failureHandler:
+ */
+- (void) deleteObjectWithConnectingConnections;
+
+/**
+ @see deleteObjectWithConnectingConnectionsSuccessHandler:failureHandler:
+ */
+- (void) deleteObjectWithConnectingConnections:(APFailureBlock)failureBlock;
+
+/**
+ Deletes an APObject along with any connections it has.
+ 
+ @param successBlock Block invoked when the delete operation is successful.
+ @param failureBlock Block invoked when the delete operation is unsuccessful.
+ */
+- (void) deleteObjectWithConnectingConnectionsSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+
+/**
+ @see updateObjectWithRevision:successHandler:failureHandler:
 */
-- (void) updateDevice;
+- (void) updateObject;
+
+/**
+ @see updateObjectWithRevisionNumber:successHandler:failureHandler:
+ */
+- (void) updateObjectWithFailureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see updateObjectWithRevision:successHandler:failureHandler:
+ */
+- (void) updateObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to update the device object
+ 
+ @param successBlock Block invoked when the update operation is successful.
+ @param failureBlock Block invoked when the update operation is unsuccessful.
  */
-- (void) updateDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) updateObjectWithRevisionNumber:(NSNumber*)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Fetch APObjects */
 
 /**
- @see fetchDeviceWithSuccessHandler:failureHandler:
+ @see fetchWithSuccessHandler:failureHandler:
  */
-- (void) fetchDevice;
+- (void) fetch;
 
 /**
- Method to fetch a device object
+ @see fetchWithSuccessHandler:failureHandler:
  */
+- (void) fetchWithFailureHandler:(APFailureBlock)failureBlock;
 
-- (void) fetchDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+/**
+ Method used to fetch an APObject.
+ 
+ This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
+ 
+ @param successBlock Block invoked when the fetch operation is successful.
+ @param failureBlock Block invoked when the fetch operation fails.
+ */
+- (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-@end
-
-
-
-
-
-#pragma mark - IOSOptions Interface
-
-@interface IOSOptions : NSObject
-
-@property (strong, nonatomic, readonly) NSString *soundFile;
-
-- (instancetype) initWithSoundFile:(NSString*)soundFile;
-
-@end
-
-
-
-
-
-#pragma mark - AndroidOptions Interface
-
-@interface AndroidOptions : NSObject
-
-@property (strong, nonatomic, readonly) NSString *title;
-
-- (instancetype) initWithTitle:(NSString*)title;
+/**
+ Method used to fetch an APObject.
+ 
+ This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
+ @param queryString SQL kind of query to search for specific objects. For more info http://appacitive.comd
+ @param successBlock Block invoked when the fetch operation is successful.
+ @param failureBlock Block invoked when the fetch operation fails.
+ */
+- (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 @end
-
-
-
-
-
-#pragma mark - WPTile Interface
-
-@interface WPTile : NSObject
-
-@property (nonatomic) WPTileType wpTileType;
-- (instancetype) initWithTileType:(WPTileType)wpTileType;
-
-@end
-
-
-
-
-
-#pragma mark - FlipTile Interface
-
-@interface FlipTile : WPTile
-
-@property (strong, nonatomic) NSString* tileID;
-@property (strong, nonatomic) NSString* frontTile;
-@property (strong, nonatomic) NSString* frontBackgroundImage;
-@property (strong, nonatomic) NSString* frontCount;
-@property (strong, nonatomic) NSString* smallBackgroundImage;
-@property (strong, nonatomic) NSString* wideBackgroundImage;
-@property (strong, nonatomic) NSString* backTitle;
-@property (strong, nonatomic) NSString* backContent;
-@property (strong, nonatomic) NSString* backBackgroundImage;
-@property (strong, nonatomic) NSString* wideBackContent;
-@property (strong, nonatomic) NSString* wideBackBackgroundImage;
-- (instancetype) init;
-
-@end
-
-
-
-
-
-
-#pragma mark - IconicTile : WPTile
-
-@interface IconicTile : WPTile
-    
-@property (strong, nonatomic) NSString* tileId;
-@property (strong, nonatomic) NSString* frontTitle;
-@property (strong, nonatomic) NSString* iconImage;
-@property (strong, nonatomic) NSString* smallIconImage;
-@property (strong, nonatomic) NSString* backgroundColor;
-@property (strong, nonatomic) NSString* wideContent1;
-@property (strong, nonatomic) NSString* wideContent2;
-@property (strong, nonatomic) NSString* wideContent3;
-- (instancetype) init;
-@end
-
-
-
-
-
-#pragma mark - CyclicTile Interface
-
-@interface CyclicTile : WPTile
-{
-    NSMutableArray *_images;
-}
-@property (strong, nonatomic, readonly) NSMutableArray *images;
-@property (strong, nonatomic) NSString* tileId;
-@property (strong, nonatomic) NSString* frontTitle;
-- (instancetype) initWithFrontTitle:(NSString*)frontTitle images:(NSArray*)images;
-- (instancetype) init;
-
-@end
-
-
-
-
-
-
-
-#pragma mark - WPNotification Interface
-
-@interface WPNotification : NSObject
-{
-    WPNotificationType _wpNotificationType;
-}
-@property (nonatomic, readonly) WPNotificationType wpNotificationType;
-- (instancetype) initWithNotificationType:(WPNotificationType)wpNotificationType;
-
-@end
-
-
-
-
-#pragma mark - ToastNotification Interface
-
-@interface ToastNotification : WPNotification
-
-@property (strong, nonatomic) NSString* text1;
-@property (strong, nonatomic) NSString* text2;
-@property (strong, nonatomic) NSString* path;
-- (instancetype) initWithText1:(NSString*)text1 text2:(NSString*)text2 path:(NSString*)path;
-
-@end
-
-
-
-
-
-#pragma mark - WPTileNotification Interface
-
-@interface TileNotification : WPNotification
-{
-    WPTile* _wp7Tile;
-    WPTile* _wp75Tile;
-}
-- (TileNotification*) createNewFlipTile:(FlipTile*)tile;
-- (TileNotification*) createNewIconicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)fliptile;
-- (TileNotification*) createNewCyclicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)fliptile;
-- (instancetype) init;
-@property (nonatomic, strong) WPTile* wp8Tile;
-@property (nonatomic, strong) WPTile* wp7Tile;
-@property (nonatomic, strong) WPTile* wp75Tile;
-
-@end
-
-
-
-
-#pragma mark - RawNotification Interface
-
-@interface RawNotification : WPNotification
-
-@property (strong, nonatomic) NSString* rawData;
-- (instancetype) init;
-@end
-
-
-
-
-#pragma mark - WindowsPhoneOptions Interface
-
-@interface WindowsPhoneOptions : NSObject
-
-@property (strong, nonatomic) WPNotification* notification;
-- (instancetype) initWithToast:(ToastNotification*)notification;
-- (instancetype) initWithTile:(TileNotification*)notification;
-- (instancetype) initWithRaw:(RawNotification*)notification;
-
-@end
-
-
-
-
-
-#pragma mark - APPlatformOptions Interface
-
-@interface APPlatformOptions : NSObject
-
-@property (strong, nonatomic) IOSOptions *iosOptions;
-@property (strong, nonatomic) AndroidOptions *androidOptions;
-@property (strong, nonatomic) WindowsPhoneOptions *windowsPhoneOptions;
-
-@end
-
-
-
-#pragma mark - APPushNotification Interface
-
-@interface APPushNotification : NSObject
-{
-    NSString *_message;
-}
-@property (nonatomic) BOOL isBroadcast;
-@property (nonatomic, strong) NSArray *deviceIds;
-@property (nonatomic, strong) NSString *query;
-@property (nonatomic, strong) NSMutableArray *channels;
-@property (nonatomic, readonly) NSString *message;
-@property (nonatomic, strong) NSMutableDictionary *data;
-@property (nonatomic, strong) NSNumber *expireAfter;
-@property (nonatomic, strong) APPlatformOptions *platformOptions;
-
-- (instancetype) initWithMessage:(NSString*)message;
-
-- (void) sendPush;
-
-- (void) sendPushWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-@end
-
-

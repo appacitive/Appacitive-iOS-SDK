@@ -223,6 +223,67 @@
     return nil;
 }
 
+- (APSimpleQuery *) isGreaterThanDate:(NSDate*)date {
+    if (date != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @">";
+        query.value = [NSString stringWithFormat:@"date('%@')",date];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isLessThanDate:(NSDate*)date {
+    if (date != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"<";
+        query.value = [NSString stringWithFormat:@"date('%@')",date];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isGreaterThanOrEqualToDate:(NSDate*)date {
+    if (date != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @">=";
+        query.value = [NSString stringWithFormat:@"date('%@')",date];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isLessThanOrEqualToDate:(NSDate*)date {
+    if (date != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"<=";
+        query.value = [NSString stringWithFormat:@"date('%@')",date];
+        return query;
+    }
+    return nil;
+}
+
+- (APSimpleQuery *) isBetweenDates:(NSDate*)date1 and:(NSDate*)date2 {
+    if (date1 != nil && date2 != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = _name;
+        query.fieldType = _type;
+        query.operation = @"between";
+        query.value = [NSString stringWithFormat:@"(date('%@'),date('%@'))",date1,date2];
+        return query;
+    }
+    return nil;
+}
+
+
 @end
 
 #pragma mark - Query
@@ -255,26 +316,7 @@
     return compoundQuery;
 }
 
-+ (NSString *) queryWithPageSize:(NSUInteger)pageSize {
-    return [NSString stringWithFormat:@"psize=%d", pageSize];
-}
-
-+ (NSString *) queryWithPageNumber:(NSUInteger)pageNumber {
-    return [NSString stringWithFormat:@"pnum=%d", pageNumber];
-}
-
-+ (NSString *) queryWithFields:(NSArray*)fields {
-    NSString *queryString = [NSString stringWithFormat:@"fields="];
-    if(fields != nil)
-    {
-        for(int i = 0; i < fields.count; i++) {
-            queryString = [queryString stringByAppendingString:[fields[i] stringValue]];
-        }
-    }
-    return queryString;
-}
-
-+ (NSString *) queryWithGeoCodeSearchForProperty:(NSString*)propertyName location:(CLLocation*)location distance:(DistanceMetric)distanceMetric raduis:(NSNumber*)radius {
++ (NSString *) queryWithRadialSearchForProperty:(NSString*)propertyName nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric {
     if(location != nil && radius != nil) {
         NSString *queryString = [NSString stringWithFormat:@"*%@ within_circle ", propertyName];
         queryString = [queryString stringByAppendingFormat:@"%lf, %lf, %lf", location.coordinate.latitude, location.coordinate.longitude, radius.doubleValue];
@@ -291,7 +333,6 @@
 + (NSString *) queryWithPolygonSearchForProperty:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates {
     if (coordinates != nil && coordinates.count >= 3) {
         __block NSString *query = [NSString stringWithFormat:@"*%@ within_polygon ", propertyName];
-        
         [coordinates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             if ([obj isKindOfClass:[CLLocation class]]) {
                 CLLocation *location = (CLLocation*)obj;
@@ -340,6 +381,34 @@
         return queryString;
     }
     return nil;
+}
+
++ (NSString *) queryWithPageSize:(NSUInteger)pageSize {
+    return [NSString stringWithFormat:@"psize=%d", pageSize];
+}
+
++ (NSString *) queryWithPageNumber:(NSUInteger)pageNumber {
+    return [NSString stringWithFormat:@"pnum=%d", pageNumber];
+}
+
++ (NSString *) queryWithOrderBy:(NSString*)property isAscending:(BOOL)isAscending {
+    if(property != nil) {
+    if(isAscending == YES)
+        return [NSString stringWithFormat:@"orderBy=%@&isAsc=true",property];
+    else
+        return [NSString stringWithFormat:@"orderBy=%@&isAsc=false",property];
+    }
+    else return nil;
+}
+
++ (NSString *) queryWithFields:(NSArray*)fields {
+    NSString *queryString = [NSString stringWithFormat:@"fields="];
+    if(fields != nil) {
+        for(int i = 0; i < fields.count; i++) {
+            queryString = [queryString stringByAppendingFormat:@"%@,",fields[i]];
+        }
+    }
+    return queryString;
 }
 
 + (NSString *) queryWithSearchUsingFreeText:(NSArray*)freeTextTokens {

@@ -17,6 +17,8 @@
 		2CEB0EB5162BD4230074DA50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
 		39510000989F40589B1E62B2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE18E91493A45BE9CFB5B14 /* libPods.a */; };
 		4C0902721878336000CA5D42 /* APDeviceFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0902711878336000CA5D42 /* APDeviceFixture.m */; };
+		4C40861518904976002DC1E5 /* APPushNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C40861318904976002DC1E5 /* APPushNotification.h */; };
+		4C40861618904976002DC1E5 /* APPushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C40861418904976002DC1E5 /* APPushNotification.m */; };
 		4C7A8607185EC8D900BD06FF /* APEmail.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A8605185EC8D900BD06FF /* APEmail.h */; };
 		4C7A8608185EC8D900BD06FF /* APEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A8606185EC8D900BD06FF /* APEmail.m */; };
 		4CB768AF1872C43B00A69FE4 /* APNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB768AD1872C43B00A69FE4 /* APNetworking.h */; };
@@ -96,6 +98,8 @@
 		0AE18E91493A45BE9CFB5B14 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CEB0E93162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Appacitive_iOS_SDK-NetworkTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C0902711878336000CA5D42 /* APDeviceFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APDeviceFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APDeviceFixture.m"; sourceTree = SOURCE_ROOT; };
+		4C40861318904976002DC1E5 /* APPushNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPushNotification.h; path = "Appacitive-iOS-SDK/Classes/APPushNotification.h"; sourceTree = SOURCE_ROOT; };
+		4C40861418904976002DC1E5 /* APPushNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPushNotification.m; path = "Appacitive-iOS-SDK/Classes/APPushNotification.m"; sourceTree = SOURCE_ROOT; };
 		4C7A8605185EC8D900BD06FF /* APEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APEmail.h; path = "Appacitive-iOS-SDK/Classes/APEmail.h"; sourceTree = SOURCE_ROOT; };
 		4C7A8606185EC8D900BD06FF /* APEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = APEmail.m; path = "Appacitive-iOS-SDK/Classes/APEmail.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4CB768AD1872C43B00A69FE4 /* APNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APNetworking.h; path = "Appacitive-iOS-SDK/Classes/APNetworking.h"; sourceTree = SOURCE_ROOT; };
@@ -207,12 +211,12 @@
 			isa = PBXGroup;
 			children = (
 				6102BAE9169A93E300D78642 /* APBlobFixture.m */,
+				61D4A0E51635223400DB5FD9 /* APConnectionFixture.m */,
 				4C0902711878336000CA5D42 /* APDeviceFixture.m */,
 				4CBA47461876C46E00484799 /* APEmailFixture.m */,
-				61D4A0E61635223400DB5FD9 /* APObjectFixture.m */,
 				4CBCA516187C21E000947D90 /* APGraphNodeFixture.m */,
+				61D4A0E61635223400DB5FD9 /* APObjectFixture.m */,
 				618FEE54169AEAEC006A1888 /* APUserFixture.m */,
-				61D4A0E51635223400DB5FD9 /* APConnectionFixture.m */,
 				6191E993169A926A00F87656 /* test_image.png */,
 				2CEB0E98162BD2AB0074DA50 /* Supporting Files */,
 			);
@@ -257,6 +261,15 @@
 				61D62C0115F8857100C57AA3 /* APError.m */,
 			);
 			name = Error;
+			sourceTree = "<group>";
+		};
+		4C4086171890497E002DC1E5 /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				4C40861318904976002DC1E5 /* APPushNotification.h */,
+				4C40861418904976002DC1E5 /* APPushNotification.m */,
+			);
+			name = Push;
 			sourceTree = "<group>";
 		};
 		4C581BE91859B7B200518557 /* Object */ = {
@@ -402,10 +415,10 @@
 		612E3E2315EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests */ = {
 			isa = PBXGroup;
 			children = (
-				61D4A0EC1635234500DB5FD9 /* APHelperMethodsFixture.h */,
-				61D4A0ED1635234500DB5FD9 /* APHelperMethodsFixture.m */,
 				61D4A0EF1635234500DB5FD9 /* AppacitiveFixture.h */,
 				61D4A0F01635234500DB5FD9 /* AppacitiveFixture.m */,
+				61D4A0EC1635234500DB5FD9 /* APHelperMethodsFixture.h */,
+				61D4A0ED1635234500DB5FD9 /* APHelperMethodsFixture.m */,
 				61D4A0F11635234500DB5FD9 /* APQueryFixture.h */,
 				61D4A0F21635234600DB5FD9 /* APQueryFixture.m */,
 				612E3E2415EDF8FE00F98FB8 /* Supporting Files */,
@@ -434,9 +447,10 @@
 				4CB41C5318644E3000918DA6 /* File */,
 				4CB41C5418644E3E00918DA6 /* Query */,
 				4CBCA515187C014900947D90 /* Graph */,
+				4C4086171890497E002DC1E5 /* Push */,
+				4C581BEA1859B7C100518557 /* Connection */,
 				4CE27A9618682B290099FBAC /* Device */,
 				4C581BEC1859B7D800518557 /* User */,
-				4C581BEA1859B7C100518557 /* Connection */,
 				4C581BE91859B7B200518557 /* Object */,
 			);
 			path = Classes;
@@ -464,6 +478,7 @@
 				61D62C0B15F8857100C57AA3 /* APConnection.h in Headers */,
 				4C7A8607185EC8D900BD06FF /* APEmail.h in Headers */,
 				4CBCA513187C00E400947D90 /* APGraphNode.h in Headers */,
+				4C40861518904976002DC1E5 /* APPushNotification.h in Headers */,
 				61D62C0D15F8857100C57AA3 /* APError.h in Headers */,
 				61D62C0F15F8857100C57AA3 /* APHelperMethods.h in Headers */,
 				61D62C1115F8857100C57AA3 /* APObject.h in Headers */,
@@ -670,6 +685,7 @@
 				61D62C0C15F8857100C57AA3 /* APConnection.m in Sources */,
 				4C7A8608185EC8D900BD06FF /* APEmail.m in Sources */,
 				4CCA7CD918740F5800D89FFA /* APDevice.m in Sources */,
+				4C40861618904976002DC1E5 /* APPushNotification.m in Sources */,
 				61D62C0E15F8857100C57AA3 /* APError.m in Sources */,
 				61D62C1015F8857100C57AA3 /* APHelperMethods.m in Sources */,
 				61D62C1215F8857100C57AA3 /* APObject.m in Sources */,
