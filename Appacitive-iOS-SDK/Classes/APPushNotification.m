@@ -382,16 +382,16 @@
 - (TileNotification*) createNewIconicTile:(IconicTile*)tile  flipTileForWP75AndBelow:(FlipTile*)flipTile{
     if (tile != nil)
         _wp8Tile = tile;
-    _wp75Tile = fliptile;
-    _wp7Tile = fliptile;
+    _wp75Tile = flipTile;
+    _wp7Tile = flipTile;
     return self;
 }
 
 - (TileNotification*) createNewCyclicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)flipTile {
     if (tile != nil )
         _wp8Tile = tile;
-    _wp75Tile = fliptile;
-    _wp7Tile = fliptile;
+    _wp75Tile = flipTile;
+    _wp7Tile = flipTile;
     return self;
 }
 

@@ -38,7 +38,10 @@ static BOOL enableLiveEnvironment = NO;
     if([[NSUserDefaults standardUserDefaults] valueForKey:@"appacitive-device-guid"] == nil) {
         NSString* deviceGUID = [self GetUUID];
         APDevice *device = [[APDevice alloc]initWithDeviceToken:deviceGUID deviceType:@"ios"];
-        [[NSUserDefaults standardUserDefaults] setObject:deviceGUID forKey:@"appacitive-device-guid"];
+        [device registerDeviceWithSuccessHandler:^{
+            [[NSUserDefaults standardUserDefaults] setObject:deviceGUID forKey:@"appacitive-device-guid"];
+        } failureHandler:^(APError *error) {
+        }];
     }
 }
 

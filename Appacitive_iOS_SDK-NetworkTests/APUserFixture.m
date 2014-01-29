@@ -1,41 +1,41 @@
-//#import "Appacitive.h"
-//#import "APError.h"
-//#import "APUser.h"
-//
-//SPEC_BEGIN(APUserTests)
-//
-//describe(@"APUserTests", ^{
-//    
-//    beforeAll(^() {
-//        [Appacitive initWithAPIKey:API_KEY];
-//        [Appacitive useLiveEnvironment:NO];
-//        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
-//    });
-//    
-//    beforeEach(^{
-//        [APUser authenticateUserWithUserName:@"ppatel"
-//                                    password:@"1qaz1qaz"
-//         successHandler:^(APUser *user) {
-//         }];
-//    });
-//    
-//    afterAll(^(){
-//    });
-//
-//#pragma mark - AUTHENTICATE_TEST
-//    
-//    it(@"authenticating a user with a valid user id", ^{
-//        __block BOOL isUserAuthenticateSuccesful = NO;
-//
-//        [APUser authenticateUserWithUserName:@"ppatel" password:@"1qaz1qaz"
-//                successHandler:^(APUser* user) {
-//                    isUserAuthenticateSuccesful = YES;
-//                } failureHandler:^(APError *error) {
-//                    isUserAuthenticateSuccesful = NO;
-//                }];
-//        [[expectFutureValue(theValue(isUserAuthenticateSuccesful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
-//    });
-//
+#import "Appacitive.h"
+#import "APError.h"
+#import "APUser.h"
+
+SPEC_BEGIN(APUserTests)
+
+describe(@"APUserTests", ^{
+    
+    beforeAll(^() {
+        [Appacitive initWithAPIKey:API_KEY];
+        [Appacitive useLiveEnvironment:NO];
+        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
+    });
+    
+    beforeEach(^{
+        [APUser authenticateUserWithUserName:@"ppatel"
+                                    password:@"1qaz1qaz"
+         successHandler:^(APUser *user) {
+         }];
+    });
+    
+    afterAll(^(){
+    });
+
+#pragma mark - AUTHENTICATE_TEST
+    
+    it(@"authenticating a user with a valid user id", ^{
+        __block BOOL isUserAuthenticateSuccesful = NO;
+
+        [APUser authenticateUserWithUserName:@"ppatel" password:@"1qaz1qaz"
+                successHandler:^(APUser* user) {
+                    isUserAuthenticateSuccesful = YES;
+                } failureHandler:^(APError *error) {
+                    isUserAuthenticateSuccesful = NO;
+                }];
+        [[expectFutureValue(theValue(isUserAuthenticateSuccesful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
+    });
+
 //    it(@"validating user session with a valid user token", ^{
 //        __block BOOL isUserAuthenticateSuccesful = NO;
 //        
@@ -240,7 +240,7 @@
 //        [[expectFutureValue(theValue(isPasswordChanged)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//});
-//
-//SPEC_END
+});
+
+SPEC_END
 //
