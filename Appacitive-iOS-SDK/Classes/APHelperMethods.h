@@ -9,6 +9,10 @@
 //#import "MKNetworkKit.h"
 
 @class APError;
+
+/**
+ This class contains all the helper methods used internally by the SDK.
+ */
 @interface APHelperMethods : NSObject
 
 #define NSStringFromBOOL(aBOOL) aBOOL ? @"YES" : @"NO"
@@ -51,8 +55,8 @@
 /**
  Helper method to parse json response to NSDate
  
- @param response Response received from the server.
- @return date date as NSDate object.
+ @param jsonDateString Date in JSON string format.
+ @return date as NSDate object.
  */
 + (NSDate*) deserializeJsonDateString:(NSString*)jsonDateString;
 

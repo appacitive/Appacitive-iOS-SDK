@@ -30,7 +30,6 @@
 
 /**
  Method to instantiate an email object with minimum number of requierd properties.
- 
  @param recipients An array of email addresses of the recipients of the email.
  @param subject Subject for the email.
  @param body Content of the email.
@@ -44,7 +43,6 @@
 
 /**
  Method to send a simple email.
- 
  @param successBlock Block invoked when the email sending operation is successful.
  @param failureBlock Block invoked when the email sending operation is unsuccessful.
  @note To send an email the following properties of the email object MUST be set: toRecipients, subjectText, bodyText
@@ -52,14 +50,13 @@
 - (void) sendEmailWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see sendEmailWithSMTPConfig:successHandler:failureHandler:
+ @see sendEmailUsingSMTPConfig:successHandler:failureHandler:
  */
 - (void) sendEmailUsingSMTPConfig:(NSDictionary*)smtpConfig;
 
 /**
  Method to send a simple email
- 
- @param smtpConfig (Optional) a dictionary with smtp configuration parameters.
+ @param smtpConfig A dictionary with smtp configuration parameters.
  @param successBlock Block invoked when the email sending operation is successful.
  @param failureBlock Block invoked when the email sending operation is unsuccessful.
  @note To send an email the following properties of the email object MUST be set: @b toRecipients, @b subjectText, @b bodyText.
@@ -69,31 +66,36 @@
 - (void) sendEmailUsingSMTPConfig:(NSDictionary*)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see sendTemplatedEmailUsingTemplate:usingSMTPConfig:successHandler:failureHandler
+ @see sendTemplatedEmailUsingTemplate:usingSMTPConfig:successHandler:failureHandler:
  */
 - (void) sendTemplatedEmailUsingTemplate:(NSString *)templateName usingSMTPConfig:(NSDictionary*)smtpConfig;
 
 /**
- @see sendTemplatedEmailUsingTemplate:usingSMTPConfig:successHandler:failureHandler
+ @see sendTemplatedEmailUsingTemplate:usingSMTPConfig:successHandler:failureHandler:
  */
 - (void) sendTemplatedEmailUsingTemplate:(NSString *)templateName;
 
 /**
- @see sendTemplatedEmailUsingTemplate:usingSMTPConfig:successHandler:failureHandler
+ @see sendTemplatedEmailUsingTemplate:usingSMTPConfig:successHandler:failureHandler:
  */
 - (void) sendTemplatedEmailUsingTemplate:(NSString *)templateName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-
 /**
  Mehtod to send a templated email.
- 
  @param templateName name of the template configured on the Appacitive portal.
- 
+ @param smtpConfig A dictionary with smtp configuration parameters.
+ @param successBlock Block invoked when the email sending operation is successful.
+ @param failureBlock Block invoked when the email sending operation is unsuccessful.
  */
 - (void) sendTemplatedEmailUsingTemplate:(NSString *)templateName usingSMTPConfig:(NSDictionary*)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- Helper method to create a dictionary object properties and save it to configDictObject
+ Helper method to create a dictionary object with SMTP Configuration parameters
+ @param username Username for the account on SMTP server.
+ @param password Password for the account on SMTP server.
+ @param host SMTP server host url.
+ @param port SMTP server port.
+ @param enableSSL Whether to user SSL or not.
  */
 + (NSDictionary*) makeSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL;
 

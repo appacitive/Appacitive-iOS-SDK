@@ -31,8 +31,8 @@
  Method to make a network request
  
  @param urlRequest NSURLRequest object for the request that needs to be made.
- @param successBlock Block invoked when the network request operation is successful.
- @param failureBlock Block invoked when the network request operation is unsuccessful.
+ @param requestSuccessBlock Block invoked when the network request operation is successful.
+ @param requestFailureBlock Block invoked when the network request operation is unsuccessful.
  */
 - (void) makeAsyncRequestWithURLRequest:(NSMutableURLRequest*)urlRequest successHandler:(APResultSuccessBlock)requestSuccessBlock failureHandler:(APFailureBlock)requestFailureBlock;
 

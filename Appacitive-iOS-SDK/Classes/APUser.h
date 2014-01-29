@@ -9,6 +9,9 @@
 #import "APResponseBlocks.h"
 #import "APObject.h"
 
+/**
+ An APUser is a user registerd for using your app. This class helps you to manage the details of the users of your app.
+ */
 @interface APUser : APObject <APObjectPropertyMapping>
 
 @property (nonatomic, strong, readonly) NSString *userToken;
@@ -118,7 +121,7 @@
 /** @name Create a new user */
 
 /**
- @see createUserWithDetails:successHandler:failureHandler:
+ @see createUserWithSuccessHandler:failureHandler:
  */
 - (void) createUserWithSuccessHandler:(APSuccessBlock) successBlock;
 
@@ -129,11 +132,10 @@
  
  @note This method does not set the current user as the new user.
  
- @param userDetails The details of the new user.
  @param successBlock Block invoked when the create request is successful.
  @param failureBlock Block invoked when the create request is unsuccessful.
  */
-- (void) createUserWithSuccessHandler:(APSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) createUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
  @see createUserWithFacebook:successHandler:failureHandler:
@@ -222,12 +224,12 @@
 - (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see getUserByUserName:successHandler:failureHandler:
+ @see fetchUserByUserName:successHandler:failureHandler:
  */
 - (void) fetchUserByUserName:(NSString *)userName;
 
 /**
- @see getUserByUserName:successHandler:failureHandler:
+ @see fetchUserByUserName:successHandler:failureHandler:
  */
 - (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock) successBlock;
 
@@ -241,18 +243,19 @@
 - (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see getCurrentUserWith:successHandler:failureHandler:
+ @see fetchUserWithUserToken:successHandler:failureHandler:
  */
 - (void) fetchUserWithUserToken:(NSString *)userToken;
 
 /**
- @see getCurrentUserWith:successHandler:failureHandler:
+ @see fetchUserWithUserToken:successHandler:failureHandler:
  */
 - (void) fetchUserWithUserToken:(NSString *)userToken successHandler:(APSuccessBlock) successBlock;
 
 /**
  Method to retrieve of currently logged-in User
  
+ @param userToken user token for the user you wish to fetch.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
@@ -292,19 +295,19 @@
 /** @name Update User */
 
 /**
- @see upadteUserWithRevisionNumber:successHandler:failureHandler:
+ @see updateObjectWithRevisionNumber:successHandler:failureHandler:
  */
 - (void) updateObject;
 
 /**
- @see upadteUserWithRevisionNumber:successHandler:failureHandler:
+ @see updateObjectWithRevisionNumber:successHandler:failureHandler:
  */
 - (void) updateObjectWithSuccessHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to update a User
  
- @param userid the id of the user whose details need to be updated.
+ @param revision The the last revision number of the object.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
@@ -313,7 +316,7 @@
 /** @name Delete User */
 
 /**
- @see deleteUserWithUserId:successHandler:failureHandler:
+ @see deleteObjectWithSuccessHandler:failureHandler:
  */
 - (void) deleteObject;
 
@@ -344,14 +347,14 @@
 - (void) deleteObjectWithConnectingConnectionsSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see deleteUserWithUserName:successHandler:failureHandler:
+ @see deleteObjectWithUserName:successHandler:failureHandler:
  */
 - (void) deleteObjectWithUserName:(NSString*)userName;
 
 /**
  Method to delete a User
  
- @param userid the id of the user whose details need to be deleted.
+ @param userName The username of the user whose details need to be deleted.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
@@ -371,12 +374,12 @@
 + (void) deleteCurrentlyLoggedInUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see setLocationToLatitude:longitude:forUserWithUserId:successHandler:failureHandler:
+ @see setUserLocationToLatitude:longitude:forUserWithUserId:successHandler:failureHandler:
  */
 + (void) setUserLocationToLatitude:(NSString*)latitude longitude:(NSString*)longitude forUserWithUserId:(NSString*)userId;
 
 /**
- @see setLocationToLatitude:longitude:forUserWithUserId:successHandler:failureHandler:
+ @see setUserLocationToLatitude:longitude:forUserWithUserId:successHandler:failureHandler:
  */
 + (void) setUserLocationToLatitude:(NSString*)latitude longitude:(NSString*)longitude forUserWithUserId:(NSString*)userId failureHandler:(APFailureBlock)failureBlock;
 
@@ -385,33 +388,32 @@
  
  @param latitude Latitude of the user's current location coordinate.
  @param longitude Longitude of the user's current location coordinate.
- @param userid the id of the user whose location needs to be set.
+ @param userId the id of the user whose location needs to be set.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
 + (void) setUserLocationToLatitude:(NSString*)latitude longitude:(NSString*)longitude forUserWithUserId:(NSString*)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see validateCurrentUserSessionsuccessHandler:failureHandler
+ @see validateCurrentUserSessionWithSuccessHandler:failureHandler:
  */
 + (void) validateCurrentUserSessionWithSuccessHandler:(APResultSuccessBlock)successBlock;
 
 /**
  Method to validate user's session
  
- @param userToken token of the user whose session needs to be validated.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
 + (void) validateCurrentUserSessionWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see logOutCurrentUserWithSuccessHandler:successHandler:failureHandler:
+ @see logOutCurrentUserWithSuccessHandler:failureHandler:
  */
 + (void) logOutCurrentUser;
 
 /**
- @see logOutCurrentUserWithSuccessHandler:successHandler:failureHandler:
+ @see logOutCurrentUserWithSuccessHandler:failureHandler:
  */
 + (void) logOutCurrentUserWithFailureHandler:(APFailureBlock)failureBlock;
 
@@ -426,29 +428,30 @@
 /**
  @see changePasswordFromOldPassword:toNewPassword:successHandler:failureHandler:
  */
-- (void) changePasswordFromOldPassword:(NSString*)oldPassword toNewPassPassword:(NSString*)newPassword;
+- (void) changePasswordFromOldPassword:(NSString*)oldPassword toNewPassword:(NSString*)newPassword;
 
 /**
  @see changePasswordFromOldPassword:toNewPassword:successHandler:failureHandler:
  */
-- (void) changePasswordFromOldPassword:(NSString*)oldPassword toNewPassPassword:(NSString*)newPassword failureHandler:(APFailureBlock)failureBlock;
+- (void) changePasswordFromOldPassword:(NSString*)oldPassword toNewPassword:(NSString*)newPassword failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to change Password for the currently logged-in user
  
  @param oldPassword The current/old password of the logged-in user.
+ @param newPassword The new password of the logged-in user.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassPassword:(NSString *)newPassword successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassword:(NSString *)newPassword successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see sendResetPasswordEmailWithSubject:succssHandler:failureHandler:
+ @see sendResetPasswordEmailWithSubject:successHandler:failureHandler:
  */
 - (void) sendResetPasswordEmailWithSubject:(NSString*)emailSubject;
 
 /**
- @see sendResetPasswordEmailWithSubject:succssHandler:failureHandler:
+ @see sendResetPasswordEmailWithSubject:successHandler:failureHandler:
  */
 - (void) sendResetPasswordEmailWithSubject:(NSString*)emailSubject failureHandler:(APFailureBlock)failureBlock;
 

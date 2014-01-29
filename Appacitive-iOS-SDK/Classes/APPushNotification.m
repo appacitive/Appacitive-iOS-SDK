@@ -379,7 +379,7 @@
     return self;
 }
 
-- (TileNotification*) createNewIconicTile:(IconicTile*)tile  flipTileForWP75AndBelow:(FlipTile*)fliptile{
+- (TileNotification*) createNewIconicTile:(IconicTile*)tile  flipTileForWP75AndBelow:(FlipTile*)flipTile{
     if (tile != nil)
         _wp8Tile = tile;
     _wp75Tile = fliptile;
@@ -387,7 +387,7 @@
     return self;
 }
 
-- (TileNotification*) createNewCyclicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)fliptile {
+- (TileNotification*) createNewCyclicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)flipTile {
     if (tile != nil )
         _wp8Tile = tile;
     _wp75Tile = fliptile;

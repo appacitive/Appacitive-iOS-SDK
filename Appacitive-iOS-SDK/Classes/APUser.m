@@ -778,15 +778,15 @@ static NSDictionary *headerParams;
 
 #pragma mark - Password management methods
 
-- (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassPassword:(NSString *)newPassword {
-    [self changePasswordFromOldPassword:oldPassword toNewPassPassword:newPassword successHandler:nil failureHandler:nil];
+- (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassword:(NSString *)newPassword {
+    [self changePasswordFromOldPassword:oldPassword toNewPassword:newPassword successHandler:nil failureHandler:nil];
 }
 
-- (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassPassword:(NSString *)newPassword failureHandler:(APFailureBlock)failureBlock {
-    [self changePasswordFromOldPassword:oldPassword toNewPassPassword:newPassword successHandler:nil failureHandler:failureBlock];
+- (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassword:(NSString *)newPassword failureHandler:(APFailureBlock)failureBlock {
+    [self changePasswordFromOldPassword:oldPassword toNewPassword:newPassword successHandler:nil failureHandler:failureBlock];
 }
 
-- (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassPassword:(NSString *)newPassword successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassword:(NSString *)newPassword successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@/changePassword",self.objectId];
     path = [HOST_NAME stringByAppendingPathComponent:path];

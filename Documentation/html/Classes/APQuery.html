@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=550" />
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
 		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
-		<meta name="generator" content="appledoc 2.0.5 (build 789)" />
+		<meta name="generator" content="appledoc 2.1 (build 840)" />
 	</head>
 	<body>
 		<header id="top_header">
@@ -27,6 +27,8 @@
 					<select id="jumpTo">
 	<option value="top">Jump To&#133;</option>
 	
+	<option value="overview">Overview</option>
+	
 	
 	
 	
@@ -40,29 +42,33 @@
 	
 	<option value="class_methods">Class Methods</option>
 	
-	<option value="//api/name/queryStringForEqualCondition:date:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForEqualCondition:date:</option>
+	<option value="//api/name/booleanAnd:">&nbsp;&nbsp;&nbsp;&nbsp;+ booleanAnd:</option>
 	
-	<option value="//api/name/queryStringForEqualCondition:propertyValue:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForEqualCondition:propertyValue:</option>
+	<option value="//api/name/booleanOr:">&nbsp;&nbsp;&nbsp;&nbsp;+ booleanOr:</option>
 	
-	<option value="//api/name/queryStringForGeoCodeProperty:location:distance:raduis:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForGeoCodeProperty:location:distance:raduis:</option>
+	<option value="//api/name/queryExpressionWithAggregate:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryExpressionWithAggregate:</option>
 	
-	<option value="//api/name/queryStringForGreaterThanCondition:propertyValue:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForGreaterThanCondition:propertyValue:</option>
+	<option value="//api/name/queryExpressionWithAttribute:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryExpressionWithAttribute:</option>
 	
-	<option value="//api/name/queryStringForLessThanCondition:propertyValue:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForLessThanCondition:propertyValue:</option>
+	<option value="//api/name/queryExpressionWithProperty:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryExpressionWithProperty:</option>
 	
-	<option value="//api/name/queryStringForLikeCondition:propertyValue:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForLikeCondition:propertyValue:</option>
+	<option value="//api/name/queryWithFields:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithFields:</option>
 	
-	<option value="//api/name/queryStringForPageNumber:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForPageNumber:</option>
+	<option value="//api/name/queryWithOrderBy:isAscending:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithOrderBy:isAscending:</option>
 	
-	<option value="//api/name/queryStringForPageSize:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForPageSize:</option>
+	<option value="//api/name/queryWithPageNumber:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithPageNumber:</option>
 	
-	<option value="//api/name/queryStringForPolygonSearch:withPolygonCoordinates:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForPolygonSearch:withPolygonCoordinates:</option>
+	<option value="//api/name/queryWithPageSize:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithPageSize:</option>
 	
-	<option value="//api/name/queryStringForSearchWithAllTags:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForSearchWithAllTags:</option>
+	<option value="//api/name/queryWithPolygonSearchForProperty:withPolygonCoordinates:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithPolygonSearchForProperty:withPolygonCoordinates:</option>
 	
-	<option value="//api/name/queryStringForSearchWithFreeText:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForSearchWithFreeText:</option>
+	<option value="//api/name/queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:</option>
 	
-	<option value="//api/name/queryStringForSearchWithOneOrMoreTags:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryStringForSearchWithOneOrMoreTags:</option>
+	<option value="//api/name/queryWithSearchUsingAllTags:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithSearchUsingAllTags:</option>
+	
+	<option value="//api/name/queryWithSearchUsingFreeText:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithSearchUsingFreeText:</option>
+	
+	<option value="//api/name/queryWithSearchUsingOneOrMoreTags:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithSearchUsingOneOrMoreTags:</option>
 	
 	
 	
@@ -75,6 +81,8 @@
 		<nav id="tocContainer" class="isShowingTOC">
 			<ul id="toc" role="tree">
 				
+<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
+
 
 
 
@@ -90,29 +98,33 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForEqualCondition:date:">queryStringForEqualCondition:date:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/booleanAnd:">booleanAnd:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForEqualCondition:propertyValue:">queryStringForEqualCondition:propertyValue:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/booleanOr:">booleanOr:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForGeoCodeProperty:location:distance:raduis:">queryStringForGeoCodeProperty:location:distance:raduis:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryExpressionWithAggregate:">queryExpressionWithAggregate:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForGreaterThanCondition:propertyValue:">queryStringForGreaterThanCondition:propertyValue:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryExpressionWithAttribute:">queryExpressionWithAttribute:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForLessThanCondition:propertyValue:">queryStringForLessThanCondition:propertyValue:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryExpressionWithProperty:">queryExpressionWithProperty:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForLikeCondition:propertyValue:">queryStringForLikeCondition:propertyValue:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithFields:">queryWithFields:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForPageNumber:">queryStringForPageNumber:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithOrderBy:isAscending:">queryWithOrderBy:isAscending:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForPageSize:">queryStringForPageSize:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithPageNumber:">queryWithPageNumber:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForPolygonSearch:withPolygonCoordinates:">queryStringForPolygonSearch:withPolygonCoordinates:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithPageSize:">queryWithPageSize:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForSearchWithAllTags:">queryStringForSearchWithAllTags:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithPolygonSearchForProperty:withPolygonCoordinates:">queryWithPolygonSearchForProperty:withPolygonCoordinates:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForSearchWithFreeText:">queryStringForSearchWithFreeText:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:">queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryStringForSearchWithOneOrMoreTags:">queryStringForSearchWithOneOrMoreTags:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithSearchUsingAllTags:">queryWithSearchUsingAllTags:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithSearchUsingFreeText:">queryWithSearchUsingFreeText:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithSearchUsingOneOrMoreTags:">queryWithSearchUsingOneOrMoreTags:</a></span></li>
 	
 </ul></li>
 
@@ -140,13 +152,21 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">NSObject</td>
+	<td class="specification-value"><a href="../Classes/APSimpleQuery.html">APSimpleQuery</a> : NSObject</td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
 	<td class="specification-value">APQuery.h<br />APQuery.m</td>
 </tr>
 						</tbody></table></div>
 					
+					
+					
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>An APQuery is the generic form of query for query string parameters.</p>
+					</div>
 					
 					
 					
@@ -163,85 +183,99 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForEqualCondition:propertyValue:">+&nbsp;queryStringForEqualCondition:propertyValue:</a></code>
-		<span class="tooltip"><p>Helper method to generate an equal to query string.</p></span>
+		<code><a href="#//api/name/queryExpressionWithProperty:">+&nbsp;queryExpressionWithProperty:</a></code>
+		<span class="tooltip"><p>Method to crete a query expression with query operand as a property of an <a href="../Classes/APObject.html">APObject</a>.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForEqualCondition:date:">+&nbsp;queryStringForEqualCondition:date:</a></code>
-		<span class="tooltip"><p>Helper method to generate an equal to query string.</p></span>
+		<code><a href="#//api/name/queryExpressionWithAttribute:">+&nbsp;queryExpressionWithAttribute:</a></code>
+		<span class="tooltip"><p>Method to crete a query expression with query operand as an attribute of an <a href="../Classes/APObject.html">APObject</a>.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForLikeCondition:propertyValue:">+&nbsp;queryStringForLikeCondition:propertyValue:</a></code>
-		<span class="tooltip"><p>Helper method to generate a query string for like condition.</p></span>
+		<code><a href="#//api/name/queryExpressionWithAggregate:">+&nbsp;queryExpressionWithAggregate:</a></code>
+		<span class="tooltip"><p>Method to crete a query expression with query operand as an aggregate of an <a href="../Classes/APObject.html">APObject</a>.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForGreaterThanCondition:propertyValue:">+&nbsp;queryStringForGreaterThanCondition:propertyValue:</a></code>
-		<span class="tooltip"><p>Helper method to generate a greater than query string.</p></span>
+		<code><a href="#//api/name/booleanAnd:">+&nbsp;booleanAnd:</a></code>
+		<span class="tooltip"><p>Method to crete a compound query by boolean ANDing all the operands in the queries array.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForLessThanCondition:propertyValue:">+&nbsp;queryStringForLessThanCondition:propertyValue:</a></code>
-		<span class="tooltip"><p>Helper method to generate a less than query string.</p></span>
+		<code><a href="#//api/name/booleanOr:">+&nbsp;booleanOr:</a></code>
+		<span class="tooltip"><p>Method to crete a compound query by boolean ORing all the operands in the queries array.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForPageSize:">+&nbsp;queryStringForPageSize:</a></code>
+		<code><a href="#//api/name/queryWithPageSize:">+&nbsp;queryWithPageSize:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string for page size.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForPageNumber:">+&nbsp;queryStringForPageNumber:</a></code>
+		<code><a href="#//api/name/queryWithPageNumber:">+&nbsp;queryWithPageNumber:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string for page number.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForGeoCodeProperty:location:distance:raduis:">+&nbsp;queryStringForGeoCodeProperty:location:distance:raduis:</a></code>
+		<code><a href="#//api/name/queryWithOrderBy:isAscending:">+&nbsp;queryWithOrderBy:isAscending:</a></code>
+		<span class="tooltip"><p>Helper method to generate a query string for page size and page number.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:">+&nbsp;queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string for geocode search.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForPolygonSearch:withPolygonCoordinates:">+&nbsp;queryStringForPolygonSearch:withPolygonCoordinates:</a></code>
+		<code><a href="#//api/name/queryWithPolygonSearchForProperty:withPolygonCoordinates:">+&nbsp;queryWithPolygonSearchForProperty:withPolygonCoordinates:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string for polygon search.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForSearchWithOneOrMoreTags:">+&nbsp;queryStringForSearchWithOneOrMoreTags:</a></code>
+		<code><a href="#//api/name/queryWithSearchUsingOneOrMoreTags:">+&nbsp;queryWithSearchUsingOneOrMoreTags:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string for search with tags.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForSearchWithAllTags:">+&nbsp;queryStringForSearchWithAllTags:</a></code>
+		<code><a href="#//api/name/queryWithSearchUsingAllTags:">+&nbsp;queryWithSearchUsingAllTags:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string for search with tags.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryStringForSearchWithFreeText:">+&nbsp;queryStringForSearchWithFreeText:</a></code>
+		<code><a href="#//api/name/queryWithSearchUsingFreeText:">+&nbsp;queryWithSearchUsingFreeText:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string to search for free text.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/queryWithFields:">+&nbsp;queryWithFields:</a></code>
+		<span class="tooltip"><p>Helper method to generate a query string to fetch specific fields.</p></span>
 	</span>
 	
 	
@@ -261,18 +295,18 @@
 						<h2 class="subtitle subtitle-methods">Class Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/queryStringForEqualCondition:date:" title="queryStringForEqualCondition:date:"></a>
-	<h3 class="subsubtitle method-title">queryStringForEqualCondition:date:</h3>
+	<a name="//api/name/booleanAnd:" title="booleanAnd:"></a>
+	<h3 class="subsubtitle method-title">booleanAnd:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Helper method to generate an equal to query string.</p>
+		<p>Method to crete a compound query by boolean ANDing all the operands in the queries array.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForEqualCondition:(NSString *)<em>propertyName</em> date:(NSDate *)<em>date</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (APCompoundQuery *)booleanAnd:(NSArray *)<em>queries</em></code></div>
 
     
 	
@@ -280,16 +314,8 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>propertyName</em></dt>
-			<dd><p>name of the property to search for</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>date</em></dt>
-			<dd><p>the date to equate to.</p>
-
-<p>Example query would be +[APQuery queryStringForEqualCondition:@&ldquo;checkinDate&rdquo; date:someDate]
-This would return &ldquo;*checkinDate == date(someDate.description)&lsquo;&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
+			<dt><em>queries</em></dt>
+			<dd><p>Array of operands for the boolean AND operation.</p></dd>
 		</dl>
 		
 	</div>
@@ -315,18 +341,393 @@ This would return &ldquo;*checkinDate == date(someDate.description)&lsquo;&rdquo
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/queryStringForEqualCondition:propertyValue:" title="queryStringForEqualCondition:propertyValue:"></a>
-	<h3 class="subsubtitle method-title">queryStringForEqualCondition:propertyValue:</h3>
+	<a name="//api/name/booleanOr:" title="booleanOr:"></a>
+	<h3 class="subsubtitle method-title">booleanOr:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Helper method to generate an equal to query string.</p>
+		<p>Method to crete a compound query by boolean ORing all the operands in the queries array.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForEqualCondition:(NSString *)<em>propertyName</em> propertyValue:(NSString *)<em>propertyValue</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (APCompoundQuery *)booleanOr:(NSArray *)<em>queries</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>queries</em></dt>
+			<dd><p>Array of operands for the boolean OR operation.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryExpressionWithAggregate:" title="queryExpressionWithAggregate:"></a>
+	<h3 class="subsubtitle method-title">queryExpressionWithAggregate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to crete a query expression with query operand as an aggregate of an <a href="../Classes/APObject.html">APObject</a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (APQueryExpression *)queryExpressionWithAggregate:(NSString *)<em>aggregate</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>aggregate</em></dt>
+			<dd><p>Aggregate to be used an operand of the query expression.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryExpressionWithAttribute:" title="queryExpressionWithAttribute:"></a>
+	<h3 class="subsubtitle method-title">queryExpressionWithAttribute:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to crete a query expression with query operand as an attribute of an <a href="../Classes/APObject.html">APObject</a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (APQueryExpression *)queryExpressionWithAttribute:(NSString *)<em>attribute</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>attribute</em></dt>
+			<dd><p>Attribute to be used an operand of the query expression.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryExpressionWithProperty:" title="queryExpressionWithProperty:"></a>
+	<h3 class="subsubtitle method-title">queryExpressionWithProperty:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to crete a query expression with query operand as a property of an <a href="../Classes/APObject.html">APObject</a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (APQueryExpression *)queryExpressionWithProperty:(NSString *)<em>property</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>property</em></dt>
+			<dd><p>Property to be used an operand of the query expression.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryWithFields:" title="queryWithFields:"></a>
+	<h3 class="subsubtitle method-title">queryWithFields:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Helper method to generate a query string to fetch specific fields.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithFields:(NSArray *)<em>fields</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>fields</em></dt>
+			<dd><p>Array of field name strings.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryWithOrderBy:isAscending:" title="queryWithOrderBy:isAscending:"></a>
+	<h3 class="subsubtitle method-title">queryWithOrderBy:isAscending:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Helper method to generate a query string for page size and page number.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithOrderBy:(NSString *)<em>property</em> isAscending:(BOOL)<em>isAscending</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>property</em></dt>
+			<dd><p>the property to be used for sorting</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>isAscending</em></dt>
+			<dd><p>ascending or descending order for sorting
+Example query would be +[APQuery queryWithOrderBy:@&ldquo;name&rdquo; isAscending:NO]
+This would return &ldquo;orderBy=&lsquo;name&rsquo;&amp;isAsc=false&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryWithPageNumber:" title="queryWithPageNumber:"></a>
+	<h3 class="subsubtitle method-title">queryWithPageNumber:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Helper method to generate a query string for page number.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithPageNumber:(NSUInteger)<em>pageNumber</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>pageNumber</em></dt>
+			<dd><p>the page number to get</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryWithPageSize:" title="queryWithPageSize:"></a>
+	<h3 class="subsubtitle method-title">queryWithPageSize:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Helper method to generate a query string for page size.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithPageSize:(NSUInteger)<em>pageSize</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>pageSize</em></dt>
+			<dd><p>an integer value for the page size.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryWithPolygonSearchForProperty:withPolygonCoordinates:" title="queryWithPolygonSearchForProperty:withPolygonCoordinates:"></a>
+	<h3 class="subsubtitle method-title">queryWithPolygonSearchForProperty:withPolygonCoordinates:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Helper method to generate a query string for polygon search.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithPolygonSearchForProperty:(NSString *)<em>propertyName</em> withPolygonCoordinates:(NSArray *)<em>coordinates</em></code></div>
 
     
 	
@@ -339,388 +740,9 @@ This would return &ldquo;*checkinDate == date(someDate.description)&lsquo;&rdquo
 		</dl>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>propertyValue</em></dt>
-			<dd><p>the value of the property to equate to.</p>
-
-<p>Example query would be +[APQuery queryStringForEqualCondition:@&ldquo;hotelName&rdquo; propertyValue:@&ldquo;Le Meridian&rdquo;]
-This would return &ldquo;*hotelName == &lsquo;Le Meridian&rsquo;&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryStringForGeoCodeProperty:location:distance:raduis:" title="queryStringForGeoCodeProperty:location:distance:raduis:"></a>
-	<h3 class="subsubtitle method-title">queryStringForGeoCodeProperty:location:distance:raduis:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for geocode search.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForGeoCodeProperty:(NSString *)<em>propertyName</em> location:(CLLocation *)<em>location</em> distance:(DistanceMetric)<em>distanceMetric</em> raduis:(NSNumber *)<em>radius</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>propertyName</em></dt>
-			<dd><p>name of the property to search for</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>location</em></dt>
-			<dd><p>the geocode to search for</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>distanceMetric</em></dt>
-			<dd><p>the distance either in km or miles</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>radius</em></dt>
-			<dd><p>the radios around the location to look for</p>
-
-<p>Example query would be +[APQuery queryStringForGeoCodeProperty:@&ldquo;location&rdquo; location:{123, 123} distance:kilometers raduis:12]
-This would return &ldquo;*location within_circle 123,123,12&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryStringForGreaterThanCondition:propertyValue:" title="queryStringForGreaterThanCondition:propertyValue:"></a>
-	<h3 class="subsubtitle method-title">queryStringForGreaterThanCondition:propertyValue:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a greater than query string.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForGreaterThanCondition:(NSString *)<em>propertyName</em> propertyValue:(NSString *)<em>propertyValue</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>propertyName</em></dt>
-			<dd><p>name of the property to search for</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>propertyValue</em></dt>
-			<dd><p>value that the property should be greater than.</p>
-
-<p>Example query would be +[APQuery queryStringForGreaterThanCondition:@&ldquo;cost&rdquo; propertyValue:[NSString stringWithFormat@&ldquo;%d&rdquo;, 123]]
-This would return &ldquo;*cost > &lsquo;123&rsquo;&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryStringForLessThanCondition:propertyValue:" title="queryStringForLessThanCondition:propertyValue:"></a>
-	<h3 class="subsubtitle method-title">queryStringForLessThanCondition:propertyValue:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a less than query string.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForLessThanCondition:(NSString *)<em>propertyName</em> propertyValue:(NSString *)<em>propertyValue</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>propertyName</em></dt>
-			<dd><p>name of the property to search for</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>propertyValue</em></dt>
-			<dd><p>the value the property should be less than.</p>
-
-<p>Example query would be +[APQuery queryStringForLessThanCondition:@&ldquo;cost&rdquo; propertyValue:[NSString stringWithFormat@&ldquo;%d&rdquo;, 123]]
-This would return &ldquo;*cost &lt; &lsquo;123&rsquo;&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryStringForLikeCondition:propertyValue:" title="queryStringForLikeCondition:propertyValue:"></a>
-	<h3 class="subsubtitle method-title">queryStringForLikeCondition:propertyValue:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for like condition.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForLikeCondition:(NSString *)<em>propertyName</em> propertyValue:(NSString *)<em>propertyValue</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>propertyName</em></dt>
-			<dd><p>name of the property to search for</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>propertyValue</em></dt>
-			<dd><p>the value of the property.</p>
-
-<p>Example query would be +[APQuery queryStringForLikeCondition:@&ldquo;hotelName&rdquo; propertyValue:@&ldquo;Le Meridian&rdquo;]
-This would return &ldquo;*hotelName like &lsquo;Le Meridian&rsquo;&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryStringForPageNumber:" title="queryStringForPageNumber:"></a>
-	<h3 class="subsubtitle method-title">queryStringForPageNumber:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for page number.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForPageNumber:(NSUInteger)<em>pageNumber</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>pageNumber</em></dt>
-			<dd><p>the page number to get</p>
-
-<p>Example query would be [APQuery queryStringForPageNumber:123]
-This would return &ldquo;pnum=(123)&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryStringForPageSize:" title="queryStringForPageSize:"></a>
-	<h3 class="subsubtitle method-title">queryStringForPageSize:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for page size.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForPageSize:(NSUInteger)<em>pageSize</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>pageSize</em></dt>
-			<dd><p>an integer value for the page size.</p>
-
-<p>Example query would be [APQuery queryStringForPageSize:2]
-This would return &ldquo;psize=(2)&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryStringForPolygonSearch:withPolygonCoordinates:" title="queryStringForPolygonSearch:withPolygonCoordinates:"></a>
-	<h3 class="subsubtitle method-title">queryStringForPolygonSearch:withPolygonCoordinates:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for polygon search.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForPolygonSearch:(NSString *)<em>propertyName</em> withPolygonCoordinates:(NSArray *)<em>coordinates</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>propertyName</em></dt>
-			<dd><p>name of the property to search for</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
 			<dt><em>coordinates</em></dt>
-			<dd><p>an array of CLLocation coordinates. The array needs to have a minimum of three coordinates.</p>
-
-<p>Example query would be +[APQuery queryStringForPolygonSearch:@&ldquo;location&rdquo; withPolygonCoordinates:coordinates]
+			<dd><p>an array of CLLocation coordinates. The array needs to have a minimum of three coordinates.
+Example query would be +[APQuery queryForPolygonSearch:@&ldquo;location&rdquo; withPolygonCoordinates:coordinates]
 This would return &ldquo;*location within_polygon {lat,long} | {lat,long} | {lat,long}&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands.</p></dd>
 		</dl>
 		
@@ -747,18 +769,18 @@ This would return &ldquo;*location within_polygon {lat,long} | {lat,long} | {lat
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/queryStringForSearchWithAllTags:" title="queryStringForSearchWithAllTags:"></a>
-	<h3 class="subsubtitle method-title">queryStringForSearchWithAllTags:</h3>
+	<a name="//api/name/queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:" title="queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:"></a>
+	<h3 class="subsubtitle method-title">queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for search with tags.</p>
+		<p>Helper method to generate a query string for geocode search.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForSearchWithAllTags:(NSArray *)<em>tags</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithRadialSearchForProperty:(NSString *)<em>propertyName</em> nearLocation:(CLLocation *)<em>location</em> withinRadius:(NSNumber *)<em>radius</em> usingDistanceMetric:(DistanceMetric)<em>distanceMetric</em></code></div>
 
     
 	
@@ -766,11 +788,25 @@ This would return &ldquo;*location within_polygon {lat,long} | {lat,long} | {lat
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>tags</em></dt>
-			<dd><p>an array of tags to search for.</p>
-
-<p>Example query would be [APQuery queryStringForSearchWithAllTags:array]
-This would return &ldquo;tagged_with_all (&lsquo;tag1,tag2&rsquo;)&rdquo; where tag1 and tag2 are in array, which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
+			<dt><em>propertyName</em></dt>
+			<dd><p>name of the property to search for.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>location</em></dt>
+			<dd><p>the geocode to search for</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>radius</em></dt>
+			<dd><p>the radios around the location to look for
+Example query would be +[APQuery queryForGeoCodeProperty:@&ldquo;location&rdquo; nearLocation:{123, 123} distanceMetric:kilometers radius:12]
+This would return &ldquo;*location within_circle 123,123,12&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>distanceMetric</em></dt>
+			<dd><p>the distance either in km or miles</p></dd>
 		</dl>
 		
 	</div>
@@ -796,31 +832,36 @@ This would return &ldquo;tagged_with_all (&lsquo;tag1,tag2&rsquo;)&rdquo; where 
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/queryStringForSearchWithFreeText:" title="queryStringForSearchWithFreeText:"></a>
-	<h3 class="subsubtitle method-title">queryStringForSearchWithFreeText:</h3>
+	<a name="//api/name/queryWithSearchUsingAllTags:" title="queryWithSearchUsingAllTags:"></a>
+	<h3 class="subsubtitle method-title">queryWithSearchUsingAllTags:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string to search for free text.</p>
+		<p>Helper method to generate a query string for search with tags.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForSearchWithFreeText:(NSArray *)<em>freeTextTokens</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithSearchUsingAllTags:(NSArray *)<em>tags</em></code></div>
 
     
 	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>@param freeTextTokens</p>
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>tags</em></dt>
+			<dd><p>An array of tags to search for.</p></dd>
+		</dl>
+		
 	</div>
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -837,8 +878,54 @@ This would return &ldquo;tagged_with_all (&lsquo;tag1,tag2&rsquo;)&rdquo; where 
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/queryStringForSearchWithOneOrMoreTags:" title="queryStringForSearchWithOneOrMoreTags:"></a>
-	<h3 class="subsubtitle method-title">queryStringForSearchWithOneOrMoreTags:</h3>
+	<a name="//api/name/queryWithSearchUsingFreeText:" title="queryWithSearchUsingFreeText:"></a>
+	<h3 class="subsubtitle method-title">queryWithSearchUsingFreeText:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Helper method to generate a query string to search for free text.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithSearchUsingFreeText:(NSArray *)<em>freeTextTokens</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>freeTextTokens</em></dt>
+			<dd><p>free text tokens for the query.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/queryWithSearchUsingOneOrMoreTags:" title="queryWithSearchUsingOneOrMoreTags:"></a>
+	<h3 class="subsubtitle method-title">queryWithSearchUsingOneOrMoreTags:</h3>
 	
 	
 	
@@ -848,7 +935,7 @@ This would return &ldquo;tagged_with_all (&lsquo;tag1,tag2&rsquo;)&rdquo; where 
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryStringForSearchWithOneOrMoreTags:(NSArray *)<em>tags</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithSearchUsingOneOrMoreTags:(NSArray *)<em>tags</em></code></div>
 
     
 	
@@ -857,10 +944,7 @@ This would return &ldquo;tagged_with_all (&lsquo;tag1,tag2&rsquo;)&rdquo; where 
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>tags</em></dt>
-			<dd><p>an array of tags to search for.</p>
-
-<p>Example query would be [APQuery queryStringForSearchWithOneOrMoreTags:array]
-This would return &ldquo;tagged_with_one_or_more (&lsquo;tag1,tag2&rsquo;)&rdquo; where tag1 and tag2 are in array, which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
+			<dd><p>An array of tags to search for.</p></dd>
 		</dl>
 		
 	</div>
@@ -900,9 +984,9 @@ This would return &ldquo;tagged_with_one_or_more (&lsquo;tag1,tag2&rsquo;)&rdquo
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Appacitive software. All rights reserved. (Last updated: 2013-02-01)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-01-29)</span><br />
 						
-						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 789)</a>.</span></p>
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						
 					</div>
 				</div>

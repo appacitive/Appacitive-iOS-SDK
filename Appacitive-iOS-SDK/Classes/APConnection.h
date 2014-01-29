@@ -114,7 +114,7 @@
  @param objectA The object to create a connection from.
  @param objectB The object to create a connection to.
  @param labelA The label at the starting vertex of the connection.
- @param lablelB The label at the end vertex of the connection.
+ @param labelB The label at the end vertex of the connection.
  @param successBlock Block invoked when the create operation is successful.
  @param failureBlock Block invoked when the create operation fails.
  */
@@ -136,7 +136,7 @@
  @param objectAId Object Id of the object to create a connection from.
  @param objectBId Object Id of the object to create a connection to.
  @param labelA The label at the starting vertex of the connection.
- @param lablelB The label at the end vertex of the connection.
+ @param labelB The label at the end vertex of the connection.
  @param successBlock Block invoked when the create operation is successful.
  @param failureBlock Block invoked when the create operation fails.
  */
@@ -158,7 +158,7 @@
  @param objectA The object to create a connection from.
  @param objectBId Object Id of the object to create a connection to.
  @param labelA The label at the starting vertex of the connection.
- @param lablelB The label at the end vertex of the connection.
+ @param labelB The label at the end vertex of the connection.
  @param successBlock Block invoked when the create operation is successful.
  @param failureBlock Block invoked when the create operation fails.
  */
@@ -180,7 +180,7 @@
  @param objectAId Object Id of the object to create a connection from.
  @param objectB The object to create a connection to.
  @param labelA The label at the starting vertex of the connection.
- @param lablelB The label at the end vertex of the connection.
+ @param labelB The label at the end vertex of the connection.
  @param successBlock Block invoked when the create operation is successful.
  @param failureBlock Block invoked when the create operation fails.
  */
@@ -315,7 +315,9 @@
 - (void) removeAttributeWithKey:(NSString*) keyName;
 @end
 
-
+/**
+ Helper class for APConnection performing class level operations.
+ */
 
 @interface APConnections : NSObject
 
@@ -383,7 +385,7 @@
 + (void) searchAllConnectionsWithRelationType:(NSString*)relationType fromObjectId:(NSString *)objectAId toObjectId:(NSString *)objectBId successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see searchAllConnectionsFromObjectId:toObjectId:withSuccessHandler:failureHandler:
+ @see searchAllConnectionsFromObjectId:toObjectId:successHandler:failureHandler:
  */
 + (void) searchAllConnectionsFromObjectId:(NSString *)objectAId toObjectId:(NSString *)objectBId successHandler:(APObjectsSuccessBlock)successBlock;
 
@@ -399,7 +401,7 @@
 
 
 /**
- @see searchAllConnectionsFromObjectId:toObjectIds:withSuccessHandler:failureHandler:
+ @see searchAllConnectionsFromObjectId:toObjectIds:successHandler:failureHandler:
  */
 + (void) searchAllConnectionsFromObjectId:(NSString *)objectId toObjectIds:(NSArray *)objectIds successHandler:(APObjectsSuccessBlock)successBlock;
 
@@ -407,7 +409,7 @@
  Searches for Connections between the single object and any of the objects in the list and returns the paginated list of all connections .
  
  @param objectId  The id of the APObject for which the connections are to be retrieved.
- @param objectsId An array of objectIds.
+ @param objectIds An array of objectIds.
  @param successBlock Block invoked when the search call is successful.
  @param failureBlock Block invoked when the search call fails.
  */
@@ -431,7 +433,7 @@
 + (void) fetchConnectionWithRelationType:(NSString*)relationType objectId:(NSString*)objectId successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see fetchConnectionsWithRelationType:objectId:successHandler:failureHandler:
+ @see fetchConnectionsWithRelationType:objectIds:successHandler:failureHandler:
  */
 + (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APObjectsSuccessBlock)successBlock;
 
@@ -446,7 +448,7 @@
 + (void) fetchConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see fetchConnectedObjectsOfType:withObjectId:withRelationType:successHandler:failureHandler
+ @see fetchConnectedObjectsOfType:withObjectId:withRelationType:successHandler:failureHandler:
  */
 + (void) fetchConnectedObjectsOfType:(NSString*)objectType withObjectId:(NSString*)objectId withRelationType:(NSString*)relationType successHandler:(APObjectsSuccessBlock)successBlock;
 

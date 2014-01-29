@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
-		<title>Appacitive Class Reference</title>
+		<title>RawNotification Class Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
 		<meta name="viewport" content="width=550" />
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
@@ -17,7 +17,7 @@
 			</div>
 			
 			<div id="title" role="banner">
-				<h1 class="hideInXcode">Appacitive Class Reference</h1>
+				<h1 class="hideInXcode">RawNotification Class Reference</h1>
 			</div>
 			<ul id="headerButtons" role="toolbar">
 				<li id="toc_button">
@@ -40,17 +40,11 @@
 	
 	
 	
-	<option value="class_methods">Class Methods</option>
-	
-	<option value="//api/name/environmentToUse">&nbsp;&nbsp;&nbsp;&nbsp;+ environmentToUse</option>
-	
-	<option value="//api/name/getApiKey">&nbsp;&nbsp;&nbsp;&nbsp;+ getApiKey</option>
-	
-	<option value="//api/name/initWithAPIKey:">&nbsp;&nbsp;&nbsp;&nbsp;+ initWithAPIKey:</option>
-	
-	<option value="//api/name/useLiveEnvironment:">&nbsp;&nbsp;&nbsp;&nbsp;+ useLiveEnvironment:</option>
 	
 	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/init">&nbsp;&nbsp;&nbsp;&nbsp;- init</option>
 	
 	
 	
@@ -76,26 +70,20 @@
 
 
 
-<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/environmentToUse">environmentToUse</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getApiKey">getApiKey</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithAPIKey:">initWithAPIKey:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/useLiveEnvironment:">useLiveEnvironment:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/init">init</a></span></li>
 	
 </ul></li>
-
-
 
 
 			</ul>
 		</nav>
 		<article>
 			<div id="contents" class="isShowingTOC" role="main">
-				<a title="Appacitive Class Reference" name="top"></a>
+				<a title="RawNotification Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
 	<li><a href="../index.html">Index</a></li>
@@ -104,7 +92,7 @@
 				</div>
 				<div id="header">
 					<div class="section-header">
-						<h1 class="title title-header">Appacitive Class Reference</h1>
+						<h1 class="title title-header">RawNotification Class Reference</h1>
 					</div>		
 				</div>
 				<div id="container">	
@@ -112,10 +100,10 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">NSObject</td>
+	<td class="specification-value"><a href="../Classes/WPNotification.html">WPNotification</a> : NSObject</td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
-	<td class="specification-value">Appacitive.h<br />Appacitive.m</td>
+	<td class="specification-value">APPushNotification.h<br />APPushNotification.m</td>
 </tr>
 						</tbody></table></div>
 					
@@ -125,8 +113,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>Appacitive is the entry point to use the Appacitive SDK.
-Here you set your Appacitive application APIKey and your Appacitive application environment, which will be used to make all network requests to Appacitive back end.</p>
+						<p>Class for configuring a WindowsPhone Raw Notification.</p>
 					</div>
 					
 					
@@ -144,29 +131,8 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/getApiKey">+&nbsp;getApiKey</a></code>
-		<span class="tooltip"><p>Returns the current ApiKey</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/initWithAPIKey:">+&nbsp;initWithAPIKey:</a></code>
-		<span class="tooltip"><p>Sets the APIkey</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/environmentToUse">+&nbsp;environmentToUse</a></code>
-		<span class="tooltip"><p>By default the environment is set to sandbox. To change to live set the enableLiveEnvironment property of the Appacitive object.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/useLiveEnvironment:">+&nbsp;useLiveEnvironment:</a></code>
-		<span class="tooltip"><p>Method to set application environment to live</p></span>
+		<code><a href="#//api/name/init">&ndash;&nbsp;init</a></code>
+		<span class="tooltip"><p>Method to initialize a windows phone raw notification object.</p></span>
 	</span>
 	
 	
@@ -181,64 +147,25 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 					
 					
 					
+					
+					
 					<div class="section section-methods">
-						<a title="Class Methods" name="class_methods"></a>
-						<h2 class="subtitle subtitle-methods">Class Methods</h2>
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/environmentToUse" title="environmentToUse"></a>
-	<h3 class="subsubtitle method-title">environmentToUse</h3>
+	<a name="//api/name/init" title="init"></a>
+	<h3 class="subsubtitle method-title">init</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>By default the environment is set to sandbox. To change to live set the enableLiveEnvironment property of the Appacitive object.</p>
+		<p>Method to initialize a windows phone raw notification object.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)environmentToUse</code></div>
-
-    
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The environment to use</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">Appacitive.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/getApiKey" title="getApiKey"></a>
-	<h3 class="subsubtitle method-title">getApiKey</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Returns the current ApiKey</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)getApiKey</code></div>
+	<div class="method-subsection method-declaration"><code>- (instancetype)init</code></div>
 
     
 	
@@ -256,107 +183,13 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">Appacitive.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/initWithAPIKey:" title="initWithAPIKey:"></a>
-	<h3 class="subsubtitle method-title">initWithAPIKey:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Sets the APIkey</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (void)initWithAPIKey:(NSString *)<em>apiKey</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>apiKey</em></dt>
-			<dd><p>APIKey to be used for the app. You can obtain this key from the Appacitive portal.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">Appacitive.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/useLiveEnvironment:" title="useLiveEnvironment:"></a>
-	<h3 class="subsubtitle method-title">useLiveEnvironment:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Method to set application environment to live</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (void)useLiveEnvironment:(BOOL)<em>answer</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>answer</em></dt>
-			<dd><p>Whether you want to use live environment.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">Appacitive.h</code><br />
+		<code class="declared-in-ref">APPushNotification.h</code><br />
 	</div>				
 	
 	
 </div>
 						
 					</div>
-					
-					
 					
 					
 				</div>

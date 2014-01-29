@@ -63,14 +63,12 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Initialize and return an autoreleased APObject for the provided type name.
- 
  @param typeName The type this object represents.
  */
 - (instancetype) initWithTypeName:(NSString*)typeName;
 
 /**
  Initialize and return an autoreleased APObject for the provided type name and objectId.
- 
  @param typeName The type this object represents.
  @param objectId objectId of the object
  */
@@ -78,16 +76,14 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Initialize and return an autoreleased APObject for the provided type name.
- 
  @param typeName The type this object represents.
  */
 + (APObject*) objectWithTypeName:(NSString*)typeName;
 
 /**
  Initialize and return an autoreleased APObject for the provided type name and objectId.
- 
  @param typeName The type this object represents.
- @param objectID objectId of the object
+ @param objectId objectId of the object
  */
 + (APObject*) objectWithTypeName:(NSString*)typeName objectId:(NSString*)objectId;
 
@@ -103,9 +99,7 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Deletes and APObject.
- 
  This method will delete the object on the remote server. It will not nullify the current properties or attributes.
- 
  @param successBlock Block invoked when delete operation is successful
  @param failureBlock Block invoked when delete operation fails.
  */
@@ -123,7 +117,6 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Deletes an APObject along with any connections it has.
- 
  @param successBlock Block invoked when delete operation is successful
  @param failureBlock Block invoked when delete operation is unsuccessful
  */
@@ -143,9 +136,8 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Method used to fetch an APObject.
- 
  This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
- 
+ @param successBlock Block invoked when the fetch operation is successful.
  @param failureBlock Block invoked when the fetch operation fails.
  */
 - (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
@@ -157,7 +149,6 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Retrieves multiple APObjects of a particular type.
- 
  @param objectIds The ids of the objects.
  @param typeName The type name the objects belong to.
  @param successBlock Block invoked when the retrieve operation succeeds.
@@ -166,7 +157,12 @@ extern NSString *const OBJECT_PATH;
 + (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 
-
+/**
+ Retrieve APObjects by using a query string.
+ @param queryString SQL kind of query to search for specific objects. For more info http://appacitive.com
+ @param successBlock Block invoked when the retrieve operation succeeds.
+ @param failureBlock Block invoked when the failure operation succeeds.
+ */
 - (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /** @name Save APObjects */
@@ -183,9 +179,7 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Save the object on the remote server.
- 
  This method will save an object in the background. If save is successful the properties will be updated and the successBlock will be invoked. If not the failure block is invoked.
- 
  @param successBlock Block invoked when the save operation is successful
  @param failureBlock Block invoked when the save operation fails.
  
@@ -211,7 +205,6 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Method used to update an APObject.
- 
  @param successBlock Block invoked when the update operation is successful.
  @param failureBlock Block invoked when the update operation fails.
  */
@@ -226,7 +219,6 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Searches for all APObjects of a particular type.
- 
  @param typeName The type that the objects should belong to.
  @param successBlock Block invoked when the search call is successful.
  @param failureBlock Block invoked when search call fails.
@@ -240,7 +232,6 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Searches for APObjects and filters the results according to the query string.
- 
  @param typeName The type of the objects you want to search.
  @param queryString SQL kind of query to search for specific objects. For more info http://appacitive.com
  @param successBlock Block invoked when the search call is successful.
@@ -252,69 +243,64 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Method used to add a property to the APObject.
- 
  @param keyName key of the data item to be stored.
  @param object Corresponding value to the key.
  */
-- (void) addPropertyWithKey:(NSString*) keyName value:(id) object;
+- (void) addPropertyWithKey:(NSString*) keyName value:(id)object;
 
 /**
  Method used to update an existing property.
  Call update after this method call to persist the update.
- 
  @param keyName key of the data item to be updated.
  @param object Corresponding value to the key.
  */
-- (void) updatePropertyWithKey:(NSString*) keyName value:(id) object;
+- (void) updatePropertyWithKey:(NSString*)keyName value:(id)object;
 
 /**
  Method used to delete a property.
  Call update after this method call to persist the change.
- 
  @param keyName key of the data item to be removed.
  */
-- (void) removePropertyWithKey:(NSString*) keyName;
+- (void) removePropertyWithKey:(NSString*)keyName;
 
 /**
  Method used to retrieve a property using its key.
- 
  @param keyName key of the date item to be removed.
  */
-- (instancetype) getPropertyWithKey:(NSString*) keyName;
+- (instancetype) getPropertyWithKey:(NSString*)keyName;
 
 /**
  Method used to add an attibute to the APObject.
  Attributes are used to store extra information.
- 
  @param keyName key of the data item to be stored.
  @param object Corresponding value to the key.
  */
-- (void) addAttributeWithKey:(NSString*) keyName value:(id) object;
+- (void) addAttributeWithKey:(NSString*)keyName value:(id)object;
 
 /**
  Method used to update an attribute.
  Call update after this method call to persist the change
- 
  @param keyName key of the attribute to be updated.
  @param object Corresponding value to the key.
  */
-- (void) updateAttributeWithKey:(NSString*) keyName value:(id) object;
+- (void) updateAttributeWithKey:(NSString*)keyName value:(id)object;
 
 /**
  Method used to remove an attribute.
  Call update after this method call to persist the change
- 
  @param keyName key of the attribute to be removed.
  */
-- (void) removeAttributeWithKey:(NSString*) keyName;
+- (void) removeAttributeWithKey:(NSString*)keyName;
 
 /**
- Method to add tags to object
+ Method to add tags to object.
+ @param tag The tag you wish to add.
  */
 - (void) addTag:(NSString*)tag;
 
 /**
- Method to remove tags from object
+ Method to remove tags from object.
+ @param tag The tag you wish to remove.
  */
 - (void) removeTag:(NSString*)tag;
 
@@ -322,6 +308,9 @@ extern NSString *const OBJECT_PATH;
 
 #pragma mark - APOBjects Interface
 
+/**
+ Helper class for APObjects performing class level operations.
+ */
 @interface APObjects : NSObject
 
 /** @name Deleting APObjects */
@@ -333,7 +322,6 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Deletes multiple APObjects.
- 
  @param objectIds The ids of the objects to delete.
  @param typeName The type that the objects belong to.
  @param successBlock Block invoked when the multi delete operation succeeds.

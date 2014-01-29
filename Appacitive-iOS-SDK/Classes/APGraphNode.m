@@ -94,11 +94,11 @@ static NSMutableArray *nodeStack;
     }];
 }
 
-- (void) applyProjectionGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary *)placeHolders forObjectsIds:(NSArray *)objectIDs successHandler:(APGraphNodeSuccessBlock)successBlock {
-    [self applyProjectionGraphQuery:query usingPlaceHolders:placeHolders forObjectsIds:objectIDs  successHandler:successBlock failureHandler:nil];
+- (void) applyProjectionGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary *)placeHolders forObjectsIds:(NSArray *)objectIds successHandler:(APGraphNodeSuccessBlock)successBlock {
+    [self applyProjectionGraphQuery:query usingPlaceHolders:placeHolders forObjectsIds:objectIds  successHandler:successBlock failureHandler:nil];
 }
 
-- (void) applyProjectionGraphQuery:(NSString *)query usingPlaceHolders:(NSDictionary *)placeHolders forObjectsIds:(NSArray *)objectIDs successHandler:(APGraphNodeSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) applyProjectionGraphQuery:(NSString *)query usingPlaceHolders:(NSDictionary *)placeHolders forObjectsIds:(NSArray *)objectIds successHandler:(APGraphNodeSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     NSString *path = [SEARCH_PATH stringByAppendingString:[NSString stringWithFormat:@"%@/project",query]];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
@@ -108,7 +108,7 @@ static NSMutableArray *nodeStack;
         placeHolders = [[NSDictionary alloc] initWithObjectsAndKeys:@" ",@" ", nil];
     }
     NSMutableDictionary *requestData = [[NSMutableDictionary alloc] init];
-    [requestData setObject:objectIDs forKey:@"ids"];
+    [requestData setObject:objectIds forKey:@"ids"];
     [requestData setObject:placeHolders forKey:@"placeholders"];
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:requestData options:kNilOptions error:&jsonError];

@@ -26,8 +26,9 @@
 @property (nonatomic, strong) NSString* badge;
 
 - (instancetype) init;
-/** Create a basic instance of an APDevice Object with deviceToken and deviceType
- @param deviceToken device token provided by Appacitive
+/** Create a basic instance of an APDevice Object with deviceToken and deviceType.
+ @param deviceToken Device token provided by Appacitive.
+ @param deviceType Type of device voz. iOS/Android/WindowsPhone
 */
 - (instancetype) initWithDeviceToken:(NSString*)deviceToken deviceType:(NSString*)deviceType;
 
@@ -38,10 +39,8 @@
 
 /**
  Method to register a device to Appacitive
- 
  @param successBlock Block ivoked on successful registration of the device.
  @param failureBlock Block invoked in case the device registration fails.
- 
  @note On successfull registration, a device Object will be returned in the successblock
  */
 - (void) registerDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
@@ -60,12 +59,9 @@
 
 /**
  Save the object on the remote server.
- 
  This method will save an object in the background. If save is successful the properties will be updated and the successBlock will be invoked. If not the failure block is invoked.
- 
- @param successBlock Block invoked when the save operation is successful
+ @param successBlock Block invoked when the save operation is successful.
  @param failureBlock Block invoked when the save operation fails.
- 
  */
 - (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
@@ -97,15 +93,13 @@
 
 /**
  Deletes an APObject along with any connections it has.
- 
  @param successBlock Block invoked when the delete operation is successful.
  @param failureBlock Block invoked when the delete operation is unsuccessful.
  */
 - (void) deleteObjectWithConnectingConnectionsSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-
 /**
- @see updateObjectWithRevision:successHandler:failureHandler:
+ @see updateObjectWithRevisionNumber:successHandler:failureHandler:
 */
 - (void) updateObject;
 
@@ -115,13 +109,13 @@
 - (void) updateObjectWithFailureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see updateObjectWithRevision:successHandler:failureHandler:
+ @see updateObjectWithRevisionNumber:successHandler:failureHandler:
  */
 - (void) updateObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- Method to update the device object
- 
+ Method to update the device object.
+ @param revision The last revision number for the object.
  @param successBlock Block invoked when the update operation is successful.
  @param failureBlock Block invoked when the update operation is unsuccessful.
  */
@@ -141,9 +135,7 @@
 
 /**
  Method used to fetch an APObject.
- 
  This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
- 
  @param successBlock Block invoked when the fetch operation is successful.
  @param failureBlock Block invoked when the fetch operation fails.
  */
