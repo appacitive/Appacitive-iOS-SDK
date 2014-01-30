@@ -56,7 +56,7 @@
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
-    
+    [self updateSnapshot];
     
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
@@ -129,8 +129,7 @@
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
-    
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -173,7 +172,7 @@
             DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
         [urlRequest setHTTPBody:requestBody];
         [urlRequest setHTTPMethod:@"PUT"];
-        
+        [self updateSnapshot];
         [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
             if (successBlock != nil) {
                 [self setPropertyValuesFromDictionary:result];
@@ -222,7 +221,7 @@
             DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
         [urlRequest setHTTPBody:requestBody];
         [urlRequest setHTTPMethod:@"PUT"];
-        
+        [self updateSnapshot];
         [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
             if (successBlock != nil) {
                 [self setPropertyValuesFromDictionary:result];
@@ -274,7 +273,7 @@
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
     
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -308,7 +307,7 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -341,7 +340,7 @@
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-
+    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -465,6 +464,8 @@
     
     _attributes = [connection[@"__attributes"] mutableCopy];
     _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:connection].mutableCopy;
+    
+    [self updateSnapshot];
 }
 
 - (NSMutableDictionary*) parameters {
@@ -537,16 +538,34 @@
 
 - (NSMutableDictionary*) postParamertersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
-    
+
     if (self.attributes && [self.attributes count] > 0)
-        postParams[@"__attributes"] = self.attributes;
+        for(id key in self.attributes) {
+            if(![[[_snapShot objectForKey:@"__attributes"] allKeys] containsObject:key])
+                [postParams[@"__attributes"] setObject:[self.attributes objectForKey:key] forKey:key];
+            else if([[_snapShot objectForKey:@"__attributes"] objectForKey:key] != [self.attributes objectForKey:key])
+                [postParams[@"__attributes"] setObject:[self.attributes objectForKey:key] forKey:key];
+        }
     
     for(NSDictionary *prop in self.properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [postParams setObject:obj forKey:key];
+            if(![[_snapShot allKeys] containsObject:key])
+                [postParams setObject:obj forKey:key];
+            else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                [postParams setObject:obj forKey:key];
             *stop = YES;
         }];
     }
+    
+//    if (self.attributes && [self.attributes count] > 0)
+//        postParams[@"__attributes"] = self.attributes;
+//    
+//    for(NSDictionary *prop in self.properties) {
+//        [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+//            [postParams setObject:obj forKey:key];
+//            *stop = YES;
+//        }];
+//    }
     
     if (self.tagsToAdd)
         postParams[@"addtags"] = [self.tagsToAdd allObjects];
@@ -555,6 +574,18 @@
         postParams[@"removetags"] = [self.tagsToRemove allObjects];
     
     return postParams;
+}
+
+- (void) updateSnapshot {
+    if(_snapShot == nil)
+        _snapShot = [[NSMutableDictionary alloc] init];
+    
+    if(self.attributes)
+        _snapShot[@"__attributes"] = [self.attributes mutableCopy];
+    if(self.tags)
+        _snapShot[@"__tags"] = [self.tags mutableCopy];
+    if(self.properties)
+        _snapShot[@"__properties"] = [self.properties mutableCopy];
 }
 
 - (NSString*) description {
@@ -788,7 +819,6 @@
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {

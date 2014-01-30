@@ -34,9 +34,7 @@ extern NSString *const OBJECT_PATH;
     NSNumber *_revision;
     NSMutableArray *_properties;
     NSMutableDictionary *_attributes;
-    NSUInteger _tagsHash;
-    NSUInteger _attrHash;
-    NSUInteger _propHash;
+    NSMutableDictionary *_snapShot;
 }
 
 @property (nonatomic, strong) NSString *createdBy;
@@ -52,9 +50,6 @@ extern NSString *const OBJECT_PATH;
 @property (nonatomic, strong) NSArray *tags;
 @property (nonatomic, strong) NSMutableSet *tagsToAdd;
 @property (strong, nonatomic) NSMutableSet *tagsToRemove;
-@property (nonatomic, readonly) NSUInteger tagsHash;
-@property (nonatomic, readonly) NSUInteger attrHash;
-@property (nonatomic, readonly) NSUInteger propHash;
 @property (nonatomic, weak) id<APObjectPropertyMapping> delegate;
 
 #pragma mark - APObject Methods

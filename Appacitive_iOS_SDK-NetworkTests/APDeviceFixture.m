@@ -13,12 +13,14 @@
 //    beforeAll(^() {
 //        [Appacitive initWithAPIKey:API_KEY];
 //        [Appacitive useLiveEnvironment:NO];
-//        [APUser authenticateUserWithUserName:@"ppatel"
-//                                            password:@"1qaz1qaz"
-//                 successHandler:^(APUser *user) {
-//                 }];
-// 
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
+//    });
+//
+//    beforeEach(^{
+//        [APUser authenticateUserWithUserName:@"ppatel"
+//                                    password:@"1qaz1qaz"
+//                              successHandler:^(APUser *user) {
+//                              }];
 //    });
 //
 //    afterAll(^(){

@@ -68,6 +68,7 @@ static NSDictionary* headerParams;
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setAllHTTPHeaderFields:[APDevice getHeaderParams]];
     [urlRequest setHTTPMethod:@"PUT"];
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -122,6 +123,7 @@ static NSDictionary* headerParams;
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -164,12 +166,11 @@ static NSDictionary* headerParams;
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        
         if(successBlock != nil) {
-            [self setPropertyValuesFromDictionary:result];
             successBlock(self);
         }
     } failureHandler:^(APError *error) {
@@ -240,8 +241,8 @@ static NSDictionary* headerParams;
         [requestBody setObject:self.channels forKey:@"channels"];
     if(self.timeZone)
         [requestBody setObject:self.timeZone forKey:@"timezone"];
-    if(self.isAvctive)
-        [requestBody setObject:self.isAvctive forKey:@"isactive"];
+    if(self.isActive)
+        [requestBody setObject:self.isActive forKey:@"isactive"];
     return requestBody;
 }
 
@@ -254,7 +255,7 @@ static NSDictionary* headerParams;
     _deviceToken = object[@"devicetoken"];
     self.deviceLocation = object[@"location"];
     self.deviceType = object[@"devicetype"];
-    self.isAvctive = object[@"isactive"];
+    self.isActive = object[@"isactive"];
     self.channels = object[@"channels"];
     self.badge = object[@"badge"];
     self.createdBy = (NSString*) object[@"__createdby"];
@@ -268,10 +269,14 @@ static NSDictionary* headerParams;
     self.tags = object[@"__tags"];
     self.type = object[@"__type"];
     _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:object].mutableCopy;
+    
+    [self updateSnapshot];
 }
 
 - (NSMutableDictionary*) postParameters {
+    
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
+    
     if (self.objectId)
         postParams[@"__id"] = self.objectId;
     if (self.attributes)
@@ -284,6 +289,21 @@ static NSDictionary* headerParams;
         postParams[@"__type"] = self.type;
     if (self.tags)
         postParams[@"__tags"] = self.tags;
+    if (self.deviceToken)
+        postParams[@"devicetoken"] = self.deviceToken;
+    if (self.deviceType)
+        postParams[@"devicetype"] = self.deviceType;
+    if (self.deviceLocation)
+        postParams[@"devicelocation"] = self.deviceLocation;
+    if (self.channels)
+        postParams[@"channels"] = self.channels;
+    if (self.isActive)
+        postParams[@"isActive"] = self.isActive;
+    if (self.timeZone)
+        postParams[@"timezone"] = self.timeZone;
+    if (self.badge)
+        postParams[@"badge"] = self.tags;
+    
     for(NSDictionary *prop in self.properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
             [postParams setObject:obj forKey:key];
@@ -295,31 +315,76 @@ static NSDictionary* headerParams;
 
 - (NSMutableDictionary*) postParametersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
+//    if (self.attributes && [self.attributes count] > 0)
+//        postParams[@"__attributes"] = self.attributes;
+//    for(NSDictionary *prop in self.properties) {
+//        [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+//            [postParams setObject:obj forKey:key];
+//            *stop = YES;
+//        }];
+//    }
     if (self.attributes && [self.attributes count] > 0)
-        postParams[@"__attributes"] = self.attributes;
+        for(id key in self.attributes) {
+            if(![[[_snapShot objectForKey:@"__attributes"] allKeys] containsObject:key])
+                [postParams[@"__attributes"] setObject:[self.attributes objectForKey:key] forKey:key];
+            else if([[_snapShot objectForKey:@"__attributes"] objectForKey:key] != [self.attributes objectForKey:key])
+                [postParams[@"__attributes"] setObject:[self.attributes objectForKey:key] forKey:key];
+        }
+    
     for(NSDictionary *prop in self.properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [postParams setObject:obj forKey:key];
+            if(![[_snapShot allKeys] containsObject:key])
+                [postParams setObject:obj forKey:key];
+            else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                [postParams setObject:obj forKey:key];
             *stop = YES;
         }];
     }
-    if (self.deviceLocation != nil)
+    
+    if (self.deviceLocation != nil && self.deviceLocation != [_snapShot objectForKey:@"devicelocation"])
         postParams[@"devicelocation"] = self.deviceLocation;
-    if (self.deviceToken != nil)
+    if (self.deviceToken != nil && self.deviceToken != [_snapShot objectForKey:@"devicetoken"])
         postParams[@"devicetoken"] = self.deviceToken;
-    if (self.deviceType != nil)
+    if (self.deviceType != nil && self.deviceType != [_snapShot objectForKey:@"devicetype"])
         postParams[@"devicetype"] = self.deviceType;
-    if(self.channels != nil && [self.channels count] >0)
+    if(self.channels != nil && [self.channels count] >0  && self.channels != [_snapShot objectForKey:@"channels"])
         postParams[@"channels"] = self.channels;
+    if (self.timeZone != nil && self.timeZone != [_snapShot objectForKey:@"timezone"])
+        postParams[@"timezone"] = self.timeZone;
+    if(self.isActive != nil && self.isActive != [_snapShot objectForKey:@"isactive"])
+        postParams[@"isactive"] = self.isActive;
+    
     if (self.tagsToAdd != nil && [self.tagsToAdd count] > 0)
         postParams[@"__addtags"] = [self.tagsToAdd allObjects];
     if (self.tagsToRemove !=nil && [self.tagsToRemove count] > 0)
         postParams[@"__removetags"] = [self.tagsToRemove allObjects];
-    if (self.timeZone != nil)
-        postParams[@"timezone"] = self.timeZone;
-    if(self.isAvctive != nil)
-        postParams[@"isactive"] = self.isAvctive;
+    
     return postParams;
+}
+
+- (void) updateSnapshot {
+    if(_snapShot == nil)
+        _snapShot = [[NSMutableDictionary alloc] init];
+    
+    if(self.deviceToken)
+        _snapShot[@"devicetoken"] = self.deviceToken;
+    if(self.deviceType)
+        _snapShot[@"devicetype"] = self.deviceType;
+    if(self.deviceLocation)
+        _snapShot[@"devicelocation"] = self.deviceLocation;
+    if(self.channels)
+        _snapShot[@"channels"] = self.channels;
+    if(self.timeZone)
+        _snapShot[@"timezone"] = self.timeZone;
+    if(self.isActive)
+        _snapShot[@"isactive"] = self.isActive;
+    
+    if(self.attributes)
+        _snapShot[@"__attributes"] = [self.attributes mutableCopy];
+    if(self.tags)
+        _snapShot[@"__tags"] = [self.tags mutableCopy];
+    if(self.properties)
+        _snapShot[@"__properties"] = [self.properties mutableCopy];
 }
 
 @end

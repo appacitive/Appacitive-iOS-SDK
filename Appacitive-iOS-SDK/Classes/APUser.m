@@ -191,7 +191,7 @@ static NSDictionary *headerParams;
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    
+
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
@@ -232,7 +232,7 @@ static NSDictionary *headerParams;
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
     [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -277,7 +277,7 @@ static NSDictionary *headerParams;
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -324,7 +324,7 @@ static NSDictionary *headerParams;
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -360,7 +360,7 @@ static NSDictionary *headerParams;
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -398,7 +398,7 @@ static NSDictionary *headerParams;
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if (successBlock) {
+            if (successBlock) {
             successBlock();
         }
         
@@ -427,7 +427,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -459,12 +459,11 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         APUser *user = [[APUser alloc] initWithTypeName:@"user"];
         [user setPropertyValuesFromDictionary:result];
-        
         if (successBlock) {
             successBlock();
         }
@@ -483,11 +482,11 @@ static NSDictionary *headerParams;
     [self updateObjectWithRevisionNumber:nil successHandler:nil failureHandler:nil];
 }
 
-- (void) updateObjectWithSuccessHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) updateObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     [self updateObjectWithRevisionNumber:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) updateObjectWithRevisionNumber:(NSNumber *)revision successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) updateObjectWithRevisionNumber:(NSNumber *)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@",self.objectId];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -502,14 +501,13 @@ static NSDictionary *headerParams;
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         APUser *user = [[APUser alloc] initWithTypeName:@"user"];
         [user setPropertyValuesFromDictionary:result];
-        
         if (successBlock) {
-            successBlock(user);
+            successBlock();
         }
     } failureHandler:^(APError *error) {
         
@@ -551,9 +549,7 @@ static NSDictionary *headerParams;
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    
     [urlRequest setHTTPMethod:@"DELETE"];
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if(successBlock != nil) {
@@ -662,7 +658,7 @@ static NSDictionary *headerParams;
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -804,9 +800,9 @@ static NSDictionary *headerParams;
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:postData];
     [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        [self updateSnapshot];
         if (successBlock) {
             successBlock();
         }
@@ -844,7 +840,6 @@ static NSDictionary *headerParams;
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:postData];
     [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         if (successBlock) {
@@ -869,13 +864,16 @@ static NSDictionary *headerParams;
 }
 
 - (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
+    
     if(dictionary[@"token"] != nil)
         _userToken = dictionary[@"token"];
+    
     NSDictionary *object = [[NSDictionary alloc] init];
     if([[dictionary allKeys] containsObject:@"user"])
         object = dictionary[@"user"];
     else
         object = dictionary;
+    
     self.createdBy = (NSString*) object[@"__createdby"];
     _objectId = object[@"__id"];
     _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
@@ -900,6 +898,8 @@ static NSDictionary *headerParams;
     self.isOnline = object[@"isonline"];
     
     _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:object].mutableCopy;
+    
+    [self updateSnapshot];
 }
 
 - (NSMutableDictionary*) postParameters {
@@ -931,64 +931,112 @@ static NSDictionary *headerParams;
         [postParams setObject:self.isOnline forKey:@"isonline"];
     if (self.objectId)
         postParams[@"__id"] = self.objectId;
-    if (self.attributes)
+    if (_attributes)
         postParams[@"__attributes"] = self.attributes;
     if (self.createdBy)
         postParams[@"__createdby"] = self.createdBy;
-    if (self.revision)
+    if (_revision)
         postParams[@"__revision"] = self.revision;
     if (self.type)
         postParams[@"__type"] = self.type;
     if (self.tags)
         postParams[@"__tags"] = self.tags;
-    for(NSDictionary *prop in self.properties) {
+    
+    for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
             [postParams setObject:obj forKey:key];
             *stop = YES;
         }];
     }
+    
     return postParams;
 }
 
 - (NSMutableDictionary*) postParametersUpdate {
+    
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
-    if (self.username)
+    
+    if (self.username && self.username != [_snapShot objectForKey:@"username"])
         [postParams setObject:self.username forKey:@"username"];
-    if (self.password)
-        [postParams setObject:self.password forKey:@"password"];
-    if (self.firstName)
+    if (self.firstName && self.firstName != [_snapShot objectForKey:@"firstname"])
         [postParams setObject:self.firstName forKey:@"firstname"];
-    if (self.email)
+    if (self.email && self.email != [_snapShot objectForKey:@"email"])
         [postParams setObject:self.email forKey:@"email"];
-    if (self.birthDate)
+    if (self.birthDate && self.birthDate != [_snapShot objectForKey:@"birthdate"])
         [postParams setObject:self.birthDate forKey:@"birthdate"];
-    if (self.lastName)
+    if (self.lastName && self.lastName != [_snapShot objectForKey:@"lastname"])
         [postParams setObject:self.lastName forKey:@"lastname"];
-    if (self.location)
+    if (self.location && self.location != [_snapShot objectForKey:@"location"])
         [postParams setObject:self.location forKey:@"location"];
-    if (self.isEnabled)
+    if (self.isEnabled && self.isEnabled != [_snapShot objectForKey:@"isenabled"])
         [postParams setObject:self.isEnabled forKey:@"isenabled"];
-    if (self.secretQuestion)
+    if (self.secretQuestion && self.secretQuestion != [_snapShot objectForKey:@"secretquestion"])
         [postParams setObject:self.secretQuestion forKey:@"secretquestion"];
-    if (self.isEmailVerified)
+    if (self.isEmailVerified && self.isEmailVerified != [_snapShot objectForKey:@"isemailverified"])
         [postParams setObject:self.isEmailVerified forKey:@"isemailverified"];
-    if (self.phone)
+    if (self.phone && self.phone != [_snapShot objectForKey:@"phone"])
         [postParams setObject:self.phone forKey:@"phone"];
-    if (self.isOnline)
+    if (self.isOnline && self.isOnline != [_snapShot objectForKey:@"isonline"])
         [postParams setObject:self.isOnline forKey:@"isonline"];
-    if (self.attributes && [self.attributes count] > 0)
-        postParams[@"__attributes"] = self.attributes;
-    for(NSDictionary *prop in self.properties) {
+    
+    if (_attributes && [_attributes count] > 0)
+        for(id key in _attributes) {
+            if(![[[_snapShot objectForKey:@"__attributes"] allKeys] containsObject:key])
+                [postParams[@"__attributes"] setObject:[_attributes objectForKey:key] forKey:key];
+            else if([[_snapShot objectForKey:@"__attributes"] objectForKey:key] != [_attributes objectForKey:key])
+                [postParams[@"__attributes"] setObject:[_attributes objectForKey:key] forKey:key];
+        }
+//        postParams[@"__attributes"] = self.attributes;
+    
+    for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [postParams setObject:obj forKey:key];
+            if(![[_snapShot allKeys] containsObject:key])
+                [postParams setObject:obj forKey:key];
+            else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                [postParams setObject:obj forKey:key];
             *stop = YES;
         }];
     }
+    
     if(self.tagsToAdd && [self.tagsToAdd count] > 0)
         postParams[@"__addtags"] = [self.tagsToAdd allObjects];
     if(self.tagsToRemove && [self.tagsToRemove count] > 0)
         postParams[@"__removetags"] = [self.tagsToRemove allObjects];
     return postParams;
+}
+
+- (void) updateSnapshot {
+    if(_snapShot == nil)
+        _snapShot = [[NSMutableDictionary alloc] init];
+        
+    if(self.username)
+        _snapShot[@"username"] = self.username;
+    if(self.firstName)
+        _snapShot[@"firstname"] = self.firstName;
+    if(self.lastName)
+        _snapShot[@"lastname"] = self.lastName;
+    if(self.email)
+        _snapShot[@"email"] = self.email;
+    if(self.birthDate)
+        _snapShot[@"birthdate"] = self.birthDate;
+    if(self.isEnabled)
+        _snapShot[@"isenabled"] = self.isEnabled;
+    if(self.location)
+        _snapShot[@"location"] = self.location;
+    if(self.phone)
+        _snapShot[@"phone"] = self.phone;
+    if(self.secretQuestion)
+        _snapShot[@"secretquestion"] = self.secretQuestion;
+    if(self.isEmailVerified)
+        _snapShot[@"isemailverified"] = self.isEmailVerified;
+    if(self.isOnline)
+        _snapShot[@"isonline"] = self.isOnline;
+    if(_attributes)
+        _snapShot[@"__attributes"] = [self.attributes mutableCopy];
+    if(self.tags)
+        _snapShot[@"__tags"] = [self.tags mutableCopy];
+    if(_properties)
+        _snapShot[@"__properties"] = [self.properties mutableCopy];
 }
 
 - (NSString*) description {

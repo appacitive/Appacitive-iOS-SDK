@@ -12,7 +12,8 @@
 /**
  An APUser is a user registerd for using your app. This class helps you to manage the details of the users of your app.
  */
-@interface APUser : APObject <APObjectPropertyMapping>
+@interface APUser : APObject <APObjectPropertyMapping> {
+}
 
 @property (nonatomic, strong, readonly) NSString *userToken;
 @property (nonatomic, readonly) BOOL loggedInWithFacebook;
@@ -201,7 +202,6 @@
  */
 - (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-
 /** @name Fetch APUser */
 
 /**
@@ -302,7 +302,7 @@
 /**
  @see updateObjectWithRevisionNumber:successHandler:failureHandler:
  */
-- (void) updateObjectWithSuccessHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) updateObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to update a User
@@ -311,7 +311,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) updateObjectWithRevisionNumber:(NSNumber*)revision successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) updateObjectWithRevisionNumber:(NSNumber*)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /** @name Delete User */
 

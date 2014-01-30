@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSString *deviceLocation;
 @property (nonatomic, strong) NSMutableArray *channels;
 @property (nonatomic, strong) NSString *timeZone;
-@property (nonatomic, strong) NSString* isAvctive;
+@property (nonatomic, strong) NSString* isActive;
 @property (nonatomic, strong) NSString* badge;
 
 - (instancetype) init;

@@ -15,7 +15,9 @@
  A Connection itself can store data in its properties and attributes fields.
  */
 
-@interface APConnection : NSObject <APObjectPropertyMapping>
+@interface APConnection : NSObject <APObjectPropertyMapping> {
+    NSMutableDictionary *_snapShot;
+}
 
 @property (nonatomic, strong) NSString *createdBy;
 @property (nonatomic, strong) NSString *objectAId;

@@ -11,8 +11,6 @@
 #import "APHelperMethods.h"
 #import "NSString+APString.h"
 #import "APNetworking.h"
-#import "APUser.h"
-#import "APDevice.h"
 #import "Appacitive.h"
 
 @implementation APObject
@@ -154,7 +152,7 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -188,7 +186,6 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    
     
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
@@ -230,7 +227,7 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -276,16 +273,14 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     if(jsonError != nil)
         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
     [urlRequest setHTTPBody:requestBody];
-    
+    [self updateSnapshot];
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        
         if(successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-        
         if(failureBlock != nil) {
             failureBlock(error);
         }
@@ -340,7 +335,7 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 
 #pragma mark - Add properties method
 
-- (void) addPropertyWithKey:(NSString*) keyName value:(id) object {
+- (void) addPropertyWithKey:(NSString*)keyName value:(id)object {
     if (!self.properties)
         _properties = [NSMutableArray array];
     [_properties addObject:@{keyName: object}.mutableCopy];
@@ -408,16 +403,20 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 
 - (void) addTag:(NSString*)tag
 {
+    if(_tagsToAdd == nil)
+        _tagsToAdd = [[NSMutableSet alloc] init];
     if(tag != nil) {
-        [self.tagsToAdd addObject:[tag lowercaseString]];
+        [_tagsToAdd addObject:[tag lowercaseString]];
     }
 }
 
 - (void) removeTag:(NSString*)tag
 {
+    if(_tagsToRemove == nil)
+        _tagsToRemove = [[NSMutableSet alloc] init];
     if(tag != nil) {
-        [self.tagsToRemove addObject:[tag lowercaseString]];
-        [self.tagsToAdd minusSet:self.tagsToRemove];
+        [_tagsToRemove addObject:[tag lowercaseString]];
+        [_tagsToAdd minusSet:self.tagsToRemove];
     }
 }
 
@@ -441,20 +440,22 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     _tags = object[@"__tags"];
     _type = object[@"__type"];
     _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:object].mutableCopy;
+    
+    [self updateSnapshot];
 }
 
 
 - (NSMutableDictionary*) postParameters {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
-    if (self.objectId != nil)
+    if (_objectId != nil)
         postParams[@"__id"] = self.objectId;
-    if (self.attributes)
-        postParams[@"__attributes"] = self.attributes;
-    if (self.createdBy)
-        postParams[@"__createdby"] = self.createdBy;
-    if (self.revision)
-        postParams[@"__revision"] = self.revision;
-    for(NSDictionary *prop in self.properties) {
+    if (_attributes)
+        postParams[@"__attributes"] = _attributes;
+    if (_createdBy)
+        postParams[@"__createdby"] = _createdBy;
+    if (_revision)
+        postParams[@"__revision"] = _revision;
+    for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
             [postParams setObject:obj forKey:key];
             *stop = YES;
@@ -468,20 +469,53 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 }
 
 - (NSMutableDictionary*) postParametersUpdate {
+    
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
-    if (self.attributes && [self.attributes count] > 0)
-        postParams[@"__attributes"] = self.attributes;
-    for(NSDictionary *prop in self.properties) {
+    
+    if (_attributes && [_attributes count] > 0)
+        for(id key in _attributes) {
+            if(![[[_snapShot objectForKey:@"__attributes"] allKeys] containsObject:key])
+                [postParams[@"__attributes"] setObject:[self.attributes objectForKey:key] forKey:key];
+            else if([[_snapShot objectForKey:@"__attributes"] objectForKey:key] != [_attributes objectForKey:key])
+                [postParams[@"__attributes"] setObject:[_attributes objectForKey:key] forKey:key];
+        }
+    
+    for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [postParams setObject:obj forKey:key];
+            if(![[_snapShot allKeys] containsObject:key])
+                [postParams setObject:obj forKey:key];
+            else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                [postParams setObject:obj forKey:key];
             *stop = YES;
         }];
     }
-    if(self.tagsToAdd && [self.tagsToAdd count] > 0)
-        postParams[@"__addtags"] = [self.tagsToAdd allObjects];
-    if(self.tagsToRemove && [self.tagsToRemove count] > 0)
-        postParams[@"__removetags"] = [self.tagsToRemove allObjects];
+//    
+//    if (self.attributes && [self.attributes count] > 0)
+//        postParams[@"__attributes"] = self.attributes;
+//    
+//    for(NSDictionary *prop in self.properties) {
+//        [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+//            [postParams setObject:obj forKey:key];
+//            *stop = YES;
+//        }];
+//    }
+    if(_tagsToAdd && [_tagsToAdd count] > 0)
+        postParams[@"__addtags"] = [_tagsToAdd allObjects];
+    if(_tagsToRemove && [_tagsToRemove count] > 0)
+        postParams[@"__removetags"] = [_tagsToRemove allObjects];
     return postParams;
+}
+
+- (void) updateSnapshot {
+    if(_snapShot == nil)
+        _snapShot = [[NSMutableDictionary alloc] init];
+    
+    if(_attributes)
+        _snapShot[@"__attributes"] = [self.attributes mutableCopy];
+    if(_tags)
+        _snapShot[@"__tags"] = [self.tags mutableCopy];
+    if(_properties)
+        _snapShot[@"__properties"] = [self.properties mutableCopy];
 }
 
 @end

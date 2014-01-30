@@ -17,7 +17,7 @@
 //    
 //    afterAll(^(){
 //    });
-//    
+//
 //#pragma mark - TESTING_RETRIEVE_PROPERTY
 //
 //    it(@"retrieve a valid property", ^{
@@ -514,7 +514,7 @@
 //             successHandler:^(NSArray *objects){
 //                 object = [objects lastObject];
 //                 [APConnections
-//                  fetchConnectedObjectsOfType:object.type withObjectId:object.objectId withRelationType:@"testconnection"
+//                  fetchConnectedObjectsOfType:object.type withObjectId:object.objectId withRelationType:@"testconnection2"
 //                  successHandler:^(NSArray *objects){
 //                      isFetchSuccesful = YES;
 //                  } failureHandler:^(APError *error){
