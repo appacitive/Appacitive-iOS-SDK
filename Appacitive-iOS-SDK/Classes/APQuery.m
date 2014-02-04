@@ -384,11 +384,11 @@
 }
 
 + (NSString *) queryWithPageSize:(NSUInteger)pageSize {
-    return [NSString stringWithFormat:@"psize=%d", pageSize];
+    return [NSString stringWithFormat:@"psize=%lu", (unsigned long)pageSize];
 }
 
 + (NSString *) queryWithPageNumber:(NSUInteger)pageNumber {
-    return [NSString stringWithFormat:@"pnum=%d", pageNumber];
+    return [NSString stringWithFormat:@"pnum=%lu", (unsigned long)pageNumber];
 }
 
 + (NSString *) queryWithOrderBy:(NSString*)property isAscending:(BOOL)isAscending {
