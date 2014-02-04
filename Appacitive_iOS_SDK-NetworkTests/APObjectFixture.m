@@ -262,14 +262,10 @@
 //        __block BOOL isDeleteSuccessful = NO;
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
 //        [object setCreatedBy:@"Sandeep Dhull"];
-//        [object addPropertyWithKey:@"Name" value:@"Tavisca"];
-//        [object addPropertyWithKey:@"Category" value:@"arts"];
-//        [object addPropertyWithKey:@"Description" value:@"Tavisca artists works here"];
-//        [object addPropertyWithKey:@"Address" value:@"Eon It Park Kharadi"];
-//        [object addPropertyWithKey:@"GeoCodes" value:@"18.551678,73.954275"];
+//        [object addPropertyWithKey:@"name" value:@"Tavisca"];
 //        
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
-//            [object removePropertyWithKey:@"address"];
+//            [object removePropertyWithKey:@"name"];
 //            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
 //                [object deleteObject];
 //                isDeleteSuccessful = YES;
@@ -471,14 +467,10 @@
 //        
 //        APObject *object = [[APObject alloc] initWithTypeName:@"sdktest"];
 //        [object setCreatedBy:@"Sandeep Dhull"];
-//        [object addPropertyWithKey:@"Name" value:[NSNull null]];
-//        [object addPropertyWithKey:@"Category" value:[NSNull null]];
-//        [object addPropertyWithKey:@"Description" value:[NSNull null]];
-//        [object addPropertyWithKey:@"Address" value:[NSNull null]];
-//        [object addPropertyWithKey:@"GeoCodes" value:[NSNull null]];
+//        [object addPropertyWithKey:@"name" value:[NSNull null]];
 //        
 //        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
-//            [[object properties] setValue:[NSNull null] forKey:@"Name"];
+//            [[object properties] setValue:[NSNull null] forKey:@"name"];
 //            [object updateObjectWithSuccessHandler:^(NSDictionary *result){
 //                isSaveSuccessful = YES;
 //                [object deleteObject];

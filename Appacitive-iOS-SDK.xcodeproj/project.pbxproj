@@ -7,16 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2CEB0E94162BD2AB0074DA50 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E1B15EDF8FE00F98FB8 /* SenTestingKit.framework */; };
-		2CEB0E95162BD2AB0074DA50 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1415F4850E009A8578 /* UIKit.framework */; };
-		2CEB0E96162BD2AB0074DA50 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
-		2CEB0EAE162BD33E0074DA50 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A0E15F48488009A8578 /* CFNetwork.framework */; };
 		2CEB0EB0162BD3500074DA50 /* libAppacitive-iOS-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */; };
-		2CEB0EB3162BD3F60074DA50 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1015F4848D009A8578 /* Security.framework */; };
-		2CEB0EB4162BD4030074DA50 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1215F484E7009A8578 /* SystemConfiguration.framework */; };
-		2CEB0EB5162BD4230074DA50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
 		39510000989F40589B1E62B2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE18E91493A45BE9CFB5B14 /* libPods.a */; };
 		4C0902721878336000CA5D42 /* APDeviceFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0902711878336000CA5D42 /* APDeviceFixture.m */; };
+		4C2A522B189FB6150049EB85 /* libPods-Appacitive_iOS_SDK-NetworkTests-Kiwi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2A522A189FB6150049EB85 /* libPods-Appacitive_iOS_SDK-NetworkTests-Kiwi.a */; };
 		4C40861518904976002DC1E5 /* APPushNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C40861318904976002DC1E5 /* APPushNotification.h */; };
 		4C40861618904976002DC1E5 /* APPushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C40861418904976002DC1E5 /* APPushNotification.m */; };
 		4C7A8607185EC8D900BD06FF /* APEmail.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A8605185EC8D900BD06FF /* APEmail.h */; };
@@ -31,24 +25,17 @@
 		4CCA7CD518740F4B00D89FFA /* APFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA7CD318740F4B00D89FFA /* APFile.m */; };
 		4CCA7CD818740F5800D89FFA /* APDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD618740F5800D89FFA /* APDevice.h */; };
 		4CCA7CD918740F5800D89FFA /* APDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA7CD718740F5800D89FFA /* APDevice.m */; };
-		5C7690AFDA464064B61511E6 /* libPods-Appacitive_iOS_AsyncTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6E2583A5F5480EAE5D2808 /* libPods-Appacitive_iOS_AsyncTests.a */; };
+		4CF69F0C18A0B84B00DEFE29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF69F0B18A0B84B00DEFE29 /* SystemConfiguration.framework */; };
+		4CF69F0D18A0B88A00DEFE29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF69F0B18A0B84B00DEFE29 /* SystemConfiguration.framework */; };
+		4CF69F0E18A0B89500DEFE29 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF69F0B18A0B84B00DEFE29 /* SystemConfiguration.framework */; };
 		6102BAEA169A93E300D78642 /* APBlobFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 6102BAE9169A93E300D78642 /* APBlobFixture.m */; };
-		612CCDFA15FDA37000A78F3E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
-		612E3E0E15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
-		612E3E1C15EDF8FE00F98FB8 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E1B15EDF8FE00F98FB8 /* SenTestingKit.framework */; };
-		612E3E1F15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
 		612E3E2215EDF8FE00F98FB8 /* libAppacitive-iOS-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */; };
-		61388C1615F8667000C79F1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
 		614B911916A3C8BD001070DD /* APConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 614B911816A3C8BD001070DD /* APConstants.h */; };
 		6169128C16115C3D0086C006 /* NSString+APString.h in Headers */ = {isa = PBXBuildFile; fileRef = 6169128A16115C3D0086C006 /* NSString+APString.h */; };
 		6169128D16115C3D0086C006 /* NSString+APString.m in Sources */ = {isa = PBXBuildFile; fileRef = 6169128B16115C3D0086C006 /* NSString+APString.m */; };
 		6169128F161160110086C006 /* AppacitiveSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 6169128E161160110086C006 /* AppacitiveSDK.h */; };
 		61691292161160790086C006 /* NSDictionary+APDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 61691290161160790086C006 /* NSDictionary+APDictionary.h */; };
 		61691293161160790086C006 /* NSDictionary+APDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 61691291161160790086C006 /* NSDictionary+APDictionary.m */; };
-		616A6A0F15F48488009A8578 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A0E15F48488009A8578 /* CFNetwork.framework */; };
-		616A6A1115F4848D009A8578 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1015F4848D009A8578 /* Security.framework */; };
-		616A6A1315F484E7009A8578 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1215F484E7009A8578 /* SystemConfiguration.framework */; };
-		616A6A1515F4850E009A8578 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1415F4850E009A8578 /* UIKit.framework */; };
 		618FEE55169AEAEC006A1888 /* APUserFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 618FEE54169AEAEC006A1888 /* APUserFixture.m */; };
 		618FEE5A169AEB04006A1888 /* APUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 618FEE56169AEB04006A1888 /* APUser.h */; };
 		618FEE5B169AEB04006A1888 /* APUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 618FEE57169AEB04006A1888 /* APUser.m */; };
@@ -94,10 +81,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01DC32F44D8D45CAA1F2A598 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		0AE18E91493A45BE9CFB5B14 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C93E64065E84EBE81DE7209 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig"; path = "Pods/Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig"; sourceTree = "<group>"; };
 		2CEB0E93162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Appacitive_iOS_SDK-NetworkTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C0902711878336000CA5D42 /* APDeviceFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APDeviceFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APDeviceFixture.m"; sourceTree = SOURCE_ROOT; };
+		4C2A522A189FB6150049EB85 /* libPods-Appacitive_iOS_SDK-NetworkTests-Kiwi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Appacitive_iOS_SDK-NetworkTests-Kiwi.a"; path = "Pods/build/Debug-iphoneos/libPods-Appacitive_iOS_SDK-NetworkTests-Kiwi.a"; sourceTree = "<group>"; };
 		4C40861318904976002DC1E5 /* APPushNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPushNotification.h; path = "Appacitive-iOS-SDK/Classes/APPushNotification.h"; sourceTree = SOURCE_ROOT; };
 		4C40861418904976002DC1E5 /* APPushNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPushNotification.m; path = "Appacitive-iOS-SDK/Classes/APPushNotification.m"; sourceTree = SOURCE_ROOT; };
 		4C7A8605185EC8D900BD06FF /* APEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APEmail.h; path = "Appacitive-iOS-SDK/Classes/APEmail.h"; sourceTree = SOURCE_ROOT; };
@@ -112,23 +100,16 @@
 		4CCA7CD318740F4B00D89FFA /* APFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFile.m; path = "Appacitive-iOS-SDK/Classes/APFile.m"; sourceTree = SOURCE_ROOT; };
 		4CCA7CD618740F5800D89FFA /* APDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APDevice.h; path = "Appacitive-iOS-SDK/Classes/APDevice.h"; sourceTree = SOURCE_ROOT; };
 		4CCA7CD718740F5800D89FFA /* APDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APDevice.m; path = "Appacitive-iOS-SDK/Classes/APDevice.m"; sourceTree = SOURCE_ROOT; };
-		5C16A64AB7FB464E91839AF3 /* Pods-Appacitive_iOS_AsyncTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appacitive_iOS_AsyncTests.xcconfig"; path = "Pods/Pods-Appacitive_iOS_AsyncTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4CF69F0B18A0B84B00DEFE29 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6102BAE9169A93E300D78642 /* APBlobFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APBlobFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APBlobFixture.m"; sourceTree = SOURCE_ROOT; };
 		612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libAppacitive-iOS-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		612E3E1A15EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Appacitive-iOS-SDK-InterfaceTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		612E3E1B15EDF8FE00F98FB8 /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		61388C1515F8667000C79F1F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		614B911816A3C8BD001070DD /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APConstants.h; path = "Appacitive-iOS-SDK/Classes/APConstants.h"; sourceTree = SOURCE_ROOT; };
 		6169128A16115C3D0086C006 /* NSString+APString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+APString.h"; sourceTree = "<group>"; };
 		6169128B16115C3D0086C006 /* NSString+APString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+APString.m"; sourceTree = "<group>"; };
 		6169128E161160110086C006 /* AppacitiveSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppacitiveSDK.h; path = "Appacitive-iOS-SDK/Classes/AppacitiveSDK.h"; sourceTree = SOURCE_ROOT; };
 		61691290161160790086C006 /* NSDictionary+APDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+APDictionary.h"; sourceTree = "<group>"; };
 		61691291161160790086C006 /* NSDictionary+APDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+APDictionary.m"; sourceTree = "<group>"; };
-		616A6A0E15F48488009A8578 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		616A6A1015F4848D009A8578 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		616A6A1215F484E7009A8578 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		616A6A1415F4850E009A8578 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		618FEE54169AEAEC006A1888 /* APUserFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APUserFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APUserFixture.m"; sourceTree = SOURCE_ROOT; };
 		618FEE56169AEB04006A1888 /* APUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APUser.h; path = "Appacitive-iOS-SDK/Classes/APUser.h"; sourceTree = SOURCE_ROOT; };
 		618FEE57169AEB04006A1888 /* APUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = APUser.m; path = "Appacitive-iOS-SDK/Classes/APUser.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -159,7 +140,7 @@
 		61D62C0915F8857100C57AA3 /* APQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APQuery.m; path = "Appacitive-iOS-SDK/Classes/APQuery.m"; sourceTree = SOURCE_ROOT; };
 		61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APResponseBlocks.h; path = "Appacitive-iOS-SDK/Classes/APResponseBlocks.h"; sourceTree = SOURCE_ROOT; };
 		61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Appacitive-iOS-SDK-Prefix.pch"; path = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		9F6E2583A5F5480EAE5D2808 /* libPods-Appacitive_iOS_AsyncTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Appacitive_iOS_AsyncTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1A55D0AA79744C2AEA59E62 /* libPods-Appacitive_iOS_SDK-NetworkTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Appacitive_iOS_SDK-NetworkTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,15 +148,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CEB0EB5162BD4230074DA50 /* CoreLocation.framework in Frameworks */,
-				2CEB0EB4162BD4030074DA50 /* SystemConfiguration.framework in Frameworks */,
-				2CEB0EB3162BD3F60074DA50 /* Security.framework in Frameworks */,
+				4CF69F0E18A0B89500DEFE29 /* SystemConfiguration.framework in Frameworks */,
 				2CEB0EB0162BD3500074DA50 /* libAppacitive-iOS-SDK.a in Frameworks */,
-				2CEB0EAE162BD33E0074DA50 /* CFNetwork.framework in Frameworks */,
-				2CEB0E94162BD2AB0074DA50 /* SenTestingKit.framework in Frameworks */,
-				2CEB0E95162BD2AB0074DA50 /* UIKit.framework in Frameworks */,
-				2CEB0E96162BD2AB0074DA50 /* Foundation.framework in Frameworks */,
-				5C7690AFDA464064B61511E6 /* libPods-Appacitive_iOS_AsyncTests.a in Frameworks */,
+				4C2A522B189FB6150049EB85 /* libPods-Appacitive_iOS_SDK-NetworkTests-Kiwi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,8 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61388C1615F8667000C79F1F /* CoreLocation.framework in Frameworks */,
-				612E3E0E15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */,
+				4CF69F0C18A0B84B00DEFE29 /* SystemConfiguration.framework in Frameworks */,
 				39510000989F40589B1E62B2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,13 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				612CCDFA15FDA37000A78F3E /* CoreLocation.framework in Frameworks */,
-				616A6A1515F4850E009A8578 /* UIKit.framework in Frameworks */,
-				616A6A1315F484E7009A8578 /* SystemConfiguration.framework in Frameworks */,
-				616A6A1115F4848D009A8578 /* Security.framework in Frameworks */,
-				616A6A0F15F48488009A8578 /* CFNetwork.framework in Frameworks */,
-				612E3E1C15EDF8FE00F98FB8 /* SenTestingKit.framework in Frameworks */,
-				612E3E1F15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */,
+				4CF69F0D18A0B88A00DEFE29 /* SystemConfiguration.framework in Frameworks */,
 				612E3E2215EDF8FE00F98FB8 /* libAppacitive-iOS-SDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,8 +329,7 @@
 				2CEB0E97162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests */,
 				612E3E0C15EDF8FE00F98FB8 /* Frameworks */,
 				612E3E0B15EDF8FD00F98FB8 /* Products */,
-				01DC32F44D8D45CAA1F2A598 /* Pods.xcconfig */,
-				5C16A64AB7FB464E91839AF3 /* Pods-Appacitive_iOS_AsyncTests.xcconfig */,
+				1C93E64065E84EBE81DE7209 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
@@ -380,15 +347,10 @@
 		612E3E0C15EDF8FE00F98FB8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				61388C1515F8667000C79F1F /* CoreLocation.framework */,
-				616A6A1415F4850E009A8578 /* UIKit.framework */,
-				616A6A1215F484E7009A8578 /* SystemConfiguration.framework */,
-				616A6A1015F4848D009A8578 /* Security.framework */,
-				616A6A0E15F48488009A8578 /* CFNetwork.framework */,
-				612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */,
-				612E3E1B15EDF8FE00F98FB8 /* SenTestingKit.framework */,
+				4CF69F0B18A0B84B00DEFE29 /* SystemConfiguration.framework */,
+				4C2A522A189FB6150049EB85 /* libPods-Appacitive_iOS_SDK-NetworkTests-Kiwi.a */,
 				0AE18E91493A45BE9CFB5B14 /* libPods.a */,
-				9F6E2583A5F5480EAE5D2808 /* libPods-Appacitive_iOS_AsyncTests.a */,
+				B1A55D0AA79744C2AEA59E62 /* libPods-Appacitive_iOS_SDK-NetworkTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -504,6 +466,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2CEB0EA1162BD2AB0074DA50 /* Build configuration list for PBXNativeTarget "Appacitive_iOS_SDK-NetworkTests" */;
 			buildPhases = (
+				38B332D63EFE495C866F52A8 /* Check Pods Manifest.lock */,
 				2CEB0E8E162BD2AB0074DA50 /* Sources */,
 				2CEB0E8F162BD2AB0074DA50 /* Frameworks */,
 				2CEB0E90162BD2AB0074DA50 /* Resources */,
@@ -619,6 +582,21 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		38B332D63EFE495C866F52A8 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		457415B4877F48E0AA55786C /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -658,7 +636,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-Appacitive_iOS_AsyncTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Pods-Appacitive_iOS_SDK-NetworkTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -738,16 +717,13 @@
 /* Begin XCBuildConfiguration section */
 		2CEB0EA2162BD2AB0074DA50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C16A64AB7FB464E91839AF3 /* Pods-Appacitive_iOS_AsyncTests.xcconfig */;
+			baseConfigurationReference = 1C93E64065E84EBE81DE7209 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Prefix.pch";
 				INFOPLIST_FILE = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Info.plist";
@@ -759,16 +735,13 @@
 		};
 		2CEB0EA3162BD2AB0074DA50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C16A64AB7FB464E91839AF3 /* Pods-Appacitive_iOS_AsyncTests.xcconfig */;
+			baseConfigurationReference = 1C93E64065E84EBE81DE7209 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Prefix.pch";
 				INFOPLIST_FILE = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Info.plist";
@@ -782,6 +755,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -815,6 +789,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -839,9 +814,9 @@
 		};
 		612E3E2F15EDF8FE00F98FB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01DC32F44D8D45CAA1F2A598 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/AppYoda_iOS_SDK.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch";
@@ -854,9 +829,9 @@
 		};
 		612E3E3015EDF8FE00F98FB8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01DC32F44D8D45CAA1F2A598 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				DSTROOT = /tmp/AppYoda_iOS_SDK.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch";
@@ -869,21 +844,12 @@
 		};
 		612E3E3215EDF8FE00F98FB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01DC32F44D8D45CAA1F2A598 /* Pods.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/BuildHeaders\"",
-					"\"${PODS_ROOT}/BuildHeaders/MKNetworkKit\"",
-					"\"${PODS_ROOT}/BuildHeaders/MKNetworkKit/Categories\"",
-					"\"${PODS_ROOT}/BuildHeaders/Reachability\"",
-				);
+				HEADER_SEARCH_PATHS = $inherited;
 				INFOPLIST_FILE = "";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -899,10 +865,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
