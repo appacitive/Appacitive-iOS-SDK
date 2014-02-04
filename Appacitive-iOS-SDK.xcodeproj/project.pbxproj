@@ -1,0 +1,976 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2CEB0E94162BD2AB0074DA50 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E1B15EDF8FE00F98FB8 /* SenTestingKit.framework */; };
+		2CEB0E95162BD2AB0074DA50 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1415F4850E009A8578 /* UIKit.framework */; };
+		2CEB0E96162BD2AB0074DA50 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
+		2CEB0EAE162BD33E0074DA50 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A0E15F48488009A8578 /* CFNetwork.framework */; };
+		2CEB0EB0162BD3500074DA50 /* libAppacitive-iOS-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */; };
+		2CEB0EB3162BD3F60074DA50 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1015F4848D009A8578 /* Security.framework */; };
+		2CEB0EB4162BD4030074DA50 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1215F484E7009A8578 /* SystemConfiguration.framework */; };
+		2CEB0EB5162BD4230074DA50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
+		39510000989F40589B1E62B2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AE18E91493A45BE9CFB5B14 /* libPods.a */; };
+		4C0902721878336000CA5D42 /* APDeviceFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0902711878336000CA5D42 /* APDeviceFixture.m */; };
+		4C40861518904976002DC1E5 /* APPushNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C40861318904976002DC1E5 /* APPushNotification.h */; };
+		4C40861618904976002DC1E5 /* APPushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C40861418904976002DC1E5 /* APPushNotification.m */; };
+		4C7A8607185EC8D900BD06FF /* APEmail.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A8605185EC8D900BD06FF /* APEmail.h */; };
+		4C7A8608185EC8D900BD06FF /* APEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A8606185EC8D900BD06FF /* APEmail.m */; };
+		4C81334918A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C81334818A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a */; };
+		4CB768AF1872C43B00A69FE4 /* APNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB768AD1872C43B00A69FE4 /* APNetworking.h */; };
+		4CB768B01872C43B00A69FE4 /* APNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB768AE1872C43B00A69FE4 /* APNetworking.m */; };
+		4CBA47471876C46E00484799 /* APEmailFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA47461876C46E00484799 /* APEmailFixture.m */; };
+		4CBCA513187C00E400947D90 /* APGraphNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBCA511187C00E400947D90 /* APGraphNode.h */; };
+		4CBCA514187C00E400947D90 /* APGraphNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA512187C00E400947D90 /* APGraphNode.m */; };
+		4CBCA517187C21E000947D90 /* APGraphNodeFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA516187C21E000947D90 /* APGraphNodeFixture.m */; };
+		4CCA7CD418740F4B00D89FFA /* APFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD218740F4B00D89FFA /* APFile.h */; };
+		4CCA7CD518740F4B00D89FFA /* APFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA7CD318740F4B00D89FFA /* APFile.m */; };
+		4CCA7CD818740F5800D89FFA /* APDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD618740F5800D89FFA /* APDevice.h */; };
+		4CCA7CD918740F5800D89FFA /* APDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA7CD718740F5800D89FFA /* APDevice.m */; };
+		6102BAEA169A93E300D78642 /* APBlobFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 6102BAE9169A93E300D78642 /* APBlobFixture.m */; };
+		612CCDFA15FDA37000A78F3E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
+		612E3E0E15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
+		612E3E1C15EDF8FE00F98FB8 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E1B15EDF8FE00F98FB8 /* SenTestingKit.framework */; };
+		612E3E1F15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
+		612E3E2215EDF8FE00F98FB8 /* libAppacitive-iOS-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */; };
+		61388C1615F8667000C79F1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
+		614B911916A3C8BD001070DD /* APConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 614B911816A3C8BD001070DD /* APConstants.h */; };
+		6169128C16115C3D0086C006 /* NSString+APString.h in Headers */ = {isa = PBXBuildFile; fileRef = 6169128A16115C3D0086C006 /* NSString+APString.h */; };
+		6169128D16115C3D0086C006 /* NSString+APString.m in Sources */ = {isa = PBXBuildFile; fileRef = 6169128B16115C3D0086C006 /* NSString+APString.m */; };
+		6169128F161160110086C006 /* AppacitiveSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 6169128E161160110086C006 /* AppacitiveSDK.h */; };
+		61691292161160790086C006 /* NSDictionary+APDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 61691290161160790086C006 /* NSDictionary+APDictionary.h */; };
+		61691293161160790086C006 /* NSDictionary+APDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 61691291161160790086C006 /* NSDictionary+APDictionary.m */; };
+		616A6A0F15F48488009A8578 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A0E15F48488009A8578 /* CFNetwork.framework */; };
+		616A6A1115F4848D009A8578 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1015F4848D009A8578 /* Security.framework */; };
+		616A6A1315F484E7009A8578 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1215F484E7009A8578 /* SystemConfiguration.framework */; };
+		616A6A1515F4850E009A8578 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1415F4850E009A8578 /* UIKit.framework */; };
+		618FEE55169AEAEC006A1888 /* APUserFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 618FEE54169AEAEC006A1888 /* APUserFixture.m */; };
+		618FEE5A169AEB04006A1888 /* APUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 618FEE56169AEB04006A1888 /* APUser.h */; };
+		618FEE5B169AEB04006A1888 /* APUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 618FEE57169AEB04006A1888 /* APUser.m */; };
+		6191E994169A926A00F87656 /* test_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 6191E993169A926A00F87656 /* test_image.png */; };
+		61D4A0E91635223400DB5FD9 /* APConnectionFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D4A0E51635223400DB5FD9 /* APConnectionFixture.m */; };
+		61D4A0EA1635223400DB5FD9 /* APObjectFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D4A0E61635223400DB5FD9 /* APObjectFixture.m */; };
+		61D4A0F81635234600DB5FD9 /* APHelperMethodsFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D4A0ED1635234500DB5FD9 /* APHelperMethodsFixture.m */; };
+		61D4A0F91635234600DB5FD9 /* Appacitive-iOS-SDK-InterfaceTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61D4A0EE1635234500DB5FD9 /* Appacitive-iOS-SDK-InterfaceTests-Info.plist */; };
+		61D4A0FA1635234600DB5FD9 /* AppacitiveFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D4A0F01635234500DB5FD9 /* AppacitiveFixture.m */; };
+		61D4A0FB1635234600DB5FD9 /* APQueryFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D4A0F21635234600DB5FD9 /* APQueryFixture.m */; };
+		61D4A1001635238E00DB5FD9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 61D4A0FE1635238E00DB5FD9 /* InfoPlist.strings */; };
+		61D62C0B15F8857100C57AA3 /* APConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62BFE15F8857100C57AA3 /* APConnection.h */; };
+		61D62C0C15F8857100C57AA3 /* APConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62BFF15F8857100C57AA3 /* APConnection.m */; };
+		61D62C0D15F8857100C57AA3 /* APError.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0015F8857100C57AA3 /* APError.h */; };
+		61D62C0E15F8857100C57AA3 /* APError.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0115F8857100C57AA3 /* APError.m */; };
+		61D62C0F15F8857100C57AA3 /* APHelperMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0215F8857100C57AA3 /* APHelperMethods.h */; };
+		61D62C1015F8857100C57AA3 /* APHelperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0315F8857100C57AA3 /* APHelperMethods.m */; };
+		61D62C1115F8857100C57AA3 /* APObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0415F8857100C57AA3 /* APObject.h */; };
+		61D62C1215F8857100C57AA3 /* APObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0515F8857100C57AA3 /* APObject.m */; };
+		61D62C1315F8857100C57AA3 /* Appacitive.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0615F8857100C57AA3 /* Appacitive.h */; };
+		61D62C1415F8857100C57AA3 /* Appacitive.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0715F8857100C57AA3 /* Appacitive.m */; };
+		61D62C1515F8857100C57AA3 /* APQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0815F8857100C57AA3 /* APQuery.h */; };
+		61D62C1615F8857100C57AA3 /* APQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0915F8857100C57AA3 /* APQuery.m */; };
+		61D62C1715F8857100C57AA3 /* APResponseBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */; };
+		61D62C1A15F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2CEB0EB1162BD3540074DA50 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 612E3E0115EDF8FD00F98FB8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 612E3E0915EDF8FD00F98FB8;
+			remoteInfo = "Appacitive-iOS-SDK";
+		};
+		612E3E2015EDF8FE00F98FB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 612E3E0115EDF8FD00F98FB8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 612E3E0915EDF8FD00F98FB8;
+			remoteInfo = "AppYoda-iOS-SDK";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0AE18E91493A45BE9CFB5B14 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CEB0E93162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Appacitive_iOS_SDK-NetworkTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C0902711878336000CA5D42 /* APDeviceFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APDeviceFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APDeviceFixture.m"; sourceTree = SOURCE_ROOT; };
+		4C40861318904976002DC1E5 /* APPushNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPushNotification.h; path = "Appacitive-iOS-SDK/Classes/APPushNotification.h"; sourceTree = SOURCE_ROOT; };
+		4C40861418904976002DC1E5 /* APPushNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPushNotification.m; path = "Appacitive-iOS-SDK/Classes/APPushNotification.m"; sourceTree = SOURCE_ROOT; };
+		4C7A8605185EC8D900BD06FF /* APEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APEmail.h; path = "Appacitive-iOS-SDK/Classes/APEmail.h"; sourceTree = SOURCE_ROOT; };
+		4C7A8606185EC8D900BD06FF /* APEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = APEmail.m; path = "Appacitive-iOS-SDK/Classes/APEmail.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		4C81334818A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Appacitive_iOS_SDK-NetworkTests.a"; path = "Pods/build/Debug-iphoneos/libPods-Appacitive_iOS_SDK-NetworkTests.a"; sourceTree = "<group>"; };
+		4CB768AD1872C43B00A69FE4 /* APNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APNetworking.h; path = "Appacitive-iOS-SDK/Classes/APNetworking.h"; sourceTree = SOURCE_ROOT; };
+		4CB768AE1872C43B00A69FE4 /* APNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APNetworking.m; path = "Appacitive-iOS-SDK/Classes/APNetworking.m"; sourceTree = SOURCE_ROOT; };
+		4CBA47461876C46E00484799 /* APEmailFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APEmailFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APEmailFixture.m"; sourceTree = SOURCE_ROOT; };
+		4CBCA511187C00E400947D90 /* APGraphNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APGraphNode.h; path = "Appacitive-iOS-SDK/Classes/APGraphNode.h"; sourceTree = SOURCE_ROOT; };
+		4CBCA512187C00E400947D90 /* APGraphNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APGraphNode.m; path = "Appacitive-iOS-SDK/Classes/APGraphNode.m"; sourceTree = SOURCE_ROOT; };
+		4CBCA516187C21E000947D90 /* APGraphNodeFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APGraphNodeFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APGraphNodeFixture.m"; sourceTree = SOURCE_ROOT; };
+		4CCA7CD218740F4B00D89FFA /* APFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APFile.h; path = "Appacitive-iOS-SDK/Classes/APFile.h"; sourceTree = SOURCE_ROOT; };
+		4CCA7CD318740F4B00D89FFA /* APFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFile.m; path = "Appacitive-iOS-SDK/Classes/APFile.m"; sourceTree = SOURCE_ROOT; };
+		4CCA7CD618740F5800D89FFA /* APDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APDevice.h; path = "Appacitive-iOS-SDK/Classes/APDevice.h"; sourceTree = SOURCE_ROOT; };
+		4CCA7CD718740F5800D89FFA /* APDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APDevice.m; path = "Appacitive-iOS-SDK/Classes/APDevice.m"; sourceTree = SOURCE_ROOT; };
+		6102BAE9169A93E300D78642 /* APBlobFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APBlobFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APBlobFixture.m"; sourceTree = SOURCE_ROOT; };
+		612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libAppacitive-iOS-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		612E3E1A15EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Appacitive-iOS-SDK-InterfaceTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		612E3E1B15EDF8FE00F98FB8 /* SenTestingKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		61388C1515F8667000C79F1F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		614B911816A3C8BD001070DD /* APConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APConstants.h; path = "Appacitive-iOS-SDK/Classes/APConstants.h"; sourceTree = SOURCE_ROOT; };
+		6169128A16115C3D0086C006 /* NSString+APString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+APString.h"; sourceTree = "<group>"; };
+		6169128B16115C3D0086C006 /* NSString+APString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+APString.m"; sourceTree = "<group>"; };
+		6169128E161160110086C006 /* AppacitiveSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppacitiveSDK.h; path = "Appacitive-iOS-SDK/Classes/AppacitiveSDK.h"; sourceTree = SOURCE_ROOT; };
+		61691290161160790086C006 /* NSDictionary+APDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+APDictionary.h"; sourceTree = "<group>"; };
+		61691291161160790086C006 /* NSDictionary+APDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+APDictionary.m"; sourceTree = "<group>"; };
+		616A6A0E15F48488009A8578 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		616A6A1015F4848D009A8578 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		616A6A1215F484E7009A8578 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		616A6A1415F4850E009A8578 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		618FEE54169AEAEC006A1888 /* APUserFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APUserFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APUserFixture.m"; sourceTree = SOURCE_ROOT; };
+		618FEE56169AEB04006A1888 /* APUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APUser.h; path = "Appacitive-iOS-SDK/Classes/APUser.h"; sourceTree = SOURCE_ROOT; };
+		618FEE57169AEB04006A1888 /* APUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = APUser.m; path = "Appacitive-iOS-SDK/Classes/APUser.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		6191E993169A926A00F87656 /* test_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test_image.png; path = "Appacitive_iOS_SDK-NetworkTests/test_image.png"; sourceTree = SOURCE_ROOT; };
+		61D4A0E51635223400DB5FD9 /* APConnectionFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APConnectionFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APConnectionFixture.m"; sourceTree = SOURCE_ROOT; };
+		61D4A0E61635223400DB5FD9 /* APObjectFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APObjectFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APObjectFixture.m"; sourceTree = SOURCE_ROOT; };
+		61D4A0E71635223400DB5FD9 /* Appacitive_iOS_SDK-NetworkTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Appacitive_iOS_SDK-NetworkTests-Info.plist"; path = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Info.plist"; sourceTree = SOURCE_ROOT; };
+		61D4A0E81635223400DB5FD9 /* Appacitive_iOS_SDK-NetworkTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Appacitive_iOS_SDK-NetworkTests-Prefix.pch"; path = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		61D4A0EC1635234500DB5FD9 /* APHelperMethodsFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APHelperMethodsFixture.h; path = "Appacitive-iOS-SDK-InterfaceTests/APHelperMethodsFixture.h"; sourceTree = SOURCE_ROOT; };
+		61D4A0ED1635234500DB5FD9 /* APHelperMethodsFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APHelperMethodsFixture.m; path = "Appacitive-iOS-SDK-InterfaceTests/APHelperMethodsFixture.m"; sourceTree = SOURCE_ROOT; };
+		61D4A0EE1635234500DB5FD9 /* Appacitive-iOS-SDK-InterfaceTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Appacitive-iOS-SDK-InterfaceTests-Info.plist"; path = "Appacitive-iOS-SDK-InterfaceTests/Appacitive-iOS-SDK-InterfaceTests-Info.plist"; sourceTree = SOURCE_ROOT; };
+		61D4A0EF1635234500DB5FD9 /* AppacitiveFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppacitiveFixture.h; path = "Appacitive-iOS-SDK-InterfaceTests/AppacitiveFixture.h"; sourceTree = SOURCE_ROOT; };
+		61D4A0F01635234500DB5FD9 /* AppacitiveFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppacitiveFixture.m; path = "Appacitive-iOS-SDK-InterfaceTests/AppacitiveFixture.m"; sourceTree = SOURCE_ROOT; };
+		61D4A0F11635234500DB5FD9 /* APQueryFixture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APQueryFixture.h; path = "Appacitive-iOS-SDK-InterfaceTests/APQueryFixture.h"; sourceTree = SOURCE_ROOT; };
+		61D4A0F21635234600DB5FD9 /* APQueryFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APQueryFixture.m; path = "Appacitive-iOS-SDK-InterfaceTests/APQueryFixture.m"; sourceTree = SOURCE_ROOT; };
+		61D4A0FF1635238E00DB5FD9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "Appacitive-iOS-SDK-InterfaceTests/en.lproj/InfoPlist.strings"; sourceTree = SOURCE_ROOT; };
+		61D62BFE15F8857100C57AA3 /* APConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APConnection.h; path = "Appacitive-iOS-SDK/Classes/APConnection.h"; sourceTree = SOURCE_ROOT; };
+		61D62BFF15F8857100C57AA3 /* APConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = APConnection.m; path = "Appacitive-iOS-SDK/Classes/APConnection.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		61D62C0015F8857100C57AA3 /* APError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APError.h; path = "Appacitive-iOS-SDK/Classes/APError.h"; sourceTree = SOURCE_ROOT; };
+		61D62C0115F8857100C57AA3 /* APError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APError.m; path = "Appacitive-iOS-SDK/Classes/APError.m"; sourceTree = SOURCE_ROOT; };
+		61D62C0215F8857100C57AA3 /* APHelperMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APHelperMethods.h; path = "Appacitive-iOS-SDK/Classes/APHelperMethods.h"; sourceTree = SOURCE_ROOT; };
+		61D62C0315F8857100C57AA3 /* APHelperMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APHelperMethods.m; path = "Appacitive-iOS-SDK/Classes/APHelperMethods.m"; sourceTree = SOURCE_ROOT; };
+		61D62C0415F8857100C57AA3 /* APObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APObject.h; path = "Appacitive-iOS-SDK/Classes/APObject.h"; sourceTree = SOURCE_ROOT; };
+		61D62C0515F8857100C57AA3 /* APObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APObject.m; path = "Appacitive-iOS-SDK/Classes/APObject.m"; sourceTree = SOURCE_ROOT; };
+		61D62C0615F8857100C57AA3 /* Appacitive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Appacitive.h; path = "Appacitive-iOS-SDK/Classes/Appacitive.h"; sourceTree = SOURCE_ROOT; };
+		61D62C0715F8857100C57AA3 /* Appacitive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Appacitive.m; path = "Appacitive-iOS-SDK/Classes/Appacitive.m"; sourceTree = SOURCE_ROOT; };
+		61D62C0815F8857100C57AA3 /* APQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APQuery.h; path = "Appacitive-iOS-SDK/Classes/APQuery.h"; sourceTree = SOURCE_ROOT; };
+		61D62C0915F8857100C57AA3 /* APQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APQuery.m; path = "Appacitive-iOS-SDK/Classes/APQuery.m"; sourceTree = SOURCE_ROOT; };
+		61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APResponseBlocks.h; path = "Appacitive-iOS-SDK/Classes/APResponseBlocks.h"; sourceTree = SOURCE_ROOT; };
+		61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Appacitive-iOS-SDK-Prefix.pch"; path = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig"; path = "Pods/Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2CEB0E8F162BD2AB0074DA50 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C81334918A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a in Frameworks */,
+				2CEB0EB5162BD4230074DA50 /* CoreLocation.framework in Frameworks */,
+				2CEB0EB4162BD4030074DA50 /* SystemConfiguration.framework in Frameworks */,
+				2CEB0EB3162BD3F60074DA50 /* Security.framework in Frameworks */,
+				2CEB0EB0162BD3500074DA50 /* libAppacitive-iOS-SDK.a in Frameworks */,
+				2CEB0EAE162BD33E0074DA50 /* CFNetwork.framework in Frameworks */,
+				2CEB0E94162BD2AB0074DA50 /* SenTestingKit.framework in Frameworks */,
+				2CEB0E95162BD2AB0074DA50 /* UIKit.framework in Frameworks */,
+				2CEB0E96162BD2AB0074DA50 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		612E3E0715EDF8FD00F98FB8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61388C1615F8667000C79F1F /* CoreLocation.framework in Frameworks */,
+				612E3E0E15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */,
+				39510000989F40589B1E62B2 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		612E3E1615EDF8FE00F98FB8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				612CCDFA15FDA37000A78F3E /* CoreLocation.framework in Frameworks */,
+				616A6A1515F4850E009A8578 /* UIKit.framework in Frameworks */,
+				616A6A1315F484E7009A8578 /* SystemConfiguration.framework in Frameworks */,
+				616A6A1115F4848D009A8578 /* Security.framework in Frameworks */,
+				616A6A0F15F48488009A8578 /* CFNetwork.framework in Frameworks */,
+				612E3E1C15EDF8FE00F98FB8 /* SenTestingKit.framework in Frameworks */,
+				612E3E1F15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */,
+				612E3E2215EDF8FE00F98FB8 /* libAppacitive-iOS-SDK.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2CEB0E97162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests */ = {
+			isa = PBXGroup;
+			children = (
+				6102BAE9169A93E300D78642 /* APBlobFixture.m */,
+				61D4A0E51635223400DB5FD9 /* APConnectionFixture.m */,
+				4C0902711878336000CA5D42 /* APDeviceFixture.m */,
+				4CBA47461876C46E00484799 /* APEmailFixture.m */,
+				4CBCA516187C21E000947D90 /* APGraphNodeFixture.m */,
+				61D4A0E61635223400DB5FD9 /* APObjectFixture.m */,
+				618FEE54169AEAEC006A1888 /* APUserFixture.m */,
+				6191E993169A926A00F87656 /* test_image.png */,
+				2CEB0E98162BD2AB0074DA50 /* Supporting Files */,
+			);
+			name = "Appacitive_iOS_SDK-NetworkTests";
+			path = Appacitive_iOS_AsyncTests;
+			sourceTree = "<group>";
+		};
+		2CEB0E98162BD2AB0074DA50 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				61D4A0E71635223400DB5FD9 /* Appacitive_iOS_SDK-NetworkTests-Info.plist */,
+				61D4A0E81635223400DB5FD9 /* Appacitive_iOS_SDK-NetworkTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4C2EFE0E18767B8900733CE2 /* Appacitive */ = {
+			isa = PBXGroup;
+			children = (
+				6169128E161160110086C006 /* AppacitiveSDK.h */,
+				614B911816A3C8BD001070DD /* APConstants.h */,
+				61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */,
+				61D62C0615F8857100C57AA3 /* Appacitive.h */,
+				61D62C0715F8857100C57AA3 /* Appacitive.m */,
+			);
+			name = Appacitive;
+			sourceTree = "<group>";
+		};
+		4C2EFE0F18767B9D00733CE2 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				61D62C0215F8857100C57AA3 /* APHelperMethods.h */,
+				61D62C0315F8857100C57AA3 /* APHelperMethods.m */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		4C2EFE1018767BB200733CE2 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				61D62C0015F8857100C57AA3 /* APError.h */,
+				61D62C0115F8857100C57AA3 /* APError.m */,
+			);
+			name = Error;
+			sourceTree = "<group>";
+		};
+		4C4086171890497E002DC1E5 /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				4C40861318904976002DC1E5 /* APPushNotification.h */,
+				4C40861418904976002DC1E5 /* APPushNotification.m */,
+			);
+			name = Push;
+			sourceTree = "<group>";
+		};
+		4C581BE91859B7B200518557 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				61D62C0415F8857100C57AA3 /* APObject.h */,
+				61D62C0515F8857100C57AA3 /* APObject.m */,
+			);
+			name = Object;
+			sourceTree = "<group>";
+		};
+		4C581BEA1859B7C100518557 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				61D62BFE15F8857100C57AA3 /* APConnection.h */,
+				61D62BFF15F8857100C57AA3 /* APConnection.m */,
+			);
+			name = Connection;
+			sourceTree = "<group>";
+		};
+		4C581BEC1859B7D800518557 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				618FEE56169AEB04006A1888 /* APUser.h */,
+				618FEE57169AEB04006A1888 /* APUser.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		4C7A8609185ECCAD00BD06FF /* Email */ = {
+			isa = PBXGroup;
+			children = (
+				4C7A8605185EC8D900BD06FF /* APEmail.h */,
+				4C7A8606185EC8D900BD06FF /* APEmail.m */,
+			);
+			name = Email;
+			sourceTree = "<group>";
+		};
+		4CB41C5318644E3000918DA6 /* File */ = {
+			isa = PBXGroup;
+			children = (
+				4CCA7CD218740F4B00D89FFA /* APFile.h */,
+				4CCA7CD318740F4B00D89FFA /* APFile.m */,
+			);
+			name = File;
+			sourceTree = "<group>";
+		};
+		4CB41C5418644E3E00918DA6 /* Query */ = {
+			isa = PBXGroup;
+			children = (
+				61D62C0815F8857100C57AA3 /* APQuery.h */,
+				61D62C0915F8857100C57AA3 /* APQuery.m */,
+			);
+			name = Query;
+			sourceTree = "<group>";
+		};
+		4CB768B11872CD5400A69FE4 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				4CB768AD1872C43B00A69FE4 /* APNetworking.h */,
+				4CB768AE1872C43B00A69FE4 /* APNetworking.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		4CBCA515187C014900947D90 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				4CBCA511187C00E400947D90 /* APGraphNode.h */,
+				4CBCA512187C00E400947D90 /* APGraphNode.m */,
+			);
+			name = Graph;
+			sourceTree = "<group>";
+		};
+		4CE27A9618682B290099FBAC /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				4CCA7CD618740F5800D89FFA /* APDevice.h */,
+				4CCA7CD718740F5800D89FFA /* APDevice.m */,
+			);
+			name = Device;
+			sourceTree = "<group>";
+		};
+		612E3DFF15EDF8FD00F98FB8 = {
+			isa = PBXGroup;
+			children = (
+				612E3E0F15EDF8FE00F98FB8 /* Appacitive-iOS-SDK */,
+				612E3E2315EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests */,
+				2CEB0E97162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests */,
+				612E3E0C15EDF8FE00F98FB8 /* Frameworks */,
+				612E3E0B15EDF8FD00F98FB8 /* Products */,
+				C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */,
+			);
+			sourceTree = "<group>";
+			usesTabs = 0;
+		};
+		612E3E0B15EDF8FD00F98FB8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */,
+				612E3E1A15EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests.octest */,
+				2CEB0E93162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		612E3E0C15EDF8FE00F98FB8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61388C1515F8667000C79F1F /* CoreLocation.framework */,
+				616A6A1415F4850E009A8578 /* UIKit.framework */,
+				616A6A1215F484E7009A8578 /* SystemConfiguration.framework */,
+				616A6A1015F4848D009A8578 /* Security.framework */,
+				616A6A0E15F48488009A8578 /* CFNetwork.framework */,
+				612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */,
+				612E3E1B15EDF8FE00F98FB8 /* SenTestingKit.framework */,
+				0AE18E91493A45BE9CFB5B14 /* libPods.a */,
+				4C81334818A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		612E3E0F15EDF8FE00F98FB8 /* Appacitive-iOS-SDK */ = {
+			isa = PBXGroup;
+			children = (
+				6169128816115C100086C006 /* Categories */,
+				612E3E3415EDF9B200F98FB8 /* Classes */,
+				612E3E1015EDF8FE00F98FB8 /* Supporting Files */,
+			);
+			name = "Appacitive-iOS-SDK";
+			path = "AppYoda-iOS-SDK";
+			sourceTree = "<group>";
+		};
+		612E3E1015EDF8FE00F98FB8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		612E3E2315EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests */ = {
+			isa = PBXGroup;
+			children = (
+				61D4A0EF1635234500DB5FD9 /* AppacitiveFixture.h */,
+				61D4A0F01635234500DB5FD9 /* AppacitiveFixture.m */,
+				61D4A0EC1635234500DB5FD9 /* APHelperMethodsFixture.h */,
+				61D4A0ED1635234500DB5FD9 /* APHelperMethodsFixture.m */,
+				61D4A0F11635234500DB5FD9 /* APQueryFixture.h */,
+				61D4A0F21635234600DB5FD9 /* APQueryFixture.m */,
+				612E3E2415EDF8FE00F98FB8 /* Supporting Files */,
+			);
+			name = "Appacitive-iOS-SDK-InterfaceTests";
+			path = "AppYoda-iOS-SDKTests";
+			sourceTree = "<group>";
+		};
+		612E3E2415EDF8FE00F98FB8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				61D4A0FE1635238E00DB5FD9 /* InfoPlist.strings */,
+				61D4A0EE1635234500DB5FD9 /* Appacitive-iOS-SDK-InterfaceTests-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		612E3E3415EDF9B200F98FB8 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4C2EFE0E18767B8900733CE2 /* Appacitive */,
+				4C2EFE0F18767B9D00733CE2 /* Helper */,
+				4C2EFE1018767BB200733CE2 /* Error */,
+				4CB768B11872CD5400A69FE4 /* Networking */,
+				4C7A8609185ECCAD00BD06FF /* Email */,
+				4CB41C5318644E3000918DA6 /* File */,
+				4CB41C5418644E3E00918DA6 /* Query */,
+				4CBCA515187C014900947D90 /* Graph */,
+				4C4086171890497E002DC1E5 /* Push */,
+				4C581BEA1859B7C100518557 /* Connection */,
+				4CE27A9618682B290099FBAC /* Device */,
+				4C581BEC1859B7D800518557 /* User */,
+				4C581BE91859B7B200518557 /* Object */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		6169128816115C100086C006 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				6169128A16115C3D0086C006 /* NSString+APString.h */,
+				6169128B16115C3D0086C006 /* NSString+APString.m */,
+				61691290161160790086C006 /* NSDictionary+APDictionary.h */,
+				61691291161160790086C006 /* NSDictionary+APDictionary.m */,
+			);
+			name = Categories;
+			path = "Appacitive-iOS-SDK/Categories";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		612E3E0815EDF8FD00F98FB8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61D62C0B15F8857100C57AA3 /* APConnection.h in Headers */,
+				4C7A8607185EC8D900BD06FF /* APEmail.h in Headers */,
+				4CBCA513187C00E400947D90 /* APGraphNode.h in Headers */,
+				4C40861518904976002DC1E5 /* APPushNotification.h in Headers */,
+				61D62C0D15F8857100C57AA3 /* APError.h in Headers */,
+				61D62C0F15F8857100C57AA3 /* APHelperMethods.h in Headers */,
+				61D62C1115F8857100C57AA3 /* APObject.h in Headers */,
+				61D62C1315F8857100C57AA3 /* Appacitive.h in Headers */,
+				61D62C1515F8857100C57AA3 /* APQuery.h in Headers */,
+				61D62C1715F8857100C57AA3 /* APResponseBlocks.h in Headers */,
+				4CB768AF1872C43B00A69FE4 /* APNetworking.h in Headers */,
+				61D62C1A15F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch in Headers */,
+				6169128C16115C3D0086C006 /* NSString+APString.h in Headers */,
+				4CCA7CD818740F5800D89FFA /* APDevice.h in Headers */,
+				6169128F161160110086C006 /* AppacitiveSDK.h in Headers */,
+				61691292161160790086C006 /* NSDictionary+APDictionary.h in Headers */,
+				4CCA7CD418740F4B00D89FFA /* APFile.h in Headers */,
+				618FEE5A169AEB04006A1888 /* APUser.h in Headers */,
+				614B911916A3C8BD001070DD /* APConstants.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2CEB0E92162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CEB0EA1162BD2AB0074DA50 /* Build configuration list for PBXNativeTarget "Appacitive_iOS_SDK-NetworkTests" */;
+			buildPhases = (
+				34EEB59BC48B4E3282798C95 /* Check Pods Manifest.lock */,
+				2CEB0E8E162BD2AB0074DA50 /* Sources */,
+				2CEB0E8F162BD2AB0074DA50 /* Frameworks */,
+				2CEB0E90162BD2AB0074DA50 /* Resources */,
+				2CEB0E91162BD2AB0074DA50 /* ShellScript */,
+				88856E9E201849699E601CE2 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2CEB0EB2162BD3540074DA50 /* PBXTargetDependency */,
+			);
+			name = "Appacitive_iOS_SDK-NetworkTests";
+			productName = Appacitive_iOS_AsyncTests;
+			productReference = 2CEB0E93162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		612E3E0915EDF8FD00F98FB8 /* Appacitive-iOS-SDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 612E3E2E15EDF8FE00F98FB8 /* Build configuration list for PBXNativeTarget "Appacitive-iOS-SDK" */;
+			buildPhases = (
+				612E3E0615EDF8FD00F98FB8 /* Sources */,
+				612E3E0715EDF8FD00F98FB8 /* Frameworks */,
+				612E3E0815EDF8FD00F98FB8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Appacitive-iOS-SDK";
+			productName = "AppYoda-iOS-SDK";
+			productReference = 612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		612E3E1915EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 612E3E3115EDF8FE00F98FB8 /* Build configuration list for PBXNativeTarget "Appacitive-iOS-SDK-InterfaceTests" */;
+			buildPhases = (
+				612E3E1515EDF8FE00F98FB8 /* Sources */,
+				612E3E1615EDF8FE00F98FB8 /* Frameworks */,
+				612E3E1715EDF8FE00F98FB8 /* Resources */,
+				457415B4877F48E0AA55786C /* Copy Pods Resources */,
+				612E3E1815EDF8FE00F98FB8 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				612E3E2115EDF8FE00F98FB8 /* PBXTargetDependency */,
+			);
+			name = "Appacitive-iOS-SDK-InterfaceTests";
+			productName = "AppYoda-iOS-SDKTests";
+			productReference = 612E3E1A15EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		612E3E0115EDF8FD00F98FB8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Appacitive Software Pvt. Ltd";
+			};
+			buildConfigurationList = 612E3E0415EDF8FD00F98FB8 /* Build configuration list for PBXProject "Appacitive-iOS-SDK" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 612E3DFF15EDF8FD00F98FB8;
+			productRefGroup = 612E3E0B15EDF8FD00F98FB8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				612E3E0915EDF8FD00F98FB8 /* Appacitive-iOS-SDK */,
+				612E3E1915EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests */,
+				2CEB0E92162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2CEB0E90162BD2AB0074DA50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6191E994169A926A00F87656 /* test_image.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		612E3E1715EDF8FE00F98FB8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61D4A0F91635234600DB5FD9 /* Appacitive-iOS-SDK-InterfaceTests-Info.plist in Resources */,
+				61D4A1001635238E00DB5FD9 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2CEB0E91162BD2AB0074DA50 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		34EEB59BC48B4E3282798C95 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		457415B4877F48E0AA55786C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		612E3E1815EDF8FE00F98FB8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		88856E9E201849699E601CE2 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-Appacitive_iOS_SDK-NetworkTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2CEB0E8E162BD2AB0074DA50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CBCA517187C21E000947D90 /* APGraphNodeFixture.m in Sources */,
+				61D4A0E91635223400DB5FD9 /* APConnectionFixture.m in Sources */,
+				4CBA47471876C46E00484799 /* APEmailFixture.m in Sources */,
+				4C0902721878336000CA5D42 /* APDeviceFixture.m in Sources */,
+				61D4A0EA1635223400DB5FD9 /* APObjectFixture.m in Sources */,
+				6102BAEA169A93E300D78642 /* APBlobFixture.m in Sources */,
+				618FEE55169AEAEC006A1888 /* APUserFixture.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		612E3E0615EDF8FD00F98FB8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CB768B01872C43B00A69FE4 /* APNetworking.m in Sources */,
+				61D62C0C15F8857100C57AA3 /* APConnection.m in Sources */,
+				4C7A8608185EC8D900BD06FF /* APEmail.m in Sources */,
+				4CCA7CD918740F5800D89FFA /* APDevice.m in Sources */,
+				4C40861618904976002DC1E5 /* APPushNotification.m in Sources */,
+				61D62C0E15F8857100C57AA3 /* APError.m in Sources */,
+				61D62C1015F8857100C57AA3 /* APHelperMethods.m in Sources */,
+				61D62C1215F8857100C57AA3 /* APObject.m in Sources */,
+				4CBCA514187C00E400947D90 /* APGraphNode.m in Sources */,
+				4CCA7CD518740F4B00D89FFA /* APFile.m in Sources */,
+				61D62C1415F8857100C57AA3 /* Appacitive.m in Sources */,
+				61D62C1615F8857100C57AA3 /* APQuery.m in Sources */,
+				6169128D16115C3D0086C006 /* NSString+APString.m in Sources */,
+				61691293161160790086C006 /* NSDictionary+APDictionary.m in Sources */,
+				618FEE5B169AEB04006A1888 /* APUser.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		612E3E1515EDF8FE00F98FB8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61D4A0F81635234600DB5FD9 /* APHelperMethodsFixture.m in Sources */,
+				61D4A0FA1635234600DB5FD9 /* AppacitiveFixture.m in Sources */,
+				61D4A0FB1635234600DB5FD9 /* APQueryFixture.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2CEB0EB2162BD3540074DA50 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 612E3E0915EDF8FD00F98FB8 /* Appacitive-iOS-SDK */;
+			targetProxy = 2CEB0EB1162BD3540074DA50 /* PBXContainerItemProxy */;
+		};
+		612E3E2115EDF8FE00F98FB8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 612E3E0915EDF8FD00F98FB8 /* Appacitive-iOS-SDK */;
+			targetProxy = 612E3E2015EDF8FE00F98FB8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		61D4A0FE1635238E00DB5FD9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				61D4A0FF1635238E00DB5FD9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2CEB0EA2162BD2AB0074DA50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Prefix.pch";
+				INFOPLIST_FILE = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		2CEB0EA3162BD2AB0074DA50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Prefix.pch";
+				INFOPLIST_FILE = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		612E3E2C15EDF8FE00F98FB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		612E3E2D15EDF8FE00F98FB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		612E3E2F15EDF8FE00F98FB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DSTROOT = /tmp/AppYoda_iOS_SDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "Appacitive-iOS-SDK";
+				SKIP_INSTALL = YES;
+				TEST_AFTER_BUILD = NO;
+			};
+			name = Debug;
+		};
+		612E3E3015EDF8FE00F98FB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DSTROOT = /tmp/AppYoda_iOS_SDK.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "Appacitive-iOS-SDK";
+				SKIP_INSTALL = YES;
+				TEST_AFTER_BUILD = NO;
+			};
+			name = Release;
+		};
+		612E3E3215EDF8FE00F98FB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/BuildHeaders\"",
+					"\"${PODS_ROOT}/BuildHeaders/MKNetworkKit\"",
+					"\"${PODS_ROOT}/BuildHeaders/MKNetworkKit/Categories\"",
+					"\"${PODS_ROOT}/BuildHeaders/Reachability\"",
+				);
+				INFOPLIST_FILE = "";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "Appacitive-iOS-SDK-InterfaceTests";
+				USER_HEADER_SEARCH_PATHS = "";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		612E3E3315EDF8FE00F98FB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "Appacitive-iOS-SDK-InterfaceTests";
+				USER_HEADER_SEARCH_PATHS = "";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2CEB0EA1162BD2AB0074DA50 /* Build configuration list for PBXNativeTarget "Appacitive_iOS_SDK-NetworkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CEB0EA2162BD2AB0074DA50 /* Debug */,
+				2CEB0EA3162BD2AB0074DA50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		612E3E0415EDF8FD00F98FB8 /* Build configuration list for PBXProject "Appacitive-iOS-SDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				612E3E2C15EDF8FE00F98FB8 /* Debug */,
+				612E3E2D15EDF8FE00F98FB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		612E3E2E15EDF8FE00F98FB8 /* Build configuration list for PBXNativeTarget "Appacitive-iOS-SDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				612E3E2F15EDF8FE00F98FB8 /* Debug */,
+				612E3E3015EDF8FE00F98FB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		612E3E3115EDF8FE00F98FB8 /* Build configuration list for PBXNativeTarget "Appacitive-iOS-SDK-InterfaceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				612E3E3215EDF8FE00F98FB8 /* Debug */,
+				612E3E3315EDF8FE00F98FB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 612E3E0115EDF8FD00F98FB8 /* Project object */;
+}
