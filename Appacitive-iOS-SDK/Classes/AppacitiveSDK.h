@@ -19,6 +19,6 @@
 #import "APPushNotification.h"
 
 #import "APError.h"
-#import "APConstants"
+#import "APConstants.h"
 #import "APHelperMethods.h"
 #import "APResponseBlocks.h"
