@@ -262,7 +262,7 @@ extern NSString *const OBJECT_PATH;
  Method used to retrieve a property using its key.
  @param keyName key of the date item to be removed.
  */
-- (instancetype) getPropertyWithKey:(NSString*)keyName;
+- (id) getPropertyWithKey:(NSString*)keyName;
 
 /**
  Method used to add an attibute to the APObject.

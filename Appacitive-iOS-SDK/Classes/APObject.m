@@ -367,7 +367,7 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 
 #pragma mark - Retrieve property
 
-- (instancetype) getPropertyWithKey:(NSString*) keyName {
+- (id) getPropertyWithKey:(NSString*) keyName {
     __block id property;
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;

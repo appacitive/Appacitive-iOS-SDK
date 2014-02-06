@@ -44,10 +44,10 @@ describe(@"APEmailTests", ^{
         myTemplatedEmail.bodyText = @"Test mail from Appacitive API";
         
         myTemplatedEmail.templateBody = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                         @"Pratik Patel", @"userfullname",
-                                         @"ppatel", @"username",
-                                         @"ipratikpatel", @"accName",
-                                         @"DealHunter",@"applicationName", nil];
+                                         @"John Doe", @"userfullname",
+                                         @"jdoe", @"username",
+                                         @"johnDoe", @"accName",
+                                         @"SampleApp",@"applicationName", nil];
         
         [myTemplatedEmail sendTemplatedEmailUsingTemplate:@"newmailtemplate" successHandler:^() {
             isMailSent = YES;
@@ -63,12 +63,12 @@ describe(@"APEmailTests", ^{
         __block BOOL isMailSent = NO;
 
         APEmail *myMail = [[APEmail alloc] init];
-        myMail.toRecipients = [NSArray arrayWithObjects:@"pratik644@gmail", nil];
-        myMail.fromSender = @"theodorebagwell123@gmail.com";
+        myMail.toRecipients = [NSArray arrayWithObjects:@"user2@gmail", nil];
+        myMail.fromSender = @"user@gmail.com.com";
         myMail.subjectText = @"TestMail";
         myMail.bodyText = @"Test mail from Appacitive API";
         
-        [myMail sendEmailUsingSMTPConfig:[APEmail makeSMTPConfigurationDictionaryWithUsername:@"theodore.bagwell123@gmail.com" password:@"l10nk1n6" host:@"smtp.gmail.com" port:@465 enableSSL:YES]
+        [myMail sendEmailUsingSMTPConfig:[APEmail makeSMTPConfigurationDictionaryWithUsername:@"user@gmail.com" password:@"S3cr3t" host:@"smtp.gmail.com" port:@465 enableSSL:YES]
                           successHandler:^{
             isMailSent = YES;
         } failureHandler:^(APError *error) {
@@ -82,19 +82,19 @@ describe(@"APEmailTests", ^{
         __block BOOL isMailSent = NO;
 
         APEmail *myTemplatedEmail = [[APEmail alloc] init];
-        myTemplatedEmail.toRecipients = [NSArray arrayWithObjects:@"pratik644@gmail.com", nil];
-        myTemplatedEmail.fromSender = @"theodorebagwell123@gmail.com";
+        myTemplatedEmail.toRecipients = [NSArray arrayWithObjects:@"user2@gmail.com", nil];
+        myTemplatedEmail.fromSender = @"user@gmail.com";
         myTemplatedEmail.subjectText = @"TestMail";
         myTemplatedEmail.bodyText = @"Test mail from Appacitive API";
 
         myTemplatedEmail.templateBody = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                         @"Pratik Patel", @"userfullname",
-                                         @"ppatel", @"username",
-                                         @"ipratikpatel", @"accName",
-                                         @"DealHunter",@"applicationName", nil];
+                                         @"John Doe", @"userfullname",
+                                         @"jdoe", @"username",
+                                         @"johnDoe", @"accName",
+                                         @"Sample App",@"applicationName", nil];
 
         [myTemplatedEmail sendTemplatedEmailUsingTemplate:@"newmailtemplate"
-                                          usingSMTPConfig:[APEmail makeSMTPConfigurationDictionaryWithUsername:@"theodore.bagwell123@gmail.com" password:@"l10nk1n6" host:@"smtp.gmail.com" port:@465 enableSSL:YES] successHandler:^() {
+                                          usingSMTPConfig:[APEmail makeSMTPConfigurationDictionaryWithUsername:@"user@gmail.com" password:@"S3cr3t" host:@"smtp.gmail.com" port:@465 enableSSL:YES] successHandler:^() {
             isMailSent = YES;
         }failureHandler:^(APError *error) {
             isMailSent = NO;
