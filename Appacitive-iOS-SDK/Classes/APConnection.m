@@ -831,9 +831,9 @@
                 NSDictionary *nodeDict = [[result valueForKey:@"nodes"] objectAtIndex:i];
                 if([[nodeDict allKeys] containsObject:@"__type"]) {
                     APObject *object = [[APObject alloc] init];
-                    if([typeMapping objectForKey:[result valueForKey:@"__type"]] != nil)
+                    if([typeMapping objectForKey:[nodeDict valueForKey:@"__type"]] != nil)
                         object = [[NSClassFromString([typeMapping objectForKey:[nodeDict valueForKey:@"__type"]]) alloc] init];
-                    [object setPropertyValuesFromDictionary:result];
+                    [object setPropertyValuesFromDictionary:nodeDict];
                     node.object = object;
                 }
                 if([[nodeDict allKeys] containsObject:@"__edge"]) {

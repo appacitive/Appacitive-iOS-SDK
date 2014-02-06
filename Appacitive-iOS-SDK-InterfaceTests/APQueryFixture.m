@@ -344,7 +344,6 @@
 - (void) testEqualityDateHelperMethod {
     NSDate *date = [NSDate date];
     NSString *query = [[[APQuery queryExpressionWithProperty:@"date" ] isEqualToDate:date] stringForm];
-    
     NSString *expectedQuery = [NSString stringWithFormat:@"*date == date('%@')", date.description];
     STAssertEqualObjects(query, expectedQuery, 
                          @"Test case for equality date helper method failed");
@@ -374,7 +373,6 @@
 - (void) testInEqualityDateHelperMethod {
     NSDate *date = [NSDate date];
     NSString *query = [[[APQuery queryExpressionWithProperty:@"date" ] isNotEqualToDate:date] stringForm];
-    
     NSString *expectedQuery = [NSString stringWithFormat:@"*date <> date('%@')", date.description];
     STAssertEqualObjects(query, expectedQuery,
                          @"Test case for equality date helper method failed");
@@ -395,7 +393,6 @@
  */
 - (void) testBooleanANDQueryHelperMethod {
     APCompoundQuery *query = [APQuery booleanAnd:[NSArray arrayWithObjects:[[APQuery queryExpressionWithAttribute:@"username"] isEqualTo:@"ppatel"],[[APQuery queryExpressionWithProperty:@"firstname"] isEqualTo:@"Pratik"], nil]];
-    //    NSString *query = [APQuery queryWithEqualCondition:@"createdBy" propertyValue:@"John"];
     STAssertEqualObjects([query stringForm], @"(@username == 'ppatel' AND *firstname == 'Pratik')",@"Test case for equality helper method failed");
 }
 
@@ -404,7 +401,6 @@
  */
 - (void) testCompoundQueryHelperMethod {
     APCompoundQuery *query = [APQuery booleanOr:[NSArray arrayWithObjects:[[APQuery queryExpressionWithAttribute:@"username"] isEqualTo:@"ppatel"],[APQuery booleanAnd:[NSArray arrayWithObjects:[[APQuery queryExpressionWithProperty:@"firstname"] isEqualTo:@"Pratik"], [[APQuery queryExpressionWithProperty:@"lastname"] isEqualTo:@"Patel"], nil]], nil]];
-    //    NSString *query = [APQuery queryWithEqualCondition:@"createdBy" propertyValue:@"John"];
     STAssertEqualObjects([query stringForm], @"(@username == 'ppatel' OR (*firstname == 'Pratik' AND *lastname == 'Patel'))",@"Test case for equality helper method failed");
 }
 
@@ -443,10 +439,8 @@
     CLLocation *location2 = [[CLLocation alloc] initWithLatitude:200 longitude:300];
     CLLocation *location3 = [[CLLocation alloc] initWithLatitude:400 longitude:500];
     NSArray *coordinates = [NSArray arrayWithObjects:location1, location2, location3, nil];
-    
     NSString *expectedString = @"*location within_polygon 123.000000,444.000000|200.000000,300.000000|400.000000,500.000000";
     NSString *query = [APQuery queryWithPolygonSearchForProperty:@"location" withPolygonCoordinates:coordinates];
-    
     STAssertEqualObjects(query, expectedString, @"Test case for polygon search failed");
 }
 
@@ -482,7 +476,6 @@
  */
 - (void) testOneOrMoreTagsHelperMethod {
     NSArray *tags = [NSArray arrayWithObjects:@"a", @"b", nil];
-    
     NSString *expectedString = @"tagged_with_one_or_more ('a,b')";
     NSString *queryString = [APQuery queryWithSearchUsingOneOrMoreTags:tags];
     STAssertEqualObjects(queryString, expectedString, @"Test case for one or more tags helper method failed");
@@ -493,7 +486,6 @@
  */
 - (void) testTagsWithAllHelperMethod {
     NSArray *tags = [NSArray arrayWithObjects:@"a", @"b", nil];
-    
     NSString *expectedString = @"tagged_with_all ('a,b')";
     NSString *queryString = [APQuery queryWithSearchUsingAllTags:tags];
     STAssertEqualObjects(queryString, expectedString, @"Test case for all tags helper method failed");
@@ -506,7 +498,6 @@
     CLLocation *location = [[CLLocation alloc] initWithLatitude:123 longitude:200];
     NSString *expectedString = @"*location within_circle 123.000000, 200.000000, 12.000000 km";
     NSString *queryString = [APQuery queryWithRadialSearchForProperty:@"location" nearLocation:location withinRadius:[NSNumber numberWithInt:12] usingDistanceMetric:kKilometers];
-    
     STAssertEqualObjects(queryString, expectedString, @"Test case for geo code helper method failed");
 }
 
@@ -518,7 +509,6 @@
     APCompoundQuery *query1 = [APQuery booleanOr:[NSArray arrayWithObjects:[[APQuery queryExpressionWithAttribute:@"username"] isEqualTo:@"ppatel"],[[APQuery queryExpressionWithProperty:@"firstname"] isEqualTo:@"Pratik"], nil]];
     NSString *query2 = [APQuery queryWithOrderBy:@"name" isAscending:NO];
     NSString *queryString = [[query1 stringForm]stringByAppendingFormat:@"&%@", query2];
-    
     STAssertEqualObjects(queryString, expectedString, @"Test case for geo code helper method failed");
 }
 
