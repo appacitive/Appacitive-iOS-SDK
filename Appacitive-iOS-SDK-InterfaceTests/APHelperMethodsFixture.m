@@ -21,7 +21,7 @@
  */
 - (void) testForNilResponse {
     APError *error = [APHelperMethods checkForErrorStatus:nil];
-    STAssertNil(error, @"Test case for nil response object failed");
+    XCTAssertNil(error, @"Test case for nil response object failed");
 }
 
 /**
@@ -37,7 +37,7 @@
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                 statusDictionary, @"status", nil];
     APError *error = [APHelperMethods checkForErrorStatus:dictionary];
-    STAssertNotNil(error, @"Test case for response object with error status failed");
+    XCTAssertNotNil(error, @"Test case for response object with error status failed");
 }
 
 /**
@@ -54,6 +54,7 @@
                                 nil, @"Object",
                                 statusDictionary, @"Status", nil];
     APError *error = [APHelperMethods checkForErrorStatus:dictionary];
-    STAssertNil(error, @"Test case for valid response object failed");
+    XCTAssertNil(error, @"Test case for valid response object failed");
 }
+
 @end

@@ -25,12 +25,16 @@
 @property (nonatomic, strong) NSString* isActive;
 @property (nonatomic, strong) NSString* badge;
 
+/** @name Initializing an APDevice instance */
+
 - (instancetype) init;
 /** Create a basic instance of an APDevice Object with deviceToken and deviceType.
  @param deviceToken Device token provided by Appacitive.
  @param deviceType Type of device voz. iOS/Android/WindowsPhone
 */
 - (instancetype) initWithDeviceToken:(NSString*)deviceToken deviceType:(NSString*)deviceType;
+
+/** Registering an APDevice */
 
 /**
  @see registerDeviceWithSuccessHandler:failureHandler:
@@ -45,7 +49,7 @@
  */
 - (void) registerDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-/** @name Save APObjects */
+/** @name Saving APDevice */
 
 /**
  @see saveObjectWithSuccessHandler:failureHandler:
@@ -64,6 +68,8 @@
  @param failureBlock Block invoked when the save operation fails.
  */
 - (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Deleting APDevice */
 
 /**
  @see deleteObjectWithSuccessHandler:failureHandler:
@@ -98,6 +104,8 @@
  */
 - (void) deleteObjectWithConnectingConnectionsSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
+/** Updating APDevice */
+
 /**
  @see updateObjectWithRevisionNumber:successHandler:failureHandler:
 */
@@ -121,34 +129,30 @@
  */
 - (void) updateObjectWithRevisionNumber:(NSNumber*)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-/** @name Fetch APObjects */
+/** @name Fetching APDevice */
 
 /**
- @see fetchWithSuccessHandler:failureHandler:
+ @see fetchWithPropertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetch;
 
 /**
- @see fetchWithSuccessHandler:failureHandler:
+ @see fetchWithPropertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetchWithFailureHandler:(APFailureBlock)failureBlock;
 
 /**
- Method used to fetch an APObject.
- This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
- @param successBlock Block invoked when the fetch operation is successful.
- @param failureBlock Block invoked when the fetch operation fails.
- */
+@see fetchWithPropertiesToFetch:successHandler:failureHandler:
+*/
 - (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method used to fetch an APObject.
- 
  This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
- @param queryString SQL kind of query to search for specific objects. For more info http://appacitive.comd
+ @param propertiesToFetch Array of properties to be fetched excluding all other.
  @param successBlock Block invoked when the fetch operation is successful.
  @param failureBlock Block invoked when the fetch operation fails.
  */
-- (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) fetchWithPropertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 @end

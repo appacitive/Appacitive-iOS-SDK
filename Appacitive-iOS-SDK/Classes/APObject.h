@@ -7,6 +7,7 @@
 //
 
 #import "APResponseBlocks.h"
+#import "APQuery.h"
 
 @class APError;
 
@@ -50,11 +51,17 @@ extern NSString *const OBJECT_PATH;
 @property (nonatomic, strong) NSArray *tags;
 @property (nonatomic, strong) NSMutableSet *tagsToAdd;
 @property (strong, nonatomic) NSMutableSet *tagsToRemove;
+@property (strong, nonatomic) NSMutableDictionary *propertiesToAdd;
+@property (strong, nonatomic) NSMutableDictionary *propertiesToAddUnique;
+@property (strong, nonatomic) NSMutableDictionary *propertiesToRemove;
+@property (strong, nonatomic) NSMutableDictionary *propertiesToIncrement;
+@property (strong, nonatomic) NSMutableDictionary *propertiesToDecrement;
+
 @property (nonatomic, weak) id<APObjectPropertyMapping> delegate;
 
 #pragma mark - APObject Methods
 
-/** @name Getting the APObject */
+/** @name Initializing an APObject instance */
 
 /**
  Initialize and return an autoreleased APObject for the provided type name.
@@ -82,7 +89,130 @@ extern NSString *const OBJECT_PATH;
  */
 + (APObject*) objectWithTypeName:(NSString*)typeName objectId:(NSString*)objectId;
 
+/** @name Fetching APObject */
+
 /**
+ @see fetchWithPropertiesToFetch:successHandler:failureHandler:
+ */
+- (void) fetch;
+
+/**
+ @see fetchWithPropertiesToFetch:successHandler:failureHandler:
+ */
+- (void) fetchWithFailureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see fetchWithPropertiesToFetch:successHandler:failureHandler:
+ */
+- (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method used to fetch an APObject.
+ This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
+ @param propertiesToFetch Array of properties to be fetched excluding all other.
+ @param successBlock Block invoked when the fetch operation is successful.
+ @param failureBlock Block invoked when the fetch operation fails.
+ */
+- (void) fetchWithPropertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:
+ */
++ (void) fetchObjectWithObjectId:(NSString*)objectId typeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:
+ */
++ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Retrieves multiple APObjects of a particular type.
+ @param objectIds The ids of the objects.
+ @param typeName The type name the objects belong to.
+ @param propertiesToFetch Array of properties to be fetched excluding all other.
+ @param successBlock Block invoked when the retrieve operation succeeds.
+ @param failureBlock Block invoked when the failure operation succeeds.
+ */
++ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Saving APObject */
+
+/**
+ @see saveObjectWithSuccessHandler:failureHandler:
+ */
+- (void) saveObject;
+
+/**
+ @see saveObjectWithSuccessHandler:failureHandler:
+ */
+- (void) saveObjectWithFailureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Save the object on the remote server.
+ This method will save an object in the background. If save is successful the properties will be updated and the successBlock will be invoked. If not the failure block is invoked.
+ @param successBlock Block invoked when the save operation is successful
+ @param failureBlock Block invoked when the save operation fails.
+ 
+ */
+- (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Updating APObject */
+
+/**
+ @see updateObjectWithRevisionNumber:successHandler:failureHandler:
+ */
+- (void) updateObject;
+
+/**
+ @see updateObjectWithRevisionNumber:successHandler:failureHandler:
+ */
+- (void) updateObjectWithFailureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see updateObjectWithRevisionNumber:successHandler:failureHandler:
+ */
+- (void) updateObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method used to update an APObject.
+ @param successBlock Block invoked when the update operation is successful.
+ @param failureBlock Block invoked when the update operation fails.
+ */
+- (void) updateObjectWithRevisionNumber:(NSNumber*)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Searching for APObject */
+
+/**
+ @see searchAllObjectsWithTypeName:successHandler:failureHandler:
+ */
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName successHandler:(APPagedResultSuccessBlock)successBlock;
+
+/**
+ Searches for all APObjects of a particular type.
+ @param typeName The type that the objects should belong to.
+ @param successBlock Block invoked when the search call is successful.
+ @param failureBlock Block invoked when search call fails.
+ */
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName successHandler:(APPagedResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:
+ */
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQuery:(NSString*)query successHandler:(APPagedResultSuccessBlock)successBlock;
+
+/**
+ Searches for APObjects and filters the results according to the query string.
+ @param typeName The type of the objects you want to search.
+ @param query String representation of an APQuery instance.
+ @param successBlock Block invoked when the search call is successful.
+ @param failureBlock Block invoked when the search call fails.
+ */
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQuery:(NSString*)query successHandler:(APPagedResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+
+/** @name Deleting APObject */
+ 
+ /**
  @see deleteObjectWithSuccessHandler:failureHandler:
  */
 - (void) deleteObject;
@@ -117,131 +247,14 @@ extern NSString *const OBJECT_PATH;
  */
 - (void) deleteObjectWithConnectingConnectionsSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-/** @name Fetch APObjects */
-
-/**
- @see fetchWithSuccessHandler:failureHandler:
- */
-- (void) fetch;
-
-/**
- @see fetchWithSuccessHandler:failureHandler:
- */
-- (void) fetchWithFailureHandler:(APFailureBlock)failureBlock;
-
-/**
- Method used to fetch an APObject.
- This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
- @param successBlock Block invoked when the fetch operation is successful.
- @param failureBlock Block invoked when the fetch operation fails.
- */
-- (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/**
- @see fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:
- */
-+ (void) fetchObjectWithObjectId:(NSString*)objectId typeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/**
- Retrieves multiple APObjects of a particular type.
- @param objectIds The ids of the objects.
- @param typeName The type name the objects belong to.
- @param successBlock Block invoked when the retrieve operation succeeds.
- @param failureBlock Block invoked when the failure operation succeeds.
- */
-+ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-
-/**
- Retrieve APObjects by using a query string.
- @param queryString SQL kind of query to search for specific objects. For more info http://appacitive.com
- @param successBlock Block invoked when the retrieve operation succeeds.
- @param failureBlock Block invoked when the failure operation succeeds.
- */
-- (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/** @name Save APObjects */
-
-/**
- @see saveObjectWithSuccessHandler:failureHandler:
- */
-- (void) saveObject;
-
-/**
- @see saveObjectWithSuccessHandler:failureHandler:
- */
-- (void) saveObjectWithFailureHandler:(APFailureBlock)failureBlock;
-
-/**
- Save the object on the remote server.
- This method will save an object in the background. If save is successful the properties will be updated and the successBlock will be invoked. If not the failure block is invoked.
- @param successBlock Block invoked when the save operation is successful
- @param failureBlock Block invoked when the save operation fails.
- 
- */
-- (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/** @name Update APObjects */
-
-/**
- @see updateObjectWithRevisionNumber:successHandler:failureHandler:
- */
-- (void) updateObject;
-
-/**
- @see updateObjectWithRevisionNumber:successHandler:failureHandler:
- */
-- (void) updateObjectWithFailureHandler:(APFailureBlock)failureBlock;
-
-/**
- @see updateObjectWithRevisionNumber:successHandler:failureHandler:
- */
-- (void) updateObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/**
- Method used to update an APObject.
- @param successBlock Block invoked when the update operation is successful.
- @param failureBlock Block invoked when the update operation fails.
- */
-- (void) updateObjectWithRevisionNumber:(NSNumber*)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/** @name Searching for APObjects */
-
-/**
- @see searchAllObjectsWithTypeName:successHandler:failureHandler:
- */
-+ (void) searchAllObjectsWithTypeName:(NSString*) typeName successHandler:(APObjectsSuccessBlock)successBlock;
-
-/**
- Searches for all APObjects of a particular type.
- @param typeName The type that the objects should belong to.
- @param successBlock Block invoked when the search call is successful.
- @param failureBlock Block invoked when search call fails.
- */
-+ (void) searchAllObjectsWithTypeName:(NSString*) typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/**
- @see searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:
- */
-+ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APObjectsSuccessBlock)successBlock;
-
-/**
- Searches for APObjects and filters the results according to the query string.
- @param typeName The type of the objects you want to search.
- @param queryString SQL kind of query to search for specific objects. For more info http://appacitive.com
- @param successBlock Block invoked when the search call is successful.
- @param failureBlock Block invoked when the search call fails.
- */
-+ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/** @name Methods to store key-value pairs */
+/** @name Setting and Getting properties, attributes and tags of APObject */
 
 /**
  Method used to add a property to the APObject.
  @param keyName key of the data item to be stored.
  @param object Corresponding value to the key.
  */
-- (void) addPropertyWithKey:(NSString*) keyName value:(id)object;
+- (void) addPropertyWithKey:(NSString*)keyName value:(id)object;
 
 /**
  Method used to update an existing property.
@@ -263,6 +276,41 @@ extern NSString *const OBJECT_PATH;
  @param keyName key of the date item to be removed.
  */
 - (id) getPropertyWithKey:(NSString*)keyName;
+
+/**
+ Method to add values to a multivalued property.
+ @param propertyName key/name of the multivalued property.
+ @param values array of values to be added to the multivalued property.
+ */
+- (void) addValues:(NSArray*)values toMultivaluedProperty:(NSString*)propertyName;
+
+/**
+ Method to add unique values to a multivalued property.
+ @param propertyName key/name of the multivalued property.
+ @param values array of values to be added to the multivalued property.
+ */
+- (void) addUniqueValues:(NSArray*)values toMultivaluedProperty:(NSString*)propertyName;
+
+/**
+ Method to remove values from a multivalued property.
+ @param propertyName key/name of the multivalued property.
+ @param values array of values to be removed from the multivalued property.
+ */
+- (void) removeValues:(NSArray*)values fromMultivaluedProperty:(NSString*)propertyName;
+
+/**
+ Method to increment value of a numeric property.
+ @param propertyName key/name of the property.
+ @param value the value that the property should be inceremneted by.
+ */
+- (void) incrementValueOfProperty:(NSString*)propertyName byValue:(NSNumber*)value;
+
+/**
+ Method to decrement value of a numeric property.
+ @param propertyName key/name of the property.
+ @param value the value that the property should be decremented by.
+ */
+- (void) decrementValueOfProperty:(NSString*)propertyName byValue:(NSNumber*)value;
 
 /**
  Method used to add an attibute to the APObject.
@@ -304,11 +352,11 @@ extern NSString *const OBJECT_PATH;
 #pragma mark - APOBjects Interface
 
 /**
- Helper class for APObjects performing class level operations.
+ Helper class for APObject performing class level operations.
  */
 @interface APObjects : NSObject
 
-/** @name Deleting APObjects */
+/** @name Deleting APObject */
 
 /**
  @see deleteObjectsWithIds:typeName:successHandler:failureHandler:

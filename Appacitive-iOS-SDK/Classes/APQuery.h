@@ -1,5 +1,5 @@
 //
-//  APQuery.h
+//  APBaseQuery.h
 //  Appacitive-iOS-SDK
 //
 //  Created by Kauserali Hafizji on 05/09/12.
@@ -18,12 +18,28 @@ typedef enum {
     kOr
 } BooleanOperator;
 
+#pragma mark - APBaseQuery
+
+/**
+ APBaseQuery abstract base class
+ */
+
+@interface APBaseQuery : NSObject
+
+/**
+ Helper method to cast the query object into an appropriate string query that can be interpreted by the Appacitive API
+ */
+- (NSString*) stringValue;
+
+@end
+
+
 #pragma mark - SimpleQuery
 
 /**
  An APSimpleQuery is a query string on properties, attributes and aggragates.
  */
-@interface APSimpleQuery : NSObject
+@interface APSimpleQuery : APBaseQuery
 
 @property (strong, nonatomic) NSString *fieldName;
 @property (strong, nonatomic) NSString *fieldType;
@@ -34,7 +50,7 @@ typedef enum {
  Method to generate a formatted string from the query object.
  @return NSString representation of query formatted for Appacitive query string standards.
  */
-- (NSString*)stringForm;
+- (NSString*)stringValue;
 
 @end
 
@@ -57,10 +73,9 @@ typedef enum {
  Method to generate a formatted string from the query object.
  @return NSString representation of query formatted for Appacitive query string standards.
  */
-- (NSString*)stringForm;
+- (NSString*)stringValue;
 
 @end
-
 
 /**
  An APQueryExpression is a query in the form of an expression depicting the operator, operator type and the operands.
@@ -191,12 +206,20 @@ typedef enum {
 
 @end
 
-#pragma mark - Query
+#pragma mark - QueryString
 
 /**
- An APQuery is the generic form of query for query string parameters.
+ An APBaseQuery is the generic form of query for query string parameters.
  */
-@interface APQuery : APSimpleQuery
+@interface APQuery : APBaseQuery
+
+@property (strong, nonatomic) NSString *freeText;
+@property (strong, nonatomic) NSString *orderBy;
+@property (nonatomic) NSInteger pageNumber;
+@property (nonatomic) NSInteger pageSize;
+@property (nonatomic) BOOL isAsc;
+@property (nonatomic) APBaseQuery *filterQuery;
+@property (nonatomic) NSArray* propertiesToFetch;
 
 /**
  Method to crete a query expression with query operand as a property of an APObject.
@@ -229,69 +252,47 @@ typedef enum {
 + (APCompoundQuery *)booleanOr:(NSArray*)queries;
 
 /**
- Helper method to generate a query string for page size.
- @param pageSize an integer value for the page size.
- */
-+ (NSString *)queryWithPageSize:(NSUInteger)pageSize;
-
-/**
- Helper method to generate a query string for page number.
- @param pageNumber the page number to get
- */
-+ (NSString *)queryWithPageNumber:(NSUInteger)pageNumber;
-
-/**
- Helper method to generate a query string for page size and page number.
- @param property the property to be used for sorting
- @param isAscending ascending or descending order for sorting
- Example query would be +[APQuery queryWithOrderBy:@"name" isAscending:NO]
- This would return "orderBy='name'&isAsc=false" which is the format Appacitive understands
- */
-+ (NSString *)queryWithOrderBy:(NSString*)property isAscending:(BOOL)isAscending;
-
-/**
  Helper method to generate a query string for geocode search.
  @param propertyName name of the property to search for.
  @param location the geocode to search for
  @param distanceMetric the distance either in km or miles
  @param radius the radios around the location to look for
- Example query would be +[APQuery queryForGeoCodeProperty:@"location" nearLocation:{123, 123} distanceMetric:kilometers radius:12]
+ Example query would be +[APBaseQuery queryForGeoCodeProperty:@"location" nearLocation:{123, 123} distanceMetric:kilometers radius:12]
  This would return "*location within_circle 123,123,12" which is the format Appacitive understands.
  */
-+ (NSString *)queryWithRadialSearchForProperty:(NSString*)propertyName nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric;
++ (APSimpleQuery*)queryWithRadialSearchForProperty:(NSString*) propertyName  nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric;
 
 /**
  Helper method to generate a query string for polygon search.
  @param propertyName name of the property to search for.
  @param coordinates an array of CLLocation coordinates. The array needs to have a minimum of three coordinates.
- Example query would be +[APQuery queryForPolygonSearch:@"location" withPolygonCoordinates:coordinates]
+ Example query would be +[APBaseQuery queryForPolygonSearch:@"location" withPolygonCoordinates:coordinates]
  This would return "*location within_polygon {lat,long} | {lat,long} | {lat,long}" which is the format Appacitive understands.
  */
-+ (NSString *)queryWithPolygonSearchForProperty:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates;
++ (APSimpleQuery*)queryWithPolygonSearchForProperty:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates;
 
 /**
  Helper method to generate a query string for search with tags.
  @param tags An array of tags to search for.
  */
-+ (NSString *)queryWithSearchUsingOneOrMoreTags:(NSArray*)tags;
++ (APSimpleQuery*)queryWithSearchUsingOneOrMoreTags:(NSArray*)tags;
 
 /**
  Helper method to generate a query string for search with tags.
  @param tags An array of tags to search for.
  */
-+ (NSString *)queryWithSearchUsingAllTags:(NSArray*)tags;
++ (APSimpleQuery*)queryWithSearchUsingAllTags:(NSArray*)tags;
 
 /**
  Helper method to generate a query string to search for free text.
  @param freeTextTokens free text tokens for the query.
  */
-+ (NSString *)queryWithSearchUsingFreeText:(NSArray*)freeTextTokens;
+- (void) queryWithSearchUsingFreeText:(NSArray*)freeTextTokens;
 
 /**
- Helper method to generate a query string to fetch specific fields.
- @param fields Array of field name strings.
+ Helper method to cast the query object into an appropriate string query that can be interpreted by the Appacitive API
  */
-+ (NSString *)queryWithFields:(NSArray*)fields;
+- (NSString*)stringValue;
 
 @end
 

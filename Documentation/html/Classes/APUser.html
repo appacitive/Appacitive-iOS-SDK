@@ -42,19 +42,27 @@
 	
 	<option value="class_methods">Class Methods</option>
 	
-	<option value="//api/name/authenticateUserWithFacebook:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithFacebook:successHandler:</option>
+	<option value="//api/name/authenticateUserWithFacebook:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithFacebook:</option>
+	
+	<option value="//api/name/authenticateUserWithFacebook:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithFacebook:failureHandler:</option>
 	
 	<option value="//api/name/authenticateUserWithFacebook:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithFacebook:successHandler:failureHandler:</option>
 	
-	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:</option>
+	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:</option>
+	
+	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:</option>
+	
+	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:</option>
 	
 	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</option>
 	
-	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:successHandler:</option>
+	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:failureHandler:</option>
 	
 	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:</option>
 	
-	<option value="//api/name/authenticateUserWithUserName:password:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUserName:password:successHandler:</option>
+	<option value="//api/name/authenticateUserWithUserName:password:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUserName:password:</option>
+	
+	<option value="//api/name/authenticateUserWithUserName:password:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUserName:password:failureHandler:</option>
 	
 	<option value="//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUserName:password:successHandler:failureHandler:</option>
 	
@@ -93,6 +101,8 @@
 	
 	<option value="//api/name/changePasswordFromOldPassword:toNewPassword:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- changePasswordFromOldPassword:toNewPassword:successHandler:failureHandler:</option>
 	
+	<option value="//api/name/createUser">&nbsp;&nbsp;&nbsp;&nbsp;- createUser</option>
+	
 	<option value="//api/name/createUserWithFacebook:">&nbsp;&nbsp;&nbsp;&nbsp;- createUserWithFacebook:</option>
 	
 	<option value="//api/name/createUserWithFacebook:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- createUserWithFacebook:failureHandler:</option>
@@ -123,15 +133,23 @@
 	
 	<option value="//api/name/deleteObjectWithUserName:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- deleteObjectWithUserName:successHandler:failureHandler:</option>
 	
+	<option value="//api/name/delinkAccountWithServiceName:">&nbsp;&nbsp;&nbsp;&nbsp;- delinkAccountWithServiceName:</option>
+	
+	<option value="//api/name/delinkAccountWithServiceName:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- delinkAccountWithServiceName:failureHandler:</option>
+	
+	<option value="//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- delinkAccountWithServiceName:successHandler:failureHandler:</option>
+	
 	<option value="//api/name/fetch">&nbsp;&nbsp;&nbsp;&nbsp;- fetch</option>
 	
 	<option value="//api/name/fetchUserById:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserById:</option>
 	
+	<option value="//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserById:propertiesToFetch:successHandler:failureHandler:</option>
+	
 	<option value="//api/name/fetchUserById:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserById:successHandler:</option>
 	
-	<option value="//api/name/fetchUserById:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserById:successHandler:failureHandler:</option>
-	
 	<option value="//api/name/fetchUserByUserName:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUserName:</option>
+	
+	<option value="//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/fetchUserByUserName:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUserName:successHandler:</option>
 	
@@ -139,15 +157,43 @@
 	
 	<option value="//api/name/fetchUserWithUserToken:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserWithUserToken:</option>
 	
+	<option value="//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</option>
+	
 	<option value="//api/name/fetchUserWithUserToken:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserWithUserToken:successHandler:</option>
 	
 	<option value="//api/name/fetchUserWithUserToken:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserWithUserToken:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/fetchWithFailureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithFailureHandler:</option>
 	
-	<option value="//api/name/fetchWithQueryString:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithQueryString:successHandler:failureHandler:</option>
+	<option value="//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithPropertiesToFetch:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/fetchWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithSuccessHandler:failureHandler:</option>
+	
+	<option value="//api/name/getAllLinkedAccountsWithSuccessHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- getAllLinkedAccountsWithSuccessHandler:</option>
+	
+	<option value="//api/name/getAllLinkedAccountsWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- getAllLinkedAccountsWithSuccessHandler:failureHandler:</option>
+	
+	<option value="//api/name/getLinkedAccountWithServiceName:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- getLinkedAccountWithServiceName:successHandler:</option>
+	
+	<option value="//api/name/getLinkedAccountWithServiceName:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- getLinkedAccountWithServiceName:successHandler:failureHandler:</option>
+	
+	<option value="//api/name/linkFacebookAccountWithAccessToken:">&nbsp;&nbsp;&nbsp;&nbsp;- linkFacebookAccountWithAccessToken:</option>
+	
+	<option value="//api/name/linkFacebookAccountWithAccessToken:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- linkFacebookAccountWithAccessToken:failureHandler:</option>
+	
+	<option value="//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- linkFacebookAccountWithAccessToken:successHandler:failureHandler:</option>
+	
+	<option value="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:">&nbsp;&nbsp;&nbsp;&nbsp;- linkTwitterAccountWithOauthToken:oauthSecret:</option>
+	
+	<option value="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:">&nbsp;&nbsp;&nbsp;&nbsp;- linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:</option>
+	
+	<option value="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:</option>
+	
+	<option value="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</option>
+	
+	<option value="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:</option>
+	
+	<option value="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/saveObject">&nbsp;&nbsp;&nbsp;&nbsp;- saveObject</option>
 	
@@ -183,17 +229,29 @@
 
 <li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Authenticating a user">Authenticating a user</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Setting/Getting the currentUser instance">Setting/Getting the currentUser instance</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Create a new user">Create a new user</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Authenticating APUser">Authenticating APUser</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Save APUser objects">Save APUser objects</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Linking external identities with APUser">Linking external identities with APUser</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Fetch APUser">Fetch APUser</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Delinking external identities from APUser">Delinking external identities from APUser</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Update User">Update User</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Fetching linked external identities of an APUser">Fetching linked external identities of an APUser</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Delete User">Delete User</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Creating APUser">Creating APUser</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Saving APUser">Saving APUser</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Fetching APUser">Fetching APUser</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Updating APUser">Updating APUser</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Deleting APUser">Deleting APUser</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Checking-in a user to a location">Checking-in a user to a location</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Validating APUser session">Validating APUser session</a></span></li>
 	
 </ul></li>
 
@@ -205,19 +263,27 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithFacebook:successHandler:">authenticateUserWithFacebook:successHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithFacebook:">authenticateUserWithFacebook:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithFacebook:failureHandler:">authenticateUserWithFacebook:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithFacebook:successHandler:failureHandler:">authenticateUserWithFacebook:successHandler:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:">authenticateUserWithTwitter:oauthSecret:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:">authenticateUserWithTwitter:oauthSecret:successHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:failureHandler:">authenticateUserWithTwitter:oauthSecret:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUserName:password:successHandler:">authenticateUserWithUserName:password:successHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUserName:password:">authenticateUserWithUserName:password:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUserName:password:failureHandler:">authenticateUserWithUserName:password:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></span></li>
 	
@@ -257,6 +323,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/changePasswordFromOldPassword:toNewPassword:successHandler:failureHandler:">changePasswordFromOldPassword:toNewPassword:successHandler:failureHandler:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createUser">createUser</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createUserWithFacebook:">createUserWithFacebook:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/createUserWithFacebook:failureHandler:">createUserWithFacebook:failureHandler:</a></span></li>
@@ -287,15 +355,23 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteObjectWithUserName:successHandler:failureHandler:">deleteObjectWithUserName:successHandler:failureHandler:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delinkAccountWithServiceName:">delinkAccountWithServiceName:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delinkAccountWithServiceName:failureHandler:">delinkAccountWithServiceName:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">delinkAccountWithServiceName:successHandler:failureHandler:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetch">fetch</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserById:">fetchUserById:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">fetchUserById:propertiesToFetch:successHandler:failureHandler:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserById:successHandler:">fetchUserById:successHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserById:successHandler:failureHandler:">fetchUserById:successHandler:failureHandler:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUserName:">fetchUserByUserName:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUserName:successHandler:">fetchUserByUserName:successHandler:</a></span></li>
 	
@@ -303,15 +379,43 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserWithUserToken:">fetchUserWithUserToken:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserWithUserToken:successHandler:">fetchUserWithUserToken:successHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserWithUserToken:successHandler:failureHandler:">fetchUserWithUserToken:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithFailureHandler:">fetchWithFailureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithQueryString:successHandler:failureHandler:">fetchWithQueryString:successHandler:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getAllLinkedAccountsWithSuccessHandler:">getAllLinkedAccountsWithSuccessHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getAllLinkedAccountsWithSuccessHandler:failureHandler:">getAllLinkedAccountsWithSuccessHandler:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getLinkedAccountWithServiceName:successHandler:">getLinkedAccountWithServiceName:successHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getLinkedAccountWithServiceName:successHandler:failureHandler:">getLinkedAccountWithServiceName:successHandler:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkFacebookAccountWithAccessToken:">linkFacebookAccountWithAccessToken:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkFacebookAccountWithAccessToken:failureHandler:">linkFacebookAccountWithAccessToken:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">linkFacebookAccountWithAccessToken:successHandler:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:">linkTwitterAccountWithOauthToken:oauthSecret:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saveObject">saveObject</a></span></li>
 	
@@ -383,8 +487,8 @@
 						<h2 class="subtitle subtitle-tasks">Tasks</h2>
 						
 						
-						
-						<h3 class="subsubtitle task-title">Other Methods</h3>
+						<a title="Setting/Getting the currentUser instance" name="task_Setting/Getting the currentUser instance"></a>
+						<h3 class="subsubtitle task-title">Setting/Getting the currentUser instance</h3>
 
 						<ul class="task-list">
 							<li>
@@ -405,13 +509,20 @@
 						</ul>
 						
 						
-						<a title="Authenticating a user" name="task_Authenticating a user"></a>
-						<h3 class="subsubtitle task-title">Authenticating a user</h3>
+						<a title="Authenticating APUser" name="task_Authenticating APUser"></a>
+						<h3 class="subsubtitle task-title">Authenticating APUser</h3>
 
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/authenticateUserWithUserName:password:successHandler:">+&nbsp;authenticateUserWithUserName:password:successHandler:</a></code>
+		<code><a href="#//api/name/authenticateUserWithUserName:password:">+&nbsp;authenticateUserWithUserName:password:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/authenticateUserWithUserName:password:failureHandler:">+&nbsp;authenticateUserWithUserName:password:failureHandler:</a></code>
 		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></p></span>
 	</span>
 	
@@ -425,7 +536,14 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/authenticateUserWithFacebook:successHandler:">+&nbsp;authenticateUserWithFacebook:successHandler:</a></code>
+		<code><a href="#//api/name/authenticateUserWithFacebook:">+&nbsp;authenticateUserWithFacebook:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithFacebook:successHandler:failureHandler:">authenticateUserWithFacebook:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/authenticateUserWithFacebook:failureHandler:">+&nbsp;authenticateUserWithFacebook:failureHandler:</a></code>
 		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithFacebook:successHandler:failureHandler:">authenticateUserWithFacebook:successHandler:failureHandler:</a></p></span>
 	</span>
 	
@@ -439,7 +557,14 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:">+&nbsp;authenticateUserWithTwitter:oauthSecret:successHandler:</a></code>
+		<code><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:">+&nbsp;authenticateUserWithTwitter:oauthSecret:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:failureHandler:">+&nbsp;authenticateUserWithTwitter:oauthSecret:failureHandler:</a></code>
 		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:</a></p></span>
 	</span>
 	
@@ -453,7 +578,14 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:">+&nbsp;authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:</a></code>
+		<code><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:">+&nbsp;authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:">+&nbsp;authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:</a></code>
 		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p></span>
 	</span>
 	
@@ -469,11 +601,154 @@
 						</ul>
 						
 						
-						<a title="Create a new user" name="task_Create a new user"></a>
-						<h3 class="subsubtitle task-title">Create a new user</h3>
+						<a title="Linking external identities with APUser" name="task_Linking external identities with APUser"></a>
+						<h3 class="subsubtitle task-title">Linking external identities with APUser</h3>
 
 						<ul class="task-list">
 							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkFacebookAccountWithAccessToken:">&ndash;&nbsp;linkFacebookAccountWithAccessToken:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">linkFacebookAccountWithAccessToken:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkFacebookAccountWithAccessToken:failureHandler:">&ndash;&nbsp;linkFacebookAccountWithAccessToken:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">linkFacebookAccountWithAccessToken:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">&ndash;&nbsp;linkFacebookAccountWithAccessToken:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method to link a user&rsquo;s account to his Facebook account.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:">&ndash;&nbsp;linkTwitterAccountWithOauthToken:oauthSecret:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:">&ndash;&nbsp;linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">&ndash;&nbsp;linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method to link a user&rsquo;s account to his Twitter account.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:">&ndash;&nbsp;linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:">&ndash;&nbsp;linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">&ndash;&nbsp;linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method to link a user&rsquo;s account to his Twitter account.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Delinking external identities from APUser" name="task_Delinking external identities from APUser"></a>
+						<h3 class="subsubtitle task-title">Delinking external identities from APUser</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delinkAccountWithServiceName:">&ndash;&nbsp;delinkAccountWithServiceName:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">delinkAccountWithServiceName:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delinkAccountWithServiceName:failureHandler:">&ndash;&nbsp;delinkAccountWithServiceName:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">delinkAccountWithServiceName:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">&ndash;&nbsp;delinkAccountWithServiceName:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method to delink a user&rsquo;s account from his Twitter or Facebook account.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Fetching linked external identities of an APUser" name="task_Fetching linked external identities of an APUser"></a>
+						<h3 class="subsubtitle task-title">Fetching linked external identities of an APUser</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getLinkedAccountWithServiceName:successHandler:">&ndash;&nbsp;getLinkedAccountWithServiceName:successHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/getLinkedAccountWithServiceName:successHandler:failureHandler:">getLinkedAccountWithServiceName:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getLinkedAccountWithServiceName:successHandler:failureHandler:">&ndash;&nbsp;getLinkedAccountWithServiceName:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method to <a href="#//api/name/fetch">fetch</a> a user&rsquo;s linked account.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getAllLinkedAccountsWithSuccessHandler:">&ndash;&nbsp;getAllLinkedAccountsWithSuccessHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/getAllLinkedAccountsWithSuccessHandler:failureHandler:">getAllLinkedAccountsWithSuccessHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getAllLinkedAccountsWithSuccessHandler:failureHandler:">&ndash;&nbsp;getAllLinkedAccountsWithSuccessHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method to <a href="#//api/name/fetch">fetch</a> all of the user&rsquo;s linked accounts.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Creating APUser" name="task_Creating APUser"></a>
+						<h3 class="subsubtitle task-title">Creating APUser</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/createUser">&ndash;&nbsp;createUser</a></code>
+		<span class="tooltip"><p><a href="#//api/name/createUserWithSuccessHandler:failureHandler:">createUserWithSuccessHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/createUserWithSuccessHandler:">&ndash;&nbsp;createUserWithSuccessHandler:</a></code>
 		<span class="tooltip"><p><a href="#//api/name/createUserWithSuccessHandler:failureHandler:">createUserWithSuccessHandler:failureHandler:</a></p></span>
@@ -533,8 +808,8 @@
 						</ul>
 						
 						
-						<a title="Save APUser objects" name="task_Save APUser objects"></a>
-						<h3 class="subsubtitle task-title">Save APUser objects</h3>
+						<a title="Saving APUser" name="task_Saving APUser"></a>
+						<h3 class="subsubtitle task-title">Saving APUser</h3>
 
 						<ul class="task-list">
 							<li>
@@ -562,27 +837,27 @@
 						</ul>
 						
 						
-						<a title="Fetch APUser" name="task_Fetch APUser"></a>
-						<h3 class="subsubtitle task-title">Fetch APUser</h3>
+						<a title="Fetching APUser" name="task_Fetching APUser"></a>
+						<h3 class="subsubtitle task-title">Fetching APUser</h3>
 
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchUserById:">&ndash;&nbsp;fetchUserById:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserById:successHandler:failureHandler:">fetchUserById:successHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">fetchUserById:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchUserById:successHandler:">&ndash;&nbsp;fetchUserById:successHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserById:successHandler:failureHandler:">fetchUserById:successHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">fetchUserById:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/fetchUserById:successHandler:failureHandler:">&ndash;&nbsp;fetchUserById:successHandler:failureHandler:</a></code>
+		<code><a href="#//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">&ndash;&nbsp;fetchUserById:propertiesToFetch:successHandler:failureHandler:</a></code>
 		<span class="tooltip"><p>Method to retrieve User by ID</p></span>
 	</span>
 	
@@ -590,20 +865,27 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchUserByUserName:">&ndash;&nbsp;fetchUserByUserName:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">fetchUserByUserName:successHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchUserByUserName:successHandler:">&ndash;&nbsp;fetchUserByUserName:successHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">fetchUserByUserName:successHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">&ndash;&nbsp;fetchUserByUserName:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&ndash;&nbsp;fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></code>
 		<span class="tooltip"><p>Method to retrieve User by userName</p></span>
 	</span>
 	
@@ -611,20 +893,27 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchUserWithUserToken:">&ndash;&nbsp;fetchUserWithUserToken:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserWithUserToken:successHandler:failureHandler:">fetchUserWithUserToken:successHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchUserWithUserToken:successHandler:">&ndash;&nbsp;fetchUserWithUserToken:successHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserWithUserToken:successHandler:failureHandler:">fetchUserWithUserToken:successHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchUserWithUserToken:successHandler:failureHandler:">&ndash;&nbsp;fetchUserWithUserToken:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">&ndash;&nbsp;fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></code>
 		<span class="tooltip"><p>Method to retrieve of currently logged-in User</p></span>
 	</span>
 	
@@ -632,28 +921,28 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetch">&ndash;&nbsp;fetch</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchWithFailureHandler:">&ndash;&nbsp;fetchWithFailureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash;&nbsp;fetchWithSuccessHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Method used to <a href="#//api/name/fetch">fetch</a> an <a href="../Classes/APObject.html">APObject</a>.</p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/fetchWithQueryString:successHandler:failureHandler:">&ndash;&nbsp;fetchWithQueryString:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Method to retrieve a User object with query string</p></span>
+		<code><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash;&nbsp;fetchWithPropertiesToFetch:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method used to <a href="#//api/name/fetch">fetch</a> an <a href="../Classes/APObject.html">APObject</a>.</p></span>
 	</span>
 	
 	
@@ -661,8 +950,8 @@
 						</ul>
 						
 						
-						<a title="Update User" name="task_Update User"></a>
-						<h3 class="subsubtitle task-title">Update User</h3>
+						<a title="Updating APUser" name="task_Updating APUser"></a>
+						<h3 class="subsubtitle task-title">Updating APUser</h3>
 
 						<ul class="task-list">
 							<li>
@@ -690,8 +979,8 @@
 						</ul>
 						
 						
-						<a title="Delete User" name="task_Delete User"></a>
-						<h3 class="subsubtitle task-title">Delete User</h3>
+						<a title="Deleting APUser" name="task_Deleting APUser"></a>
+						<h3 class="subsubtitle task-title">Deleting APUser</h3>
 
 						<ul class="task-list">
 							<li>
@@ -757,7 +1046,15 @@
 	</span>
 	
 	
-</li><li>
+</li>
+						</ul>
+						
+						
+						<a title="Checking-in a user to a location" name="task_Checking-in a user to a location"></a>
+						<h3 class="subsubtitle task-title">Checking-in a user to a location</h3>
+
+						<ul class="task-list">
+							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/setUserLocationToLatitude:longitude:forUserWithUserId:">+&nbsp;setUserLocationToLatitude:longitude:forUserWithUserId:</a></code>
 		<span class="tooltip"><p><a href="#//api/name/setUserLocationToLatitude:longitude:forUserWithUserId:successHandler:failureHandler:">setUserLocationToLatitude:longitude:forUserWithUserId:successHandler:failureHandler:</a></p></span>
@@ -778,7 +1075,15 @@
 	</span>
 	
 	
-</li><li>
+</li>
+						</ul>
+						
+						
+						<a title="Validating APUser session" name="task_Validating APUser session"></a>
+						<h3 class="subsubtitle task-title">Validating APUser session</h3>
+
+						<ul class="task-list">
+							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/validateCurrentUserSessionWithSuccessHandler:">+&nbsp;validateCurrentUserSessionWithSuccessHandler:</a></code>
 		<span class="tooltip"><p><a href="#//api/name/validateCurrentUserSessionWithSuccessHandler:failureHandler:">validateCurrentUserSessionWithSuccessHandler:failureHandler:</a></p></span>
@@ -871,8 +1176,8 @@
 						<h2 class="subtitle subtitle-methods">Class Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/authenticateUserWithFacebook:successHandler:" title="authenticateUserWithFacebook:successHandler:"></a>
-	<h3 class="subsubtitle method-title">authenticateUserWithFacebook:successHandler:</h3>
+	<a name="//api/name/authenticateUserWithFacebook:" title="authenticateUserWithFacebook:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithFacebook:</h3>
 	
 	
 	
@@ -882,7 +1187,52 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithFacebook:(NSString *)<em>accessToken</em> successHandler:(APUserSuccessBlock)<em>successBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithFacebook:(NSString *)<em>accessToken</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/authenticateUserWithFacebook:successHandler:failureHandler:">+ authenticateUserWithFacebook:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/authenticateUserWithFacebook:failureHandler:" title="authenticateUserWithFacebook:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithFacebook:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/authenticateUserWithFacebook:successHandler:failureHandler:">authenticateUserWithFacebook:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithFacebook:(NSString *)<em>accessToken</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -936,7 +1286,7 @@
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>accessToken</em></dt>
-			<dd><p>The access token retrieved after a succesful facebook login.</p></dd>
+			<dd><p>The access token retrieved after a successful facebook login.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -977,8 +1327,53 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:" title="authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:"></a>
-	<h3 class="subsubtitle method-title">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:</h3>
+	<a name="//api/name/authenticateUserWithTwitter:oauthSecret:" title="authenticateUserWithTwitter:oauthSecret:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithTwitter:oauthSecret:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithTwitter:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:">+ authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:" title="authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:</h3>
 	
 	
 	
@@ -988,7 +1383,52 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithTwitter:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> consumerKey:(NSString *)<em>consumerKey</em> consumerSecret:(NSString *)<em>consumerSecret</em> successHandler:(APUserSuccessBlock)<em>successBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithTwitter:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> consumerKey:(NSString *)<em>consumerKey</em> consumerSecret:(NSString *)<em>consumerSecret</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">+ authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:" title="authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithTwitter:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> consumerKey:(NSString *)<em>consumerKey</em> consumerSecret:(NSString *)<em>consumerSecret</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -1098,8 +1538,8 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:" title="authenticateUserWithTwitter:oauthSecret:successHandler:"></a>
-	<h3 class="subsubtitle method-title">authenticateUserWithTwitter:oauthSecret:successHandler:</h3>
+	<a name="//api/name/authenticateUserWithTwitter:oauthSecret:failureHandler:" title="authenticateUserWithTwitter:oauthSecret:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithTwitter:oauthSecret:failureHandler:</h3>
 	
 	
 	
@@ -1109,7 +1549,7 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithTwitter:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> successHandler:(APUserSuccessBlock)<em>successBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithTwitter:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> failureHandler:(APFailureBlock)<em>failureHandler</em></code></div>
 
     
 	
@@ -1209,8 +1649,8 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/authenticateUserWithUserName:password:successHandler:" title="authenticateUserWithUserName:password:successHandler:"></a>
-	<h3 class="subsubtitle method-title">authenticateUserWithUserName:password:successHandler:</h3>
+	<a name="//api/name/authenticateUserWithUserName:password:" title="authenticateUserWithUserName:password:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithUserName:password:</h3>
 	
 	
 	
@@ -1220,7 +1660,52 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUserName:(NSString *)<em>userName</em> password:(NSString *)<em>password</em> successHandler:(APUserSuccessBlock)<em>successBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUserName:(NSString *)<em>userName</em> password:(NSString *)<em>password</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">+ authenticateUserWithUserName:password:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/authenticateUserWithUserName:password:failureHandler:" title="authenticateUserWithUserName:password:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithUserName:password:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUserName:(NSString *)<em>userName</em> password:(NSString *)<em>password</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -2055,6 +2540,51 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/createUser" title="createUser"></a>
+	<h3 class="subsubtitle method-title">createUser</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/createUserWithSuccessHandler:failureHandler:">createUserWithSuccessHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)createUser</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/createUserWithSuccessHandler:failureHandler:">&ndash; createUserWithSuccessHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/createUserWithFacebook:" title="createUserWithFacebook:"></a>
 	<h3 class="subsubtitle method-title">createUserWithFacebook:</h3>
 	
@@ -2165,7 +2695,7 @@
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>token</em></dt>
-			<dd><p>The access token retrieved after a succesful facebook login.</p></dd>
+			<dd><p>The access token retrieved after a successful facebook login.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -2801,13 +3331,159 @@
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/delinkAccountWithServiceName:" title="delinkAccountWithServiceName:"></a>
+	<h3 class="subsubtitle method-title">delinkAccountWithServiceName:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">delinkAccountWithServiceName:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)delinkAccountWithServiceName:(NSString *)<em>serviceName</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">&ndash; delinkAccountWithServiceName:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/delinkAccountWithServiceName:failureHandler:" title="delinkAccountWithServiceName:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">delinkAccountWithServiceName:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">delinkAccountWithServiceName:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)delinkAccountWithServiceName:(NSString *)<em>serviceName</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/delinkAccountWithServiceName:successHandler:failureHandler:">&ndash; delinkAccountWithServiceName:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/delinkAccountWithServiceName:successHandler:failureHandler:" title="delinkAccountWithServiceName:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">delinkAccountWithServiceName:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to delink a user&rsquo;s account from his Twitter or Facebook account.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)delinkAccountWithServiceName:(NSString *)<em>serviceName</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>serviceName</em></dt>
+			<dd><p>name of the service whose account needs to be delinked eg: @&ldquo;facebook&rdquo; OR @&ldquo;twitter&rdquo;</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/fetch" title="fetch"></a>
 	<h3 class="subsubtitle method-title">fetch</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -2830,7 +3506,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash; fetchWithSuccessHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -2852,7 +3528,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserById:successHandler:failureHandler:">fetchUserById:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">fetchUserById:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -2875,10 +3551,71 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserById:successHandler:failureHandler:">&ndash; fetchUserById:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserById:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:" title="fetchUserById:propertiesToFetch:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchUserById:propertiesToFetch:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to retrieve User by ID</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchUserById:(NSString *)<em>userId</em> propertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userId</em></dt>
+			<dd><p>The user Id of an existing user whose details need to be retrieved.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertiesToFetch</em></dt>
+			<dd><p>Array of properties to be fetched excluding all other.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -2897,7 +3634,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserById:successHandler:failureHandler:">fetchUserById:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">fetchUserById:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -2920,66 +3657,10 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserById:successHandler:failureHandler:">&ndash; fetchUserById:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserById:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserById:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APUser.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/fetchUserById:successHandler:failureHandler:" title="fetchUserById:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchUserById:successHandler:failureHandler:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Method to retrieve User by ID</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)fetchUserById:(NSString *)<em>userId</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>userId</em></dt>
-			<dd><p>The user Id of an existing user whose details need to be retrieved.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>successBlock</em></dt>
-			<dd><p>Block invoked when operation is successful.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>failureBlock</em></dt>
-			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -2998,7 +3679,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">fetchUserByUserName:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -3021,10 +3702,71 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">&ndash; fetchUserByUserName:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:" title="fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to retrieve User by userName</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUserName:(NSString *)<em>userName</em> propertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userName</em></dt>
+			<dd><p>The user name of an existing user  whose details need to be retrieved.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertiesToFetch</em></dt>
+			<dd><p>Array of properties to be fetched excluding all other.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -3043,7 +3785,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">fetchUserByUserName:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -3066,7 +3808,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">&ndash; fetchUserByUserName:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -3088,7 +3830,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Method to retrieve User by userName</p>
+		<p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -3097,35 +3839,24 @@
 
     
 	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>userName</em></dt>
-			<dd><p>The user name of an existing user  whose details need to be retrieved.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>successBlock</em></dt>
-			<dd><p>Block invoked when operation is successful.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>failureBlock</em></dt>
-			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
-		</dl>
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -3144,7 +3875,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserWithUserToken:successHandler:failureHandler:">fetchUserWithUserToken:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -3167,10 +3898,71 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserWithUserToken:successHandler:failureHandler:">&ndash; fetchUserWithUserToken:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:" title="fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to retrieve of currently logged-in User</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchUserWithUserToken:(NSString *)<em>userToken</em> propertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>userToken</em></dt>
+			<dd><p>user token for the user you wish to <a href="#//api/name/fetch">fetch</a>.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertiesToFetch</em></dt>
+			<dd><p>Array of properties to be fetched excluding all other.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -3189,7 +3981,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserWithUserToken:successHandler:failureHandler:">fetchUserWithUserToken:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -3212,7 +4004,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserWithUserToken:successHandler:failureHandler:">&ndash; fetchUserWithUserToken:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -3234,7 +4026,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Method to retrieve of currently logged-in User</p>
+		<p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -3243,35 +4035,24 @@
 
     
 	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>userToken</em></dt>
-			<dd><p>user token for the user you wish to <a href="#//api/name/fetch">fetch</a>.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>successBlock</em></dt>
-			<dd><p>Block invoked when operation is successful.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>failureBlock</em></dt>
-			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
-		</dl>
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -3290,7 +4071,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -3313,7 +4094,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash; fetchWithSuccessHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -3329,64 +4110,8 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchWithQueryString:successHandler:failureHandler:" title="fetchWithQueryString:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchWithQueryString:successHandler:failureHandler:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Method to retrieve a User object with query string</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)fetchWithQueryString:(NSString *)<em>queryString</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>queryString</em></dt>
-			<dd><p>SQL kind of query to search for specific objects. For more info <a href="http://appacitive.com">http://appacitive.com</a></p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>successBlock</em></dt>
-			<dd><p>Block invoked when operation is successful.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>failureBlock</em></dt>
-			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APUser.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/fetchWithSuccessHandler:failureHandler:" title="fetchWithSuccessHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchWithSuccessHandler:failureHandler:</h3>
+	<a name="//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:" title="fetchWithPropertiesToFetch:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchWithPropertiesToFetch:successHandler:failureHandler:</h3>
 	
 	
 	
@@ -3396,12 +4121,17 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)fetchWithSuccessHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)fetchWithPropertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
 	<div class="method-subsection arguments-section parameters">
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertiesToFetch</em></dt>
+			<dd><p>Array of properties to be fetched excluding all other.</p></dd>
+		</dl>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>successBlock</em></dt>
@@ -3425,6 +4155,706 @@
 		<h4 class="method-subtitle">Discussion</h4>
 		<p>This method will use the type and objectId properties to <a href="#//api/name/fetch">fetch</a> the object. If the objectId and type is not set, results are unexpected.</p>
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchWithSuccessHandler:failureHandler:" title="fetchWithSuccessHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchWithSuccessHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchWithSuccessHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getAllLinkedAccountsWithSuccessHandler:" title="getAllLinkedAccountsWithSuccessHandler:"></a>
+	<h3 class="subsubtitle method-title">getAllLinkedAccountsWithSuccessHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/getAllLinkedAccountsWithSuccessHandler:failureHandler:">getAllLinkedAccountsWithSuccessHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)getAllLinkedAccountsWithSuccessHandler:(APResultSuccessBlock)<em>successBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/getAllLinkedAccountsWithSuccessHandler:failureHandler:">&ndash; getAllLinkedAccountsWithSuccessHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getAllLinkedAccountsWithSuccessHandler:failureHandler:" title="getAllLinkedAccountsWithSuccessHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">getAllLinkedAccountsWithSuccessHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to <a href="#//api/name/fetch">fetch</a> all of the user&rsquo;s linked accounts.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)getAllLinkedAccountsWithSuccessHandler:(APResultSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getLinkedAccountWithServiceName:successHandler:" title="getLinkedAccountWithServiceName:successHandler:"></a>
+	<h3 class="subsubtitle method-title">getLinkedAccountWithServiceName:successHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/getLinkedAccountWithServiceName:successHandler:failureHandler:">getLinkedAccountWithServiceName:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)getLinkedAccountWithServiceName:(NSString *)<em>serviceName</em> successHandler:(APResultSuccessBlock)<em>successBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/getLinkedAccountWithServiceName:successHandler:failureHandler:">&ndash; getLinkedAccountWithServiceName:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getLinkedAccountWithServiceName:successHandler:failureHandler:" title="getLinkedAccountWithServiceName:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">getLinkedAccountWithServiceName:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to <a href="#//api/name/fetch">fetch</a> a user&rsquo;s linked account.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)getLinkedAccountWithServiceName:(NSString *)<em>serviceName</em> successHandler:(APResultSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>serviceName</em></dt>
+			<dd><p>name of the service whose linked account needs to be fetched eg: @&ldquo;facebook&rdquo; OR @&ldquo;twitter&rdquo;</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkFacebookAccountWithAccessToken:" title="linkFacebookAccountWithAccessToken:"></a>
+	<h3 class="subsubtitle method-title">linkFacebookAccountWithAccessToken:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">linkFacebookAccountWithAccessToken:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkFacebookAccountWithAccessToken:(NSString *)<em>facebookAcessToken</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">&ndash; linkFacebookAccountWithAccessToken:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkFacebookAccountWithAccessToken:failureHandler:" title="linkFacebookAccountWithAccessToken:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">linkFacebookAccountWithAccessToken:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">linkFacebookAccountWithAccessToken:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkFacebookAccountWithAccessToken:(NSString *)<em>facebookAcessToken</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:">&ndash; linkFacebookAccountWithAccessToken:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkFacebookAccountWithAccessToken:successHandler:failureHandler:" title="linkFacebookAccountWithAccessToken:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">linkFacebookAccountWithAccessToken:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to link a user&rsquo;s account to his Facebook account.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkFacebookAccountWithAccessToken:(NSString *)<em>facebookAcessToken</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>facebookAcessToken</em></dt>
+			<dd><p>user&rsquo;s access token obtained from facebook.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:" title="linkTwitterAccountWithOauthToken:oauthSecret:"></a>
+	<h3 class="subsubtitle method-title">linkTwitterAccountWithOauthToken:oauthSecret:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkTwitterAccountWithOauthToken:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">&ndash; linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:" title="linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:"></a>
+	<h3 class="subsubtitle method-title">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkTwitterAccountWithOauthToken:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> consumerKey:(NSString *)<em>consumerKey</em> consumerSecret:(NSString *)<em>consumerSecret</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">&ndash; linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:" title="linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkTwitterAccountWithOauthToken:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> consumerKey:(NSString *)<em>consumerKey</em> consumerSecret:(NSString *)<em>consumerSecret</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:">&ndash; linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:" title="linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to link a user&rsquo;s account to his Twitter account.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkTwitterAccountWithOauthToken:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> consumerKey:(NSString *)<em>consumerKey</em> consumerSecret:(NSString *)<em>consumerSecret</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>oauthToken</em></dt>
+			<dd><p>The oauth token retrieved after twitter login.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>oauthSecret</em></dt>
+			<dd><p>The oauth secret.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>consumerKey</em></dt>
+			<dd><p>The consumer key of the application created on twitter.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>consumerSecret</em></dt>
+			<dd><p>The consumer secret of the application created on twitter.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:" title="linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">linkTwitterAccountWithOauthToken:oauthSecret:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkTwitterAccountWithOauthToken:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:">&ndash; linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:" title="linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to link a user&rsquo;s account to his Twitter account.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)linkTwitterAccountWithOauthToken:(NSString *)<em>oauthToken</em> oauthSecret:(NSString *)<em>oauthSecret</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>oauthToken</em></dt>
+			<dd><p>The oauth token retrieved after twitter login.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>oauthSecret</em></dt>
+			<dd><p>The oauth secret.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -3789,7 +5219,7 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)updateObjectWithRevisionNumber:(NSNumber *)<em>revision</em> successHandler:(APUserSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)updateObjectWithRevisionNumber:(NSNumber *)<em>revision</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -3845,7 +5275,7 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)updateObjectWithSuccessHandler:(APUserSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)updateObjectWithSuccessHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -3891,7 +5321,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-01-29)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-03-24)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

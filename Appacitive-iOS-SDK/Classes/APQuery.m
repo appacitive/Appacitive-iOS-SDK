@@ -8,11 +8,26 @@
 
 #import "APQuery.h"
 
+#pragma mark - APBaseQuery
+
+@implementation APBaseQuery
+
+- (NSString*)stringValue {
+    if([self isKindOfClass:[APSimpleQuery class]])
+        return [(APSimpleQuery*)self stringValue];
+    else if([self isKindOfClass:[APCompoundQuery class]])
+        return [(APCompoundQuery*)self stringValue];
+    else
+        return nil;
+}
+
+@end
+
 #pragma mark - SimpleQuery
 
 @implementation APSimpleQuery
 
-- (NSString*) stringForm {
+- (NSString*) stringValue {
     if(self.fieldName != nil && self.fieldType != nil && self.operation != nil && self.value != nil)
         return [NSString stringWithFormat:@"%@ %@ %@",
                 [self getFormattedFieldNameFor:self.fieldName  WithFieldType:self.fieldType],
@@ -26,8 +41,10 @@
         return [NSString stringWithFormat:@"@%@",name];
     else if ([type isEqualToString:@"aggregate"])
         return [NSString stringWithFormat:@"$%@",name];
-    else
+    else if ([type isEqualToString:@"property"])
         return [NSString stringWithFormat:@"*%@",name];
+    else
+        return [NSString stringWithFormat:@"%@",name];
 }
 
 @end
@@ -41,16 +58,16 @@
     return self;
 }
 
-- (NSString*) stringForm {
+- (NSString*) stringValue {
     NSString *query = [[NSString alloc] init];
     query = @"(";
     for(int i =0; i<self.innerQueries.count-1; i++)
         if(self.boolOperator == kAnd)
-            query = [query stringByAppendingString:[NSString stringWithFormat:@"%@ AND ",[self.innerQueries[i] stringForm]]];
+            query = [query stringByAppendingString:[NSString stringWithFormat:@"%@ AND ",[self.innerQueries[i] stringValue]]];
         else {
-            query = [query stringByAppendingString:[NSString stringWithFormat:@"%@ OR ",[self.innerQueries[i] stringForm]]];
+            query = [query stringByAppendingString:[NSString stringWithFormat:@"%@ OR ",[self.innerQueries[i] stringValue]]];
         }
-    query = [query stringByAppendingString:[NSString stringWithFormat:@"%@)",[[self.innerQueries lastObject] stringForm]]];
+    query = [query stringByAppendingString:[NSString stringWithFormat:@"%@)",[[self.innerQueries lastObject] stringValue]]];
     return query;
 }
 
@@ -77,7 +94,6 @@
     }
     return nil;
 }
-
 
 - (APSimpleQuery *) isEqualToDate:(NSDate*)date {
     if(date != nil) {
@@ -283,12 +299,55 @@
     return nil;
 }
 
-
 @end
 
-#pragma mark - Query
+#pragma mark - QueryString
 
 @implementation APQuery
+
+- (void) queryWithSearchUsingFreeText:(NSArray*)freeTextTokens {
+    if (freeTextTokens != nil && freeTextTokens.count > 0) {
+        __block NSString *queryString = @"freeText=";
+        [freeTextTokens enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isKindOfClass:[NSString class]]) {
+                queryString = [queryString stringByAppendingString:obj];
+                if(idx != freeTextTokens.count - 1) {
+                    queryString = [queryString stringByAppendingString:@" "];
+                }
+            }
+        }];
+        _freeText = queryString;
+    }
+    else _freeText = nil;
+}
+
+- (NSString*)stringValue {
+    NSString *queryString = [[NSString alloc] init];
+    queryString = @"?";
+    if(self.propertiesToFetch != nil && self.propertiesToFetch.count > 0) {
+        queryString = [queryString stringByAppendingString:@"fields="];
+        for(int i = 0; i < self.propertiesToFetch.count; i++)
+            queryString = [queryString stringByAppendingFormat:@"%@,",self.propertiesToFetch[i]];
+        queryString = [queryString stringByAppendingString:@"&"];
+    }
+    if(self.pageNumber)
+        queryString = [queryString stringByAppendingFormat:@"pnum=%ld&",(long)self.pageNumber];
+    if(self.pageSize)
+        queryString = [queryString stringByAppendingFormat:@"psize=%ld&",(long)self.pageSize];
+    if(self.orderBy != nil && ![[self.orderBy stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        if(self.isAsc == YES)
+            queryString = [queryString stringByAppendingFormat:@"orderBy=%@&isAsc=false&",self.orderBy];
+        else
+            queryString = [queryString stringByAppendingFormat:@"orderBy=%@&isAsc=true&",self.orderBy];
+    }
+    if(self.freeText)
+        queryString = [queryString stringByAppendingFormat:@"%@&",self.freeText];
+    if(self.filterQuery != nil)
+        queryString = [queryString stringByAppendingFormat:@"query=%@",[self.filterQuery stringValue]];
+    if([queryString hasSuffix:@"&"])
+        queryString = [queryString substringToIndex:[queryString length]-1];
+    return queryString;
+}
 
 + (APQueryExpression*) queryExpressionWithProperty:(NSString*)propertyName {
     return [[APQueryExpression alloc] initWithProperty:propertyName ofType:@"property"];
@@ -316,116 +375,92 @@
     return compoundQuery;
 }
 
-+ (NSString *) queryWithRadialSearchForProperty:(NSString*)propertyName nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric {
++ (APSimpleQuery*) queryWithRadialSearchForProperty:(NSString*)propertyName nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric {
     if(location != nil && radius != nil) {
-        NSString *queryString = [NSString stringWithFormat:@"*%@ within_circle ", propertyName];
-        queryString = [queryString stringByAppendingFormat:@"%lf, %lf, %lf", location.coordinate.latitude, location.coordinate.longitude, radius.doubleValue];
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = propertyName;
+        query.fieldType = @"property";
+        query.operation = @"within_circle";
+        
+        query.value = [NSString stringWithFormat:@"%lf, %lf, %lf", location.coordinate.latitude, location.coordinate.longitude, radius.doubleValue];
         if (distanceMetric == kKilometers) {
-            queryString = [queryString stringByAppendingFormat:@" km"];
+            query.value = [query.value stringByAppendingFormat:@" km"];
         } else {
-            queryString = [queryString stringByAppendingFormat:@" m"];
+            query.value = [query.value stringByAppendingFormat:@" m"];
         }
-        return queryString;
-    }
-    return nil;
-}
-
-+ (NSString *) queryWithPolygonSearchForProperty:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates {
-    if (coordinates != nil && coordinates.count >= 3) {
-        __block NSString *query = [NSString stringWithFormat:@"*%@ within_polygon ", propertyName];
-        [coordinates enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            if ([obj isKindOfClass:[CLLocation class]]) {
-                CLLocation *location = (CLLocation*)obj;
-                query = [query stringByAppendingFormat:@"%lf,%lf", location.coordinate.latitude, location.coordinate.longitude];
-                if (idx != coordinates.count - 1) {
-                    query = [query stringByAppendingString:@"|"];
-                }
-            }
-        }];
         return query;
     }
     return nil;
 }
 
-+ (NSString *) queryWithSearchUsingOneOrMoreTags:(NSArray*)tags {
-    if (tags != nil) {
-        __block NSString *queryString = @"tagged_with_one_or_more ('";
-        [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            if ([obj isKindOfClass:[NSString class]]) {
-                queryString = [queryString stringByAppendingFormat:@"%@", obj];
-                if (idx != tags.count - 1) {
-                    queryString = [queryString stringByAppendingString:@","];
-                } else {
-                    queryString = [queryString stringByAppendingString:@"')"];
++ (APSimpleQuery*) queryWithPolygonSearchForProperty:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates {
+    if (coordinates != nil && coordinates.count >= 3) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = propertyName;
+        query.fieldType = @"property";
+        query.operation = @"within_polygon";
+        query.value = [[NSString alloc] init];
+        
+        for(int idx = 0; idx < coordinates.count; idx++) {
+            if ([coordinates[idx] isKindOfClass:[CLLocation class]]) {
+                CLLocation *location = (CLLocation*)coordinates[idx];
+                query.value = [query.value stringByAppendingFormat:@"%lf,%lf", location.coordinate.latitude, location.coordinate.longitude];
+                if (idx != coordinates.count - 1) {
+                    query.value = [query.value stringByAppendingString:@"|"];
                 }
             }
-        }];
-        return queryString;
-    }
-    return nil;
-}
-
-+ (NSString *) queryWithSearchUsingAllTags:(NSArray*)tags {
-    if (tags != nil) {
-        __block NSString *queryString = @"tagged_with_all ('";
-        [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            if ([obj isKindOfClass:[NSString class]]) {
-                queryString = [queryString stringByAppendingFormat:@"%@", obj];
-                if (idx != tags.count - 1) {
-                    queryString = [queryString stringByAppendingString:@","];
-                } else {
-                    queryString = [queryString stringByAppendingString:@"')"];
-                }
-            }
-        }];
-        return queryString;
-    }
-    return nil;
-}
-
-+ (NSString *) queryWithPageSize:(NSUInteger)pageSize {
-    return [NSString stringWithFormat:@"psize=%lu", (unsigned long)pageSize];
-}
-
-+ (NSString *) queryWithPageNumber:(NSUInteger)pageNumber {
-    return [NSString stringWithFormat:@"pnum=%lu", (unsigned long)pageNumber];
-}
-
-+ (NSString *) queryWithOrderBy:(NSString*)property isAscending:(BOOL)isAscending {
-    if(property != nil) {
-    if(isAscending == YES)
-        return [NSString stringWithFormat:@"orderBy=%@&isAsc=true",property];
-    else
-        return [NSString stringWithFormat:@"orderBy=%@&isAsc=false",property];
-    }
-    else return nil;
-}
-
-+ (NSString *) queryWithFields:(NSArray*)fields {
-    NSString *queryString = [NSString stringWithFormat:@"fields="];
-    if(fields != nil) {
-        for(int i = 0; i < fields.count; i++) {
-            queryString = [queryString stringByAppendingFormat:@"%@,",fields[i]];
         }
+        return query;
     }
-    return queryString;
+    return nil;
 }
 
-+ (NSString *) queryWithSearchUsingFreeText:(NSArray*)freeTextTokens {
-    if (freeTextTokens != nil && freeTextTokens.count > 0) {
-        __block NSString *queryString = @"freeText=";
-        [freeTextTokens enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
++ (APSimpleQuery*) queryWithSearchUsingOneOrMoreTags:(NSArray*)tags {
+    if (tags != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = @"";
+        query.fieldType = @"";
+        query.operation = @"tagged_with_one_or_more";
+        
+        __block NSString *valString = @"('";
+        [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             if ([obj isKindOfClass:[NSString class]]) {
-                queryString = [queryString stringByAppendingString:obj];
-                if(idx != freeTextTokens.count - 1) {
-                    queryString = [queryString stringByAppendingString:@" "];
+                valString = [valString stringByAppendingFormat:@"%@", obj];
+                if (idx != tags.count - 1) {
+                    valString = [valString stringByAppendingString:@","];
+                } else {
+                    valString = [valString stringByAppendingString:@"')"];
                 }
             }
         }];
-        return queryString;
+        query.value = valString;
+        return query;
+    }
+    return nil;
+}
+
++ (APSimpleQuery*) queryWithSearchUsingAllTags:(NSArray*)tags {
+    if (tags != nil) {
+        APSimpleQuery *query = [[APSimpleQuery alloc] init];
+        query.fieldName = @"";
+        query.fieldType = @"";
+        query.operation = @"tagged_with_all";
+        
+        __block NSString *valString= @"('";
+        [tags enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isKindOfClass:[NSString class]]) {
+                valString = [valString stringByAppendingFormat:@"%@", obj];
+                if (idx != tags.count - 1) {
+                    valString = [valString stringByAppendingString:@","];
+                } else {
+                    valString = [valString stringByAppendingString:@"')"];
+                }
+            }
+        }];
+        query.value = valString;
+        return query;
     }
     return nil;
 }
 
 @end
-

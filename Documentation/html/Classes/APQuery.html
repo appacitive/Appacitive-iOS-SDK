@@ -52,25 +52,22 @@
 	
 	<option value="//api/name/queryExpressionWithProperty:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryExpressionWithProperty:</option>
 	
-	<option value="//api/name/queryWithFields:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithFields:</option>
-	
-	<option value="//api/name/queryWithOrderBy:isAscending:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithOrderBy:isAscending:</option>
-	
-	<option value="//api/name/queryWithPageNumber:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithPageNumber:</option>
-	
-	<option value="//api/name/queryWithPageSize:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithPageSize:</option>
-	
 	<option value="//api/name/queryWithPolygonSearchForProperty:withPolygonCoordinates:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithPolygonSearchForProperty:withPolygonCoordinates:</option>
 	
 	<option value="//api/name/queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:</option>
 	
 	<option value="//api/name/queryWithSearchUsingAllTags:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithSearchUsingAllTags:</option>
 	
-	<option value="//api/name/queryWithSearchUsingFreeText:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithSearchUsingFreeText:</option>
-	
 	<option value="//api/name/queryWithSearchUsingOneOrMoreTags:">&nbsp;&nbsp;&nbsp;&nbsp;+ queryWithSearchUsingOneOrMoreTags:</option>
 	
 	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/queryWithSearchUsingFreeText:">&nbsp;&nbsp;&nbsp;&nbsp;- queryWithSearchUsingFreeText:</option>
+	
+	<option value="//api/name/stringValue">&nbsp;&nbsp;&nbsp;&nbsp;- stringValue</option>
 	
 	
 	
@@ -108,27 +105,25 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryExpressionWithProperty:">queryExpressionWithProperty:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithFields:">queryWithFields:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithOrderBy:isAscending:">queryWithOrderBy:isAscending:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithPageNumber:">queryWithPageNumber:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithPageSize:">queryWithPageSize:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithPolygonSearchForProperty:withPolygonCoordinates:">queryWithPolygonSearchForProperty:withPolygonCoordinates:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:">queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithSearchUsingAllTags:">queryWithSearchUsingAllTags:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithSearchUsingFreeText:">queryWithSearchUsingFreeText:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithSearchUsingOneOrMoreTags:">queryWithSearchUsingOneOrMoreTags:</a></span></li>
 	
 </ul></li>
 
 
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/queryWithSearchUsingFreeText:">queryWithSearchUsingFreeText:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/stringValue">stringValue</a></span></li>
+	
+</ul></li>
 
 
 			</ul>
@@ -152,7 +147,7 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<td class="specification-title">Inherits from</td>
-	<td class="specification-value"><a href="../Classes/APSimpleQuery.html">APSimpleQuery</a> : NSObject</td>
+	<td class="specification-value"><a href="../Classes/APBaseQuery.html">APBaseQuery</a> : NSObject</td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
 	<td class="specification-value">APQuery.h<br />APQuery.m</td>
@@ -165,7 +160,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>An APQuery is the generic form of query for query string parameters.</p>
+						<p>An <a href="../Classes/APBaseQuery.html">APBaseQuery</a> is the generic form of query for query string parameters.</p>
 					</div>
 					
 					
@@ -218,27 +213,6 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryWithPageSize:">+&nbsp;queryWithPageSize:</a></code>
-		<span class="tooltip"><p>Helper method to generate a query string for page size.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/queryWithPageNumber:">+&nbsp;queryWithPageNumber:</a></code>
-		<span class="tooltip"><p>Helper method to generate a query string for page number.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/queryWithOrderBy:isAscending:">+&nbsp;queryWithOrderBy:isAscending:</a></code>
-		<span class="tooltip"><p>Helper method to generate a query string for page size and page number.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
 		<code><a href="#//api/name/queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:">+&nbsp;queryWithRadialSearchForProperty:nearLocation:withinRadius:usingDistanceMetric:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string for geocode search.</p></span>
 	</span>
@@ -267,15 +241,15 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryWithSearchUsingFreeText:">+&nbsp;queryWithSearchUsingFreeText:</a></code>
+		<code><a href="#//api/name/queryWithSearchUsingFreeText:">&ndash;&nbsp;queryWithSearchUsingFreeText:</a></code>
 		<span class="tooltip"><p>Helper method to generate a query string to search for free text.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/queryWithFields:">+&nbsp;queryWithFields:</a></code>
-		<span class="tooltip"><p>Helper method to generate a query string to fetch specific fields.</p></span>
+		<code><a href="#//api/name/stringValue">&ndash;&nbsp;stringValue</a></code>
+		<span class="tooltip"><p>Helper method to cast the query object into an appropriate string query that can be interpreted by the <a href="../Classes/Appacitive.html">Appacitive</a> API</p></span>
 	</span>
 	
 	
@@ -525,197 +499,6 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/queryWithFields:" title="queryWithFields:"></a>
-	<h3 class="subsubtitle method-title">queryWithFields:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string to fetch specific fields.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithFields:(NSArray *)<em>fields</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>fields</em></dt>
-			<dd><p>Array of field name strings.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryWithOrderBy:isAscending:" title="queryWithOrderBy:isAscending:"></a>
-	<h3 class="subsubtitle method-title">queryWithOrderBy:isAscending:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for page size and page number.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithOrderBy:(NSString *)<em>property</em> isAscending:(BOOL)<em>isAscending</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>property</em></dt>
-			<dd><p>the property to be used for sorting</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>isAscending</em></dt>
-			<dd><p>ascending or descending order for sorting
-Example query would be +[APQuery queryWithOrderBy:@&ldquo;name&rdquo; isAscending:NO]
-This would return &ldquo;orderBy=&lsquo;name&rsquo;&amp;isAsc=false&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryWithPageNumber:" title="queryWithPageNumber:"></a>
-	<h3 class="subsubtitle method-title">queryWithPageNumber:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for page number.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithPageNumber:(NSUInteger)<em>pageNumber</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>pageNumber</em></dt>
-			<dd><p>the page number to get</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryWithPageSize:" title="queryWithPageSize:"></a>
-	<h3 class="subsubtitle method-title">queryWithPageSize:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string for page size.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithPageSize:(NSUInteger)<em>pageSize</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>pageSize</em></dt>
-			<dd><p>an integer value for the page size.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/queryWithPolygonSearchForProperty:withPolygonCoordinates:" title="queryWithPolygonSearchForProperty:withPolygonCoordinates:"></a>
 	<h3 class="subsubtitle method-title">queryWithPolygonSearchForProperty:withPolygonCoordinates:</h3>
 	
@@ -727,7 +510,7 @@ This would return &ldquo;orderBy=&lsquo;name&rsquo;&amp;isAsc=false&rdquo; which
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithPolygonSearchForProperty:(NSString *)<em>propertyName</em> withPolygonCoordinates:(NSArray *)<em>coordinates</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (APSimpleQuery *)queryWithPolygonSearchForProperty:(NSString *)<em>propertyName</em> withPolygonCoordinates:(NSArray *)<em>coordinates</em></code></div>
 
     
 	
@@ -742,7 +525,7 @@ This would return &ldquo;orderBy=&lsquo;name&rsquo;&amp;isAsc=false&rdquo; which
 		<dl class="argument-def parameter-def">
 			<dt><em>coordinates</em></dt>
 			<dd><p>an array of CLLocation coordinates. The array needs to have a minimum of three coordinates.
-Example query would be +[APQuery queryForPolygonSearch:@&ldquo;location&rdquo; withPolygonCoordinates:coordinates]
+Example query would be +[<a href="../Classes/APBaseQuery.html">APBaseQuery</a> queryForPolygonSearch:@&ldquo;location&rdquo; withPolygonCoordinates:coordinates]
 This would return &ldquo;*location within_polygon {lat,long} | {lat,long} | {lat,long}&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands.</p></dd>
 		</dl>
 		
@@ -780,7 +563,7 @@ This would return &ldquo;*location within_polygon {lat,long} | {lat,long} | {lat
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithRadialSearchForProperty:(NSString *)<em>propertyName</em> nearLocation:(CLLocation *)<em>location</em> withinRadius:(NSNumber *)<em>radius</em> usingDistanceMetric:(DistanceMetric)<em>distanceMetric</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (APSimpleQuery *)queryWithRadialSearchForProperty:(NSString *)<em>propertyName</em> nearLocation:(CLLocation *)<em>location</em> withinRadius:(NSNumber *)<em>radius</em> usingDistanceMetric:(DistanceMetric)<em>distanceMetric</em></code></div>
 
     
 	
@@ -800,7 +583,7 @@ This would return &ldquo;*location within_polygon {lat,long} | {lat,long} | {lat
 		<dl class="argument-def parameter-def">
 			<dt><em>radius</em></dt>
 			<dd><p>the radios around the location to look for
-Example query would be +[APQuery queryForGeoCodeProperty:@&ldquo;location&rdquo; nearLocation:{123, 123} distanceMetric:kilometers radius:12]
+Example query would be +[<a href="../Classes/APBaseQuery.html">APBaseQuery</a> queryForGeoCodeProperty:@&ldquo;location&rdquo; nearLocation:{123, 123} distanceMetric:kilometers radius:12]
 This would return &ldquo;*location within_circle 123,123,12&rdquo; which is the format <a href="../Classes/Appacitive.html">Appacitive</a> understands.</p></dd>
 		</dl>
 		
@@ -843,7 +626,7 @@ This would return &ldquo;*location within_circle 123,123,12&rdquo; which is the 
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithSearchUsingAllTags:(NSArray *)<em>tags</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (APSimpleQuery *)queryWithSearchUsingAllTags:(NSArray *)<em>tags</em></code></div>
 
     
 	
@@ -853,52 +636,6 @@ This would return &ldquo;*location within_circle 123,123,12&rdquo; which is the 
 		<dl class="argument-def parameter-def">
 			<dt><em>tags</em></dt>
 			<dd><p>An array of tags to search for.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APQuery.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/queryWithSearchUsingFreeText:" title="queryWithSearchUsingFreeText:"></a>
-	<h3 class="subsubtitle method-title">queryWithSearchUsingFreeText:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Helper method to generate a query string to search for free text.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithSearchUsingFreeText:(NSArray *)<em>freeTextTokens</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>freeTextTokens</em></dt>
-			<dd><p>free text tokens for the query.</p></dd>
 		</dl>
 		
 	</div>
@@ -935,7 +672,7 @@ This would return &ldquo;*location within_circle 123,123,12&rdquo; which is the 
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (NSString *)queryWithSearchUsingOneOrMoreTags:(NSArray *)<em>tags</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (APSimpleQuery *)queryWithSearchUsingOneOrMoreTags:(NSArray *)<em>tags</em></code></div>
 
     
 	
@@ -973,6 +710,94 @@ This would return &ldquo;*location within_circle 123,123,12&rdquo; which is the 
 					
 					
 					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/queryWithSearchUsingFreeText:" title="queryWithSearchUsingFreeText:"></a>
+	<h3 class="subsubtitle method-title">queryWithSearchUsingFreeText:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Helper method to generate a query string to search for free text.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)queryWithSearchUsingFreeText:(NSArray *)<em>freeTextTokens</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>freeTextTokens</em></dt>
+			<dd><p>free text tokens for the query.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/stringValue" title="stringValue"></a>
+	<h3 class="subsubtitle method-title">stringValue</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Helper method to cast the query object into an appropriate string query that can be interpreted by the <a href="../Classes/Appacitive.html">Appacitive</a> API</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (NSString *)stringValue</code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APQuery.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
 					
 				</div>
 				<div class="main-navigation navigation-bottom">
@@ -984,7 +809,7 @@ This would return &ldquo;*location within_circle 123,123,12&rdquo; which is the 
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-01-29)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-03-24)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

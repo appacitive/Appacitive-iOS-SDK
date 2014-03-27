@@ -23,7 +23,7 @@
 - (void) testInitMethodForNilApiKey {
     [Appacitive initWithAPIKey:nil];
     NSString *key = [Appacitive getApiKey];
-    STAssertNil(key, @"Test case for nil api key failed");
+    XCTAssertNil(key, @"Test case for nil api key failed");
 }
 
 @end

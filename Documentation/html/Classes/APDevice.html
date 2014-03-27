@@ -60,7 +60,7 @@
 	
 	<option value="//api/name/fetchWithFailureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithFailureHandler:</option>
 	
-	<option value="//api/name/fetchWithQueryString:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithQueryString:successHandler:failureHandler:</option>
+	<option value="//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithPropertiesToFetch:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/fetchWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithSuccessHandler:failureHandler:</option>
 	
@@ -100,9 +100,13 @@
 
 <li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Save APObjects">Save APObjects</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Initializing an APDevice instance">Initializing an APDevice instance</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Fetch APObjects">Fetch APObjects</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Saving APDevice">Saving APDevice</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Deleting APDevice">Deleting APDevice</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Fetching APDevice">Fetching APDevice</a></span></li>
 	
 </ul></li>
 
@@ -132,7 +136,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithFailureHandler:">fetchWithFailureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithQueryString:successHandler:failureHandler:">fetchWithQueryString:successHandler:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></span></li>
 	
@@ -208,8 +212,8 @@
 						<h2 class="subtitle subtitle-tasks">Tasks</h2>
 						
 						
-						
-						<h3 class="subsubtitle task-title">Other Methods</h3>
+						<a title="Initializing an APDevice instance" name="task_Initializing an APDevice instance"></a>
+						<h3 class="subsubtitle task-title">Initializing an APDevice instance</h3>
 
 						<ul class="task-list">
 							<li>
@@ -237,8 +241,8 @@
 						</ul>
 						
 						
-						<a title="Save APObjects" name="task_Save APObjects"></a>
-						<h3 class="subsubtitle task-title">Save APObjects</h3>
+						<a title="Saving APDevice" name="task_Saving APDevice"></a>
+						<h3 class="subsubtitle task-title">Saving APDevice</h3>
 
 						<ul class="task-list">
 							<li>
@@ -263,7 +267,15 @@ This method will save an object in the background. If save is successful the pro
 	</span>
 	
 	
-</li><li>
+</li>
+						</ul>
+						
+						
+						<a title="Deleting APDevice" name="task_Deleting APDevice"></a>
+						<h3 class="subsubtitle task-title">Deleting APDevice</h3>
+
+						<ul class="task-list">
+							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/deleteObject">&ndash;&nbsp;deleteObject</a></code>
 		<span class="tooltip"><p><a href="#//api/name/deleteObjectWithSuccessHandler:failureHandler:">deleteObjectWithSuccessHandler:failureHandler:</a></p></span>
@@ -337,36 +349,36 @@ This method will save an object in the background. If save is successful the pro
 						</ul>
 						
 						
-						<a title="Fetch APObjects" name="task_Fetch APObjects"></a>
-						<h3 class="subsubtitle task-title">Fetch APObjects</h3>
+						<a title="Fetching APDevice" name="task_Fetching APDevice"></a>
+						<h3 class="subsubtitle task-title">Fetching APDevice</h3>
 
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetch">&ndash;&nbsp;fetch</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchWithFailureHandler:">&ndash;&nbsp;fetchWithFailureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash;&nbsp;fetchWithSuccessHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Method used to <a href="#//api/name/fetch">fetch</a> an <a href="../Classes/APObject.html">APObject</a>.
-This method will use the type and objectId properties to <a href="#//api/name/fetch">fetch</a> the object. If the objectId and type is not set, results are unexpected.</p></span>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/fetchWithQueryString:successHandler:failureHandler:">&ndash;&nbsp;fetchWithQueryString:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Method used to <a href="#//api/name/fetch">fetch</a> an <a href="../Classes/APObject.html">APObject</a>.</p></span>
+		<code><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash;&nbsp;fetchWithPropertiesToFetch:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method used to <a href="#//api/name/fetch">fetch</a> an <a href="../Classes/APObject.html">APObject</a>.
+This method will use the type and objectId properties to <a href="#//api/name/fetch">fetch</a> the object. If the objectId and type is not set, results are unexpected.</p></span>
 	</span>
 	
 	
@@ -670,7 +682,7 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -693,7 +705,7 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash; fetchWithSuccessHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -715,7 +727,7 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -738,7 +750,7 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash; fetchWithSuccessHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -754,18 +766,19 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchWithQueryString:successHandler:failureHandler:" title="fetchWithQueryString:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchWithQueryString:successHandler:failureHandler:</h3>
+	<a name="//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:" title="fetchWithPropertiesToFetch:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchWithPropertiesToFetch:successHandler:failureHandler:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Method used to <a href="#//api/name/fetch">fetch</a> an <a href="../Classes/APObject.html">APObject</a>.</p>
+		<p>Method used to <a href="#//api/name/fetch">fetch</a> an <a href="../Classes/APObject.html">APObject</a>.
+This method will use the type and objectId properties to <a href="#//api/name/fetch">fetch</a> the object. If the objectId and type is not set, results are unexpected.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)fetchWithQueryString:(NSString *)<em>queryString</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)fetchWithPropertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -773,8 +786,8 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>queryString</em></dt>
-			<dd><p>SQL kind of query to search for specific objects. For more info <a href="http://appacitive.comd">http://appacitive.comd</a></p></dd>
+			<dt><em>propertiesToFetch</em></dt>
+			<dd><p>Array of properties to be fetched excluding all other.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -794,11 +807,6 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 	
 	
 	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<p>This method will use the type and objectId properties to <a href="#//api/name/fetch">fetch</a> the object. If the objectId and type is not set, results are unexpected.</p>
-	</div>
 	
 	
 	
@@ -821,8 +829,7 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Method used to <a href="#//api/name/fetch">fetch</a> an <a href="../Classes/APObject.html">APObject</a>.
-This method will use the type and objectId properties to <a href="#//api/name/fetch">fetch</a> the object. If the objectId and type is not set, results are unexpected.</p>
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -831,30 +838,24 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 
     
 	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>successBlock</em></dt>
-			<dd><p>Block invoked when the <a href="#//api/name/fetch">fetch</a> operation is successful.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>failureBlock</em></dt>
-			<dd><p>Block invoked when the <a href="#//api/name/fetch">fetch</a> operation fails.</p></dd>
-		</dl>
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -1364,7 +1365,7 @@ This method will save an object in the background. If save is successful the pro
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-01-29)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-03-24)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

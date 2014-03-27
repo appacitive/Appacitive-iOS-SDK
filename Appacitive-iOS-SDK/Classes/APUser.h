@@ -12,8 +12,8 @@
 /**
  An APUser is a user registerd for using your app. This class helps you to manage the details of the users of your app.
  */
-@interface APUser : APObject <APObjectPropertyMapping> {
-}
+
+@interface APUser : APObject <APObjectPropertyMapping>
 
 @property (nonatomic, strong, readonly) NSString *userToken;
 @property (nonatomic, readonly) BOOL loggedInWithFacebook;
@@ -32,8 +32,12 @@
 @property (nonatomic, strong) NSString *isEnabled;
 @property (nonatomic, strong) NSString *isOnline;
 
--(instancetype)init;
+/** @name Initializing an APUser instance */
 
+- (instancetype)init;
+
+/** @name Setting/Getting the currentUser instance */
+ 
 /**
  Returns the current authenticated user.
  
@@ -48,12 +52,17 @@
  */
 + (void) setCurrentUser:(APUser*) user;
 
-/** @name Authenticating a user */
+/** @name Authenticating APUser */
 
 /**
  @see authenticateUserWithUserName:password:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock;
++ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password;
+
+/**
+ @see authenticateUserWithUserName:password:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password failureHandler:(APFailureBlock) failureBlock;
 
 /**
  Method to authenticate a user
@@ -70,14 +79,20 @@
 /**
  @see authenticateUserWithFacebook:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken successHandler:(APUserSuccessBlock) successBlock;
++ (void) authenticateUserWithFacebook:(NSString *)accessToken;
+
+
+/**
+ @see authenticateUserWithFacebook:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithFacebook:(NSString *)accessToken failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to authenticate a user with facebook.
  
  If successful the currentUser is set to the authenticated user.
  
- @param accessToken The access token retrieved after a succesful facebook login.
+ @param accessToken The access token retrieved after a successful facebook login.
  @param successBlock Block invoked when authentication with facebook is successful.
  @param failureBlock Block invoked when authentication with facebook is unsuccessful.
  */
@@ -86,7 +101,13 @@
 /**
  @see authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*) oauthSecret successHandler:(APUserSuccessBlock) successBlock;
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*) oauthSecret;
+
+
+/**
+ @see authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*) oauthSecret failureHandler:(APFailureBlock)failureHandler;
 
 /**
  Method to authenticate a user with Twitter.
@@ -103,7 +124,12 @@
 /**
  @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock;
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret;
+
+/**
+ @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to authenticate a user with Twitter.
@@ -117,9 +143,127 @@
  @param successBlock Block invoked when authentication with twitter is successful.
  @param failureBlock Block invoked when authentication with twitter is unsuccessful.
  */
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-/** @name Create a new user */
+/** @name Linking external identities with APUser */
+
+/**
+ @see linkFacebookAccountWithAccessToken:successHandler:failureHandler:
+ */
+- (void) linkFacebookAccountWithAccessToken:(NSString*)facebookAcessToken;
+
+/**
+ @see linkFacebookAccountWithAccessToken:successHandler:failureHandler:
+ */
+- (void) linkFacebookAccountWithAccessToken:(NSString*)facebookAcessToken failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method to link a user's account to his Facebook account.
+ 
+ @param facebookAcessToken user's access token obtained from facebook.
+ @param successBlock Block invoked when operation is successful.
+ @param failureBlock Block invoked when operation is unsuccessful.
+ */
+- (void) linkFacebookAccountWithAccessToken:(NSString*)facebookAcessToken successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:
+ */
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret;
+
+/**
+ @see linkTwitterAccountWithOauthToken:oauthSecret:successHandler:failureHandler:
+ */
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method to link a user's account to his Twitter account.
+ 
+ @param oauthToken The oauth token retrieved after twitter login.
+ @param oauthSecret The oauth secret.
+ @param successBlock Block invoked when operation is successful.
+ @param failureBlock Block invoked when operation is unsuccessful.
+ */
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:
+ */
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret;
+
+/**
+ @see linkTwitterAccountWithOauthToken:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:
+ */
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method to link a user's account to his Twitter account.
+ @param oauthToken The oauth token retrieved after twitter login.
+ @param oauthSecret The oauth secret.
+ @param consumerKey The consumer key of the application created on twitter.
+ @param consumerSecret The consumer secret of the application created on twitter.
+ @param successBlock Block invoked when operation is successful.
+ @param failureBlock Block invoked when operation is unsuccessful.
+ */
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Delinking external identities from APUser */
+
+/**
+ @see delinkAccountWithServiceName:successHandler:failureHandler:
+ */
+- (void) delinkAccountWithServiceName:(NSString*)serviceName;
+
+/**
+ @see delinkAccountWithServiceName:successHandler:failureHandler:
+ */
+- (void) delinkAccountWithServiceName:(NSString*)serviceName failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method to delink a user's account from his Twitter or Facebook account.
+ 
+ @param serviceName name of the service whose account needs to be delinked eg: @"facebook" OR @"twitter"
+ @param successBlock Block invoked when operation is successful.
+ @param failureBlock Block invoked when operation is unsuccessful.
+ */
+- (void) delinkAccountWithServiceName:(NSString*)serviceName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Fetching linked external identities of an APUser */
+
+/**
+ @see getLinkedAccountWithServiceName:successHandler:failureHandler:
+ */
+- (void) getLinkedAccountWithServiceName:(NSString*)serviceName successHandler:(APResultSuccessBlock)successBlock;
+
+/**
+ Method to fetch a user's linked account.
+ 
+ @param serviceName name of the service whose linked account needs to be fetched eg: @"facebook" OR @"twitter"
+ @param successBlock Block invoked when operation is successful.
+ @param failureBlock Block invoked when operation is unsuccessful.
+ */
+- (void) getLinkedAccountWithServiceName:(NSString*)serviceName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see getAllLinkedAccountsWithSuccessHandler:failureHandler:
+ */
+- (void) getAllLinkedAccountsWithSuccessHandler:(APResultSuccessBlock)successBlock;
+
+/**
+ Method to fetch all of the user's linked accounts.
+ 
+ @param successBlock Block invoked when operation is successful.
+ @param failureBlock Block invoked when operation is unsuccessful.
+ */
+
+- (void) getAllLinkedAccountsWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/** @name Creating APUser */
+
+/**
+ @see createUserWithSuccessHandler:failureHandler:
+ */
+- (void) createUser;
 
 /**
  @see createUserWithSuccessHandler:failureHandler:
@@ -151,7 +295,7 @@
 /**
  Method to create a user with Facebook.
  
- @param token The access token retrieved after a succesful facebook login.
+ @param token The access token retrieved after a successful facebook login.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
@@ -160,12 +304,12 @@
 /**
  @see createUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:
  */
-- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*)consumerSecret;
+- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret;
 
 /**
  @see createUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:
  */
-- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*)consumerSecret failureHandler:(APFailureBlock)failureBlock;
+- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to create a user with twitter token and secret.
@@ -177,9 +321,9 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*) consumerSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-/** @name Save APUser objects */
+/** @name Saving APUser */
 
 /**
  @see saveObjectWithSuccessHandler:failureHandler:
@@ -202,97 +346,107 @@
  */
 - (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-/** @name Fetch APUser */
+/** @name Fetching APUser */
 
 /**
- @see fetchUserById:successHandler:failureHandler:
+ @see fetchUserById:propertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetchUserById:(NSString *)userId;
 
 /**
- @see fetchUserById:successHandler:failureHandler:
+ @see fetchUserById:propertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock) successBlock;
+
+- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
  Method to retrieve User by ID
  
  @param userId The user Id of an existing user whose details need to be retrieved.
+ @param propertiesToFetch Array of properties to be fetched excluding all other.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see fetchUserByUserName:successHandler:failureHandler:
+ @see fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetchUserByUserName:(NSString *)userName;
 
 /**
- @see fetchUserByUserName:successHandler:failureHandler:
+ @see fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock) successBlock;
+
+/**
+ @see fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:
+ */
+- (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
  Method to retrieve User by userName
  
  @param userName The user name of an existing user  whose details need to be retrieved.
+ @param propertiesToFetch Array of properties to be fetched excluding all other.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserByUserName:(NSString *)userName propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see fetchUserWithUserToken:successHandler:failureHandler:
+ @see fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetchUserWithUserToken:(NSString *)userToken;
 
 /**
- @see fetchUserWithUserToken:successHandler:failureHandler:
+ @see fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetchUserWithUserToken:(NSString *)userToken successHandler:(APSuccessBlock) successBlock;
+
+/**
+ @see fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:
+ */
+- (void) fetchUserWithUserToken:(NSString *)userToken successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
  Method to retrieve of currently logged-in User
  
  @param userToken user token for the user you wish to fetch.
+ @param propertiesToFetch Array of properties to be fetched excluding all other.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) fetchUserWithUserToken:(NSString *)userToken successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserWithUserToken:(NSString *)userToken propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see fetchWithSuccessHandler:failureHandler:
+ @see fetchWithPropertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetch;
 
 /**
- @see fetchWithSuccessHandler:failureHandler:
+ @see fetchWithPropertiesToFetch:successHandler:failureHandler:
  */
 - (void) fetchWithFailureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see fetchWithPropertiesToFetch:successHandler:failureHandler:
+ */
+- (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method used to fetch an APObject.
  
  This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
  
- @param failureBlock Block invoked when the fetch operation fails.
+ @param propertiesToFetch Array of properties to be fetched excluding all other.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) fetchWithPropertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-/**
- Method to retrieve a User object with query string
- 
- @param queryString SQL kind of query to search for specific objects. For more info http://appacitive.com
- @param successBlock Block invoked when operation is successful.
- @param failureBlock Block invoked when operation is unsuccessful.
- */
-- (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-
-/** @name Update User */
+/** @name Updating APUser */
 
 /**
  @see updateObjectWithRevisionNumber:successHandler:failureHandler:
@@ -313,7 +467,7 @@
  */
 - (void) updateObjectWithRevisionNumber:(NSNumber*)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
-/** @name Delete User */
+/** @name Deleting APUser */
 
 /**
  @see deleteObjectWithSuccessHandler:failureHandler:
@@ -373,6 +527,8 @@
  */
 + (void) deleteCurrentlyLoggedInUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
+/** @name Checking-in a user to a location */
+
 /**
  @see setUserLocationToLatitude:longitude:forUserWithUserId:successHandler:failureHandler:
  */
@@ -394,6 +550,8 @@
  */
 + (void) setUserLocationToLatitude:(NSString*)latitude longitude:(NSString*)longitude forUserWithUserId:(NSString*)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
+/** @name Validating APUser session*/
+
 /**
  @see validateCurrentUserSessionWithSuccessHandler:failureHandler:
  */
@@ -406,6 +564,8 @@
  @param failureBlock Block invoked when operation is unsuccessful.
  */
 + (void) validateCurrentUserSessionWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+
+/** Logging-out an APUser */
 
 /**
  @see logOutCurrentUserWithSuccessHandler:failureHandler:
@@ -424,6 +584,8 @@
  @param failureBlock Block invoked when operation is unsuccessful.
  */
 + (void) logOutCurrentUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+
+/** Password management for APUser */
 
 /**
  @see changePasswordFromOldPassword:toNewPassword:successHandler:failureHandler:

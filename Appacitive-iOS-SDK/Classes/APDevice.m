@@ -8,7 +8,6 @@
 
 #import "APDevice.h"
 #import "APHelperMethods.h"
-#import "NSString+APString.h"
 #import "APNetworking.h"
 #import "Appacitive.h"
 #import "APConstants.h"
@@ -37,11 +36,11 @@ static NSDictionary* headerParams;
 
 - (instancetype)initWithDeviceToken:(NSString *)deviceToken deviceType:(NSString *)deviceType {
     self = [super initWithTypeName:@"device"];
-    if(deviceToken != nil && deviceType != nil) {
+    if(deviceType != nil)
         self.deviceType = deviceType;
+    if(deviceToken != nil)
         self.deviceToken = deviceToken;
-        self.type = @"device";
-    }
+    self.type = @"device";
     return self;
 }
 
@@ -98,27 +97,23 @@ static NSDictionary* headerParams;
 
 #pragma mark - Fetch methods
 - (void) fetch {
-    [self fetchWithQueryString:nil successHandler:nil failureHandler:nil];
+    [self fetchWithSuccessHandler:nil failureHandler:nil];
 }
 
 - (void) fetchWithFailureHandler:(APFailureBlock)failureBlock {
-    [self fetchWithQueryString:nil successHandler:nil failureHandler:failureBlock];
+    [self fetchWithSuccessHandler:nil failureHandler:failureBlock];
 }
 
 - (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [self fetchWithQueryString:nil successHandler:successBlock failureHandler:failureBlock];
+    [self fetchWithPropertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) fetchWithPropertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     NSString *path = [DEVICE_PATH stringByAppendingFormat:@"%@", self.objectId];
-    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
-    if (queryString) {
-        NSDictionary *queryStringParams = [queryString queryParameters];
-        [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [queryParams setObject:obj forKey:key];
-        }];
-    }
-    path = [path stringByAppendingQueryParameters:queryParams];
+    
+     if(propertiesToFetch != nil || propertiesToFetch.count > 0)
+        path = [path stringByAppendingFormat:@"?fields=%@",[propertiesToFetch componentsJoinedByString:@","]];
+    
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -209,8 +204,12 @@ static NSDictionary* headerParams;
 - (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock deleteConnectingConnections:(BOOL)deleteConnections {
     NSString *path = [[NSString alloc] init];
     path = [DEVICE_PATH stringByAppendingFormat:@"%@",self.objectId];
-    NSDictionary *queryParams = @{@"deleteconnections":deleteConnections?@"true":@"false"};
-    path = [path stringByAppendingQueryParameters:queryParams];
+
+    if(deleteConnections == YES) {
+        path = [path stringByAppendingString:@"?deleteconnections=true"];
+    } else {
+        path = [path stringByAppendingString:@"?deleteconnections=false"];
+    }
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -248,16 +247,26 @@ static NSDictionary* headerParams;
 
 - (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
     
-    NSDictionary *object = [[NSDictionary alloc] init];
+    NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
+    
     if([[dictionary allKeys] containsObject:@"device"])
-        object = dictionary[@"device"];
-    else object = dictionary;
+        object = [dictionary[@"device"] mutableCopy];
+    
+    else object = [dictionary mutableCopy];
+    
     _deviceToken = object[@"devicetoken"];
+    [object removeObjectForKey:@"devicetoken"];
     self.deviceLocation = object[@"location"];
+    [object removeObjectForKey:@"location"];
     self.deviceType = object[@"devicetype"];
+    [object removeObjectForKey:@"devicetype"];
     self.isActive = object[@"isactive"];
+    [object removeObjectForKey:@"isactive"];
     self.channels = object[@"channels"];
+    [object removeObjectForKey:@"channels"];
     self.badge = object[@"badge"];
+    [object removeObjectForKey:@"badge"];
+    
     self.createdBy = (NSString*) object[@"__createdby"];
     _objectId = object[@"__id"];
     _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
@@ -289,6 +298,7 @@ static NSDictionary* headerParams;
         postParams[@"__type"] = self.type;
     if (self.tags)
         postParams[@"__tags"] = self.tags;
+    
     if (self.deviceToken)
         postParams[@"devicetoken"] = self.deviceToken;
     if (self.deviceType)
@@ -315,14 +325,7 @@ static NSDictionary* headerParams;
 
 - (NSMutableDictionary*) postParametersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
-//    if (self.attributes && [self.attributes count] > 0)
-//        postParams[@"__attributes"] = self.attributes;
-//    for(NSDictionary *prop in self.properties) {
-//        [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-//            [postParams setObject:obj forKey:key];
-//            *stop = YES;
-//        }];
-//    }
+
     if (self.attributes && [self.attributes count] > 0)
         for(id key in self.attributes) {
             if(![[[_snapShot objectForKey:@"__attributes"] allKeys] containsObject:key])
