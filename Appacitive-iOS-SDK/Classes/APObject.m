@@ -9,7 +9,6 @@
 #import "APObject.h"
 #import "APError.h"
 #import "APHelperMethods.h"
-#import "NSString+APString.h"
 #import "APNetworking.h"
 #import "Appacitive.h"
 
@@ -44,11 +43,11 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
         }
         return self;
     } else {
-        NSException* myException = [NSException
+        NSException* subclassingException = [NSException
                                     exceptionWithName:[NSString stringWithFormat:@"%@ Subclass does not conform to the APObjectPropertyMapping protocol.",[self class]]
                                     reason:@"In order to be able to subclass APObject, the subclass must conform to the APObjectPropertyMapping protocol and must implement all the methods marked as required."
                                     userInfo:nil];
-        @throw myException;
+        @throw subclassingException;
     }
 
 }
@@ -98,9 +97,12 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
     NSString *path = [[NSString alloc] init];
     
     path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId];
-    
-    NSDictionary *queryParams = @{@"deleteconnections":deleteConnections?@"true":@"false"};
-    path = [path stringByAppendingQueryParameters:queryParams];
+
+    if(deleteConnections == YES) {
+        path = [path stringByAppendingString:@"?deleteconnections=true"];
+    } else {
+        path = [path stringByAppendingString:@"?deleteconnections=false"];
+    }
     
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
@@ -123,31 +125,24 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 #pragma mark - Fetch methods
 
 - (void) fetch {
-    [self fetchWithQueryString:nil successHandler:nil failureHandler:nil];
+    [self fetchWithSuccessHandler:nil failureHandler:nil];
 }
 
 - (void) fetchWithFailureHandler:(APFailureBlock)failureBlock {
-    [self fetchWithQueryString:nil successHandler:nil failureHandler:failureBlock];
+    [self fetchWithSuccessHandler:nil failureHandler:failureBlock];
 }
 
 - (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [self fetchWithQueryString:nil successHandler:successBlock failureHandler:failureBlock];
+    [self fetchWithPropertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) fetchWithPropertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId];
     
-    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
+     if(propertiesToFetch != nil || propertiesToFetch.count > 0)
+        path = [path stringByAppendingFormat:@"?fields=%@",[propertiesToFetch componentsJoinedByString:@","]];
     
-    if (queryString) {
-        NSDictionary *queryStringParams = [queryString queryParameters];
-        [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [queryParams setObject:obj forKey:key];
-        }];
-    }
-    
-    path = [path stringByAppendingQueryParameters:queryParams];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -167,10 +162,14 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 }
 
 + (void) fetchObjectWithObjectId:(NSString*)objectId typeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [self fetchObjectsWithObjectIds:@[objectId] typeName:typeName successHandler:successBlock failureHandler:failureBlock];
+    [self fetchObjectsWithObjectIds:@[objectId] typeName:typeName propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-+ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [self fetchObjectsWithObjectIds:objectIds typeName:typeName propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
++ (void) fetchObjectsWithObjectIds:(NSArray*)objectIds typeName:(NSString *)typeName propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     __block NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/multiget/", typeName];
     
@@ -181,6 +180,9 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
             path = [path stringByAppendingString:@","];
         }
     }];
+    
+     if(propertiesToFetch != nil || propertiesToFetch.count > 0)
+        path = [path stringByAppendingFormat:@"?fields=%@",[propertiesToFetch componentsJoinedByString:@","]];
     
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
@@ -289,29 +291,27 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
 
 #pragma mark - Search method
 
-+ (void) searchAllObjectsWithTypeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock {
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName successHandler:(APPagedResultSuccessBlock)successBlock {
     [APObject searchAllObjectsWithTypeName:typeName successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) searchAllObjectsWithTypeName:(NSString*)typeName successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [APObject searchAllObjectsWithTypeName:typeName withQueryString:nil successHandler:successBlock failureHandler:failureBlock];
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName successHandler:(APPagedResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [APObject searchAllObjectsWithTypeName:typeName withQuery:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-+ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APObjectsSuccessBlock)successBlock {
-    [APObject searchAllObjectsWithTypeName:typeName withQueryString:queryString successHandler:successBlock failureHandler:nil];
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQuery:(NSString*)query successHandler:(APPagedResultSuccessBlock)successBlock {
+    [APObject searchAllObjectsWithTypeName:typeName withQuery:query successHandler:successBlock failureHandler:nil];
 }
 
-+ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQueryString:(NSString*)queryString successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) searchAllObjectsWithTypeName:(NSString*)typeName withQuery:(NSString*)query successHandler:(APPagedResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
     NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/find/all", typeName];
-    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
-    if (queryString) {
-        NSDictionary *queryStringParams = [queryString queryParameters];
-        [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [queryParams setObject:obj forKey:key];
-        }];
-    }
-    path = [path stringByAppendingQueryParameters:queryParams];
+    
+    if(query != nil && ![[query stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""])
+        path = [path stringByAppendingString:query];
+    
     path = [HOST_NAME stringByAppendingPathComponent:path];
+    path = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
@@ -324,7 +324,7 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
                 [tempObject setPropertyValuesFromDictionary:[[result objectForKey:@"objects"] objectAtIndex:i]];
                 [objects addObject:tempObject];
             }
-            successBlock(objects);
+            successBlock(objects,[[[result objectForKey:@"paginginfo"] valueForKey:@"pagenumber"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"pagesize"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"totalrecords"] integerValue]);
         }
     } failureHandler:^(APError *error) {
         if(failureBlock != nil) {
@@ -377,6 +377,77 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
         }
     }];
     return property;
+}
+
+#pragma mark - Methods to add/remove values in multivalued property
+
+- (void) addValues:(NSArray*)values toMultivaluedProperty:(NSString*)propertyName {
+    if(propertyName != nil && values != nil) {
+        for(id prop in _properties) {
+            if([[prop allKeys] containsObject:propertyName])
+                [prop setValue:[[prop valueForKey:propertyName] arrayByAddingObjectsFromArray:values] forKey:propertyName];
+        }
+    } else {
+        if (!self.propertiesToAdd)
+            _propertiesToAdd = [NSMutableDictionary dictionary];
+        [_propertiesToAdd setObject:values forKey:propertyName];
+    }
+}
+
+- (void) addUniqueValues:(NSArray*)values toMultivaluedProperty:(NSString*)propertyName {
+    if(propertyName != nil && values != nil) {
+        for(id prop in _properties) {
+            if([[prop allKeys] containsObject:propertyName])
+                for(id obj in values)
+                    if([[prop valueForKey:propertyName] containsObject:obj])
+                        [[prop valueForKey:propertyName] addObject:obj];
+        }
+    } else {
+        if (!self.propertiesToAddUnique)
+            _propertiesToAddUnique = [NSMutableDictionary dictionary];
+        [_propertiesToAddUnique setObject:values forKey:propertyName];
+    }
+}
+
+- (void) removeValues:(NSArray*)values fromMultivaluedProperty:(NSString*)propertyName  {
+    if(propertyName != nil && values != nil) {
+        for(id prop in _properties) {
+            if([[prop allKeys] containsObject:propertyName]) {
+                [prop setValue:[[prop valueForKey:propertyName] mutableCopy] forKey:propertyName];
+                [[prop valueForKey:propertyName] removeObjectsInArray:values];
+            }
+        }
+    } else {
+        if (!self.propertiesToRemove)
+            _propertiesToRemove = [NSMutableDictionary dictionary];
+        [_propertiesToRemove setObject:values forKey:propertyName];
+    }
+}
+
+- (void) incrementValueOfProperty:(NSString*)propertyName byValue:(NSNumber*)value {
+    if(propertyName != nil && value != nil) {
+        for(id prop in _properties) {
+            if([[prop allKeys] containsObject:propertyName])
+                [prop setValue:[NSNumber numberWithDouble:[[prop valueForKey:propertyName] doubleValue]+ [value doubleValue]] forKey:propertyName];
+        }
+    } else {
+        if (!self.propertiesToDecrement)
+            _propertiesToIncrement = [NSMutableDictionary dictionary];
+        [_propertiesToIncrement setObject:value forKey:propertyName];
+    }
+}
+
+- (void) decrementValueOfProperty:(NSString*)propertyName byValue:(NSNumber*)value {
+    if (!self.propertiesToDecrement) {
+        for(id prop in _properties) {
+            if([[prop allKeys] containsObject:propertyName])
+                [prop setValue:[NSNumber numberWithDouble:[[prop valueForKey:propertyName] doubleValue] - [value doubleValue]] forKey:propertyName];
+        }
+    } else {
+        _propertiesToDecrement = [NSMutableDictionary dictionary];
+    if(propertyName != nil && value != nil)
+        [_propertiesToDecrement setObject:value forKey:propertyName];
+    }
 }
 
 #pragma mark - Add attributes method
@@ -489,20 +560,56 @@ NSString *const OBJECT_PATH = @"v1.0/object/";
             *stop = YES;
         }];
     }
-//    
-//    if (self.attributes && [self.attributes count] > 0)
-//        postParams[@"__attributes"] = self.attributes;
-//    
-//    for(NSDictionary *prop in self.properties) {
-//        [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-//            [postParams setObject:obj forKey:key];
-//            *stop = YES;
-//        }];
-//    }
+
     if(_tagsToAdd && [_tagsToAdd count] > 0)
         postParams[@"__addtags"] = [_tagsToAdd allObjects];
     if(_tagsToRemove && [_tagsToRemove count] > 0)
         postParams[@"__removetags"] = [_tagsToRemove allObjects];
+    if(_propertiesToAdd != nil)
+        for(id key in _propertiesToAdd) {
+            postParams[key] = [NSDictionary dictionaryWithObject:[_propertiesToAdd valueForKey:key] forKey:@"additems"];
+        }
+    
+    if(_propertiesToAddUnique != nil) {
+        for(id key in _propertiesToAddUnique) {
+            for(id obj in _properties) {
+                if(![[obj allKeys] containsObject:key]) {
+                postParams[key] = [NSDictionary dictionaryWithObject:[_propertiesToAddUnique valueForKey:key] forKey:@"adduniqueitems"];
+                }
+            }
+        }
+    }
+    
+    if(_propertiesToRemove != nil) {
+        for(id key in _propertiesToRemove) {
+            for(id obj in _properties) {
+                if(![[obj allKeys] containsObject:key]) {
+                    postParams[key] = [NSDictionary dictionaryWithObject:[_propertiesToRemove valueForKey:key] forKey:@"removeitems"];
+                }
+            }
+        }
+    }
+    
+    if(_propertiesToIncrement != nil) {
+        for(id key in _propertiesToIncrement) {
+            for(id obj in _properties) {
+                if(![[obj allKeys] containsObject:key]) {
+                    postParams[key] = [NSDictionary dictionaryWithObject:[_propertiesToIncrement valueForKey:key] forKey:@"incrementby"];
+                }
+            }
+        }
+    }
+    
+    if(_propertiesToDecrement != nil) {
+        for(id key in _propertiesToDecrement) {
+            for(id obj in _properties) {
+                if(![[obj allKeys] containsObject:key]) {
+                    postParams[key] = [NSDictionary dictionaryWithObject:[_propertiesToDecrement valueForKey:key] forKey:@"decrementby"];
+                }
+            }
+        }
+    }
+    
     return postParams;
 }
 

@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 Appacitive Software Pvt. Ltd. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface APHelperMethodsFixture : SenTestCase
+@interface APHelperMethodsFixture : XCTestCase
 
 @end

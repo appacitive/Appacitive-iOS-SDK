@@ -1,4 +1,4 @@
-platform:ios
+platform:ios, '6.0'
 target :'Appacitive_iOS_SDK-NetworkTests', :exclusive => true do
-    pod 'Kiwi','~>1.1.1'
+    pod 'Kiwi/XCTest'
 end

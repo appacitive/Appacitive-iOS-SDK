@@ -27,13 +27,16 @@ static NSDictionary *headerParams = nil;
                     nil];
     sessionConfig.HTTPAdditionalHeaders = headerParams;
     sessionConfig.allowsCellularAccess = YES;
-    sessionConfig.timeoutIntervalForRequest = 60.0;
-    sessionConfig.timeoutIntervalForResource = 120.0;
+    sessionConfig.timeoutIntervalForRequest = 30.0;
+    sessionConfig.timeoutIntervalForResource = 60.0;
+    sessionConfig.URLCache = NSURLCacheStorageAllowed;
+    sessionConfig.requestCachePolicy = NSURLRequestReturnCacheDataElseLoad;
     sharedURLSession = [NSURLSession sessionWithConfiguration:sessionConfig];
     return sharedURLSession;
 }
 
 - (void) makeAsyncRequestWithURLRequest:(NSMutableURLRequest*)urlRequest successHandler:(APResultSuccessBlock)requestSuccessBlock failureHandler:(APFailureBlock)requestFailureBlock {
+    [urlRequest setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
     if([[[UIDevice currentDevice] systemVersion] intValue] >= 7) {
         if(!sharedURLSession) {
             [APNetworking getSharedURLSession];
@@ -50,32 +53,39 @@ static NSDictionary *headerParams = nil;
                                          BOOL isErrorPresent = (error != nil);
                                          if (!isErrorPresent) {
                                              if(requestSuccessBlock)
-                                                 requestSuccessBlock(responseJSON);
+                                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                                     requestSuccessBlock(responseJSON);
+                                                 });
                                          } else {
-                                             DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
-                                             if(urlRequest.HTTPBody != nil)
-                                                 DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
-                                             DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
-                                             if(requestFailureBlock)
-                                                 requestFailureBlock(error);
+                                             dispatch_async(dispatch_get_main_queue(), ^{
+                                                 DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
+                                                 DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                                                 if(urlRequest.HTTPBody != nil)
+                                                     DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
+                                                 if(requestFailureBlock)
+                                                     requestFailureBlock(error);
+                                             });
                                          }
                                      } else {
-                                         DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@", jsonError);
-                                         if(urlRequest.HTTPBody != nil)
-                                             DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
-                                         DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
-                                         if (requestFailureBlock != nil) {
-                                             requestFailureBlock((APError*)jsonError);
-                                         }
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
+                                             DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@", jsonError);
+                                             if(urlRequest.HTTPBody != nil)
+                                                 DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
+                                             
+                                             if (requestFailureBlock != nil)
+                                                 requestFailureBlock((APError*)jsonError);
+                                         });
                                      }
                                  } else {
-                                     DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
-                                     if(urlRequest.HTTPBody != nil)
-                                         DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
-                                     DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
-                                     if (requestFailureBlock != nil) {
-                                         requestFailureBlock((APError*)error);
-                                     }
+                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                         DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
+                                         DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                                         if(urlRequest.HTTPBody != nil)
+                                             DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
+                                         if (requestFailureBlock != nil)
+                                             requestFailureBlock((APError*)error);
+                                     });
                                  }
                              }]
          resume];
@@ -92,94 +102,42 @@ static NSDictionary *headerParams = nil;
                     BOOL isErrorPresent = (error != nil);
                     if (!isErrorPresent) {
                         if(requestSuccessBlock)
-                            requestSuccessBlock(responseJSON);
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                requestSuccessBlock(responseJSON);
+                            });
                     } else {
-                        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
-                        if(urlRequest.HTTPBody != nil)
-                            DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
-                        DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
-                        if(requestFailureBlock)
-                            requestFailureBlock(error);
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
+                            DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                            if(urlRequest.HTTPBody != nil)
+                                DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
+                            if(requestFailureBlock)
+                                requestFailureBlock(error);
+                        });
                     }
                 } else {
-                    DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@", jsonError);
-                    if(urlRequest.HTTPBody != nil)
-                        DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
-                    DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
-                    if (requestFailureBlock != nil) {
-                        requestFailureBlock((APError*)jsonError);
-                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
+                        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@", jsonError);
+                        if(urlRequest.HTTPBody != nil)
+                            DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
+                        
+                        if (requestFailureBlock != nil)
+                            requestFailureBlock((APError*)jsonError);
+                    });
                 }
             } else {
-                DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
-                if(urlRequest.HTTPBody != nil)
-                    DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
-                DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
-                if (requestFailureBlock != nil) {
-                    requestFailureBlock((APError*)error);
-                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
+                    DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+                    if(urlRequest.HTTPBody != nil)
+                        DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
+                    if (requestFailureBlock != nil)
+                        requestFailureBlock((APError*)error);
+                });
             }
         }];
-        //        [urlRequest setValue:[Appacitive getApiKey] forHTTPHeaderField:APIkeyHeaderKey];
-        //        [urlRequest setValue:[Appacitive environmentToUse] forHTTPHeaderField:EnvironmentHeaderKey];
-        //        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
-        //        proxySuccessBlock = [requestSuccessBlock copy];
-        //        proxyFailureBlock = [requestFailureBlock copy];
-        //        [connection start];
     }
 }
-
-//#pragma mark - NSURLConnection delegate methods
-//
-//- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
-//    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-//    [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
-//    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
-//
-//}
-//
-//- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-//    [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
-//    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-//    NSError *jsonError = nil;
-//    NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
-//    if(!jsonError) {
-//        APError *error = [APHelperMethods checkForErrorStatus:responseDict];
-//        BOOL isErrorPresent = (error != nil);
-//
-//        if (!isErrorPresent) {
-//            if(proxySuccessBlock)
-//                proxySuccessBlock(responseDict);
-//        } else {
-//            DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
-//            if(proxyFailureBlock)
-//                proxyFailureBlock(error);
-//        }
-//    } else {
-//        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@", jsonError);
-//        if (proxyFailureBlock != nil) {
-//            proxyFailureBlock((APError*) jsonError);
-//        }
-//    }
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-//    if(error)
-//        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
-//    if (proxyFailureBlock != nil) {
-//        proxyFailureBlock((APError*) error);
-//    }
-//}
-//
-//-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-//    if(response != nil)
-//        DLog(@"\n––––––––––RESPONSE–––––––––––\n%@", response.description);
-//}
 
 @end

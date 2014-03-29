@@ -44,6 +44,8 @@
 	
 	<option value="//api/name/fetchObjectWithObjectId:typeName:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ fetchObjectWithObjectId:typeName:successHandler:failureHandler:</option>
 	
+	<option value="//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</option>
+	
 	<option value="//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/objectWithTypeName:">&nbsp;&nbsp;&nbsp;&nbsp;+ objectWithTypeName:</option>
@@ -54,9 +56,9 @@
 	
 	<option value="//api/name/searchAllObjectsWithTypeName:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ searchAllObjectsWithTypeName:successHandler:failureHandler:</option>
 	
-	<option value="//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ searchAllObjectsWithTypeName:withQueryString:successHandler:</option>
+	<option value="//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ searchAllObjectsWithTypeName:withQuery:successHandler:</option>
 	
-	<option value="//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:</option>
+	<option value="//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:</option>
 	
 	
 	
@@ -68,6 +70,12 @@
 	<option value="//api/name/addPropertyWithKey:value:">&nbsp;&nbsp;&nbsp;&nbsp;- addPropertyWithKey:value:</option>
 	
 	<option value="//api/name/addTag:">&nbsp;&nbsp;&nbsp;&nbsp;- addTag:</option>
+	
+	<option value="//api/name/addUniqueValues:toMultivaluedProperty:">&nbsp;&nbsp;&nbsp;&nbsp;- addUniqueValues:toMultivaluedProperty:</option>
+	
+	<option value="//api/name/addValues:toMultivaluedProperty:">&nbsp;&nbsp;&nbsp;&nbsp;- addValues:toMultivaluedProperty:</option>
+	
+	<option value="//api/name/decrementValueOfProperty:byValue:">&nbsp;&nbsp;&nbsp;&nbsp;- decrementValueOfProperty:byValue:</option>
 	
 	<option value="//api/name/deleteObject">&nbsp;&nbsp;&nbsp;&nbsp;- deleteObject</option>
 	
@@ -85,11 +93,13 @@
 	
 	<option value="//api/name/fetchWithFailureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithFailureHandler:</option>
 	
-	<option value="//api/name/fetchWithQueryString:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithQueryString:successHandler:failureHandler:</option>
+	<option value="//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithPropertiesToFetch:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/fetchWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchWithSuccessHandler:failureHandler:</option>
 	
 	<option value="//api/name/getPropertyWithKey:">&nbsp;&nbsp;&nbsp;&nbsp;- getPropertyWithKey:</option>
+	
+	<option value="//api/name/incrementValueOfProperty:byValue:">&nbsp;&nbsp;&nbsp;&nbsp;- incrementValueOfProperty:byValue:</option>
 	
 	<option value="//api/name/initWithTypeName:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithTypeName:</option>
 	
@@ -100,6 +110,8 @@
 	<option value="//api/name/removePropertyWithKey:">&nbsp;&nbsp;&nbsp;&nbsp;- removePropertyWithKey:</option>
 	
 	<option value="//api/name/removeTag:">&nbsp;&nbsp;&nbsp;&nbsp;- removeTag:</option>
+	
+	<option value="//api/name/removeValues:fromMultivaluedProperty:">&nbsp;&nbsp;&nbsp;&nbsp;- removeValues:fromMultivaluedProperty:</option>
 	
 	<option value="//api/name/saveObject">&nbsp;&nbsp;&nbsp;&nbsp;- saveObject</option>
 	
@@ -135,17 +147,19 @@
 
 <li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Getting the APObject">Getting the APObject</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Initializing an APObject instance">Initializing an APObject instance</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Fetch APObjects">Fetch APObjects</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Fetching APObject">Fetching APObject</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Save APObjects">Save APObjects</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Saving APObject">Saving APObject</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Update APObjects">Update APObjects</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Updating APObject">Updating APObject</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Searching for APObjects">Searching for APObjects</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Searching for APObject">Searching for APObject</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Methods to store key-value pairs">Methods to store key-value pairs</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Deleting APObject">Deleting APObject</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#task_Setting and Getting properties, attributes and tags of APObject">Setting and Getting properties, attributes and tags of APObject</a></span></li>
 	
 </ul></li>
 
@@ -159,6 +173,8 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchObjectWithObjectId:typeName:successHandler:failureHandler:">fetchObjectWithObjectId:typeName:successHandler:failureHandler:</a></span></li>
 	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</a></span></li>
+	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:">fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/objectWithTypeName:">objectWithTypeName:</a></span></li>
@@ -169,9 +185,9 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/searchAllObjectsWithTypeName:successHandler:failureHandler:">searchAllObjectsWithTypeName:successHandler:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:">searchAllObjectsWithTypeName:withQueryString:successHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:">searchAllObjectsWithTypeName:withQuery:successHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:">searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:">searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:</a></span></li>
 	
 </ul></li>
 
@@ -184,6 +200,12 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addPropertyWithKey:value:">addPropertyWithKey:value:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addTag:">addTag:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addUniqueValues:toMultivaluedProperty:">addUniqueValues:toMultivaluedProperty:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addValues:toMultivaluedProperty:">addValues:toMultivaluedProperty:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/decrementValueOfProperty:byValue:">decrementValueOfProperty:byValue:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteObject">deleteObject</a></span></li>
 	
@@ -201,11 +223,13 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithFailureHandler:">fetchWithFailureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithQueryString:successHandler:failureHandler:">fetchWithQueryString:successHandler:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getPropertyWithKey:">getPropertyWithKey:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/incrementValueOfProperty:byValue:">incrementValueOfProperty:byValue:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithTypeName:">initWithTypeName:</a></span></li>
 	
@@ -216,6 +240,8 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removePropertyWithKey:">removePropertyWithKey:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeTag:">removeTag:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/removeValues:fromMultivaluedProperty:">removeValues:fromMultivaluedProperty:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saveObject">saveObject</a></span></li>
 	
@@ -289,8 +315,8 @@ Data can be stored in key-value pairs in the properties and attributes fields.</
 						<h2 class="subtitle subtitle-tasks">Tasks</h2>
 						
 						
-						<a title="Getting the APObject" name="task_Getting the APObject"></a>
-						<h3 class="subsubtitle task-title">Getting the APObject</h3>
+						<a title="Initializing an APObject instance" name="task_Initializing an APObject instance"></a>
+						<h3 class="subsubtitle task-title">Initializing an APObject instance</h3>
 
 						<ul class="task-list">
 							<li>
@@ -321,7 +347,175 @@ Data can be stored in key-value pairs in the properties and attributes fields.</
 	</span>
 	
 	
+</li>
+						</ul>
+						
+						
+						<a title="Fetching APObject" name="task_Fetching APObject"></a>
+						<h3 class="subsubtitle task-title">Fetching APObject</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetch">&ndash;&nbsp;fetch</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
 </li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchWithFailureHandler:">&ndash;&nbsp;fetchWithFailureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash;&nbsp;fetchWithSuccessHandler:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash;&nbsp;fetchWithPropertiesToFetch:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method used to <a href="#//api/name/fetch">fetch</a> an APObject.
+This method will use the type and objectId properties to <a href="#//api/name/fetch">fetch</a> the object. If the objectId and type is not set, results are unexpected.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchObjectWithObjectId:typeName:successHandler:failureHandler:">+&nbsp;fetchObjectWithObjectId:typeName:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:">+&nbsp;fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">+&nbsp;fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Retrieves multiple <a href="../Classes/APObjects.html">APObjects</a> of a particular type.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Saving APObject" name="task_Saving APObject"></a>
+						<h3 class="subsubtitle task-title">Saving APObject</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/saveObject">&ndash;&nbsp;saveObject</a></code>
+		<span class="tooltip"><p><a href="#//api/name/saveObjectWithSuccessHandler:failureHandler:">saveObjectWithSuccessHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/saveObjectWithFailureHandler:">&ndash;&nbsp;saveObjectWithFailureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/saveObjectWithSuccessHandler:failureHandler:">saveObjectWithSuccessHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/saveObjectWithSuccessHandler:failureHandler:">&ndash;&nbsp;saveObjectWithSuccessHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Save the object on the remote server.
+This method will save an object in the background. If save is successful the properties will be updated and the successBlock will be invoked. If not the failure block is invoked.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Updating APObject" name="task_Updating APObject"></a>
+						<h3 class="subsubtitle task-title">Updating APObject</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/updateObject">&ndash;&nbsp;updateObject</a></code>
+		<span class="tooltip"><p><a href="#//api/name/updateObjectWithRevisionNumber:successHandler:failureHandler:">updateObjectWithRevisionNumber:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/updateObjectWithFailureHandler:">&ndash;&nbsp;updateObjectWithFailureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/updateObjectWithRevisionNumber:successHandler:failureHandler:">updateObjectWithRevisionNumber:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/updateObjectWithSuccessHandler:failureHandler:">&ndash;&nbsp;updateObjectWithSuccessHandler:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/updateObjectWithRevisionNumber:successHandler:failureHandler:">updateObjectWithRevisionNumber:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/updateObjectWithRevisionNumber:successHandler:failureHandler:">&ndash;&nbsp;updateObjectWithRevisionNumber:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method used to update an APObject.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Searching for APObject" name="task_Searching for APObject"></a>
+						<h3 class="subsubtitle task-title">Searching for APObject</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/searchAllObjectsWithTypeName:successHandler:">+&nbsp;searchAllObjectsWithTypeName:successHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/searchAllObjectsWithTypeName:successHandler:failureHandler:">searchAllObjectsWithTypeName:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/searchAllObjectsWithTypeName:successHandler:failureHandler:">+&nbsp;searchAllObjectsWithTypeName:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Searches for all <a href="../Classes/APObjects.html">APObjects</a> of a particular type.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:">+&nbsp;searchAllObjectsWithTypeName:withQuery:successHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:">searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:">+&nbsp;searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Searches for <a href="../Classes/APObjects.html">APObjects</a> and filters the results according to the query string.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+						
+						<a title="Deleting APObject" name="task_Deleting APObject"></a>
+						<h3 class="subsubtitle task-title">Deleting APObject</h3>
+
+						<ul class="task-list">
+							<li>
 	<span class="tooltip">
 		<code><a href="#//api/name/deleteObject">&ndash;&nbsp;deleteObject</a></code>
 		<span class="tooltip"><p><a href="#//api/name/deleteObjectWithSuccessHandler:failureHandler:">deleteObjectWithSuccessHandler:failureHandler:</a></p></span>
@@ -368,161 +562,8 @@ This method will delete the object on the remote server. It will not nullify the
 						</ul>
 						
 						
-						<a title="Fetch APObjects" name="task_Fetch APObjects"></a>
-						<h3 class="subsubtitle task-title">Fetch APObjects</h3>
-
-						<ul class="task-list">
-							<li>
-	<span class="tooltip">
-		<code><a href="#//api/name/fetch">&ndash;&nbsp;fetch</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/fetchWithFailureHandler:">&ndash;&nbsp;fetchWithFailureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash;&nbsp;fetchWithSuccessHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Method used to <a href="#//api/name/fetch">fetch</a> an APObject.
-This method will use the type and objectId properties to <a href="#//api/name/fetch">fetch</a> the object. If the objectId and type is not set, results are unexpected.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/fetchObjectWithObjectId:typeName:successHandler:failureHandler:">+&nbsp;fetchObjectWithObjectId:typeName:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:">fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:">+&nbsp;fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Retrieves multiple <a href="../Classes/APObjects.html">APObjects</a> of a particular type.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/fetchWithQueryString:successHandler:failureHandler:">&ndash;&nbsp;fetchWithQueryString:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Retrieve <a href="../Classes/APObjects.html">APObjects</a> by using a query string.</p></span>
-	</span>
-	
-	
-</li>
-						</ul>
-						
-						
-						<a title="Save APObjects" name="task_Save APObjects"></a>
-						<h3 class="subsubtitle task-title">Save APObjects</h3>
-
-						<ul class="task-list">
-							<li>
-	<span class="tooltip">
-		<code><a href="#//api/name/saveObject">&ndash;&nbsp;saveObject</a></code>
-		<span class="tooltip"><p><a href="#//api/name/saveObjectWithSuccessHandler:failureHandler:">saveObjectWithSuccessHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/saveObjectWithFailureHandler:">&ndash;&nbsp;saveObjectWithFailureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/saveObjectWithSuccessHandler:failureHandler:">saveObjectWithSuccessHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/saveObjectWithSuccessHandler:failureHandler:">&ndash;&nbsp;saveObjectWithSuccessHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Save the object on the remote server.
-This method will save an object in the background. If save is successful the properties will be updated and the successBlock will be invoked. If not the failure block is invoked.</p></span>
-	</span>
-	
-	
-</li>
-						</ul>
-						
-						
-						<a title="Update APObjects" name="task_Update APObjects"></a>
-						<h3 class="subsubtitle task-title">Update APObjects</h3>
-
-						<ul class="task-list">
-							<li>
-	<span class="tooltip">
-		<code><a href="#//api/name/updateObject">&ndash;&nbsp;updateObject</a></code>
-		<span class="tooltip"><p><a href="#//api/name/updateObjectWithRevisionNumber:successHandler:failureHandler:">updateObjectWithRevisionNumber:successHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/updateObjectWithFailureHandler:">&ndash;&nbsp;updateObjectWithFailureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/updateObjectWithRevisionNumber:successHandler:failureHandler:">updateObjectWithRevisionNumber:successHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/updateObjectWithSuccessHandler:failureHandler:">&ndash;&nbsp;updateObjectWithSuccessHandler:failureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/updateObjectWithRevisionNumber:successHandler:failureHandler:">updateObjectWithRevisionNumber:successHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/updateObjectWithRevisionNumber:successHandler:failureHandler:">&ndash;&nbsp;updateObjectWithRevisionNumber:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Method used to update an APObject.</p></span>
-	</span>
-	
-	
-</li>
-						</ul>
-						
-						
-						<a title="Searching for APObjects" name="task_Searching for APObjects"></a>
-						<h3 class="subsubtitle task-title">Searching for APObjects</h3>
-
-						<ul class="task-list">
-							<li>
-	<span class="tooltip">
-		<code><a href="#//api/name/searchAllObjectsWithTypeName:successHandler:">+&nbsp;searchAllObjectsWithTypeName:successHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/searchAllObjectsWithTypeName:successHandler:failureHandler:">searchAllObjectsWithTypeName:successHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/searchAllObjectsWithTypeName:successHandler:failureHandler:">+&nbsp;searchAllObjectsWithTypeName:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Searches for all <a href="../Classes/APObjects.html">APObjects</a> of a particular type.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:">+&nbsp;searchAllObjectsWithTypeName:withQueryString:successHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:">searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:">+&nbsp;searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Searches for <a href="../Classes/APObjects.html">APObjects</a> and filters the results according to the query string.</p></span>
-	</span>
-	
-	
-</li>
-						</ul>
-						
-						
-						<a title="Methods to store key-value pairs" name="task_Methods to store key-value pairs"></a>
-						<h3 class="subsubtitle task-title">Methods to store key-value pairs</h3>
+						<a title="Setting and Getting properties, attributes and tags of APObject" name="task_Setting and Getting properties, attributes and tags of APObject"></a>
+						<h3 class="subsubtitle task-title">Setting and Getting properties, attributes and tags of APObject</h3>
 
 						<ul class="task-list">
 							<li>
@@ -552,6 +593,41 @@ Call update after this method call to persist the change.</p></span>
 	<span class="tooltip">
 		<code><a href="#//api/name/getPropertyWithKey:">&ndash;&nbsp;getPropertyWithKey:</a></code>
 		<span class="tooltip"><p>Method used to retrieve a property using its key.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/addValues:toMultivaluedProperty:">&ndash;&nbsp;addValues:toMultivaluedProperty:</a></code>
+		<span class="tooltip"><p>Method to add values to a multivalued property.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/addUniqueValues:toMultivaluedProperty:">&ndash;&nbsp;addUniqueValues:toMultivaluedProperty:</a></code>
+		<span class="tooltip"><p>Method to add unique values to a multivalued property.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/removeValues:fromMultivaluedProperty:">&ndash;&nbsp;removeValues:fromMultivaluedProperty:</a></code>
+		<span class="tooltip"><p>Method to remove values from a multivalued property.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/incrementValueOfProperty:byValue:">&ndash;&nbsp;incrementValueOfProperty:byValue:</a></code>
+		<span class="tooltip"><p>Method to increment value of a numeric property.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/decrementValueOfProperty:byValue:">&ndash;&nbsp;decrementValueOfProperty:byValue:</a></code>
+		<span class="tooltip"><p>Method to decrement value of a numeric property.</p></span>
 	</span>
 	
 	
@@ -615,7 +691,7 @@ Call update after this method call to persist the change</p></span>
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:">fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -638,7 +714,7 @@ Call update after this method call to persist the change</p></span>
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:">+ fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">+ fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -654,8 +730,8 @@ Call update after this method call to persist the change</p></span>
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:" title="fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</h3>
+	<a name="//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:" title="fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</h3>
 	
 	
 	
@@ -665,7 +741,7 @@ Call update after this method call to persist the change</p></span>
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)fetchObjectsWithObjectIds:(NSArray *)<em>objectIds</em> typeName:(NSString *)<em>typeName</em> successHandler:(APObjectsSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)fetchObjectsWithObjectIds:(NSArray *)<em>objectIds</em> typeName:(NSString *)<em>typeName</em> propertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APObjectsSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -680,6 +756,11 @@ Call update after this method call to persist the change</p></span>
 		<dl class="argument-def parameter-def">
 			<dt><em>typeName</em></dt>
 			<dd><p>The type name the objects belong to.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertiesToFetch</em></dt>
+			<dd><p>Array of properties to be fetched excluding all other.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -703,6 +784,51 @@ Call update after this method call to persist the change</p></span>
 	
 	
 	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APObject.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:" title="fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchObjectsWithObjectIds:typeName:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)fetchObjectsWithObjectIds:(NSArray *)<em>objectIds</em> typeName:(NSString *)<em>typeName</em> successHandler:(APObjectsSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:">+ fetchObjectsWithObjectIds:typeName:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
 	
 	
 	
@@ -913,18 +1039,18 @@ Call update after this method call to persist the change</p></span>
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:" title="searchAllObjectsWithTypeName:withQueryString:successHandler:"></a>
-	<h3 class="subsubtitle method-title">searchAllObjectsWithTypeName:withQueryString:successHandler:</h3>
+	<a name="//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:" title="searchAllObjectsWithTypeName:withQuery:successHandler:"></a>
+	<h3 class="subsubtitle method-title">searchAllObjectsWithTypeName:withQuery:successHandler:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:">searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:">searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)searchAllObjectsWithTypeName:(NSString *)<em>typeName</em> withQueryString:(NSString *)<em>queryString</em> successHandler:(APObjectsSuccessBlock)<em>successBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)searchAllObjectsWithTypeName:(NSString *)<em>typeName</em> withQuery:(NSString *)<em>query</em> successHandler:(APObjectsSuccessBlock)<em>successBlock</em></code></div>
 
     
 	
@@ -942,7 +1068,7 @@ Call update after this method call to persist the change</p></span>
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:">+ searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:">+ searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -958,8 +1084,8 @@ Call update after this method call to persist the change</p></span>
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:" title="searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">searchAllObjectsWithTypeName:withQueryString:successHandler:failureHandler:</h3>
+	<a name="//api/name/searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:" title="searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">searchAllObjectsWithTypeName:withQuery:successHandler:failureHandler:</h3>
 	
 	
 	
@@ -969,7 +1095,7 @@ Call update after this method call to persist the change</p></span>
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)searchAllObjectsWithTypeName:(NSString *)<em>typeName</em> withQueryString:(NSString *)<em>queryString</em> successHandler:(APObjectsSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)searchAllObjectsWithTypeName:(NSString *)<em>typeName</em> withQuery:(NSString *)<em>query</em> successHandler:(APObjectsSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -982,8 +1108,8 @@ Call update after this method call to persist the change</p></span>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>queryString</em></dt>
-			<dd><p>SQL kind of query to search for specific objects. For more info <a href="http://appacitive.com">http://appacitive.com</a></p></dd>
+			<dt><em>query</em></dt>
+			<dd><p>String representation of an <a href="../Classes/APQuery.html">APQuery</a> instance.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
@@ -1151,6 +1277,159 @@ Attributes are used to store extra information.</p>
 		<dl class="argument-def parameter-def">
 			<dt><em>tag</em></dt>
 			<dd><p>The tag you wish to add.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APObject.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/addUniqueValues:toMultivaluedProperty:" title="addUniqueValues:toMultivaluedProperty:"></a>
+	<h3 class="subsubtitle method-title">addUniqueValues:toMultivaluedProperty:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to add unique values to a multivalued property.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)addUniqueValues:(NSArray *)<em>values</em> toMultivaluedProperty:(NSString *)<em>propertyName</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>values</em></dt>
+			<dd><p>array of values to be added to the multivalued property.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertyName</em></dt>
+			<dd><p>key/name of the multivalued property.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APObject.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/addValues:toMultivaluedProperty:" title="addValues:toMultivaluedProperty:"></a>
+	<h3 class="subsubtitle method-title">addValues:toMultivaluedProperty:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to add values to a multivalued property.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)addValues:(NSArray *)<em>values</em> toMultivaluedProperty:(NSString *)<em>propertyName</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>values</em></dt>
+			<dd><p>array of values to be added to the multivalued property.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertyName</em></dt>
+			<dd><p>key/name of the multivalued property.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APObject.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/decrementValueOfProperty:byValue:" title="decrementValueOfProperty:byValue:"></a>
+	<h3 class="subsubtitle method-title">decrementValueOfProperty:byValue:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to decrement value of a numeric property.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)decrementValueOfProperty:(NSString *)<em>propertyName</em> byValue:(NSNumber *)<em>value</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertyName</em></dt>
+			<dd><p>key/name of the property.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>value</em></dt>
+			<dd><p>the value that the property should be decremented by.</p></dd>
 		</dl>
 		
 	</div>
@@ -1465,7 +1744,7 @@ This method will delete the object on the remote server. It will not nullify the
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -1488,7 +1767,7 @@ This method will delete the object on the remote server. It will not nullify the
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash; fetchWithSuccessHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -1510,7 +1789,7 @@ This method will delete the object on the remote server. It will not nullify the
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">fetchWithSuccessHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
@@ -1533,7 +1812,7 @@ This method will delete the object on the remote server. It will not nullify the
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchWithSuccessHandler:failureHandler:">&ndash; fetchWithSuccessHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -1549,64 +1828,8 @@ This method will delete the object on the remote server. It will not nullify the
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchWithQueryString:successHandler:failureHandler:" title="fetchWithQueryString:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchWithQueryString:successHandler:failureHandler:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Retrieve <a href="../Classes/APObjects.html">APObjects</a> by using a query string.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)fetchWithQueryString:(NSString *)<em>queryString</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>queryString</em></dt>
-			<dd><p>SQL kind of query to search for specific objects. For more info <a href="http://appacitive.com">http://appacitive.com</a></p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>successBlock</em></dt>
-			<dd><p>Block invoked when the retrieve operation succeeds.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>failureBlock</em></dt>
-			<dd><p>Block invoked when the failure operation succeeds.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APObject.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/fetchWithSuccessHandler:failureHandler:" title="fetchWithSuccessHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchWithSuccessHandler:failureHandler:</h3>
+	<a name="//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:" title="fetchWithPropertiesToFetch:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchWithPropertiesToFetch:successHandler:failureHandler:</h3>
 	
 	
 	
@@ -1617,12 +1840,17 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)fetchWithSuccessHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)fetchWithPropertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
 	<div class="method-subsection arguments-section parameters">
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertiesToFetch</em></dt>
+			<dd><p>Array of properties to be fetched excluding all other.</p></dd>
+		</dl>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>successBlock</em></dt>
@@ -1657,6 +1885,51 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 </div>
 						
 						<div class="section-method">
+	<a name="//api/name/fetchWithSuccessHandler:failureHandler:" title="fetchWithSuccessHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchWithSuccessHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)fetchWithSuccessHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/fetchWithPropertiesToFetch:successHandler:failureHandler:">&ndash; fetchWithPropertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APObject.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
 	<a name="//api/name/getPropertyWithKey:" title="getPropertyWithKey:"></a>
 	<h3 class="subsubtitle method-title">getPropertyWithKey:</h3>
 	
@@ -1668,7 +1941,7 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (instancetype)getPropertyWithKey:(NSString *)<em>keyName</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (id)getPropertyWithKey:(NSString *)<em>keyName</em></code></div>
 
     
 	
@@ -1678,6 +1951,57 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 		<dl class="argument-def parameter-def">
 			<dt><em>keyName</em></dt>
 			<dd><p>key of the date item to be removed.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APObject.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/incrementValueOfProperty:byValue:" title="incrementValueOfProperty:byValue:"></a>
+	<h3 class="subsubtitle method-title">incrementValueOfProperty:byValue:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to increment value of a numeric property.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)incrementValueOfProperty:(NSString *)<em>propertyName</em> byValue:(NSNumber *)<em>value</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertyName</em></dt>
+			<dd><p>key/name of the property.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>value</em></dt>
+			<dd><p>the value that the property should be inceremneted by.</p></dd>
 		</dl>
 		
 	</div>
@@ -1915,6 +2239,57 @@ Call update after this method call to persist the change.</p>
 		<dl class="argument-def parameter-def">
 			<dt><em>tag</em></dt>
 			<dd><p>The tag you wish to remove.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APObject.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/removeValues:fromMultivaluedProperty:" title="removeValues:fromMultivaluedProperty:"></a>
+	<h3 class="subsubtitle method-title">removeValues:fromMultivaluedProperty:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to remove values from a multivalued property.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (void)removeValues:(NSArray *)<em>values</em> fromMultivaluedProperty:(NSString *)<em>propertyName</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>values</em></dt>
+			<dd><p>array of values to be removed from the multivalued property.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>propertyName</em></dt>
+			<dd><p>key/name of the multivalued property.</p></dd>
 		</dl>
 		
 	</div>
@@ -2384,7 +2759,7 @@ Call update after this method call to persist the update.</p>
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-01-29)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-03-24)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

@@ -14,7 +14,7 @@
 
 @implementation APEmail
 
--(instancetype) initWithRecipients:(NSArray *)recipients subject:(NSString *)subject body:(NSString *)body {
+- (instancetype) initWithRecipients:(NSArray *)recipients subject:(NSString *)subject body:(NSString *)body {
     if(recipients != nil && recipients.count > 0 && subject != nil && body != nil) {
         self.toRecipients = recipients;
         self.subjectText = subject;
@@ -31,11 +31,11 @@
     [self sendEmailUsingSMTPConfig:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
--(void)sendEmailUsingSMTPConfig:(NSDictionary *)smtpConfig {
+- (void) sendEmailUsingSMTPConfig:(NSDictionary *)smtpConfig {
     [self sendEmailUsingSMTPConfig:smtpConfig successHandler:nil failureHandler:nil];
 }
 
--(void)sendEmailUsingSMTPConfig:(NSDictionary *)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) sendEmailUsingSMTPConfig:(NSDictionary *)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     NSString *path = [EMAIL_PATH stringByAppendingFormat:@"send/"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
@@ -89,7 +89,7 @@
     [self sendTemplatedEmailUsingTemplate:templateName usingSMTPConfig:smtpConfig successHandler:nil failureHandler:nil];
 }
 
--(void) sendTemplatedEmailUsingTemplate:(NSString *)templateName usingSMTPConfig:(NSDictionary *)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) sendTemplatedEmailUsingTemplate:(NSString *)templateName usingSMTPConfig:(NSDictionary *)smtpConfig successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     NSString *path = [EMAIL_PATH stringByAppendingFormat:@"send/"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];

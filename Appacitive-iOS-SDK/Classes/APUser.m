@@ -9,7 +9,6 @@
 #import "APUser.h"
 #import "Appacitive.h"
 #import "APHelperMethods.h"
-#import "NSString+APString.h"
 #import "APConstants.h"
 #import "APNetworking.h"
 
@@ -31,7 +30,7 @@ static NSDictionary *headerParams;
     return headerParams;
 }
 
--(instancetype)init {
+- (instancetype)init {
     return self = [super initWithTypeName:@"user"];
 }
 
@@ -45,8 +44,12 @@ static NSDictionary *headerParams;
 
 #pragma mark - Authenticate methods
 
-+ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock {
-    [APUser authenticateUserWithUserName:userName password:password successHandler:successBlock failureHandler:nil];
++ (void) authenticateUserWithUserName:(NSString *)userName password:(NSString *)password {
+    [APUser authenticateUserWithUserName:userName password:password successHandler:nil failureHandler:nil];
+}
+
++ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithUserName:userName password:password successHandler:nil failureHandler:failureBlock];
 }
 
 + (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
@@ -84,8 +87,12 @@ static NSDictionary *headerParams;
     }];
 }
 
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken successHandler:(APUserSuccessBlock)successBlock {
-    [APUser authenticateUserWithFacebook:accessToken successHandler:successBlock failureHandler:nil];
++ (void) authenticateUserWithFacebook:(NSString *)accessToken {
+    [APUser authenticateUserWithFacebook:accessToken successHandler:nil failureHandler:nil];
+}
+
++ (void) authenticateUserWithFacebook:(NSString *)accessToken failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithFacebook:accessToken successHandler:nil failureHandler:failureBlock];
 }
 
 + (void) authenticateUserWithFacebook:(NSString *) accessToken successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
@@ -96,7 +103,7 @@ static NSDictionary *headerParams;
     
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   @"true",@"createNew",
+                                                                   @"true",@"createnew",
                                                                    @"facebook",@"type",
                                                                    accessToken, @"accesstoken",
                                                                    nil] options:kNilOptions error:&jsonError];
@@ -124,8 +131,14 @@ static NSDictionary *headerParams;
                               }];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret successHandler:(APUserSuccessBlock) successBlock {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret successHandler:successBlock failureHandler:nil];
+
+
++ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret successHandler:nil failureHandler:nil];
+}
+
++ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret failureHandler:(APFailureBlock)failureHandler {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret successHandler:nil failureHandler:failureHandler];
 }
 
 + (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock {
@@ -165,11 +178,15 @@ static NSDictionary *headerParams;
                               }];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:successBlock failureHandler:nil];
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:failureBlock];
+}
+
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -199,6 +216,211 @@ static NSDictionary *headerParams;
         [currentUser setLoggedInWithFacebook:YES];
         if (successBlock) {
             successBlock(currentUser);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+#pragma mark - User Account Linking Methods
+
+- (void) linkFacebookAccountWithAccessToken:(NSString*)facebookAcessToken {
+    [self linkFacebookAccountWithAccessToken:facebookAcessToken successHandler:nil failureHandler:nil];
+}
+
+- (void) linkFacebookAccountWithAccessToken:(NSString*)facebookAcessToken failureHandler:(APFailureBlock)failureBlock {
+    [self linkFacebookAccountWithAccessToken:facebookAcessToken successHandler:nil failureHandler:failureBlock];
+}
+
+- (void) linkFacebookAccountWithAccessToken:(NSString*)facebookAcessToken successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@/link",self.objectId];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   @"facebook",@"authtype",
+                                                                   facebookAcessToken, @"accesstoken",
+                                                                   nil] options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPBody:requestBody];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock) {
+            successBlock();
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret {
+    [self linkTwitterAccountWithOauthToken:oauthToken oauthSecret:oauthSecret successHandler:nil failureHandler:nil];
+}
+
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret failureHandler:(APFailureBlock)failureBlock {
+    [self linkTwitterAccountWithOauthToken:oauthToken oauthSecret:oauthSecret successHandler:nil failureHandler:failureBlock];
+}
+
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@/link",self.objectId];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   @"twitter",@"authtype",
+                                                                   oauthToken, @"oauthtoken",
+                                                                   oauthSecret, @"oauthsecret",
+                                                                   nil] options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPBody:requestBody];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock) {
+            successBlock();
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret {
+    [self linkTwitterAccountWithOauthToken:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:nil];
+}
+
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret failureHandler:(APFailureBlock)failureBlock {
+    [self linkTwitterAccountWithOauthToken:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:failureBlock];
+}
+
+- (void) linkTwitterAccountWithOauthToken:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@/link",self.objectId];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   @"twitter",@"authtype",
+                                                                   oauthToken, @"oauthtoken",
+                                                                   oauthSecret, @"oauthsecret",
+                                                                   consumerKey, @"consumerkey",
+                                                                   consumerSecret, @"consumersecret",
+                                                                   nil] options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPBody:requestBody];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock) {
+            successBlock();
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];    
+}
+
+- (void) delinkAccountWithServiceName:(NSString*)serviceName {
+    [self delinkAccountWithServiceName:serviceName successHandler:nil failureHandler:nil];
+}
+
+- (void) delinkAccountWithServiceName:(NSString*)serviceName failureHandler:(APFailureBlock)failureBlock {
+    [self delinkAccountWithServiceName:serviceName successHandler:nil failureHandler:failureBlock];
+}
+
+- (void) delinkAccountWithServiceName:(NSString*)serviceName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@/%@/delink",self.objectId,serviceName];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock) {
+            successBlock();
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+- (void) getLinkedAccountWithServiceName:(NSString*)serviceName successHandler:(APResultSuccessBlock)successBlock {
+    [self getLinkedAccountWithServiceName:serviceName successHandler:successBlock failureHandler:nil];
+}
+
+- (void) getLinkedAccountWithServiceName:(NSString*)serviceName successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@/linkedaccounts/%@",self.objectId,serviceName];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock) {
+            successBlock(result);
+        }
+    } failureHandler:^(APError *error) {
+		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
+}
+
+- (void) getAllLinkedAccountsWithSuccessHandler:(APResultSuccessBlock)successBlock {
+    [self getAllLinkedAccountsWithSuccessHandler:successBlock failureHandler:nil];
+}
+
+- (void) getAllLinkedAccountsWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@/linkedaccounts",self.objectId];
+    path = [HOST_NAME stringByAppendingPathComponent:path];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
+    APNetworking *nwObject = [[APNetworking alloc] init];
+    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+        if (successBlock) {
+            successBlock(result);
         }
     } failureHandler:^(APError *error) {
 		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
@@ -248,11 +470,11 @@ static NSDictionary *headerParams;
 }
 
 - (void) createUserWithFacebook:(NSString*)token {
-    
+    [self createUserWithFacebook:token successHandler:nil failureHandler:nil];
 }
 
 - (void) createUserWithFacebook:(NSString*)token failureHandler:(APFailureBlock)failureBlock {
-    
+    [self createUserWithFacebook:token successHandler:nil failureHandler:failureBlock];
 }
 
 - (void) createUserWithFacebook:(NSString*)token successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
@@ -291,15 +513,15 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*) consumerSecret {
-    
+- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret {
+    [self createUserWithTwitter:oauthToken oauthSecret:oauthToken consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:nil];
 }
 
-- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*) consumerSecret failureHandler:(APFailureBlock)failureBlock {
-    
+- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret failureHandler:(APFailureBlock)failureBlock {
+    [self createUserWithTwitter:oauthToken oauthSecret:oauthToken consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:failureBlock];
 }
 
-- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret :(NSString*) consumerSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"create"];
     
@@ -377,7 +599,7 @@ static NSDictionary *headerParams;
 
 #pragma mark - Retrieve User methods
 
-- (void)fetchUserById:(NSString *)userId {
+- (void) fetchUserById:(NSString *)userId {
     [self fetchUserById:userId successHandler:nil failureHandler:nil];
 }
 
@@ -386,9 +608,17 @@ static NSDictionary *headerParams;
 }
 
 - (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+    [self fetchUserById:userId propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
+- (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@",userId];
     path = [HOST_NAME stringByAppendingPathComponent:path];
+    
+     if(propertiesToFetch != nil || propertiesToFetch.count > 0)
+        path = [path stringByAppendingFormat:@"?fields=%@",[propertiesToFetch componentsJoinedByString:@","]];
+    
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -419,9 +649,17 @@ static NSDictionary *headerParams;
 }
 
 - (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+    [self fetchUserByUserName:userName propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
+- (void) fetchUserByUserName:(NSString *)userName propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",userName];
     path = [HOST_NAME stringByAppendingPathComponent:path];
+    
+     if(propertiesToFetch != nil || propertiesToFetch.count > 0)
+        path = [path stringByAppendingFormat:@"&fields=%@",[propertiesToFetch componentsJoinedByString:@","]];
+    
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -451,9 +689,17 @@ static NSDictionary *headerParams;
 }
 
 - (void) fetchUserWithUserToken:(NSString*)userToken successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [self fetchUserWithUserToken:userToken propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
+- (void) fetchUserWithUserToken:(NSString*)userToken propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"me?useridtype=token&token=%@",userToken];
     path = [HOST_NAME stringByAppendingPathComponent:path];
+    
+     if(propertiesToFetch != nil || propertiesToFetch.count > 0)
+        path = [path stringByAppendingFormat:@"&fields=%@",[propertiesToFetch componentsJoinedByString:@","]];
+    
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -542,9 +788,12 @@ static NSDictionary *headerParams;
     NSString *path = [[NSString alloc] init];
     
     path = [USER_PATH stringByAppendingFormat:@"%@", self.objectId];
-    
-    NSDictionary *queryParams = @{@"deleteconnections":deleteConnections?@"true":@"false"};
-    path = [path stringByAppendingQueryParameters:queryParams];
+
+    if(deleteConnections == YES) {
+        path = [path stringByAppendingString:@"?deleteconnections=true"];
+    } else {
+        path = [path stringByAppendingString:@"?deleteconnections=false"];
+    }
     
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
@@ -629,31 +878,24 @@ static NSDictionary *headerParams;
 #pragma mark - Fetch methods
 
 - (void) fetch {
-    [self fetchWithQueryString:nil successHandler:nil failureHandler:nil];
+    [self fetchWithSuccessHandler:nil failureHandler:nil];
 }
 
 - (void) fetchWithFailureHandler:(APFailureBlock)failureBlock {
-    [self fetchWithQueryString:nil successHandler:nil failureHandler:failureBlock];
+    [self fetchWithSuccessHandler:nil failureHandler:failureBlock];
 }
 
 - (void) fetchWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [self fetchWithQueryString:nil successHandler:successBlock failureHandler:failureBlock];
+    [self fetchWithPropertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) fetchWithQueryString:(NSString*)queryString successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+- (void) fetchWithPropertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/%@", self.type, self.objectId];
     
-    NSMutableDictionary *queryParams = [[NSMutableDictionary alloc] init];
+     if(propertiesToFetch != nil || propertiesToFetch.count > 0)
+        path = [path stringByAppendingFormat:@"?fields=%@",[propertiesToFetch componentsJoinedByString:@","]];
     
-    if (queryString) {
-        NSDictionary *queryStringParams = [queryString queryParameters];
-        [queryStringParams enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [queryParams setObject:obj forKey:key];
-        }];
-    }
-    
-    path = [path stringByAppendingQueryParameters:queryParams];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
@@ -748,7 +990,7 @@ static NSDictionary *headerParams;
     [self logOutCurrentUserWithSuccessHandler:nil failureHandler:failureBlock];
 }
 
-+(void) logOutCurrentUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) logOutCurrentUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"invalidate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -868,11 +1110,12 @@ static NSDictionary *headerParams;
     if(dictionary[@"token"] != nil)
         _userToken = dictionary[@"token"];
     
-    NSDictionary *object = [[NSDictionary alloc] init];
+    NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
+    
     if([[dictionary allKeys] containsObject:@"user"])
-        object = dictionary[@"user"];
-    else
-        object = dictionary;
+        object = [dictionary[@"user"] mutableCopy];
+    
+    else object = [dictionary mutableCopy];;
     
     self.createdBy = (NSString*) object[@"__createdby"];
     _objectId = object[@"__id"];
@@ -886,16 +1129,27 @@ static NSDictionary *headerParams;
     self.type = object[@"__type"];
     
     self.username = object[@"username"];
+    [object removeObjectForKey:@"username"];
     self.firstName = object[@"firstname"];
+    [object removeObjectForKey:@"firstname"];
     self.lastName = object[@"lastname"];
+    [object removeObjectForKey:@"lastname"];
     self.email = object[@"email"];
+    [object removeObjectForKey:@"email"];
     self.birthDate = object[@"birthdate"];
+    [object removeObjectForKey:@"birthdate"];
     self.isEnabled = object[@"isenabled"];
+    [object removeObjectForKey:@"isenabled"];
     self.location = object[@"location"];
+    [object removeObjectForKey:@"location"];
     self.phone = object[@"phone"];
+    [object removeObjectForKey:@"phone"];
     self.secretQuestion = object[@"secretquestion"];
+    [object removeObjectForKey:@"secretquestion"];
     self.isEmailVerified = object[@"isemailverified"];
+    [object removeObjectForKey:@"isemailverified"];
     self.isOnline = object[@"isonline"];
+    [object removeObjectForKey:@"isonline"];
     
     _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:object].mutableCopy;
     
@@ -986,7 +1240,6 @@ static NSDictionary *headerParams;
             else if([[_snapShot objectForKey:@"__attributes"] objectForKey:key] != [_attributes objectForKey:key])
                 [postParams[@"__attributes"] setObject:[_attributes objectForKey:key] forKey:key];
         }
-//        postParams[@"__attributes"] = self.attributes;
     
     for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
@@ -1043,5 +1296,4 @@ static NSDictionary *headerParams;
     NSString *description = [NSString stringWithFormat:@"User Token:%@, Object Id:%@, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, TypeId:%d, type:%@, Tag:%@", self.userToken, self.objectId, self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, [self.typeId intValue], self.type, self.tags];
     return description;
 }
-
 @end

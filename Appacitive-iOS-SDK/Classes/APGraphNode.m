@@ -21,6 +21,7 @@
 static NSMutableArray *parentIdStack;
 static NSMutableArray *parentTypeStack;
 static NSMutableArray *nodeStack;
+static NSMutableArray *childKeyStack;
 
 #pragma mark - Get children method
 
@@ -47,15 +48,15 @@ static NSMutableArray *nodeStack;
     return nil;
 }
 
-- (void)setObject:(APObject *)object {
+- (void) setObject:(APObject *)object {
     _object = object;
 }
 
-- (void)setMap:(NSDictionary *)map {
+- (void) setMap:(NSDictionary *)map {
     _map = map;
 }
 
-- (void)setConnection:(APConnection *)connection {
+- (void) setConnection:(APConnection *)connection {
     _connection = connection;
 }
 
@@ -145,13 +146,15 @@ static NSMutableArray *nodeStack;
     NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     filePath = [filePath stringByAppendingPathComponent:@"typeMapping.plist"];
     NSDictionary *typeMapping = [NSDictionary dictionaryWithContentsOfFile:filePath];
-    for (id result in objs) {
+    for (NSDictionary *result in objs) {
         if(parentIdStack == nil)
             parentIdStack = [[NSMutableArray alloc] init];
         if(parentTypeStack == nil)
             parentTypeStack = [[NSMutableArray alloc] init];
         if(nodeStack == nil)
             nodeStack = [[NSMutableArray alloc] init];
+        if(childKeyStack == nil)
+            childKeyStack =[[NSMutableArray alloc] init];
         APGraphNode *node;
         if(node == nil) {
             node = [[APGraphNode alloc] init];
@@ -174,7 +177,9 @@ static NSMutableArray *nodeStack;
             [connectionDict setObject:endPointB forKey:@"__endpointb"];
             node.connection = [[APConnection alloc] init];
             [node.connection setPropertyValuesFromDictionary:connectionDict];
+            [node.connection setPropertyValuesFromDictionary:edge];
         }
+        
         if([[result allKeys] containsObject:@"__type"]) {
             APObject *object = [[APObject alloc] init];
             if([typeMapping objectForKey:[result valueForKey:@"__type"]] != nil)
@@ -184,18 +189,27 @@ static NSMutableArray *nodeStack;
             [parentIdStack addObject:object.objectId];
             [parentTypeStack addObject:object.type];
         }
+        
         if([[result allKeys] containsObject:@"__children"]) {
             NSMutableArray *children = [[NSMutableArray alloc] init];
-            [node.map setValue:[children mutableCopy] forKey:[[[result valueForKey:@"__children"] allKeys] lastObject]];
             [nodeStack addObject:node];
-            [self parseProjectionQueryResult:[[[[result valueForKey:@"__children"] allValues] lastObject] valueForKey:@"values"]];
+            
+            for(NSString *key in [[result valueForKey:@"__children"] allKeys]) {
+                [childKeyStack addObject:key];
+                [node.map setValue:[children mutableCopy] forKey:key];
+                [self parseProjectionQueryResult:[[[result valueForKey:@"__children"] objectForKey:key] valueForKey:@"values"]];
+            }
+            
             if([nodeStack count] > 1)
                 [nodeStack removeObject:[nodeStack lastObject]];
+            if([childKeyStack count] > 1)
+                [childKeyStack removeObject:[childKeyStack lastObject]];
             [parentIdStack removeObject:[parentIdStack lastObject]];
             [parentTypeStack removeObject:[parentTypeStack lastObject]];
         }
-        if([nodeStack lastObject] != nil) {
-            [[[((APGraphNode*)[nodeStack lastObject]).map allValues] lastObject] addObject:node];
+        
+        if([nodeStack lastObject] != nil && [nodeStack lastObject] != node) {
+            [[((APGraphNode*)[nodeStack lastObject]).map valueForKey:[childKeyStack lastObject]] addObject:node];
         }
     }
 }
