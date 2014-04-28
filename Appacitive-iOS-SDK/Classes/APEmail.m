@@ -10,7 +10,7 @@
 #import "APHelperMethods.h"
 #import "APNetworking.h"
 
-#define EMAIL_PATH @"v1.0/email/"
+#define EMAIL_PATH @"email/"
 
 @implementation APEmail
 

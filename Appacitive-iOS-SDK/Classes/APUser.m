@@ -12,7 +12,7 @@
 #import "APConstants.h"
 #import "APNetworking.h"
 
-#define USER_PATH @"v1.0/user/"
+#define USER_PATH @"user/"
 
 static APUser* currentUser = nil;
 static NSDictionary *headerParams;
@@ -23,7 +23,7 @@ static NSDictionary *headerParams;
 {
     headerParams = [NSDictionary dictionaryWithObjectsAndKeys:
                     [Appacitive getApiKey], APIkeyHeaderKey,
-                    [Appacitive environmentToUse], EnvironmentHeaderKey,
+                    [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
                     currentUser.userToken, UserAuthHeaderKey,
                     @"application/json", @"Content-Type",
                     nil];

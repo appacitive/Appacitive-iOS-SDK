@@ -15,7 +15,7 @@
 
 @implementation APConnection
 
-#define CONNECTION_PATH @"v1.0/connection/"
+#define CONNECTION_PATH @"connection/"
 
 #pragma mark - Initialization methods
 
@@ -668,7 +668,7 @@
 
 @implementation APConnections
 
-#define CONNECTION_PATH @"v1.0/connection/"
+#define CONNECTION_PATH @"connection/"
 
 #pragma mark - Search methods
 

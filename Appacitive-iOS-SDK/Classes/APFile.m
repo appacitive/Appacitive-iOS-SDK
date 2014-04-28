@@ -13,7 +13,7 @@
 #import "APConstants.h"
 #import "APNetworking.h"
 
-#define FILE_PATH @"v1.0/file/"
+#define FILE_PATH @"file/"
 
 APResultSuccessBlock proxySuccessBlock;
 APFileDownloadSuccessBlock proxyDownloadSuccessBlock;
@@ -34,7 +34,9 @@ BOOL isDownloadData = NO;
 
 + (void) getUploadURLForFileWithName:(NSString *)name urlExpiresAfter:(NSNumber *)minutes contentType:(NSString*)contentType successHandler:(APURLSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/v1.0/file/uploadurl?contenttype=%@&filename=%@&expires=%@",contentType,name,minutes]];
+    NSString *path = [HOST_NAME stringByAppendingString:FILE_PATH];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@uploadurl?contenttype=%@&filename=%@&expires=%@",path,contentType,name,minutes]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     urlRequest.HTTPMethod = @"GET";
     if([[[UIDevice currentDevice] systemVersion] intValue] >=7 ) {
@@ -82,7 +84,7 @@ BOOL isDownloadData = NO;
     } else {
         NSMutableDictionary *headerParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                              [Appacitive getApiKey], APIkeyHeaderKey,
-                                             [Appacitive environmentToUse], EnvironmentHeaderKey,
+                                             [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
                                              @"application/json", @"Content-Type",
                                              nil];
         [urlRequest setAllHTTPHeaderFields:headerParams];
@@ -141,7 +143,8 @@ BOOL isDownloadData = NO;
 }
 
 + (void) uploadFileWithName:(NSString *)name data:(NSData *)fileData urlExpiresAfter:(NSNumber *)minutes contentType:(NSString *)contentType successHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/v1.0/file/uploadurl?contenttype=%@&filename=%@&expires=%@",contentType,name,minutes]];
+    NSString *path = [HOST_NAME stringByAppendingString:FILE_PATH];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@uploadurl?contenttype=%@&filename=%@&expires=%@",path,contentType,name,minutes]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     urlRequest.HTTPMethod = @"GET";
     if([[[UIDevice currentDevice] systemVersion] intValue] >=7 ) {
@@ -212,7 +215,7 @@ BOOL isDownloadData = NO;
     } else {
         NSMutableDictionary *headerParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                              [Appacitive getApiKey], APIkeyHeaderKey,
-                                             [Appacitive environmentToUse], EnvironmentHeaderKey,
+                                             [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
                                              @"application/json", @"Content-Type",
                                              nil];
         [urlRequest setAllHTTPHeaderFields:headerParams];
@@ -289,7 +292,8 @@ BOOL isDownloadData = NO;
 
 
 + (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/v1.0/file/download/%@?expires=%@",name,minutes]];
+    NSString *path = [HOST_NAME stringByAppendingString:FILE_PATH];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@download/%@?expires=%@",path,name,minutes]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     if([[[UIDevice currentDevice] systemVersion] intValue] >=7 ) {
@@ -354,7 +358,7 @@ BOOL isDownloadData = NO;
     } else {
         NSMutableDictionary *headerParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                              [Appacitive getApiKey], APIkeyHeaderKey,
-                                             [Appacitive environmentToUse], EnvironmentHeaderKey,
+                                             [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
                                              @"application/json", @"Content-Type",
                                              nil];
         [urlRequest setAllHTTPHeaderFields:headerParams];
@@ -417,8 +421,8 @@ BOOL isDownloadData = NO;
 }
 
 + (void) getDownloadURLForFileWithName:(NSString *)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APURLSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/v1.0/file/download/%@?expires=%@",name,minutes]];
+    NSString *path = [HOST_NAME stringByAppendingString:FILE_PATH];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@download/%@?expires=%@",path,name,minutes]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     if([[[UIDevice currentDevice] systemVersion] intValue] >=7 ) {
@@ -458,7 +462,7 @@ BOOL isDownloadData = NO;
     } else {
         NSMutableDictionary *headerParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                              [Appacitive getApiKey], APIkeyHeaderKey,
-                                             [Appacitive environmentToUse], EnvironmentHeaderKey,
+                                             [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
                                              @"application/json", @"Content-Type",
                                              nil];
         [urlRequest setAllHTTPHeaderFields:headerParams];
@@ -508,7 +512,7 @@ BOOL isDownloadData = NO;
 
 + (void) deleteFileWithName:(NSString *)name successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/v1.0/delete/%@",name]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apis.appacitive.com/delete/%@",name]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     
