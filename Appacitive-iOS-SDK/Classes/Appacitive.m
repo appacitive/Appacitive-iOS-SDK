@@ -11,23 +11,20 @@
 #import "APHelperMethods.h"
 #import "APdevice.h"
 static NSString* _apiKey;
-static BOOL enableLiveEnvironment = NO;
+static BOOL isEnvironmentLive = NO;
 static APDevice *currentAPDevice;
 
 @implementation Appacitive
 
-+ (NSString*) environmentToUse {
-    if (enableLiveEnvironment) {
++ (NSString*) getCurrentEnvironment {
+    if (isEnvironmentLive) {
         return @"live";
     }
     return @"sandbox";
 }
 
 + (void) useLiveEnvironment:(BOOL)answer {
-    if(answer == YES)
-        enableLiveEnvironment = YES;
-    else
-        enableLiveEnvironment = NO;
+    isEnvironmentLive = answer;
 }
 
 + (NSString*) getApiKey {
@@ -38,8 +35,9 @@ static APDevice *currentAPDevice;
     return currentAPDevice;
 }
 
-+ (void) initWithAPIKey:(NSString*)apiKey {
++ (void) registerAPIKey:(NSString*)apiKey useLiveEnvironment:(BOOL)answer {
     _apiKey = apiKey;
+    isEnvironmentLive = answer;
     if([[NSUserDefaults standardUserDefaults] valueForKey:@"appacitive-device-guid"] == nil) {
         currentAPDevice = [[APDevice alloc]initWithDeviceToken:[self getUUID] deviceType:@"ios"];
         [currentAPDevice registerDeviceWithSuccessHandler:^{

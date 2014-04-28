@@ -14,7 +14,7 @@
 
 @implementation APObject
 
-NSString *const OBJECT_PATH = @"v1.0/object/";
+NSString *const OBJECT_PATH = @"object/";
 #define SEARCH_PATH @"search/"
 
 #pragma mark - Initialization methods

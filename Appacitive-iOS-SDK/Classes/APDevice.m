@@ -13,7 +13,7 @@
 #import "APConstants.h"
 #import "APUser.h"
 
-#define DEVICE_PATH @"v1.0/device/"
+#define DEVICE_PATH @"device/"
 
 @implementation APDevice
 static NSDictionary* headerParams;
@@ -22,7 +22,7 @@ static NSDictionary* headerParams;
 {
     headerParams = [NSDictionary dictionaryWithObjectsAndKeys:
                     [Appacitive getApiKey], APIkeyHeaderKey,
-                    [Appacitive environmentToUse], EnvironmentHeaderKey,
+                    [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
                     [APUser currentUser].userToken, UserAuthHeaderKey,
                     @"application/json", @"Content-Type",
                     nil];
@@ -381,7 +381,7 @@ static NSDictionary* headerParams;
         _snapShot[@"timezone"] = self.timeZone;
     if(self.isActive)
         _snapShot[@"isactive"] = self.isActive;
-    
+
     if(self.attributes)
         _snapShot[@"__attributes"] = [self.attributes mutableCopy];
     if(self.tags)

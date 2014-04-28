@@ -21,7 +21,7 @@
  @expected Appacitive object should be nil
  */
 - (void) testInitMethodForNilApiKey {
-    [Appacitive initWithAPIKey:nil];
+    [Appacitive registerAPIKey:nil];
     NSString *key = [Appacitive getApiKey];
     XCTAssertNil(key, @"Test case for nil api key failed");
 }
