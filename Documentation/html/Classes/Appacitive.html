@@ -42,13 +42,15 @@
 	
 	<option value="class_methods">Class Methods</option>
 	
-	<option value="//api/name/environmentToUse">&nbsp;&nbsp;&nbsp;&nbsp;+ environmentToUse</option>
-	
 	<option value="//api/name/getApiKey">&nbsp;&nbsp;&nbsp;&nbsp;+ getApiKey</option>
 	
 	<option value="//api/name/getCurrentAPDevice">&nbsp;&nbsp;&nbsp;&nbsp;+ getCurrentAPDevice</option>
 	
-	<option value="//api/name/initWithAPIKey:">&nbsp;&nbsp;&nbsp;&nbsp;+ initWithAPIKey:</option>
+	<option value="//api/name/getCurrentEnvironment">&nbsp;&nbsp;&nbsp;&nbsp;+ getCurrentEnvironment</option>
+	
+	<option value="//api/name/registerAPIKey:">&nbsp;&nbsp;&nbsp;&nbsp;+ registerAPIKey:</option>
+	
+	<option value="//api/name/registerAPIKey:useLiveEnvironment:">&nbsp;&nbsp;&nbsp;&nbsp;+ registerAPIKey:useLiveEnvironment:</option>
 	
 	<option value="//api/name/useLiveEnvironment:">&nbsp;&nbsp;&nbsp;&nbsp;+ useLiveEnvironment:</option>
 	
@@ -80,13 +82,15 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/environmentToUse">environmentToUse</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getApiKey">getApiKey</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCurrentAPDevice">getCurrentAPDevice</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithAPIKey:">initWithAPIKey:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCurrentEnvironment">getCurrentEnvironment</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerAPIKey:">registerAPIKey:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerAPIKey:useLiveEnvironment:">registerAPIKey:useLiveEnvironment:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/useLiveEnvironment:">useLiveEnvironment:</a></span></li>
 	
@@ -155,15 +159,22 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/initWithAPIKey:">+&nbsp;initWithAPIKey:</a></code>
+		<code><a href="#//api/name/registerAPIKey:">+&nbsp;registerAPIKey:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/registerAPIKey:useLiveEnvironment:">registerAPIKey:useLiveEnvironment:</a></p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/registerAPIKey:useLiveEnvironment:">+&nbsp;registerAPIKey:useLiveEnvironment:</a></code>
 		<span class="tooltip"><p>Sets the APIkey</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/environmentToUse">+&nbsp;environmentToUse</a></code>
-		<span class="tooltip"><p>By default the environment is set to sandbox. To change to live set the enableLiveEnvironment property of the Appacitive object.</p></span>
+		<code><a href="#//api/name/getCurrentEnvironment">+&nbsp;getCurrentEnvironment</a></code>
+		<span class="tooltip"><p>Returns the current environment setting. By default the environment is set to sandbox.</p></span>
 	</span>
 	
 	
@@ -177,7 +188,7 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/getCurrentAPDevice">+&nbsp;getCurrentAPDevice</a></code>
-		<span class="tooltip"><p>Everythime you call the initWithAPIKey method, it creates a default <a href="../Classes/APDevice.html">APDevice</a> object that corresponds to teh deviece the app is installed in. This methods return a refence to the current default <a href="../Classes/APDevice.html">APDevice</a> object.</p></span>
+		<span class="tooltip"><p>Everythime you call the registerAPIKey method, it creates a default <a href="../Classes/APDevice.html">APDevice</a> object that corresponds to teh deviece the app is installed in. This methods return a refence to the current default <a href="../Classes/APDevice.html">APDevice</a> object.</p></span>
 	</span>
 	
 	
@@ -195,47 +206,6 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 					<div class="section section-methods">
 						<a title="Class Methods" name="class_methods"></a>
 						<h2 class="subtitle subtitle-methods">Class Methods</h2>
-						
-						<div class="section-method">
-	<a name="//api/name/environmentToUse" title="environmentToUse"></a>
-	<h3 class="subsubtitle method-title">environmentToUse</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>By default the environment is set to sandbox. To change to live set the enableLiveEnvironment property of the Appacitive object.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (NSString *)environmentToUse</code></div>
-
-    
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The environment to use</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">Appacitive.h</code><br />
-	</div>				
-	
-	
-</div>
 						
 						<div class="section-method">
 	<a name="//api/name/getApiKey" title="getApiKey"></a>
@@ -280,7 +250,7 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Everythime you call the initWithAPIKey method, it creates a default <a href="../Classes/APDevice.html">APDevice</a> object that corresponds to teh deviece the app is installed in. This methods return a refence to the current default <a href="../Classes/APDevice.html">APDevice</a> object.</p>
+		<p>Everythime you call the registerAPIKey method, it creates a default <a href="../Classes/APDevice.html">APDevice</a> object that corresponds to teh deviece the app is installed in. This methods return a refence to the current default <a href="../Classes/APDevice.html">APDevice</a> object.</p>
 	</div>		
 	
     
@@ -315,8 +285,94 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/initWithAPIKey:" title="initWithAPIKey:"></a>
-	<h3 class="subsubtitle method-title">initWithAPIKey:</h3>
+	<a name="//api/name/getCurrentEnvironment" title="getCurrentEnvironment"></a>
+	<h3 class="subsubtitle method-title">getCurrentEnvironment</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Returns the current environment setting. By default the environment is set to sandbox.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (NSString *)getCurrentEnvironment</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The current environment setting.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">Appacitive.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/registerAPIKey:" title="registerAPIKey:"></a>
+	<h3 class="subsubtitle method-title">registerAPIKey:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/registerAPIKey:useLiveEnvironment:">registerAPIKey:useLiveEnvironment:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)registerAPIKey:(NSString *)<em>apiKey</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/registerAPIKey:useLiveEnvironment:">+ registerAPIKey:useLiveEnvironment:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">Appacitive.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/registerAPIKey:useLiveEnvironment:" title="registerAPIKey:useLiveEnvironment:"></a>
+	<h3 class="subsubtitle method-title">registerAPIKey:useLiveEnvironment:</h3>
 	
 	
 	
@@ -326,7 +382,7 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)initWithAPIKey:(NSString *)<em>apiKey</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)registerAPIKey:(NSString *)<em>apiKey</em> useLiveEnvironment:(BOOL)<em>answer</em></code></div>
 
     
 	
@@ -336,6 +392,11 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 		<dl class="argument-def parameter-def">
 			<dt><em>apiKey</em></dt>
 			<dd><p>APIKey to be used for the app. You can obtain this key from the Appacitive portal.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>answer</em></dt>
+			<dd><p>Whether you want to use live environment, default environment is sandbox.</p></dd>
 		</dl>
 		
 	</div>
@@ -421,7 +482,7 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-03-24)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-04-24)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

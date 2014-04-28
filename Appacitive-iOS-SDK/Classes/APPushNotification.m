@@ -11,7 +11,7 @@
 #import "APNetworking.h"
 #import "APGraphNode.h"
 
-#define PUSH_PATH @"v1.0/push/"
+#define PUSH_PATH @"push/"
 
 #pragma mark - APPushNotification Interface
 

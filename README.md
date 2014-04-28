@@ -90,7 +90,7 @@ Make sure you add the import statement for AppacitiveSDK.
 ####Initialize your SDK
 
 ```objectivec
-[Appacitive initWithAPIKey:@"<insert_apiKey_here>"];
+[Appacitive registerAPIKey:@"<insert_apiKey_here>"];
 ```
 
 The above line of code will initialize the Appacitive SDK with the default environment setting set to _sandbox_. To enable the _live_ environment add the following line of code.

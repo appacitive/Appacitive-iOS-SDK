@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4C685B24190E1A000022A01B /* AppacitiveAggregate */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C685B25190E1A000022A01B /* Build configuration list for PBXAggregateTarget "AppacitiveAggregate" */;
+			buildPhases = (
+				4C685B28190E1A2F0022A01B /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = AppacitiveAggregate;
+			productName = "Appacitive-iOS-SDK-Aggregate";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		2CEB0E95162BD2AB0074DA50 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1415F4850E009A8578 /* UIKit.framework */; };
 		2CEB0E96162BD2AB0074DA50 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
@@ -17,6 +31,36 @@
 		4C0902721878336000CA5D42 /* APDeviceFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0902711878336000CA5D42 /* APDeviceFixture.m */; };
 		4C40861518904976002DC1E5 /* APPushNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C40861318904976002DC1E5 /* APPushNotification.h */; };
 		4C40861618904976002DC1E5 /* APPushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C40861418904976002DC1E5 /* APPushNotification.m */; };
+		4C685B1F190E19560022A01B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C685B1D190E19560022A01B /* InfoPlist.strings */; };
+		4C685B29190E1AB80022A01B /* Appacitive.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0715F8857100C57AA3 /* Appacitive.m */; };
+		4C685B2A190E1AB80022A01B /* APNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB768AE1872C43B00A69FE4 /* APNetworking.m */; };
+		4C685B2B190E1AB80022A01B /* APObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0515F8857100C57AA3 /* APObject.m */; };
+		4C685B2C190E1AB80022A01B /* APConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62BFF15F8857100C57AA3 /* APConnection.m */; };
+		4C685B2D190E1AB80022A01B /* APUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 618FEE57169AEB04006A1888 /* APUser.m */; };
+		4C685B2E190E1AB80022A01B /* APDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA7CD718740F5800D89FFA /* APDevice.m */; };
+		4C685B2F190E1AB80022A01B /* APPushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C40861418904976002DC1E5 /* APPushNotification.m */; };
+		4C685B30190E1AB80022A01B /* APFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA7CD318740F4B00D89FFA /* APFile.m */; };
+		4C685B31190E1AB80022A01B /* APEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A8606185EC8D900BD06FF /* APEmail.m */; };
+		4C685B32190E1AB80022A01B /* APQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0915F8857100C57AA3 /* APQuery.m */; };
+		4C685B33190E1AB80022A01B /* APGraphNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA512187C00E400947D90 /* APGraphNode.m */; };
+		4C685B34190E1AB80022A01B /* APHelperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0315F8857100C57AA3 /* APHelperMethods.m */; };
+		4C685B35190E1AB80022A01B /* APError.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0115F8857100C57AA3 /* APError.m */; };
+		4C685B37190E1AFA0022A01B /* AppacitiveSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 6169128E161160110086C006 /* AppacitiveSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B38190E1AFA0022A01B /* APConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 614B911816A3C8BD001070DD /* APConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B39190E1AFA0022A01B /* APResponseBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B3A190E1AFA0022A01B /* Appacitive.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0615F8857100C57AA3 /* Appacitive.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B3B190E1AFA0022A01B /* APNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB768AD1872C43B00A69FE4 /* APNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B3C190E1AFA0022A01B /* APObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0415F8857100C57AA3 /* APObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B3D190E1AFA0022A01B /* APConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62BFE15F8857100C57AA3 /* APConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B3E190E1AFA0022A01B /* APUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 618FEE56169AEB04006A1888 /* APUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B3F190E1AFA0022A01B /* APDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD618740F5800D89FFA /* APDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B40190E1AFA0022A01B /* APPushNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C40861318904976002DC1E5 /* APPushNotification.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B41190E1AFA0022A01B /* APFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD218740F4B00D89FFA /* APFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B42190E1AFA0022A01B /* APEmail.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A8605185EC8D900BD06FF /* APEmail.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B43190E1AFA0022A01B /* APQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0815F8857100C57AA3 /* APQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B44190E1AFA0022A01B /* APGraphNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBCA511187C00E400947D90 /* APGraphNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B45190E1AFA0022A01B /* APHelperMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0215F8857100C57AA3 /* APHelperMethods.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C685B46190E1AFA0022A01B /* APError.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0015F8857100C57AA3 /* APError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7A8607185EC8D900BD06FF /* APEmail.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A8605185EC8D900BD06FF /* APEmail.h */; };
 		4C7A8608185EC8D900BD06FF /* APEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A8606185EC8D900BD06FF /* APEmail.m */; };
 		4C81334918A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C81334818A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a */; };
@@ -94,6 +138,11 @@
 		4C2421C818D5E62F0088495C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		4C40861318904976002DC1E5 /* APPushNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPushNotification.h; path = "Appacitive-iOS-SDK/Classes/APPushNotification.h"; sourceTree = SOURCE_ROOT; };
 		4C40861418904976002DC1E5 /* APPushNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPushNotification.m; path = "Appacitive-iOS-SDK/Classes/APPushNotification.m"; sourceTree = SOURCE_ROOT; };
+		4C685B17190E19560022A01B /* Appacitive-iOS-SDK-Framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Appacitive-iOS-SDK-Framework.framework"; path = Appacitive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C685B18190E19560022A01B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4C685B1C190E19560022A01B /* Appacitive-iOS-SDK-Framework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Appacitive-iOS-SDK-Framework-Info.plist"; sourceTree = "<group>"; };
+		4C685B1E190E19560022A01B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4C685B20190E19560022A01B /* Appacitive-iOS-SDK-Framework-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Appacitive-iOS-SDK-Framework-Prefix.pch"; sourceTree = "<group>"; };
 		4C7A8605185EC8D900BD06FF /* APEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APEmail.h; path = "Appacitive-iOS-SDK/Classes/APEmail.h"; sourceTree = SOURCE_ROOT; };
 		4C7A8606185EC8D900BD06FF /* APEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = APEmail.m; path = "Appacitive-iOS-SDK/Classes/APEmail.m"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		4C81334818A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Appacitive_iOS_SDK-NetworkTests.a"; path = "Pods/build/Debug-iphoneos/libPods-Appacitive_iOS_SDK-NetworkTests.a"; sourceTree = "<group>"; };
@@ -287,6 +336,25 @@
 			name = User;
 			sourceTree = "<group>";
 		};
+		4C685B1A190E19560022A01B /* AppacitiveFramework */ = {
+			isa = PBXGroup;
+			children = (
+				4C685B1B190E19560022A01B /* Supporting Files */,
+			);
+			name = AppacitiveFramework;
+			path = "Appacitive-iOS-SDK-Framework";
+			sourceTree = "<group>";
+		};
+		4C685B1B190E19560022A01B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C685B1C190E19560022A01B /* Appacitive-iOS-SDK-Framework-Info.plist */,
+				4C685B1D190E19560022A01B /* InfoPlist.strings */,
+				4C685B20190E19560022A01B /* Appacitive-iOS-SDK-Framework-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		4C7A8609185ECCAD00BD06FF /* Email */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +415,7 @@
 				612E3E0F15EDF8FE00F98FB8 /* Appacitive-iOS-SDK */,
 				612E3E2315EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests */,
 				2CEB0E97162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests */,
+				4C685B1A190E19560022A01B /* AppacitiveFramework */,
 				612E3E0C15EDF8FE00F98FB8 /* Frameworks */,
 				612E3E0B15EDF8FD00F98FB8 /* Products */,
 				C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */,
@@ -360,6 +429,7 @@
 				612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */,
 				612E3E1A15EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests.xctest */,
 				2CEB0E93162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests.xctest */,
+				4C685B17190E19560022A01B /* Appacitive-iOS-SDK-Framework.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -377,6 +447,7 @@
 				612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */,
 				0AE18E91493A45BE9CFB5B14 /* libPods.a */,
 				4C81334818A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a */,
+				4C685B18190E19560022A01B /* CoreFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -446,6 +517,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4C685B36190E1AE10022A01B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C685B37190E1AFA0022A01B /* AppacitiveSDK.h in Headers */,
+				4C685B38190E1AFA0022A01B /* APConstants.h in Headers */,
+				4C685B39190E1AFA0022A01B /* APResponseBlocks.h in Headers */,
+				4C685B3A190E1AFA0022A01B /* Appacitive.h in Headers */,
+				4C685B3B190E1AFA0022A01B /* APNetworking.h in Headers */,
+				4C685B3C190E1AFA0022A01B /* APObject.h in Headers */,
+				4C685B3D190E1AFA0022A01B /* APConnection.h in Headers */,
+				4C685B3E190E1AFA0022A01B /* APUser.h in Headers */,
+				4C685B3F190E1AFA0022A01B /* APDevice.h in Headers */,
+				4C685B40190E1AFA0022A01B /* APPushNotification.h in Headers */,
+				4C685B41190E1AFA0022A01B /* APFile.h in Headers */,
+				4C685B42190E1AFA0022A01B /* APEmail.h in Headers */,
+				4C685B43190E1AFA0022A01B /* APQuery.h in Headers */,
+				4C685B44190E1AFA0022A01B /* APGraphNode.h in Headers */,
+				4C685B45190E1AFA0022A01B /* APHelperMethods.h in Headers */,
+				4C685B46190E1AFA0022A01B /* APError.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		612E3E0815EDF8FD00F98FB8 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -494,6 +588,23 @@
 			productReference = 2CEB0E93162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		4C685B16190E19560022A01B /* Appacitive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4C685B23190E19560022A01B /* Build configuration list for PBXNativeTarget "Appacitive" */;
+			buildPhases = (
+				4C685B13190E19560022A01B /* Sources */,
+				4C685B15190E19560022A01B /* Resources */,
+				4C685B36190E1AE10022A01B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Appacitive;
+			productName = "Appacitive-iOS-SDK-Framework";
+			productReference = 4C685B17190E19560022A01B /* Appacitive-iOS-SDK-Framework.framework */;
+			productType = "com.apple.product-type.bundle";
+		};
 		612E3E0915EDF8FD00F98FB8 /* Appacitive-iOS-SDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 612E3E2E15EDF8FE00F98FB8 /* Build configuration list for PBXNativeTarget "Appacitive-iOS-SDK" */;
@@ -540,6 +651,14 @@
 				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Appacitive Software Pvt. Ltd";
+				TargetAttributes = {
+					2CEB0E92162BD2AB0074DA50 = {
+						TestTargetID = 4C685B16190E19560022A01B;
+					};
+					612E3E1915EDF8FE00F98FB8 = {
+						TestTargetID = 4C685B16190E19560022A01B;
+					};
+				};
 			};
 			buildConfigurationList = 612E3E0415EDF8FD00F98FB8 /* Build configuration list for PBXProject "Appacitive-iOS-SDK" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -556,6 +675,8 @@
 				612E3E0915EDF8FD00F98FB8 /* Appacitive-iOS-SDK */,
 				612E3E1915EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests */,
 				2CEB0E92162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests */,
+				4C685B16190E19560022A01B /* Appacitive */,
+				4C685B24190E1A000022A01B /* AppacitiveAggregate */,
 			);
 		};
 /* End PBXProject section */
@@ -566,6 +687,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6191E994169A926A00F87656 /* test_image.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C685B15190E19560022A01B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C685B1F190E19560022A01B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,6 +752,19 @@
 			shellPath = /bin/sh;
 			shellScript = "";
 		};
+		4C685B28190E1A2F0022A01B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Sets the target folders and the final framework product.\nFMK_NAME=Appacitive\nFMK_VERSION=A\n\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n\n# Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator\n\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\n\n# Creates and renews the final product folder.\nmkdir -p \"${INSTALL_DIR}\"\nmkdir -p \"${INSTALL_DIR}/Versions\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources\"\nmkdir -p \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers\"\n\n# Creates the internal links.\n# It MUST uses relative path, otherwise will not work when the folder is copied/moved.\nln -s \"${FMK_VERSION}\" \"${INSTALL_DIR}/Versions/Current\"\nln -s \"Versions/Current/Headers\" \"${INSTALL_DIR}/Headers\"\nln -s \"Versions/Current/Resources\" \"${INSTALL_DIR}/Resources\"\nln -s \"Versions/Current/${FMK_NAME}\" \"${INSTALL_DIR}/${FMK_NAME}\"\n\n# Copies the headers and resources files to the final product folder.\ncp -R \"${DEVICE_DIR}/Headers/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Headers/\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/\"\n\n# Removes the binary and header from the resources folder.\nrm -r \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/Headers\" \"${INSTALL_DIR}/Versions/${FMK_VERSION}/Resources/${FMK_NAME}\"\n\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/Versions/${FMK_VERSION}/${FMK_NAME}\"\n\nrm -r \"${WRK_DIR}\"";
+		};
 		612E3E1815EDF8FE00F98FB8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -665,6 +807,26 @@
 				61D4A0EA1635223400DB5FD9 /* APObjectFixture.m in Sources */,
 				6102BAEA169A93E300D78642 /* APBlobFixture.m in Sources */,
 				618FEE55169AEAEC006A1888 /* APUserFixture.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C685B13190E19560022A01B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C685B29190E1AB80022A01B /* Appacitive.m in Sources */,
+				4C685B2A190E1AB80022A01B /* APNetworking.m in Sources */,
+				4C685B2B190E1AB80022A01B /* APObject.m in Sources */,
+				4C685B2C190E1AB80022A01B /* APConnection.m in Sources */,
+				4C685B2D190E1AB80022A01B /* APUser.m in Sources */,
+				4C685B2E190E1AB80022A01B /* APDevice.m in Sources */,
+				4C685B2F190E1AB80022A01B /* APPushNotification.m in Sources */,
+				4C685B30190E1AB80022A01B /* APFile.m in Sources */,
+				4C685B31190E1AB80022A01B /* APEmail.m in Sources */,
+				4C685B32190E1AB80022A01B /* APQuery.m in Sources */,
+				4C685B33190E1AB80022A01B /* APGraphNode.m in Sources */,
+				4C685B34190E1AB80022A01B /* APHelperMethods.m in Sources */,
+				4C685B35190E1AB80022A01B /* APError.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +876,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		4C685B1D190E19560022A01B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C685B1E190E19560022A01B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		61D4A0FE1635238E00DB5FD9 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -729,6 +899,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Appacitive-iOS-SDK-Framework.framework/Appacitive-iOS-SDK-Framework";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -745,6 +916,7 @@
 				INFOPLIST_FILE = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
 		};
@@ -752,6 +924,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Appacitive-iOS-SDK-Framework.framework/Appacitive-iOS-SDK-Framework";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -767,6 +940,81 @@
 				GCC_PREFIX_HEADER = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Prefix.pch";
 				INFOPLIST_FILE = "Appacitive_iOS_SDK-NetworkTests/Appacitive_iOS_SDK-NetworkTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Release;
+		};
+		4C685B21190E19560022A01B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK-Framework/Appacitive-iOS-SDK-Framework-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Appacitive-iOS-SDK-Framework/Appacitive-iOS-SDK-Framework-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		4C685B22190E19560022A01B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK-Framework/Appacitive-iOS-SDK-Framework-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Appacitive-iOS-SDK-Framework/Appacitive-iOS-SDK-Framework-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		4C685B26190E1A000022A01B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4C685B27190E1A000022A01B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -862,6 +1110,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Appacitive-iOS-SDK-Framework.framework/Appacitive-iOS-SDK-Framework";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -881,6 +1130,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "Appacitive-iOS-SDK-InterfaceTests";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
@@ -889,6 +1139,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Appacitive-iOS-SDK-Framework.framework/Appacitive-iOS-SDK-Framework";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -903,6 +1154,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "Appacitive-iOS-SDK-InterfaceTests";
+				TEST_HOST = "$(BUNDLE_LOADER)";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
@@ -915,6 +1167,24 @@
 			buildConfigurations = (
 				2CEB0EA2162BD2AB0074DA50 /* Debug */,
 				2CEB0EA3162BD2AB0074DA50 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C685B23190E19560022A01B /* Build configuration list for PBXNativeTarget "Appacitive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C685B21190E19560022A01B /* Debug */,
+				4C685B22190E19560022A01B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4C685B25190E1A000022A01B /* Build configuration list for PBXAggregateTarget "AppacitiveAggregate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C685B26190E1A000022A01B /* Debug */,
+				4C685B27190E1A000022A01B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

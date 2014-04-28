@@ -22,7 +22,7 @@ static NSDictionary *headerParams = nil;
     NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     headerParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                     [Appacitive getApiKey], APIkeyHeaderKey,
-                    [Appacitive environmentToUse], EnvironmentHeaderKey,
+                    [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
                     @"application/json", @"Content-Type",
                     nil];
     sessionConfig.HTTPAdditionalHeaders = headerParams;
@@ -91,7 +91,7 @@ static NSDictionary *headerParams = nil;
          resume];
     } else {
         [urlRequest setValue:[Appacitive getApiKey] forHTTPHeaderField:APIkeyHeaderKey];
-        [urlRequest setValue:[Appacitive environmentToUse] forHTTPHeaderField:EnvironmentHeaderKey];
+        [urlRequest setValue:[Appacitive getCurrentEnvironment] forHTTPHeaderField:EnvironmentHeaderKey];
         NSOperationQueue *queue = [[NSOperationQueue alloc] init];
         [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             if(!error) {
