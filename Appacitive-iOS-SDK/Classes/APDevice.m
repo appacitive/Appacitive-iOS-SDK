@@ -86,39 +86,43 @@ static APDevice* currentDevice;
     }];
 }
 
-- (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token{
-    [self registerCurrentDeviceWithPushDeviceToken:token successHandler:nil failureHandler:nil];
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer{
+    [self registerCurrentDeviceWithPushDeviceToken:token enablePushNotifications:answer successHandler:nil failureHandler:nil];
 }
 
-- (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token failureHandler:(APFailureBlock)failureBlock {
-    [self registerCurrentDeviceWithPushDeviceToken:token successHandler:nil failureHandler:failureBlock];
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer failureHandler:(APFailureBlock)failureBlock {
+    [self registerCurrentDeviceWithPushDeviceToken:token enablePushNotifications:answer successHandler:nil failureHandler:failureBlock];
 }
 
-- (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    currentDevice = [[APDevice alloc] initWithTypeName:@"device"];
     NSString *cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    self.deviceToken = cleanToken;
-    self.isActive = @"true";
-    [self registerDeviceWithSuccessHandler:^{
-        currentDevice = self;
-        [self saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+    currentDevice.deviceToken = cleanToken;
+    if(answer == YES)
+        currentDevice.isActive = @"true";
+    else
+        currentDevice.isActive = @"false";
+    
+    [currentDevice registerDeviceWithSuccessHandler:^{
+        [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
         if(successBlock != nil) {
             successBlock();
         }
     } failureHandler:failureBlock];
 }
 
-- (void) deregisterCurrentDevice {
++ (void) deregisterCurrentDevice {
     [self deregisterCurrentDeviceWithSuccessHandler:nil failureHandler:nil];
 }
 
--(void) deregisterCurrentDeviceWithFailureHandler:(APFailureBlock)failureBlock {
++ (void) deregisterCurrentDeviceWithFailureHandler:(APFailureBlock)failureBlock {
     [self deregisterCurrentDeviceWithSuccessHandler:nil failureHandler:failureBlock];
 }
 
--(void) deregisterCurrentDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    self.isActive = @"false";
-    [self updateObjectWithSuccessHandler:successBlock failureHandler:failureBlock];
++ (void) deregisterCurrentDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    currentDevice.isActive = @"false";
+    [currentDevice updateObjectWithSuccessHandler:successBlock failureHandler:failureBlock];
 }
 
 #pragma mark - Save methods
@@ -294,10 +298,10 @@ static APDevice* currentDevice;
     else object = [dictionary mutableCopy];
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentAPDevice"] != nil) {
-        APDevice *savedDevice = [self loadCustomObjectForKey:@"currentAPDevice"];
+        APDevice *savedDevice = [APDevice loadCustomObjectForKey:@"currentAPDevice"];
         if(savedDevice.objectId == object[@"__id"]) {
             [savedDevice setPropertyValuesForCurrentDeviceFromDictionary:object];
-            [self saveCustomObject:savedDevice forKey:@"currentAPDevice"];
+            [APDevice saveCustomObject:savedDevice forKey:@"currentAPDevice"];
         }
     }
     
@@ -514,7 +518,7 @@ static APDevice* currentDevice;
     return self;
 }
 
-- (void)saveCustomObject:(APDevice *)object forKey:(NSString *)key {
++ (void)saveCustomObject:(APDevice *)object forKey:(NSString *)key {
     if(object != nil) {
         NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:object];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -526,7 +530,7 @@ static APDevice* currentDevice;
     }
 }
 
-- (APDevice *)loadCustomObjectForKey:(NSString *)key {
++ (APDevice *)loadCustomObjectForKey:(NSString *)key {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:key] != nil) {
         NSData *encodedObject = [defaults objectForKey:key];
