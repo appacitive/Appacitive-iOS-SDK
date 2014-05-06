@@ -13,7 +13,7 @@
  An APUser is a user registerd for using your app. This class helps you to manage the details of the users of your app.
  */
 
-@interface APUser : APObject <APObjectPropertyMapping>
+@interface APUser : APObject <APObjectPropertyMapping, NSCoding>
 
 @property (nonatomic, strong, readonly) NSString *userToken;
 @property (nonatomic, readonly) BOOL loggedInWithFacebook;
@@ -625,5 +625,11 @@
  @param failureBlock Block invoked when operation is unsuccessful.
  */
 - (void) sendResetPasswordEmailWithSubject:(NSString *)emailSubject successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method to get the current user object persisted in local data store
+ @return APUser instance of the saved user object
+ */
++ (APUser*) getSavedUser;
 
 @end

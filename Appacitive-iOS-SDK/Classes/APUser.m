@@ -40,6 +40,7 @@ static NSDictionary *headerParams;
 
 + (void) setCurrentUser:(APUser *)user {
     currentUser = user;
+    [user saveCustomObject:user forKey:@"currentAPUser"];
 }
 
 #pragma mark - Authenticate methods
@@ -76,6 +77,7 @@ static NSDictionary *headerParams;
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
         [currentUser setPropertyValuesFromDictionary:result];
+        [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
         if (successBlock) {
             successBlock(currentUser);
         }
@@ -121,6 +123,7 @@ static NSDictionary *headerParams;
                                   currentUser = [[APUser alloc] initWithTypeName:@"user"];
                                   [currentUser setPropertyValuesFromDictionary:result];
                                   [currentUser setLoggedInWithFacebook:YES];
+                                  [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
                                   if (successBlock) {
                                       successBlock(currentUser);
                                   }
@@ -168,6 +171,7 @@ static NSDictionary *headerParams;
                                   currentUser = [[APUser alloc] initWithTypeName:@"user"];
                                   [currentUser setPropertyValuesFromDictionary:result];
                                   [currentUser setLoggedInWithFacebook:YES];
+                                  [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
                                   if (successBlock) {
                                       successBlock(currentUser);
                                   }
@@ -214,6 +218,7 @@ static NSDictionary *headerParams;
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
         [currentUser setPropertyValuesFromDictionary:result];
         [currentUser setLoggedInWithFacebook:YES];
+        [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
         if (successBlock) {
             successBlock(currentUser);
         }
@@ -826,6 +831,7 @@ static NSDictionary *headerParams;
         if(currentUser != nil) {
             if(self.objectId == currentUser.objectId) {
                 currentUser = nil;
+                [self saveCustomObject:nil forKey:@"currentAPUser"];
             }
         }
         if(successBlock != nil) {
@@ -873,6 +879,7 @@ static NSDictionary *headerParams;
 + (void) deleteCurrentlyLoggedInUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     [currentUser deleteObjectWithSuccessHandler:successBlock failureHandler:failureBlock];
     currentUser = nil;
+    [currentUser saveCustomObject:nil forKey:@"currentAPUser"];
 }
 
 #pragma mark - Fetch methods
@@ -970,9 +977,13 @@ static NSDictionary *headerParams;
         NSString *responseJSON = [NSString stringWithFormat:@"%@",[result objectForKey:@"result"]];
         if([responseJSON isEqualToString:@"1"])
         {
+            [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
             if (successBlock) {
                 successBlock(result);
             }
+        } else {
+            currentUser = nil;
+            [currentUser saveCustomObject:nil forKey:@"currentAPUser"];
         }
     } failureHandler:^(APError *error) {
 		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
@@ -1003,6 +1014,7 @@ static NSDictionary *headerParams;
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         currentUser = nil;
+        [currentUser saveCustomObject:nil forKey:@"currentAPUser"];
         if (successBlock) {
             successBlock();
         }
@@ -1117,11 +1129,68 @@ static NSDictionary *headerParams;
     
     else object = [dictionary mutableCopy];;
     
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentAPUser"] != nil) {
+        APUser *savedUser = [self loadCustomObjectForKey:@"currentAPUser"];
+        if(savedUser.objectId == object[@"__id"]) {
+            [savedUser setCurrentUserPropertyValuesFromDictionary:[dictionary mutableCopy]];
+            [self saveCustomObject:savedUser forKey:@"currentAPUser"];
+        }
+    }
+    
     self.createdBy = (NSString*) object[@"__createdby"];
     _objectId = object[@"__id"];
     _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
     _revision = (NSNumber*) object[@"__revision"];
-    self.typeId = object[@"__typeid"];
+    _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
+    _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
+    _attributes = [object[@"__attributes"] mutableCopy];
+    self.tags = object[@"__tags"];
+    self.type = object[@"__type"];
+    
+    self.username = object[@"username"];
+    [object removeObjectForKey:@"username"];
+    self.firstName = object[@"firstname"];
+    [object removeObjectForKey:@"firstname"];
+    self.lastName = object[@"lastname"];
+    [object removeObjectForKey:@"lastname"];
+    self.email = object[@"email"];
+    [object removeObjectForKey:@"email"];
+    self.birthDate = object[@"birthdate"];
+    [object removeObjectForKey:@"birthdate"];
+    self.isEnabled = object[@"isenabled"];
+    [object removeObjectForKey:@"isenabled"];
+    self.location = object[@"location"];
+    [object removeObjectForKey:@"location"];
+    self.phone = object[@"phone"];
+    [object removeObjectForKey:@"phone"];
+    self.secretQuestion = object[@"secretquestion"];
+    [object removeObjectForKey:@"secretquestion"];
+    self.isEmailVerified = object[@"isemailverified"];
+    [object removeObjectForKey:@"isemailverified"];
+    self.isOnline = object[@"isonline"];
+    [object removeObjectForKey:@"isonline"];
+    
+    _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:object].mutableCopy;
+    
+    [self updateSnapshot];
+}
+
+- (void) setCurrentUserPropertyValuesFromDictionary:(NSDictionary*) dictionary {
+    
+    if(dictionary[@"token"] != nil)
+        _userToken = dictionary[@"token"];
+    
+    NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
+    
+    if([[dictionary allKeys] containsObject:@"user"])
+        object = [dictionary[@"user"] mutableCopy];
+    
+    else object = [dictionary mutableCopy];
+    
+    self.createdBy = (NSString*) object[@"__createdby"];
+    _objectId = object[@"__id"];
+    _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
+    _revision = (NSNumber*) object[@"__revision"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
     _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
     _attributes = [object[@"__attributes"] mutableCopy];
@@ -1293,7 +1362,96 @@ static NSDictionary *headerParams;
 }
 
 - (NSString*) description {
-    NSString *description = [NSString stringWithFormat:@"User Token:%@, Object Id:%@, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, TypeId:%d, type:%@, Tag:%@", self.userToken, self.objectId, self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, [self.typeId intValue], self.type, self.tags];
+    NSString *description = [NSString stringWithFormat:@"User Token:%@, Object Id:%@, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, type:%@, Tag:%@", self.userToken, self.objectId, self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, self.type, self.tags];
     return description;
 }
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.objectId forKey:@"objectId"];
+    [encoder encodeObject:self.createdBy forKey:@"createdBy"];
+    [encoder encodeObject:self.lastModifiedBy forKey:@"lastModifiedBy"];
+    [encoder encodeObject:self.utcDateCreated forKey:@"utcDateCreated"];
+    [encoder encodeObject:self.utcLastUpdatedDate forKey:@"utcLastUpdatedDate"];
+    [encoder encodeObject:self.revision forKey:@"revision"];
+    [encoder encodeObject:self.properties forKey:@"properties"];
+    [encoder encodeObject:self.attributes forKey:@"attributes"];
+    [encoder encodeObject:self.type forKey:@"type"];
+    [encoder encodeObject:self.tags forKey:@"tags"];
+    [encoder encodeObject:self.username forKey:@"username"];
+    [encoder encodeObject:self.password forKey:@"pasword"];
+    [encoder encodeObject:self.birthDate forKey:@"birthdate"];
+    [encoder encodeObject:self.firstName forKey:@"firstName"];
+    [encoder encodeObject:self.lastName forKey:@"lastName"];
+    [encoder encodeObject:self.email forKey:@"email"];
+    [encoder encodeObject:self.location forKey:@"location"];
+    [encoder encodeObject:self.phone forKey:@"phone"];
+    [encoder encodeObject:self.secretQuestion forKey:@"secretQuestion"];
+    [encoder encodeObject:self.isEmailVerified forKey:@"isEmailVerified"];
+    [encoder encodeObject:self.isEnabled forKey:@"isEnabled"];
+    [encoder encodeObject:self.isOnline forKey:@"isOnline"];
+}
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    if((self = [super init])) {
+        //decode properties, other class vars
+        _objectId = [decoder decodeObjectForKey:@"objectId"];
+        self.createdBy = [decoder decodeObjectForKey:@"createdBy"];
+        _lastModifiedBy = [decoder decodeObjectForKey:@"lastModifiedBy"];
+        _utcDateCreated = [decoder decodeObjectForKey:@"utcDateCreated"];
+        _utcLastUpdatedDate = [decoder decodeObjectForKey:@"utcLastUpdatedDate"];
+        _revision = [decoder decodeObjectForKey:@"revision"];
+        _properties = [decoder decodeObjectForKey:@"properties"];
+        _attributes = [decoder decodeObjectForKey:@"attributes"];
+        self.type = [decoder decodeObjectForKey:@"type"];
+        self.tags= [decoder decodeObjectForKey:@"tags"];
+        self.username = [decoder decodeObjectForKey:@"username"];
+        self.password = [decoder decodeObjectForKey:@"password"];
+        self.birthDate = [decoder decodeObjectForKey:@"birthDate"];
+        self.firstName = [decoder decodeObjectForKey:@"firstName"];
+        self.lastName = [decoder decodeObjectForKey:@"lastName"];
+        self.email = [decoder decodeObjectForKey:@"email"];
+        self.location = [decoder decodeObjectForKey:@"location"];
+        self.phone = [decoder decodeObjectForKey:@"phone"];
+        self.secretQuestion = [decoder decodeObjectForKey:@"secretQuestion"];
+        self.isEmailVerified = [decoder decodeObjectForKey:@"isEmailVerified"];
+        self.isEnabled = [decoder decodeObjectForKey:@"isEnabled"];
+        self.isOnline = [decoder decodeObjectForKey:@"isOnline"];
+    }
+    return self;
+}
+
+- (void)saveCustomObject:(APUser *)object forKey:(NSString *)key {
+    if(object != nil) {
+        NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:object];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:encodedObject forKey:key];
+        [defaults synchronize];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (APUser *)loadCustomObjectForKey:(NSString *)key {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:key] != nil) {
+        NSData *encodedObject = [defaults objectForKey:key];
+        APUser *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+        return object;
+    } else {
+        return nil;
+    }
+}
+
++ (APUser*)getSavedUser {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:@"currentAPUser"] != nil) {
+        NSData *encodedObject = [defaults objectForKey:@"currentAPUser"];
+        APUser *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+        return object;
+    } else {
+        return nil;
+    }
+}
+
 @end

@@ -38,11 +38,5 @@
  */
 + (void) useLiveEnvironment:(BOOL)answer;
 
-/**
- Everythime you call the registerAPIKey method, it creates a default APDevice object that corresponds to teh deviece the app is installed in. This methods return a refence to the current default APDevice object.
- @return The current default APDevice object.
- */
-+ (APDevice*) getCurrentAPDevice;
-
 
 @end

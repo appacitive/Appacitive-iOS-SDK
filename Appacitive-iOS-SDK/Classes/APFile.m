@@ -15,15 +15,6 @@
 
 #define FILE_PATH @"file/"
 
-APResultSuccessBlock proxySuccessBlock;
-APFileDownloadSuccessBlock proxyDownloadSuccessBlock;
-APFailureBlock proxyFailureBlock;
-NSString *requestContentType = nil;
-NSMutableData *requestData = nil;
-NSURL *uploadURL;
-NSDictionary *uploadDict;
-BOOL isDownloadData = NO;
-
 @implementation APFile
 
 #pragma mark - Uplaod file methods
@@ -310,6 +301,11 @@ BOOL isDownloadData = NO;
                 if(uri) {
                     if (!isErrorPresent) {
                         NSMutableURLRequest *fileDownloadRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[dictionary objectForKey:@"uri"]]];
+                        NSUInteger cacheSizeMemory = 500*1024*1024; // 500 MB
+                        NSUInteger cacheSizeDisk = 500*1024*1024; // 500 MB
+                        NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
+                        [NSURLCache setSharedURLCache:sharedCache];
+                        sleep(1);
                         [fileDownloadRequest setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
                         [fileDownloadRequest setHTTPMethod:@"GET"];
                         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -317,7 +313,7 @@ BOOL isDownloadData = NO;
                         sessionConfig.allowsCellularAccess = YES;
                         sessionConfig.timeoutIntervalForRequest = 30.0;
                         sessionConfig.timeoutIntervalForResource = 60.0;
-                        sessionConfig.URLCache = NSURLCacheStorageAllowed;
+                        sessionConfig.URLCache = [NSURLCache sharedURLCache];
                         sessionConfig.requestCachePolicy = NSURLRequestReturnCacheDataElseLoad;
                         NSURLSession *downloadSession = [NSURLSession sessionWithConfiguration:sessionConfig];
                         [[downloadSession downloadTaskWithRequest:fileDownloadRequest completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {

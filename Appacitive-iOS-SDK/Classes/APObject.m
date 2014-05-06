@@ -27,7 +27,7 @@ NSString *const OBJECT_PATH = @"object/";
             if(objectId != nil) {
                 _objectId = objectId;
             }
-            
+            _acl = [[Acl alloc] init];
             NSMutableDictionary *typeMapping;
             NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             filePath = [filePath stringByAppendingPathComponent:@"typeMapping.plist"];
@@ -468,7 +468,7 @@ NSString *const OBJECT_PATH = @"object/";
 }
 
 - (NSString*) description {
-    NSString *description = [NSString stringWithFormat:@"Object Id:%@, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, TypeId:%d, type:%@, Tag:%@", self.objectId, self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, [self.typeId intValue], self.type, self.tags];
+    NSString *description = [NSString stringWithFormat:@"Object Id:%@, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, type:%@, Tag:%@", self.objectId, self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, self.type, self.tags];
     return description;
 }
 
@@ -504,7 +504,6 @@ NSString *const OBJECT_PATH = @"object/";
     _objectId = object[@"__id"];
     _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
     _revision = (NSNumber*) object[@"__revision"];
-    _typeId = object[@"__typeid"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
     _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
     _attributes = [object[@"__attributes"] mutableCopy];
@@ -536,6 +535,8 @@ NSString *const OBJECT_PATH = @"object/";
         postParams[@"__type"] = self.type;
     if (self.tags)
         postParams[@"__tags"] = self.tags;
+    if (self.acl)
+        postParams[@"__acls"] = [self.acl getCombinedAccessList];
     return postParams;
 }
 
@@ -609,6 +610,9 @@ NSString *const OBJECT_PATH = @"object/";
             }
         }
     }
+    
+    if (self.acl)
+        postParams[@"__acls"] = [self.acl getCombinedAccessList];
     
     return postParams;
 }

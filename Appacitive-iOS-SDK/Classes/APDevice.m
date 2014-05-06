@@ -17,6 +17,7 @@
 
 @implementation APDevice
 static NSDictionary* headerParams;
+static APDevice* currentDevice;
 
 + (NSDictionary*)getHeaderParams
 {
@@ -31,7 +32,9 @@ static NSDictionary* headerParams;
 
 #pragma mark - Initialization methods
 - (instancetype) init {
-    return self = [super initWithTypeName:@"device"];
+    self = [super initWithTypeName:@"device"];
+    self.isActive = @"false";
+    return self;
 }
 
 - (instancetype)initWithDeviceToken:(NSString *)deviceToken deviceType:(NSString *)deviceType {
@@ -41,6 +44,7 @@ static NSDictionary* headerParams;
     if(deviceToken != nil)
         self.deviceToken = deviceToken;
     self.type = @"device";
+    self.isActive = @"false";
     return self;
 }
 
@@ -80,6 +84,41 @@ static NSDictionary* headerParams;
             failureBlock(error);
         }
     }];
+}
+
+- (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token{
+    [self registerCurrentDeviceWithPushDeviceToken:token successHandler:nil failureHandler:nil];
+}
+
+- (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token failureHandler:(APFailureBlock)failureBlock {
+    [self registerCurrentDeviceWithPushDeviceToken:token successHandler:nil failureHandler:failureBlock];
+}
+
+- (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    NSString *cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    self.deviceToken = cleanToken;
+    self.isActive = @"true";
+    [self registerDeviceWithSuccessHandler:^{
+        currentDevice = self;
+        [self saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+        if(successBlock != nil) {
+            successBlock();
+        }
+    } failureHandler:failureBlock];
+}
+
+- (void) deregisterCurrentDevice {
+    [self deregisterCurrentDeviceWithSuccessHandler:nil failureHandler:nil];
+}
+
+-(void) deregisterCurrentDeviceWithFailureHandler:(APFailureBlock)failureBlock {
+    [self deregisterCurrentDeviceWithSuccessHandler:nil failureHandler:failureBlock];
+}
+
+-(void) deregisterCurrentDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    self.isActive = @"false";
+    [self updateObjectWithSuccessHandler:successBlock failureHandler:failureBlock];
 }
 
 #pragma mark - Save methods
@@ -254,6 +293,14 @@ static NSDictionary* headerParams;
     
     else object = [dictionary mutableCopy];
     
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentAPDevice"] != nil) {
+        APDevice *savedDevice = [self loadCustomObjectForKey:@"currentAPDevice"];
+        if(savedDevice.objectId == object[@"__id"]) {
+            [savedDevice setPropertyValuesForCurrentDeviceFromDictionary:object];
+            [self saveCustomObject:savedDevice forKey:@"currentAPDevice"];
+        }
+    }
+    
     _deviceToken = object[@"devicetoken"];
     [object removeObjectForKey:@"devicetoken"];
     self.deviceLocation = object[@"location"];
@@ -271,7 +318,42 @@ static NSDictionary* headerParams;
     _objectId = object[@"__id"];
     _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
     _revision = (NSNumber*) object[@"__revision"];
-    self.typeId = object[@"__typeid"];
+    _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
+    _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
+    _attributes = [object[@"__attributes"] mutableCopy];
+    self.tags = object[@"__tags"];
+    self.type = object[@"__type"];
+    _properties = [APHelperMethods arrayOfPropertiesFromJSONResponse:object].mutableCopy;
+    
+    [self updateSnapshot];
+}
+
+- (void) setPropertyValuesForCurrentDeviceFromDictionary:(NSDictionary*) dictionary {
+    
+    NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
+    
+    if([[dictionary allKeys] containsObject:@"device"])
+        object = [dictionary[@"device"] mutableCopy];
+    
+    else object = [dictionary mutableCopy];
+    
+    _deviceToken = object[@"devicetoken"];
+    [object removeObjectForKey:@"devicetoken"];
+    self.deviceLocation = object[@"location"];
+    [object removeObjectForKey:@"location"];
+    self.deviceType = object[@"devicetype"];
+    [object removeObjectForKey:@"devicetype"];
+    self.isActive = object[@"isactive"];
+    [object removeObjectForKey:@"isactive"];
+    self.channels = object[@"channels"];
+    [object removeObjectForKey:@"channels"];
+    self.badge = object[@"badge"];
+    [object removeObjectForKey:@"badge"];
+    
+    self.createdBy = (NSString*) object[@"__createdby"];
+    _objectId = object[@"__id"];
+    _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
+    _revision = (NSNumber*) object[@"__revision"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
     _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
     _attributes = [object[@"__attributes"] mutableCopy];
@@ -325,14 +407,15 @@ static NSDictionary* headerParams;
 
 - (NSMutableDictionary*) postParametersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
-
-    if (self.attributes && [self.attributes count] > 0)
+    
+    if (self.attributes && [self.attributes count] > 0) {
         for(id key in self.attributes) {
             if(![[[_snapShot objectForKey:@"__attributes"] allKeys] containsObject:key])
                 [postParams[@"__attributes"] setObject:[self.attributes objectForKey:key] forKey:key];
             else if([[_snapShot objectForKey:@"__attributes"] objectForKey:key] != [self.attributes objectForKey:key])
                 [postParams[@"__attributes"] setObject:[self.attributes objectForKey:key] forKey:key];
         }
+    }
     
     for(NSDictionary *prop in self.properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
@@ -356,7 +439,6 @@ static NSDictionary* headerParams;
         postParams[@"timezone"] = self.timeZone;
     if(self.isActive != nil && self.isActive != [_snapShot objectForKey:@"isactive"])
         postParams[@"isactive"] = self.isActive;
-    
     if (self.tagsToAdd != nil && [self.tagsToAdd count] > 0)
         postParams[@"__addtags"] = [self.tagsToAdd allObjects];
     if (self.tagsToRemove !=nil && [self.tagsToRemove count] > 0)
@@ -368,7 +450,6 @@ static NSDictionary* headerParams;
 - (void) updateSnapshot {
     if(_snapShot == nil)
         _snapShot = [[NSMutableDictionary alloc] init];
-    
     if(self.deviceToken)
         _snapShot[@"devicetoken"] = self.deviceToken;
     if(self.deviceType)
@@ -381,7 +462,6 @@ static NSDictionary* headerParams;
         _snapShot[@"timezone"] = self.timeZone;
     if(self.isActive)
         _snapShot[@"isactive"] = self.isActive;
-
     if(self.attributes)
         _snapShot[@"__attributes"] = [self.attributes mutableCopy];
     if(self.tags)
@@ -390,5 +470,71 @@ static NSDictionary* headerParams;
         _snapShot[@"__properties"] = [self.properties mutableCopy];
 }
 
-@end
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    [encoder encodeObject:self.objectId forKey:@"objectId"];
+    [encoder encodeObject:self.createdBy forKey:@"createdBy"];
+    [encoder encodeObject:self.lastModifiedBy forKey:@"lastModifiedBy"];
+    [encoder encodeObject:self.utcDateCreated forKey:@"utcDateCreated"];
+    [encoder encodeObject:self.utcLastUpdatedDate forKey:@"utcLastUpdatedDate"];
+    [encoder encodeObject:self.revision forKey:@"revision"];
+    [encoder encodeObject:self.properties forKey:@"properties"];
+    [encoder encodeObject:self.attributes forKey:@"attributes"];
+    [encoder encodeObject:self.type forKey:@"type"];
+    [encoder encodeObject:self.tags forKey:@"tags"];
+    [encoder encodeObject:self.deviceToken forKey:@"deviceToken"];
+    [encoder encodeObject:self.deviceType forKey:@"deviceType"];
+    [encoder encodeObject:self.deviceLocation forKey:@"deviceLocation"];
+    [encoder encodeObject:self.channels forKey:@"channels"];
+    [encoder encodeObject:self.timeZone forKey:@"timeZone"];
+    [encoder encodeObject:self.isActive forKey:@"isActive"];
+    [encoder encodeObject:self.badge forKey:@"badge"];
+}
 
+- (id)initWithCoder:(NSCoder *)decoder {
+    if((self = [super init])) {
+        //decode properties, other class vars
+        _objectId = [decoder decodeObjectForKey:@"objectId"];
+        self.createdBy = [decoder decodeObjectForKey:@"createdBy"];
+        _lastModifiedBy = [decoder decodeObjectForKey:@"lastModifiedBy"];
+        _utcDateCreated = [decoder decodeObjectForKey:@"utcDateCreated"];
+        _utcLastUpdatedDate = [decoder decodeObjectForKey:@"utcLastUpdatedDate"];
+        _revision = [decoder decodeObjectForKey:@"revision"];
+        _properties = [decoder decodeObjectForKey:@"properties"];
+        _attributes = [decoder decodeObjectForKey:@"attributes"];
+        self.type = [decoder decodeObjectForKey:@"type"];
+        self.tags= [decoder decodeObjectForKey:@"tags"];
+        self.deviceToken = [decoder decodeObjectForKey:@"deviceToken"];
+        self.deviceType = [decoder decodeObjectForKey:@"deviceType"];
+        self.deviceLocation = [decoder decodeObjectForKey:@"deviceLocation"];
+        self.channels = [decoder decodeObjectForKey:@"channels"];
+        self.timeZone = [decoder decodeObjectForKey:@"timeZone"];
+        self.isActive = [decoder decodeObjectForKey:@"isActive"];
+        self.badge = [decoder decodeObjectForKey:@"badge"];
+    }
+    return self;
+}
+
+- (void)saveCustomObject:(APDevice *)object forKey:(NSString *)key {
+    if(object != nil) {
+        NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:object];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:encodedObject forKey:key];
+        [defaults synchronize];
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:key];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (APDevice *)loadCustomObjectForKey:(NSString *)key {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:key] != nil) {
+        NSData *encodedObject = [defaults objectForKey:key];
+        APDevice *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+        return object;
+    } else {
+        return nil;
+    }
+}
+
+@end
