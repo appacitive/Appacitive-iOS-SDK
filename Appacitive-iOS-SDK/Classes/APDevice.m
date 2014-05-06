@@ -34,6 +34,7 @@ static APDevice* currentDevice;
 - (instancetype) init {
     self = [super initWithTypeName:@"device"];
     self.isActive = @"false";
+    self.deviceType = @"ios";
     return self;
 }
 
@@ -95,21 +96,33 @@ static APDevice* currentDevice;
 }
 
 + (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    currentDevice = [[APDevice alloc] initWithTypeName:@"device"];
     NSString *cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     currentDevice.deviceToken = cleanToken;
-    if(answer == YES)
-        currentDevice.isActive = @"true";
-    else
-        currentDevice.isActive = @"false";
     
-    [currentDevice registerDeviceWithSuccessHandler:^{
-        [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
-        if(successBlock != nil) {
-            successBlock();
-        }
-    } failureHandler:failureBlock];
+    if([APDevice getCurrentDevice] != nil) {
+        currentDevice.isActive = @"false";
+        if(answer == YES)
+            currentDevice.isActive = @"true";
+        [currentDevice registerDeviceWithSuccessHandler:^{
+            [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+            if(successBlock != nil) {
+                successBlock();
+            }
+        } failureHandler:failureBlock];
+    }
+    else {
+        currentDevice = [[APDevice alloc] initWithDeviceToken:cleanToken deviceType:@"ios"];
+        currentDevice.isActive = @"false";
+        if(answer == YES)
+            currentDevice.isActive = @"true";
+        [currentDevice updateObjectWithSuccessHandler:^{
+            [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+            if(successBlock != nil) {
+                successBlock();
+            }
+        } failureHandler:failureBlock];
+    }
 }
 
 + (void) deregisterCurrentDevice {
