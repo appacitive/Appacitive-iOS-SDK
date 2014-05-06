@@ -96,11 +96,14 @@ static APDevice* currentDevice;
 }
 
 + (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    NSString *cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    currentDevice.deviceToken = cleanToken;
+    NSString *cleanToken = [APDevice GetUUID];
+    if(token != nil) {
+        cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+        cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    }
     
-    if([APDevice getCurrentDevice] != nil) {
+    if([APDevice getCurrentDevice] == nil) {
+        currentDevice = [[APDevice alloc] initWithDeviceToken:cleanToken deviceType:@"ios"];
         currentDevice.isActive = @"false";
         if(answer == YES)
             currentDevice.isActive = @"true";
@@ -110,9 +113,7 @@ static APDevice* currentDevice;
                 successBlock();
             }
         } failureHandler:failureBlock];
-    }
-    else {
-        currentDevice = [[APDevice alloc] initWithDeviceToken:cleanToken deviceType:@"ios"];
+    } else {
         currentDevice.isActive = @"false";
         if(answer == YES)
             currentDevice.isActive = @"true";
@@ -563,6 +564,14 @@ static APDevice* currentDevice;
     } else {
         return nil;
     }
+}
+
++ (NSString *)GetUUID
+{
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    return (__bridge NSString *)string;
 }
 
 @end
