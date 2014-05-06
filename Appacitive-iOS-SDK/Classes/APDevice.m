@@ -102,7 +102,8 @@ static APDevice* currentDevice;
         cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     }
     
-    if([APDevice getCurrentDevice] != nil) {
+    if([APDevice getCurrentDevice] == nil) {
+        currentDevice = [[APDevice alloc] initWithDeviceToken:cleanToken deviceType:@"ios"];
         currentDevice.isActive = @"false";
         if(answer == YES)
             currentDevice.isActive = @"true";
@@ -112,9 +113,7 @@ static APDevice* currentDevice;
                 successBlock();
             }
         } failureHandler:failureBlock];
-    }
-    else {
-        currentDevice = [[APDevice alloc] initWithDeviceToken:cleanToken deviceType:@"ios"];
+    } else {
         currentDevice.isActive = @"false";
         if(answer == YES)
             currentDevice.isActive = @"true";
