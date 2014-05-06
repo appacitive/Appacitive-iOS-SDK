@@ -8,6 +8,7 @@
 
 #import "APResponseBlocks.h"
 #import "APQuery.h"
+#import "Acl.h"
 
 @class APError;
 
@@ -34,6 +35,7 @@ extern NSString *const OBJECT_PATH;
     NSDate *_utcLastUpdatedDate;
     NSNumber *_revision;
     NSMutableArray *_properties;
+    Acl *_acl;
     NSMutableDictionary *_attributes;
     NSMutableDictionary *_snapShot;
 }
@@ -46,7 +48,6 @@ extern NSString *const OBJECT_PATH;
 @property (nonatomic, strong, readonly) NSNumber *revision;
 @property (nonatomic, strong, readonly) NSMutableArray *properties;
 @property (nonatomic, strong, readonly) NSMutableDictionary *attributes;
-@property (nonatomic, strong) NSString *typeId;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSArray *tags;
 @property (nonatomic, strong) NSMutableSet *tagsToAdd;
@@ -56,8 +57,8 @@ extern NSString *const OBJECT_PATH;
 @property (strong, nonatomic) NSMutableDictionary *propertiesToRemove;
 @property (strong, nonatomic) NSMutableDictionary *propertiesToIncrement;
 @property (strong, nonatomic) NSMutableDictionary *propertiesToDecrement;
-
-@property (nonatomic, weak) id<APObjectPropertyMapping> delegate;
+@property (strong, nonatomic) Acl *acl;
+@property (nonatomic, weak) id <APObjectPropertyMapping> delegate;
 
 #pragma mark - APObject Methods
 

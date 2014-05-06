@@ -23,14 +23,14 @@ describe(@"APObject", ^{
         
         [APObject searchAllObjectsWithTypeName:@"sdktest"
                                      successHandler:^(NSArray *objects, NSInteger pageNumber, NSInteger pageSize, NSInteger totalrecords) {
-                                         NSLog(@"PagingInfo:\nPageNumber:%d\nPageSize:%d\nTotalRecords:%d",pageNumber,pageSize, totalrecords);
+                                         NSLog(@"PagingInfo:\nPageNumber:%ld\nPageSize:%ld\nTotalRecords:%ld",(long)pageNumber,(long)pageSize, (long)totalrecords);
                                          isSearchSuccessful = YES;
                                      }failureHandler:^(APError *error){
                                          isSearchSuccessful = NO;
                                      }];
         [[expectFutureValue(theValue(isSearchSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
     });
-//
+
     it(@"search API call with invalid type name", ^{
         
         __block BOOL isSearchUnsuccessful = NO;
@@ -471,7 +471,7 @@ describe(@"APObject", ^{
         }];
         [[expectFutureValue(theValue(isUpdateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
     });
-
+    
 
 #pragma mark - TESTING_DELETE_PROPERTIES_METHOD
     
@@ -773,7 +773,24 @@ describe(@"APObject", ^{
         }];
         [[expectFutureValue(theValue(isSaveUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
     });
+
+    it(@"saving an object with acls", ^{
+        __block BOOL isSaveUnsuccessful = NO;
+        APObject *object = [[APObject alloc] initWithTypeName:@"sdk"];
+        
+        [object.acl allowUsers:@[@"ppatel"] permissions:@[@"update",@"manage permissions"]];
+
+        [object saveObjectWithSuccessHandler:^(NSDictionary *result){
+            isSaveUnsuccessful = NO;
+            [object deleteObject];
+        }failureHandler:^(APError *error){
+            isSaveUnsuccessful = YES;
+            [object deleteObject];
+        }];
+        [[expectFutureValue(theValue(isSaveUnsuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
+    });
     
+
 #pragma mark - DELETE_TESTS
     
     it(@"delete API call with improper type name", ^{

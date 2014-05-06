@@ -11,7 +11,7 @@ describe(@"APUserTests", ^{
         [Appacitive useLiveEnvironment:NO];
         [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
     });
-    
+
     beforeEach(^{
         __block BOOL isUserAuthenticateSuccessful = NO;
         
@@ -23,7 +23,7 @@ describe(@"APUserTests", ^{
                               }];
         [[expectFutureValue(theValue(isUserAuthenticateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
     });
-    
+
     afterAll(^(){
     });
 

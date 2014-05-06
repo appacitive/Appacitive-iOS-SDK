@@ -29,7 +29,7 @@
 		2CEB0EB4162BD4030074DA50 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1215F484E7009A8578 /* SystemConfiguration.framework */; };
 		2CEB0EB5162BD4230074DA50 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
 		4C0902721878336000CA5D42 /* APDeviceFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0902711878336000CA5D42 /* APDeviceFixture.m */; };
-		4C40861518904976002DC1E5 /* APPushNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C40861318904976002DC1E5 /* APPushNotification.h */; };
+		4C40861518904976002DC1E5 /* APPushNotification.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C40861318904976002DC1E5 /* APPushNotification.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C40861618904976002DC1E5 /* APPushNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C40861418904976002DC1E5 /* APPushNotification.m */; };
 		4C685B1F190E19560022A01B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C685B1D190E19560022A01B /* InfoPlist.strings */; };
 		4C685B29190E1AB80022A01B /* Appacitive.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0715F8857100C57AA3 /* Appacitive.m */; };
@@ -61,34 +61,38 @@
 		4C685B44190E1AFA0022A01B /* APGraphNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBCA511187C00E400947D90 /* APGraphNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C685B45190E1AFA0022A01B /* APHelperMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0215F8857100C57AA3 /* APHelperMethods.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C685B46190E1AFA0022A01B /* APError.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0015F8857100C57AA3 /* APError.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4C7A8607185EC8D900BD06FF /* APEmail.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A8605185EC8D900BD06FF /* APEmail.h */; };
+		4C7A8607185EC8D900BD06FF /* APEmail.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A8605185EC8D900BD06FF /* APEmail.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7A8608185EC8D900BD06FF /* APEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A8606185EC8D900BD06FF /* APEmail.m */; };
 		4C81334918A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C81334818A102FC0088466B /* libPods-Appacitive_iOS_SDK-NetworkTests.a */; };
-		4CB768AF1872C43B00A69FE4 /* APNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB768AD1872C43B00A69FE4 /* APNetworking.h */; };
+		4CB768AF1872C43B00A69FE4 /* APNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB768AD1872C43B00A69FE4 /* APNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CB768B01872C43B00A69FE4 /* APNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB768AE1872C43B00A69FE4 /* APNetworking.m */; };
 		4CBA47471876C46E00484799 /* APEmailFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA47461876C46E00484799 /* APEmailFixture.m */; };
-		4CBCA513187C00E400947D90 /* APGraphNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBCA511187C00E400947D90 /* APGraphNode.h */; };
+		4CBCA513187C00E400947D90 /* APGraphNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CBCA511187C00E400947D90 /* APGraphNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CBCA514187C00E400947D90 /* APGraphNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA512187C00E400947D90 /* APGraphNode.m */; };
 		4CBCA517187C21E000947D90 /* APGraphNodeFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCA516187C21E000947D90 /* APGraphNodeFixture.m */; };
 		4CC2AA3818C8953E001963EF /* libAppacitive-iOS-SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */; };
-		4CCA7CD418740F4B00D89FFA /* APFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD218740F4B00D89FFA /* APFile.h */; };
+		4CCA7CD418740F4B00D89FFA /* APFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD218740F4B00D89FFA /* APFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCA7CD518740F4B00D89FFA /* APFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA7CD318740F4B00D89FFA /* APFile.m */; };
-		4CCA7CD818740F5800D89FFA /* APDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD618740F5800D89FFA /* APDevice.h */; };
+		4CCA7CD818740F5800D89FFA /* APDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CCA7CD618740F5800D89FFA /* APDevice.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CCA7CD918740F5800D89FFA /* APDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA7CD718740F5800D89FFA /* APDevice.m */; };
+		4CDE6EF0190E582600CFD5A2 /* Acl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDE6EEE190E582600CFD5A2 /* Acl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CDE6EF1190E582600CFD5A2 /* Acl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDE6EEE190E582600CFD5A2 /* Acl.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CDE6EF2190E582600CFD5A2 /* Acl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDE6EEF190E582600CFD5A2 /* Acl.m */; };
+		4CDE6EF3190E582600CFD5A2 /* Acl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDE6EEF190E582600CFD5A2 /* Acl.m */; };
 		4CE0BF3018D5F678007A66A7 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2421C818D5E62F0088495C /* XCTest.framework */; };
 		6102BAEA169A93E300D78642 /* APBlobFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 6102BAE9169A93E300D78642 /* APBlobFixture.m */; };
 		612CCDFA15FDA37000A78F3E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
 		612E3E0E15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
 		612E3E1F15EDF8FE00F98FB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 612E3E0D15EDF8FE00F98FB8 /* Foundation.framework */; };
 		61388C1615F8667000C79F1F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61388C1515F8667000C79F1F /* CoreLocation.framework */; };
-		614B911916A3C8BD001070DD /* APConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 614B911816A3C8BD001070DD /* APConstants.h */; };
-		6169128F161160110086C006 /* AppacitiveSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 6169128E161160110086C006 /* AppacitiveSDK.h */; };
+		614B911916A3C8BD001070DD /* APConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 614B911816A3C8BD001070DD /* APConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6169128F161160110086C006 /* AppacitiveSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 6169128E161160110086C006 /* AppacitiveSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		616A6A0F15F48488009A8578 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A0E15F48488009A8578 /* CFNetwork.framework */; };
 		616A6A1115F4848D009A8578 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1015F4848D009A8578 /* Security.framework */; };
 		616A6A1315F484E7009A8578 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1215F484E7009A8578 /* SystemConfiguration.framework */; };
 		616A6A1515F4850E009A8578 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 616A6A1415F4850E009A8578 /* UIKit.framework */; };
 		618FEE55169AEAEC006A1888 /* APUserFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 618FEE54169AEAEC006A1888 /* APUserFixture.m */; };
-		618FEE5A169AEB04006A1888 /* APUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 618FEE56169AEB04006A1888 /* APUser.h */; };
+		618FEE5A169AEB04006A1888 /* APUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 618FEE56169AEB04006A1888 /* APUser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		618FEE5B169AEB04006A1888 /* APUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 618FEE57169AEB04006A1888 /* APUser.m */; };
 		6191E994169A926A00F87656 /* test_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 6191E993169A926A00F87656 /* test_image.png */; };
 		61D4A0E91635223400DB5FD9 /* APConnectionFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D4A0E51635223400DB5FD9 /* APConnectionFixture.m */; };
@@ -98,20 +102,20 @@
 		61D4A0FA1635234600DB5FD9 /* AppacitiveFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D4A0F01635234500DB5FD9 /* AppacitiveFixture.m */; };
 		61D4A0FB1635234600DB5FD9 /* APQueryFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D4A0F21635234600DB5FD9 /* APQueryFixture.m */; };
 		61D4A1001635238E00DB5FD9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 61D4A0FE1635238E00DB5FD9 /* InfoPlist.strings */; };
-		61D62C0B15F8857100C57AA3 /* APConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62BFE15F8857100C57AA3 /* APConnection.h */; };
+		61D62C0B15F8857100C57AA3 /* APConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62BFE15F8857100C57AA3 /* APConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D62C0C15F8857100C57AA3 /* APConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62BFF15F8857100C57AA3 /* APConnection.m */; };
-		61D62C0D15F8857100C57AA3 /* APError.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0015F8857100C57AA3 /* APError.h */; };
+		61D62C0D15F8857100C57AA3 /* APError.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0015F8857100C57AA3 /* APError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D62C0E15F8857100C57AA3 /* APError.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0115F8857100C57AA3 /* APError.m */; };
-		61D62C0F15F8857100C57AA3 /* APHelperMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0215F8857100C57AA3 /* APHelperMethods.h */; };
+		61D62C0F15F8857100C57AA3 /* APHelperMethods.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0215F8857100C57AA3 /* APHelperMethods.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D62C1015F8857100C57AA3 /* APHelperMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0315F8857100C57AA3 /* APHelperMethods.m */; };
-		61D62C1115F8857100C57AA3 /* APObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0415F8857100C57AA3 /* APObject.h */; };
+		61D62C1115F8857100C57AA3 /* APObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0415F8857100C57AA3 /* APObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D62C1215F8857100C57AA3 /* APObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0515F8857100C57AA3 /* APObject.m */; };
-		61D62C1315F8857100C57AA3 /* Appacitive.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0615F8857100C57AA3 /* Appacitive.h */; };
+		61D62C1315F8857100C57AA3 /* Appacitive.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0615F8857100C57AA3 /* Appacitive.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D62C1415F8857100C57AA3 /* Appacitive.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0715F8857100C57AA3 /* Appacitive.m */; };
-		61D62C1515F8857100C57AA3 /* APQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0815F8857100C57AA3 /* APQuery.h */; };
+		61D62C1515F8857100C57AA3 /* APQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0815F8857100C57AA3 /* APQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D62C1615F8857100C57AA3 /* APQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0915F8857100C57AA3 /* APQuery.m */; };
-		61D62C1715F8857100C57AA3 /* APResponseBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */; };
-		61D62C1A15F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */; };
+		61D62C1715F8857100C57AA3 /* APResponseBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		61D62C1A15F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,7 +142,7 @@
 		4C2421C818D5E62F0088495C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		4C40861318904976002DC1E5 /* APPushNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPushNotification.h; path = "Appacitive-iOS-SDK/Classes/APPushNotification.h"; sourceTree = SOURCE_ROOT; };
 		4C40861418904976002DC1E5 /* APPushNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPushNotification.m; path = "Appacitive-iOS-SDK/Classes/APPushNotification.m"; sourceTree = SOURCE_ROOT; };
-		4C685B17190E19560022A01B /* Appacitive-iOS-SDK-Framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "Appacitive-iOS-SDK-Framework.framework"; path = Appacitive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C685B17190E19560022A01B /* Appacitive.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Appacitive.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C685B18190E19560022A01B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		4C685B1C190E19560022A01B /* Appacitive-iOS-SDK-Framework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Appacitive-iOS-SDK-Framework-Info.plist"; sourceTree = "<group>"; };
 		4C685B1E190E19560022A01B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 		4CCA7CD318740F4B00D89FFA /* APFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APFile.m; path = "Appacitive-iOS-SDK/Classes/APFile.m"; sourceTree = SOURCE_ROOT; };
 		4CCA7CD618740F5800D89FFA /* APDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APDevice.h; path = "Appacitive-iOS-SDK/Classes/APDevice.h"; sourceTree = SOURCE_ROOT; };
 		4CCA7CD718740F5800D89FFA /* APDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APDevice.m; path = "Appacitive-iOS-SDK/Classes/APDevice.m"; sourceTree = SOURCE_ROOT; };
+		4CDE6EEE190E582600CFD5A2 /* Acl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Acl.h; path = "Appacitive-iOS-SDK/Classes/Acl.h"; sourceTree = SOURCE_ROOT; };
+		4CDE6EEF190E582600CFD5A2 /* Acl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Acl.m; path = "Appacitive-iOS-SDK/Classes/Acl.m"; sourceTree = SOURCE_ROOT; };
 		4CE0BF2C18D5EAA2007A66A7 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		6102BAE9169A93E300D78642 /* APBlobFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APBlobFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APBlobFixture.m"; sourceTree = SOURCE_ROOT; };
 		612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libAppacitive-iOS-SDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -400,6 +406,15 @@
 			name = Graph;
 			sourceTree = "<group>";
 		};
+		4CDE6EF4190E58F900CFD5A2 /* Acl */ = {
+			isa = PBXGroup;
+			children = (
+				4CDE6EEE190E582600CFD5A2 /* Acl.h */,
+				4CDE6EEF190E582600CFD5A2 /* Acl.m */,
+			);
+			name = Acl;
+			sourceTree = "<group>";
+		};
 		4CE27A9618682B290099FBAC /* Device */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,7 +444,7 @@
 				612E3E0A15EDF8FD00F98FB8 /* libAppacitive-iOS-SDK.a */,
 				612E3E1A15EDF8FE00F98FB8 /* Appacitive-iOS-SDK-InterfaceTests.xctest */,
 				2CEB0E93162BD2AB0074DA50 /* Appacitive_iOS_SDK-NetworkTests.xctest */,
-				4C685B17190E19560022A01B /* Appacitive-iOS-SDK-Framework.framework */,
+				4C685B17190E19560022A01B /* Appacitive.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -510,6 +525,7 @@
 				4CBCA515187C014900947D90 /* Graph */,
 				4C2EFE0F18767B9D00733CE2 /* Helper */,
 				4C2EFE1018767BB200733CE2 /* Error */,
+				4CDE6EF4190E58F900CFD5A2 /* Acl */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -536,6 +552,7 @@
 				4C685B43190E1AFA0022A01B /* APQuery.h in Headers */,
 				4C685B44190E1AFA0022A01B /* APGraphNode.h in Headers */,
 				4C685B45190E1AFA0022A01B /* APHelperMethods.h in Headers */,
+				4CDE6EF1190E582600CFD5A2 /* Acl.h in Headers */,
 				4C685B46190E1AFA0022A01B /* APError.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,6 +570,7 @@
 				61D62C1115F8857100C57AA3 /* APObject.h in Headers */,
 				61D62C1315F8857100C57AA3 /* Appacitive.h in Headers */,
 				61D62C1515F8857100C57AA3 /* APQuery.h in Headers */,
+				4CDE6EF0190E582600CFD5A2 /* Acl.h in Headers */,
 				61D62C1715F8857100C57AA3 /* APResponseBlocks.h in Headers */,
 				4CB768AF1872C43B00A69FE4 /* APNetworking.h in Headers */,
 				61D62C1A15F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch in Headers */,
@@ -602,7 +620,7 @@
 			);
 			name = Appacitive;
 			productName = "Appacitive-iOS-SDK-Framework";
-			productReference = 4C685B17190E19560022A01B /* Appacitive-iOS-SDK-Framework.framework */;
+			productReference = 4C685B17190E19560022A01B /* Appacitive.framework */;
 			productType = "com.apple.product-type.bundle";
 		};
 		612E3E0915EDF8FD00F98FB8 /* Appacitive-iOS-SDK */ = {
@@ -822,6 +840,7 @@
 				4C685B2E190E1AB80022A01B /* APDevice.m in Sources */,
 				4C685B2F190E1AB80022A01B /* APPushNotification.m in Sources */,
 				4C685B30190E1AB80022A01B /* APFile.m in Sources */,
+				4CDE6EF3190E582600CFD5A2 /* Acl.m in Sources */,
 				4C685B31190E1AB80022A01B /* APEmail.m in Sources */,
 				4C685B32190E1AB80022A01B /* APQuery.m in Sources */,
 				4C685B33190E1AB80022A01B /* APGraphNode.m in Sources */,
@@ -842,6 +861,7 @@
 				61D62C0E15F8857100C57AA3 /* APError.m in Sources */,
 				61D62C1015F8857100C57AA3 /* APHelperMethods.m in Sources */,
 				61D62C1215F8857100C57AA3 /* APObject.m in Sources */,
+				4CDE6EF2190E582600CFD5A2 /* Acl.m in Sources */,
 				4CBCA514187C00E400947D90 /* APGraphNode.m in Sources */,
 				4CCA7CD518740F4B00D89FFA /* APFile.m in Sources */,
 				61D62C1415F8857100C57AA3 /* Appacitive.m in Sources */,
@@ -899,7 +919,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Appacitive-iOS-SDK-Framework.framework/Appacitive-iOS-SDK-Framework";
+				BUNDLE_LOADER = "";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -924,7 +944,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Appacitive-iOS-SDK-Framework.framework/Appacitive-iOS-SDK-Framework";
+				BUNDLE_LOADER = "";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -954,8 +974,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK-Framework/Appacitive-iOS-SDK-Framework-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -985,10 +1007,12 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Appacitive-iOS-SDK-Framework/Appacitive-iOS-SDK-Framework-Prefix.pch";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1008,6 +1032,7 @@
 		4C685B26190E1A000022A01B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COPY_PHASE_STRIP = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1015,6 +1040,7 @@
 		4C685B27190E1A000022A01B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COPY_PHASE_STRIP = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1110,7 +1136,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Appacitive-iOS-SDK-Framework.framework/Appacitive-iOS-SDK-Framework";
+				BUNDLE_LOADER = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1139,7 +1165,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Appacitive-iOS-SDK-Framework.framework/Appacitive-iOS-SDK-Framework";
+				BUNDLE_LOADER = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

@@ -19,6 +19,7 @@ static NSDictionary *headerParams = nil;
 + (NSURLSession*) getSharedURLSession {
     if(sharedURLSession != nil)
         return sharedURLSession;
+    
     NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     headerParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                     [Appacitive getApiKey], APIkeyHeaderKey,
@@ -29,8 +30,6 @@ static NSDictionary *headerParams = nil;
     sessionConfig.allowsCellularAccess = YES;
     sessionConfig.timeoutIntervalForRequest = 30.0;
     sessionConfig.timeoutIntervalForResource = 60.0;
-    sessionConfig.URLCache = NSURLCacheStorageAllowed;
-    sessionConfig.requestCachePolicy = NSURLRequestReturnCacheDataElseLoad;
     sharedURLSession = [NSURLSession sessionWithConfiguration:sessionConfig];
     return sharedURLSession;
 }
@@ -41,6 +40,8 @@ static NSDictionary *headerParams = nil;
         if(!sharedURLSession) {
             [APNetworking getSharedURLSession];
         }
+        if(urlRequest.HTTPBody != nil)
+            DLog(@"\n––––––––––––BODY–––––––––––––\n%@", [NSJSONSerialization JSONObjectWithData:urlRequest.HTTPBody options:kNilOptions error:nil]);
         [[sharedURLSession dataTaskWithRequest:urlRequest
                              completionHandler:^(NSData *data,
                                                  NSURLResponse *response,

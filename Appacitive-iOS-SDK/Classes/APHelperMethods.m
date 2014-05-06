@@ -15,7 +15,7 @@
 
 @implementation APHelperMethods
 
-+ (APError*) checkForErrorStatus:(id)response {
++ (APError*) checkForErrorStatus:(id)response{
     NSDictionary *status;
     if (response[@"status"]) {
         status = response[@"status"];

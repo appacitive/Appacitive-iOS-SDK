@@ -36,7 +36,6 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
     
-    
     NSMutableDictionary *poDict = [[NSMutableDictionary alloc] init];
     if(self.platformOptions) {
         if(self.platformOptions.iosOptions != nil){
@@ -424,7 +423,6 @@
 
 
 
-
 #pragma mark - WindowsPhoneOptions Interface
 
 @implementation WindowsPhoneOptions
@@ -458,6 +456,4 @@
 
 
 @end
-
-
 

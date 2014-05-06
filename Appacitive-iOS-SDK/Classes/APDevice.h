@@ -15,7 +15,7 @@
  An APDevice class helps you in managing the devices that use your app on Appacitive.
  */
 
-@interface APDevice : APObject <APObjectPropertyMapping>
+@interface APDevice : APObject <APObjectPropertyMapping, NSCoding>
 
 @property (nonatomic, strong) NSString *deviceToken;
 @property (nonatomic, strong) NSString *deviceType;
@@ -48,6 +48,45 @@
  @note On successfull registration, a device Object will be returned in the successblock
  */
 - (void) registerDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see registerCurrentDeviceWithPushDeviceToken:successHandler:failureHandler:
+ */
+- (void) registerCurrentDeviceWithPushDeviceToken:(NSData*)token;
+
+/**
+ @see registerCurrentDeviceWithPushDeviceToken:successHandler:failureHandler:
+ */
+- (void) registerCurrentDeviceWithPushDeviceToken:(NSData*)token failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method to register your device for Push Notifications.
+ 
+ @param token        device token for Push Notifications.
+ @param successBlock block executed when the operation is successful.
+ @param failureBlock block executed when the operation fails.
+ */
+- (void) registerCurrentDeviceWithPushDeviceToken:(NSData*)token successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+
+/**
+ @see deregisterCurrentDeviceWithSuccessHandler:failureHandler:
+ */
+- (void) deregisterCurrentDevice;
+
+/**
+ @see deregisterCurrentDeviceWithSuccessHandler:failureHandler:
+ */
+- (void) deregisterCurrentDeviceWithFailureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method to deregister your device from Push Notifications.
+ 
+ @param successBlock block executed when the operation is successful.
+ @param failureBlock block executed when the operation fails.
+ */
+- (void) deregisterCurrentDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
 
 /** @name Saving APDevice */
 
