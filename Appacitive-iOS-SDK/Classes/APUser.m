@@ -40,7 +40,7 @@ static NSDictionary *headerParams;
 
 + (void) setCurrentUser:(APUser *)user {
     currentUser = user;
-    [user saveCustomObject:user forKey:@"currentAPUser"];
+    [APUser saveCustomObject:user forKey:@"currentAPUser"];
 }
 
 #pragma mark - Authenticate methods
@@ -77,7 +77,7 @@ static NSDictionary *headerParams;
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
         [currentUser setPropertyValuesFromDictionary:result];
-        [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
+        [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
         if (successBlock) {
             successBlock(currentUser);
         }
@@ -123,7 +123,7 @@ static NSDictionary *headerParams;
                                   currentUser = [[APUser alloc] initWithTypeName:@"user"];
                                   [currentUser setPropertyValuesFromDictionary:result];
                                   [currentUser setLoggedInWithFacebook:YES];
-                                  [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
+                                  [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
                                   if (successBlock) {
                                       successBlock(currentUser);
                                   }
@@ -171,7 +171,7 @@ static NSDictionary *headerParams;
                                   currentUser = [[APUser alloc] initWithTypeName:@"user"];
                                   [currentUser setPropertyValuesFromDictionary:result];
                                   [currentUser setLoggedInWithFacebook:YES];
-                                  [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
+                                  [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
                                   if (successBlock) {
                                       successBlock(currentUser);
                                   }
@@ -218,7 +218,7 @@ static NSDictionary *headerParams;
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
         [currentUser setPropertyValuesFromDictionary:result];
         [currentUser setLoggedInWithFacebook:YES];
-        [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
+        [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
         if (successBlock) {
             successBlock(currentUser);
         }
@@ -831,7 +831,7 @@ static NSDictionary *headerParams;
         if(currentUser != nil) {
             if(self.objectId == currentUser.objectId) {
                 currentUser = nil;
-                [self saveCustomObject:nil forKey:@"currentAPUser"];
+                [APUser saveCustomObject:nil forKey:@"currentAPUser"];
             }
         }
         if(successBlock != nil) {
@@ -879,7 +879,7 @@ static NSDictionary *headerParams;
 + (void) deleteCurrentlyLoggedInUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     [currentUser deleteObjectWithSuccessHandler:successBlock failureHandler:failureBlock];
     currentUser = nil;
-    [currentUser saveCustomObject:nil forKey:@"currentAPUser"];
+    [APUser saveCustomObject:nil forKey:@"currentAPUser"];
 }
 
 #pragma mark - Fetch methods
@@ -977,13 +977,13 @@ static NSDictionary *headerParams;
         NSString *responseJSON = [NSString stringWithFormat:@"%@",[result objectForKey:@"result"]];
         if([responseJSON isEqualToString:@"1"])
         {
-            [currentUser saveCustomObject:currentUser forKey:@"currentAPUser"];
+            [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
             if (successBlock) {
                 successBlock(result);
             }
         } else {
             currentUser = nil;
-            [currentUser saveCustomObject:nil forKey:@"currentAPUser"];
+            [APUser saveCustomObject:nil forKey:@"currentAPUser"];
         }
     } failureHandler:^(APError *error) {
 		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
@@ -1014,7 +1014,7 @@ static NSDictionary *headerParams;
     APNetworking *nwObject = [[APNetworking alloc] init];
     [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
         currentUser = nil;
-        [currentUser saveCustomObject:nil forKey:@"currentAPUser"];
+        [APUser saveCustomObject:nil forKey:@"currentAPUser"];
         if (successBlock) {
             successBlock();
         }
@@ -1130,10 +1130,10 @@ static NSDictionary *headerParams;
     else object = [dictionary mutableCopy];;
     
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentAPUser"] != nil) {
-        APUser *savedUser = [self loadCustomObjectForKey:@"currentAPUser"];
+        APUser *savedUser = [APUser loadCustomObjectForKey:@"currentAPUser"];
         if(savedUser.objectId == object[@"__id"]) {
             [savedUser setCurrentUserPropertyValuesFromDictionary:[dictionary mutableCopy]];
-            [self saveCustomObject:savedUser forKey:@"currentAPUser"];
+            [APUser saveCustomObject:savedUser forKey:@"currentAPUser"];
         }
     }
     
@@ -1420,7 +1420,7 @@ static NSDictionary *headerParams;
     return self;
 }
 
-- (void)saveCustomObject:(APUser *)object forKey:(NSString *)key {
++ (void)saveCustomObject:(APUser *)object forKey:(NSString *)key {
     if(object != nil) {
         NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:object];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1432,7 +1432,7 @@ static NSDictionary *headerParams;
     }
 }
 
-- (APUser *)loadCustomObjectForKey:(NSString *)key {
++ (APUser *)loadCustomObjectForKey:(NSString *)key {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:key] != nil) {
         NSData *encodedObject = [defaults objectForKey:key];
