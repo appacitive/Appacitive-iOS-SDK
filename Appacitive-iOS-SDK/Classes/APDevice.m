@@ -537,4 +537,15 @@ static APDevice* currentDevice;
     }
 }
 
++ (APDevice*) getCurrentDevice {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:@"currentAPDevice"] != nil) {
+        NSData *encodedObject = [defaults objectForKey:@"currentAPDevice"];
+        APDevice *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+        return object;
+    } else {
+        return nil;
+    }
+}
+
 @end
