@@ -10,9 +10,9 @@
 #import "APConstants.h"
 #import "APHelperMethods.h"
 #import "APdevice.h"
+#import "APUser.h"
 static NSString* _apiKey;
 static BOOL isEnvironmentLive = NO;
-static APDevice *currentAPDevice;
 
 @implementation Appacitive
 
@@ -31,38 +31,13 @@ static APDevice *currentAPDevice;
     return _apiKey;
 }
 
-+ (APDevice*) getCurrentAPDevice {
-    return currentAPDevice;
-}
-
 + (void) registerAPIKey:(NSString*)apiKey useLiveEnvironment:(BOOL)answer {
     _apiKey = apiKey;
     isEnvironmentLive = answer;
-    if([[NSUserDefaults standardUserDefaults] valueForKey:@"appacitive-device-guid"] == nil) {
-        currentAPDevice = [[APDevice alloc]initWithDeviceToken:[self getUUID] deviceType:@"ios"];
-        [currentAPDevice registerDeviceWithSuccessHandler:^{
-            [[NSUserDefaults standardUserDefaults] setObject:currentAPDevice.objectId forKey:@"appacitive-device-guid"];
-        } failureHandler:^(APError *error) {
-            DLog(@"\n––––––––––ERROR–––––––––\n%@",error);
-        }];
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentAPUser"] != nil) {
+        [APUser setCurrentUser:[APUser getSavedUser]];
     }
-    else {
-        currentAPDevice = [[APDevice alloc] initWithTypeName:@"device" objectId:[[NSUserDefaults standardUserDefaults] valueForKey:@"appacitive-device-guid"]];
-        [currentAPDevice fetchWithSuccessHandler:^{
-            [[NSUserDefaults standardUserDefaults] setObject:currentAPDevice.objectId forKey:@"appacitive-device-guid"];
-        } failureHandler:^(APError *error) {
-            DLog(@"\n––––––––––ERROR–––––––––\n%@",error);
-        }];
-    }
-}
-
-#pragma mark - Private Methods
-
-+ (NSString *)getUUID {
-    CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-    CFRelease(theUUID);
-    return (__bridge NSString *)string;
 }
 
 @end
