@@ -194,4 +194,6 @@
  */
 - (void) fetchWithPropertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
++ (APDevice*) getCurrentDevice;
+
 @end
