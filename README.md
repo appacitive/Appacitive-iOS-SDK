@@ -58,16 +58,23 @@ iOS client SDK for Appacitive platform.
 * [Emails](#emails)  
   * [Configuring](#configuring)  
   * [Sending Raw Emails](#sending-raw-emails)
-  * [Sending Templated Emails](#sending-templated-emails)  
-* [Push Notifications](#push-notifications)  
+  * [Sending Templated Emails](#sending-templated-emails)
+* [Device](#device)  
+  * [Register](#register)
+  * [De-register](de-register)
+  * [Delete](#delete) 
+  * [Update](#update)
+  * [Retrieve](#retrieve)
+* [Push Notifications](#push-notifications)
   * [Broadcast](#broadcast)  
   * [Platform specific Devices](#platform-specific-devices)  
   * [Specific List of Devices](#specific-list-of-devices)  
-  * [To List of Channels](#to-list-of-channels)  
+  * [To List of Channels](#to-list-of-channels)
   * [Query](#query)  
 * [Files](#files)  
   * [Uploading](#uploading)  
   * [Downloading](#downloading)
+* [Access Control](#access-control)
 
 ## Setup
 
@@ -87,23 +94,16 @@ ApiKey is central to interacting with the API as every call to the API needs to 
 
 Make sure you add the import statement for AppacitiveSDK.
 
-####Initialize your SDK
+#### Initialize your SDK
 
 ```objectivec
-[Appacitive registerAPIKey:@"<insert_apiKey_here>"];
+[Appacitive registerAPIKey:@"<insert_apiKey_here>" useLiveEnvironment:NO];
 ```
 
-The above line of code will initialize the Appacitive SDK with the default environment setting set to _sandbox_. To enable the _live_ environment add the following line of code.
+The above line of code will initialize the Appacitive SDK with the default environment setting set to _sandbox_. To enable the _live_ environment set the `useLiveEnvironment parameter to YES`.
 
 ```objectivec
-[Appacitive useLiveEnvironment:YES];
-```
-
-When you initialize Appacitive, it creates an Appacitive APDevice object by default for you. You can use this APDevice object for device related operations. To get a reference to the instance of the APDevice object, see the code below.
-
-```objectivec
-APDevice *myPhone = [APDevice alloc] init];
-myphone = [Appacitive getCurrentAPDevice];
+[Appacitive registerAPIKey:@"<insert_apiKey_here>" useLiveEnvironment:YES];
 ```
 
 ## Conventions
@@ -918,7 +918,7 @@ If you want to associate a new APUser to a Twitter account, you can simply use t
     NSLog(@"Linked twitter account details:%@",[result description]);
 }];
 
-//Retrieving 
+//Retrieving
 [user getAllLinkedAccountsWithSuccessHandler:^(NSDictionary *result) {
     NSLog(@"All Linked account details:%@",[result description]);
 }];
@@ -1031,6 +1031,60 @@ emailObj.templateBody = @{@"username":@"Robin", @"appname":@"DealHunter"};
 
 ----------
 
+## Device
+
+Appacitive provides an out-of-the box data type called device. This type helps you in managing the devices that your apps are installed on. You can use the device class to track your user's devices and send push notifications.
+
+### Register
+
+There are two types of device registrations provided by the SDK. the `registerDevice` method will create a device instance in your app at appacitive and also give you an instance to the newly created device, just like when you create an object.
+
+```objectivec
+    APDevice *mydevice = [[APDevice alloc] initWithDeviceToken:@"1gh32fh5fgh37fx58c" deviceType:@"ios"];
+    [mydevice registerDeviceWithSuccessHandler:^() {
+        NSLog(@"Device created!");
+    } failureHandler:^(APError *error) {
+        NSLog(@"Some error occurred: %@",[error description]);
+    }];
+``` 
+
+The `registerCurrentDeviceWithPushDeviceToken` method will create a device instance in your app at Appacitive with the push device token and also set it active for receiving push notifications. the device instance that gets instantiated is the static APdevice instance `currentDevice`. Make sure that the push device token that you enter as the parameter for the register call is the same token that you receive from iOS for receiving push notifications.
+
+```objectvec
+[APDevice registerCurrentDeviceWithPushDeviceToken:nil enablePushNotifications:NO successHandler:^{
+    NSLog(@"Device created!");
+} failureHandler:^(APError *error) {
+    NSLog(@"Some error occurred: %@",[error description]);
+}];
+```
+
+### De-register
+
+The deregisterCurrentDevice method will set the isActive flag of the current device to `false` thereby disabling push notifications on the device.
+
+```
+[APDevice deregisterCurrentDeviceWithSuccessHandler:^{
+    NSLog(@"Device de-registered!");
+} failureHandler:^(APError *error) {
+    NSLog(@"Some error occurred: %@",[error description]);
+}];
+```
+
+### Delete
+
+Deleting a device works the same way as [deleting an APObject](#deleting).
+
+### Update
+
+Updating an APDevice works the same way as [updating an APObject](#updating).
+
+### Retrieve
+
+Retrieving a device works the same way as [retrieving an APDObject](#retrieving).
+
+
+----------
+
 ## Push Notifications
 
 Using Appacitive platform you can send push notification to iOS, Android and Windows Phone devices.
@@ -1127,7 +1181,7 @@ Appacitive supports file storage and provides api's for you to easily upload and
 You can download file directly.
 
 ```objectivec
-[APFile uploadFileWithName:@"BannerImage" data:[NSData dataWithContentsOfFile:@"BannerImage.png"] validUrlForTime:@10 contentType:@"image/png"];
+[APFile uploadFileWithName:@"BannerImage" data:[NSData dataWithContentsOfFile:@"BannerImage.png"] urlExpiresAfter:@10 contentType:@"image/png"];
 ```
 
 If you wish to manage the upload process on your own, you can just fetch the upload URL.
@@ -1142,7 +1196,7 @@ If you wish to manage the upload process on your own, you can just fetch the upl
 
 ```objectivec
 
-[APFile downloadFileWithName:@"BannerImage" validUrlForTime:@10 successHandler:^(NSData *data) {
+[APFile downloadFileWithName:@"BannerImage" urlExpiresAfter:@10 successHandler:^(NSData *data) {
     UIImage *bannerImage = [UIImage imageWithData:data];
 }];
 ```
@@ -1154,3 +1208,24 @@ If you wish to manage the download process on your own, you can just fetch the d
 	NSLog(@"URL:%@",url);
     }];
 ```
+
+## Access Control
+
+You can also manage access controls on your objects using the acl property of the APObect, APUser or the APDevice classes and their sub classes.
+
+You can either allow, deny or reset permissions for users or usergroups on your object.
+
+**NOTE:** Access controls cannot be enforced on connection objects.
+
+To allow users certain permissions on your object use the allowUsers:permissions: method. The users parameter accepts an array of usernames or user object's objectIds and the permissions parameter accepts an array of strings whose acceptable values are `read`, `create`, `update`, `delete` and `manageaccess`.
+
+```objectivec
+APObject *myObject = [[APObject alloc] initWithTypeName:@"mytype"];
+[myObject.acl allowUsers:@[@"johndoe",@"janedoe",@"9874135633"] permissions:@[@"update",@"manage permissions"]];
+[myObject saveObjectWithSuccessHandler:^(NSDictionary *result){
+    NSLog(@"Object saved with access conttrols");
+}failureHandler:^(APError *error){
+    NSLog(@"Some error occurred: %@"[error description]);
+}];
+```
+Similarly, to allow user groups, use `allowUserGroups:permissions:` method, to deny users or usergroups, use the `denyUsers:permissions:` or `denyUserGroups:permissions` and to reset users or usergroups, use the `resetUsers:permissions:` or `resetUsergroups:permissions` methods.
