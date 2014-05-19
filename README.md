@@ -75,7 +75,7 @@ iOS client SDK for Appacitive platform.
   * [Uploading](#uploading)  
   * [Downloading](#downloading)
 * [User Groups](#user-groups)
-  * [Adding users to a user group](#adding-users-to-a-use-group)
+  * [Adding users to a user group](#adding-users-to-a-user-group)
   * [Removing users to a user group](#removing-users-from-a-user-group)
 * [Access Control](#access-control)
 * [Logging](#logging)
