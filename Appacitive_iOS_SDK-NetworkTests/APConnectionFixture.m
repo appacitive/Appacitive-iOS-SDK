@@ -1,9 +1,4 @@
-//#import "Appacitive.h"
-//#import "APObject.h"
-//#import "APError.h"
-//#import "APQuery.h"
-//#import "APConnection.h"
-//#import "APHelperMethods.h"
+//#import "AppacitiveSDK.h"
 //
 //SPEC_BEGIN(APConnectionTests)
 //
@@ -12,6 +7,8 @@
 //    beforeAll(^() {
 //        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
 //        [Appacitive useLiveEnvironment:NO];
+//        [APLogger enableLogging:YES];
+//        [APLogger enableVerboseMode:YES];
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
 //    });
 //    

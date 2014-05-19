@@ -44,11 +44,7 @@
 	
 	<option value="//api/name/getApiKey">&nbsp;&nbsp;&nbsp;&nbsp;+ getApiKey</option>
 	
-	<option value="//api/name/getCurrentAPDevice">&nbsp;&nbsp;&nbsp;&nbsp;+ getCurrentAPDevice</option>
-	
 	<option value="//api/name/getCurrentEnvironment">&nbsp;&nbsp;&nbsp;&nbsp;+ getCurrentEnvironment</option>
-	
-	<option value="//api/name/registerAPIKey:">&nbsp;&nbsp;&nbsp;&nbsp;+ registerAPIKey:</option>
 	
 	<option value="//api/name/registerAPIKey:useLiveEnvironment:">&nbsp;&nbsp;&nbsp;&nbsp;+ registerAPIKey:useLiveEnvironment:</option>
 	
@@ -84,11 +80,7 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getApiKey">getApiKey</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCurrentAPDevice">getCurrentAPDevice</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCurrentEnvironment">getCurrentEnvironment</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerAPIKey:">registerAPIKey:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerAPIKey:useLiveEnvironment:">registerAPIKey:useLiveEnvironment:</a></span></li>
 	
@@ -159,13 +151,6 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/registerAPIKey:">+&nbsp;registerAPIKey:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/registerAPIKey:useLiveEnvironment:">registerAPIKey:useLiveEnvironment:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
 		<code><a href="#//api/name/registerAPIKey:useLiveEnvironment:">+&nbsp;registerAPIKey:useLiveEnvironment:</a></code>
 		<span class="tooltip"><p>Sets the APIkey</p></span>
 	</span>
@@ -182,13 +167,6 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 	<span class="tooltip">
 		<code><a href="#//api/name/useLiveEnvironment:">+&nbsp;useLiveEnvironment:</a></code>
 		<span class="tooltip"><p>Method to set application environment to live</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/getCurrentAPDevice">+&nbsp;getCurrentAPDevice</a></code>
-		<span class="tooltip"><p>Everythime you call the registerAPIKey method, it creates a default <a href="../Classes/APDevice.html">APDevice</a> object that corresponds to teh deviece the app is installed in. This methods return a refence to the current default <a href="../Classes/APDevice.html">APDevice</a> object.</p></span>
 	</span>
 	
 	
@@ -244,47 +222,6 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/getCurrentAPDevice" title="getCurrentAPDevice"></a>
-	<h3 class="subsubtitle method-title">getCurrentAPDevice</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Everythime you call the registerAPIKey method, it creates a default <a href="../Classes/APDevice.html">APDevice</a> object that corresponds to teh deviece the app is installed in. This methods return a refence to the current default <a href="../Classes/APDevice.html">APDevice</a> object.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (APDevice *)getCurrentAPDevice</code></div>
-
-    
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>The current default <a href="../Classes/APDevice.html">APDevice</a> object.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">Appacitive.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/getCurrentEnvironment" title="getCurrentEnvironment"></a>
 	<h3 class="subsubtitle method-title">getCurrentEnvironment</h3>
 	
@@ -314,51 +251,6 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 	
 	
 	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">Appacitive.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/registerAPIKey:" title="registerAPIKey:"></a>
-	<h3 class="subsubtitle method-title">registerAPIKey:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/registerAPIKey:useLiveEnvironment:">registerAPIKey:useLiveEnvironment:</a></p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (void)registerAPIKey:(NSString *)<em>apiKey</em></code></div>
-
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection see-also-section">
-		<h4 class="method-subtitle">See Also</h4>
-		<ul>
-			
-			<li><code><p><a href="#//api/name/registerAPIKey:useLiveEnvironment:">+ registerAPIKey:useLiveEnvironment:</a></p></code></li>
-			
-		</ul>
-	</div>
 	
 	
 	
@@ -482,7 +374,7 @@ Here you set your Appacitive application APIKey and your Appacitive application 
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-04-24)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-05-19)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

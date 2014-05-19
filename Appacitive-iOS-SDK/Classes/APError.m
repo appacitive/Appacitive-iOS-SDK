@@ -11,6 +11,6 @@
 @implementation APError
 
 - (NSString*) description {
-    return [NSString stringWithFormat:@"Error: %@, ReferenceId: %@, Version: %@", self.localizedDescription, self.referenceId, self.version];
+    return [NSString stringWithFormat:@"Error: %@, Code: %@, ReferenceId: %@, Version: %@", self.localizedDescription, self.statusCode, self.referenceId, self.version];
 }
 @end

@@ -8,9 +8,9 @@
 
 
 
-#import "Acl.h"
+#import "APAccessControl.h"
 
-@implementation Acl
+@implementation APAccessControl
 
 - (void) allowUsers:(NSArray*)users permissions:(NSArray*)permissions {
     for(NSString *user in users) {
@@ -169,7 +169,7 @@
 }
 
 
-- (NSArray*) getCombinedAccessList {
+- (NSArray*) getFormattedAccessList {
     NSMutableArray *aclList = [[NSMutableArray alloc] init];
     for(id key in _userAccessDict) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];

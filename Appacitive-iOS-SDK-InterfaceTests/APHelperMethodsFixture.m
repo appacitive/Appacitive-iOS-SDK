@@ -7,9 +7,7 @@
 //
 
 #import "APHelperMethodsFixture.h"
-#import "APHelperMethods.h"
-#import "APError.h"
-
+#import "AppacitiveSDK.h"
 /**
  Test methods to test the interface of the AYHelperMethods class
  */

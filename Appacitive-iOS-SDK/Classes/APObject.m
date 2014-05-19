@@ -11,6 +11,8 @@
 #import "APHelperMethods.h"
 #import "APNetworking.h"
 #import "Appacitive.h"
+#import "APLogger.h"
+#import "APLogger.h"
 
 @implementation APObject
 
@@ -27,7 +29,7 @@ NSString *const OBJECT_PATH = @"object/";
             if(objectId != nil) {
                 _objectId = objectId;
             }
-            _acl = [[Acl alloc] init];
+            _acl = [[APAccessControl alloc] init];
             NSMutableDictionary *typeMapping;
             NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             filePath = [filePath stringByAppendingPathComponent:@"typeMapping.plist"];
@@ -110,13 +112,12 @@ NSString *const OBJECT_PATH = @"object/";
     
     [urlRequest setHTTPMethod:@"DELETE"];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if(successBlock != nil) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -148,14 +149,13 @@ NSString *const OBJECT_PATH = @"object/";
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
         if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -189,9 +189,8 @@ NSString *const OBJECT_PATH = @"object/";
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if(successBlock != nil) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             NSMutableArray *objects = [[NSMutableArray alloc] init];
             for (int i=0; i<[[result objectForKey:@"objects"] count]; i++)
             {
@@ -202,7 +201,7 @@ NSString *const OBJECT_PATH = @"object/";
             successBlock(objects);
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -227,17 +226,16 @@ NSString *const OBJECT_PATH = @"object/";
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParameters] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if(successBlock != nil) {
+        if (successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -273,17 +271,16 @@ NSString *const OBJECT_PATH = @"object/";
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParametersUpdate] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if(successBlock != nil) {
+        if (successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -315,9 +312,8 @@ NSString *const OBJECT_PATH = @"object/";
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if(successBlock != nil) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             NSMutableArray *objects = [[NSMutableArray alloc] init];
             for (int i=0; i<[[result objectForKey:@"objects"] count]; i++) {
                 APObject *tempObject = [[APObject alloc] init];
@@ -327,7 +323,7 @@ NSString *const OBJECT_PATH = @"object/";
             successBlock(objects,[[[result objectForKey:@"paginginfo"] valueForKey:@"pagenumber"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"pagesize"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"totalrecords"] integerValue]);
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -536,7 +532,7 @@ NSString *const OBJECT_PATH = @"object/";
     if (self.tags)
         postParams[@"__tags"] = self.tags;
     if (self.acl)
-        postParams[@"__acls"] = [self.acl getCombinedAccessList];
+        postParams[@"__acls"] = [self.acl getFormattedAccessList];
     return postParams;
 }
 
@@ -612,7 +608,7 @@ NSString *const OBJECT_PATH = @"object/";
     }
     
     if (self.acl)
-        postParams[@"__acls"] = [self.acl getCombinedAccessList];
+        postParams[@"__acls"] = [self.acl getFormattedAccessList];
     
     return postParams;
 }
@@ -651,15 +647,14 @@ NSString *const OBJECT_PATH = @"object/";
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:params options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if(successBlock != nil) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];

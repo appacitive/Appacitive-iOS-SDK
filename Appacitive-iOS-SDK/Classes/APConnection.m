@@ -12,6 +12,7 @@
 #import "APHelperMethods.h"
 #import "APNetworking.h"
 #import "APGraphNode.h"
+#import "APLogger.h"
 
 @implementation APConnection
 
@@ -51,19 +52,18 @@
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
     [self updateSnapshot];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             [self setPropertyValuesFromDictionary:result];
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -127,12 +127,11 @@
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             [self setPropertyValuesFromDictionary:result];
             if([[result[@"connection"][@"__endpointa"] allKeys] containsObject:@"object"]) {
@@ -154,7 +153,7 @@
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -183,18 +182,17 @@
     self.labelB = labelB;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             [self setPropertyValuesFromDictionary:result];
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -224,12 +222,11 @@
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             [self setPropertyValuesFromDictionary:result];
             if([[result[@"connection"][@"__endpointa"] allKeys] containsObject:@"object"])
@@ -242,7 +239,7 @@
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -271,12 +268,11 @@
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self parameters] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             [self setPropertyValuesFromDictionary:result];
             
@@ -290,7 +286,7 @@
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+        
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -325,19 +321,18 @@
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParamertersUpdate] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
     
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
         if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -371,14 +366,13 @@
     [urlRequest setHTTPMethod:@"GET"];
     
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             [self setPropertyValuesFromDictionary:result];
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -404,13 +398,12 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -713,8 +706,7 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             NSMutableArray *objects = [[NSMutableArray alloc] init];
             for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
@@ -725,7 +717,7 @@
             successBlock(objects,[[[result objectForKey:@"paginginfo"] valueForKey:@"pagenumber"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"pagesize"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"totalrecords"] integerValue]);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -758,8 +750,7 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             NSMutableArray *objects = [[NSMutableArray alloc] init];
             for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
@@ -770,7 +761,7 @@
             successBlock(objects,[[[result objectForKey:@"paginginfo"] valueForKey:@"pagenumber"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"pagesize"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"totalrecords"] integerValue]);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -790,8 +781,7 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             NSMutableArray *objects = [[NSMutableArray alloc] init];
             for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
@@ -802,7 +792,7 @@
             successBlock(objects,[[[result objectForKey:@"paginginfo"] valueForKey:@"pagenumber"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"pagesize"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"totalrecords"] integerValue]);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -827,13 +817,12 @@
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:postParams options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
     
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             NSMutableArray *objects = [[NSMutableArray alloc] init];
             for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
@@ -844,7 +833,7 @@
             successBlock(objects,[[[result objectForKey:@"paginginfo"] valueForKey:@"pagenumber"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"pagesize"] integerValue], [[[result objectForKey:@"paginginfo"] valueForKey:@"totalrecords"] integerValue]);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -893,8 +882,7 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             NSMutableArray *objects = [[NSMutableArray alloc] init];
             for (int i=0; i< [[result objectForKey:@"connections"] count]; i++) {
@@ -905,7 +893,7 @@
             successBlock(objects);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -936,8 +924,7 @@
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             filePath = [filePath stringByAppendingPathComponent:@"typeMapping.plist"];
@@ -979,7 +966,7 @@
             successBlock(nodes);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -1008,16 +995,15 @@
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:params options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
+		
         if (failureBlock != nil) {
             failureBlock(error);
         }

@@ -5,11 +5,12 @@
 //  Created by Kauserali Hafizji on 29/08/12.
 //  Copyright (c) 2012 Appacitive Software Pvt. All rights reserved.
 //
-#import "APDevice.h"
+
 /**
  Appacitive is the entry point to use the Appacitive SDK.
  Here you set your Appacitive application APIKey and your Appacitive application environment, which will be used to make all network requests to Appacitive back end.
  */
+
 @interface Appacitive: NSObject
 
 @property (nonatomic, readwrite) BOOL enableDebugForEachRequest;

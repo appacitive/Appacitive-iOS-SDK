@@ -10,6 +10,7 @@
 #import "APHelperMethods.h"
 #import "APNetworking.h"
 #import "APGraphNode.h"
+#import "APLogger.h"
 
 #define PUSH_PATH @"push/"
 
@@ -202,17 +203,16 @@
     NSData *bodyData = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
     
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     [urlRequest setHTTPBody:bodyData];
     [urlRequest setHTTPMethod:@"POST"];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];

@@ -1,10 +1,4 @@
-//#import "Appacitive.h"
-//#import "APObject.h"
-//#import "APError.h"
-//#import "APDevice.h"
-//#import "APUser.h"
-//#import "APPushNotification.h"
-//#import "APQuery.h"
+//#import "AppacitiveSDK.h"
 //
 //SPEC_BEGIN(APDeviceTests)
 //
@@ -13,6 +7,8 @@
 //    beforeAll(^() {
 //        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
 //        [Appacitive useLiveEnvironment:NO];
+//        [APLogger enableLogging:YES];
+//        [APLogger enableVerboseMode:YES];
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
 //    });
 //
@@ -42,7 +38,7 @@
 //        } failureHandler:^(APError *error) {
 //            isDeviceCreated = NO;
 //        }];
-//       
+//
 //        [[expectFutureValue(theValue(isDeviceCreated)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //

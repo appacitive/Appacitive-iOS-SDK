@@ -15,7 +15,18 @@
 
 @implementation APHelperMethods
 
-+ (APError*) checkForErrorStatus:(id)response{
++ (APError*) getErrorInfo:(NSHTTPURLResponse*)response {
+    if(response != nil) {
+        NSString *errorMessage = [NSString stringWithFormat:@"Message: HTTP Error"];
+        NSDictionary *dictionary = @{NSLocalizedDescriptionKey: errorMessage};
+        APError *error = [APError errorWithDomain:ERROR_DOMAIN code:[response statusCode] userInfo:dictionary];
+        error.statusCode = [NSString stringWithFormat:@"%ld",(long)[response statusCode]];
+        return error;
+    }
+    return nil;
+}
+
++ (APError*) checkForErrorStatus:(id)response {
     NSDictionary *status;
     if (response[@"status"]) {
         status = response[@"status"];
@@ -29,9 +40,10 @@
         NSString *version = status[@"version"];
         NSArray *additionalMessages = status[@"additionalmessages"];
         
-        NSString *errorMessage = [NSString stringWithFormat:@"Message: %@ Additional messages: %@", message, additionalMessages.description];
+        NSString *errorMessage = [NSString stringWithFormat:@"Message: %@ Additional messages: %@", message, additionalMessages.count>0 ? additionalMessages.description : @"NONE"];
         NSDictionary *dictionary = @{NSLocalizedDescriptionKey: errorMessage};
         APError *error = [APError errorWithDomain:ERROR_DOMAIN code:[statusCode integerValue] userInfo:dictionary];
+        error.statusCode = statusCode;
         error.referenceId = referenceId;
         error.version = version;
         return error;

@@ -1,8 +1,4 @@
-//#import "Appacitive.h"
-//#import "APObject.h"
-//#import "APError.h"
-//#import "APQuery.h"
-//#import "APFile.h"
+//#import "AppacitiveSDK.h"
 //
 //SPEC_BEGIN(APBlobTests)
 //
@@ -11,6 +7,8 @@
 //    beforeAll(^() {
 //        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
 //        [Appacitive useLiveEnvironment:NO];
+//        [APLogger enableLogging:YES];
+//        [APLogger enableVerboseMode:YES];
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
 //    });
 //    
@@ -30,7 +28,7 @@
 //                urlExpiresAfter:@10
 //                contentType:@"image/png"
 //                successHandler:^(NSDictionary *dictionary){
-//                    NSLog(@"%@", dictionary.description);
+//                    NSLog(@"Response:%@", dictionary.description);
 //                    isUploadSuccessful = YES;
 //                } failureHandler:^(APError *error){
 //                    isUploadSuccessful = NO;
@@ -44,7 +42,7 @@
 //                urlExpiresAfter:@10
 //                contentType:@"image/png"
 //                successHandler:^(NSURL* url){
-//                    NSLog(@"\n**********Upload URL:%@\n", [url description]);
+//                    NSLog(@"\n**********UPLOAD URL:%@\n", [url description]);
 //                    isUploadSuccessful = YES;
 //                } failureHandler:^(APError *error){
 //                    isUploadSuccessful = NO;
@@ -60,7 +58,7 @@
 //        [APFile downloadFileWithName:@"Image2.png" urlExpiresAfter:@10 successHandler:^(NSData *data) {
 //            isDownloadSuccessful = YES;
 //            UIImage *image = [[UIImage alloc] initWithData:data];
-//            NSLog(@"\nImageSize:%f X %f\n",image.size.width, image.size.height);
+//            NSLog(@"\nIMAGE SIZE:%f X %f\n",image.size.width, image.size.height);
 //        } failureHandler:^(APError *error) {
 //            isDownloadSuccessful = NO;
 //        }];
@@ -72,7 +70,7 @@
 //
 //        [APFile getDownloadURLForFileWithName:@"Image2.png" urlExpiresAfter:@10 successHandler:^(NSURL *url) {
 //            isDownloadSuccessful = YES;
-//            NSLog(@"\n**********URL:%@\n",[url description]);
+//            NSLog(@"\n**********DOWNLOAD URL:%@\n",[url description]);
 //        } failureHandler:^(APError *error) {
 //            isDownloadSuccessful = NO;
 //        }];
