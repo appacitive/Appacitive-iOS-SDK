@@ -11,7 +11,7 @@
 #import "APHelperMethods.h"
 #import "APConstants.h"
 #import "APNetworking.h"
-
+#import "APLogger.h"
 #define USER_PATH @"user/"
 
 static APUser* currentUser = nil;
@@ -19,18 +19,18 @@ static NSDictionary *headerParams;
 
 @implementation APUser
 
-+ (NSDictionary*)getHeaderParams
-{
-    headerParams = [NSDictionary dictionaryWithObjectsAndKeys:
-                    [Appacitive getApiKey], APIkeyHeaderKey,
-                    [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
-                    currentUser.userToken, UserAuthHeaderKey,
-                    @"application/json", @"Content-Type",
-                    nil];
-    return headerParams;
-}
+//+ (NSDictionary*)getHeaderParams
+//{
+//    headerParams = [NSDictionary dictionaryWithObjectsAndKeys:
+//                    [Appacitive getApiKey], APIkeyHeaderKey,
+//                    [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
+//                    currentUser.userToken, UserAuthHeaderKey,
+//                    @"application/json", @"Content-Type",
+//                    nil];
+//    return headerParams;
+//}
 
-- (instancetype)init {
+- (instancetype) init {
     return self = [super initWithTypeName:@"user"];
 }
 
@@ -41,6 +41,17 @@ static NSDictionary *headerParams;
 + (void) setCurrentUser:(APUser *)user {
     currentUser = user;
     [APUser saveCustomObject:user forKey:@"currentAPUser"];
+}
+
++ (APUser*)getSavedUser {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults objectForKey:@"currentAPUser"] != nil) {
+        NSData *encodedObject = [defaults objectForKey:@"currentAPUser"];
+        APUser *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+        return object;
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - Authenticate methods
@@ -66,23 +77,22 @@ static NSDictionary *headerParams;
                                                                    nil]
                                                           options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
         [currentUser setPropertyValuesFromDictionary:result];
         [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
-        if (successBlock) {
+        [APNetworking addHTTPHeaderValue:currentUser.userToken forKey:UserAuthHeaderKey];
+        if (successBlock != nil) {
             successBlock(currentUser);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -110,21 +120,21 @@ static NSDictionary *headerParams;
                                                                    accessToken, @"accesstoken",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__
                               successHandler:^(NSDictionary *result) {
                                   currentUser = [[APUser alloc] initWithTypeName:@"user"];
                                   [currentUser setPropertyValuesFromDictionary:result];
                                   [currentUser setLoggedInWithFacebook:YES];
+                                  [APNetworking addHTTPHeaderValue:currentUser.userToken forKey:UserAuthHeaderKey];
                                   [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
-                                  if (successBlock) {
+                                  if (successBlock != nil) {
                                       successBlock(currentUser);
                                   }
                               } failureHandler:^(APError *error) {
@@ -158,21 +168,21 @@ static NSDictionary *headerParams;
                                                                    oauthSecret, @"oauthsecret",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__
                               successHandler:^(NSDictionary *result) {
                                   currentUser = [[APUser alloc] initWithTypeName:@"user"];
                                   [currentUser setPropertyValuesFromDictionary:result];
                                   [currentUser setLoggedInWithFacebook:YES];
+                                  [APNetworking addHTTPHeaderValue:currentUser.userToken forKey:UserAuthHeaderKey];
                                   [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
-                                  if (successBlock) {
+                                  if (successBlock != nil) {
                                       successBlock(currentUser);
                                   }
                               } failureHandler:^(APError *error) {
@@ -206,24 +216,23 @@ static NSDictionary *headerParams;
                                                                    consumerSecret, @"consumerSecret",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
 
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
         [currentUser setPropertyValuesFromDictionary:result];
         [currentUser setLoggedInWithFacebook:YES];
+        [APNetworking addHTTPHeaderValue:currentUser.userToken forKey:UserAuthHeaderKey];
         [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
-        if (successBlock) {
+        if (successBlock != nil) {
             successBlock(currentUser);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -251,20 +260,18 @@ static NSDictionary *headerParams;
                                                                    facebookAcessToken, @"accesstoken",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -291,20 +298,18 @@ static NSDictionary *headerParams;
                                                                    oauthSecret, @"oauthsecret",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -333,20 +338,18 @@ static NSDictionary *headerParams;
                                                                    consumerSecret, @"consumersecret",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -368,15 +371,13 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -394,15 +395,13 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -420,15 +419,13 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -454,20 +451,18 @@ static NSDictionary *headerParams;
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParameters] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if (successBlock) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -502,17 +497,16 @@ static NSDictionary *headerParams;
     
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if(successBlock != nil) {
+        if (successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -549,17 +543,16 @@ static NSDictionary *headerParams;
     
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if(successBlock != nil) {
+        if (successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -585,17 +578,16 @@ static NSDictionary *headerParams;
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParameters] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if(successBlock != nil) {
+        if (successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -628,17 +620,15 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-            if (successBlock) {
+            if (successBlock != nil) {
             successBlock();
         }
         
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -669,16 +659,14 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if (successBlock) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -709,18 +697,16 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         APUser *user = [[APUser alloc] initWithTypeName:@"user"];
         [user setPropertyValuesFromDictionary:result];
-        if (successBlock) {
+        if (successBlock != nil) {
             successBlock();
         }
         
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -747,22 +733,20 @@ static NSDictionary *headerParams;
     NSMutableDictionary *updateData = [[NSMutableDictionary alloc] initWithDictionary:[self postParametersUpdate]];
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:updateData options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         APUser *user = [[APUser alloc] initWithTypeName:@"user"];
         [user setPropertyValuesFromDictionary:result];
-        if (successBlock) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
         
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             
             failureBlock(error);
@@ -804,13 +788,12 @@ static NSDictionary *headerParams;
     NSURL *url = [NSURL URLWithString:path];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if(successBlock != nil) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -824,21 +807,21 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if(currentUser != nil) {
             if(self.objectId == currentUser.objectId) {
                 currentUser = nil;
+                [APNetworking resetDefaultHTTPHeaders];
                 [APUser saveCustomObject:nil forKey:@"currentAPUser"];
             }
         }
-        if(successBlock != nil) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -857,15 +840,13 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -879,6 +860,7 @@ static NSDictionary *headerParams;
 + (void) deleteCurrentlyLoggedInUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     [currentUser deleteObjectWithSuccessHandler:successBlock failureHandler:failureBlock];
     currentUser = nil;
+    [APNetworking resetDefaultHTTPHeaders];
     [APUser saveCustomObject:nil forKey:@"currentAPUser"];
 }
 
@@ -908,14 +890,13 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
         if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -940,15 +921,13 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -970,23 +949,22 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         NSString *responseJSON = [NSString stringWithFormat:@"%@",[result objectForKey:@"result"]];
         if([responseJSON isEqualToString:@"1"])
         {
             [APUser saveCustomObject:currentUser forKey:@"currentAPUser"];
-            if (successBlock) {
+            if (successBlock != nil) {
                 successBlock(result);
             }
         } else {
             currentUser = nil;
+            [APNetworking resetDefaultHTTPHeaders];
             [APUser saveCustomObject:nil forKey:@"currentAPUser"];
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -1009,17 +987,16 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = nil;
+        [APNetworking resetDefaultHTTPHeaders];
         [APUser saveCustomObject:nil forKey:@"currentAPUser"];
-        if (successBlock) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -1048,20 +1025,18 @@ static NSDictionary *headerParams;
                                                                 newPassword, @"newpassword", nil]
                                                        options:0 error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:postData];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self updateSnapshot];
-        if (successBlock) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -1088,19 +1063,17 @@ static NSDictionary *headerParams;
                                                                 emailSubject,@"subject", nil]
                                                        options:0 error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:postData];
-    [urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -1377,6 +1350,7 @@ static NSDictionary *headerParams;
     [encoder encodeObject:self.attributes forKey:@"attributes"];
     [encoder encodeObject:self.type forKey:@"type"];
     [encoder encodeObject:self.tags forKey:@"tags"];
+    [encoder encodeObject:self.userToken forKey:@"userToken"];
     [encoder encodeObject:self.username forKey:@"username"];
     [encoder encodeObject:self.password forKey:@"pasword"];
     [encoder encodeObject:self.birthDate forKey:@"birthdate"];
@@ -1402,6 +1376,7 @@ static NSDictionary *headerParams;
         _revision = [decoder decodeObjectForKey:@"revision"];
         _properties = [decoder decodeObjectForKey:@"properties"];
         _attributes = [decoder decodeObjectForKey:@"attributes"];
+        _userToken = [decoder decodeObjectForKey:@"userToken"];
         self.type = [decoder decodeObjectForKey:@"type"];
         self.tags= [decoder decodeObjectForKey:@"tags"];
         self.username = [decoder decodeObjectForKey:@"username"];
@@ -1436,17 +1411,6 @@ static NSDictionary *headerParams;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:key] != nil) {
         NSData *encodedObject = [defaults objectForKey:key];
-        APUser *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
-        return object;
-    } else {
-        return nil;
-    }
-}
-
-+ (APUser*)getSavedUser {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if([defaults objectForKey:@"currentAPUser"] != nil) {
-        NSData *encodedObject = [defaults objectForKey:@"currentAPUser"];
         APUser *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
         return object;
     } else {

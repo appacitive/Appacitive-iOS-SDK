@@ -9,8 +9,8 @@
 #import "Appacitive.h"
 #import "APConstants.h"
 #import "APHelperMethods.h"
-#import "APdevice.h"
 #import "APUser.h"
+
 static NSString* _apiKey;
 static BOOL isEnvironmentLive = NO;
 
@@ -34,7 +34,6 @@ static BOOL isEnvironmentLive = NO;
 + (void) registerAPIKey:(NSString*)apiKey useLiveEnvironment:(BOOL)answer {
     _apiKey = apiKey;
     isEnvironmentLive = answer;
-    
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentAPUser"] != nil) {
         [APUser setCurrentUser:[APUser getSavedUser]];
     }

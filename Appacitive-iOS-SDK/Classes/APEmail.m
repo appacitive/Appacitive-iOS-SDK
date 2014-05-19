@@ -9,6 +9,7 @@
 #import "APEmail.h"
 #import "APHelperMethods.h"
 #import "APNetworking.h"
+#import "APLogger.h"
 
 #define EMAIL_PATH @"email/"
 
@@ -62,15 +63,13 @@
     NSError *jsonError = nil;
     [urlRequest setHTTPBody:[NSJSONSerialization dataWithJSONObject:requestData options:0 error:&jsonError]];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock(result);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -121,14 +120,12 @@
     NSError *jsonError = nil;
     [urlRequest setHTTPBody:[NSJSONSerialization dataWithJSONObject:requestData options:0 error:&jsonError]];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if (successBlock) {
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }

@@ -12,6 +12,7 @@
 #import "Appacitive.h"
 #import "APConstants.h"
 #import "APUser.h"
+#import "APLogger.h"
 
 #define DEVICE_PATH @"device/"
 
@@ -67,20 +68,18 @@ static APDevice* currentDevice;
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setAllHTTPHeaderFields:[APDevice getHeaderParams]];
     [urlRequest setHTTPMethod:@"PUT"];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             [self setPropertyValuesFromDictionary:result];
             successBlock();
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -109,20 +108,35 @@ static APDevice* currentDevice;
             currentDevice.isActive = @"true";
         [currentDevice registerDeviceWithSuccessHandler:^{
             [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
-            if(successBlock != nil) {
+            if (successBlock != nil) {
                 successBlock();
             }
         } failureHandler:failureBlock];
     } else {
-        currentDevice.isActive = @"false";
-        if(answer == YES)
-            currentDevice.isActive = @"true";
-        [currentDevice updateObjectWithSuccessHandler:^{
-            [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
-            if(successBlock != nil) {
-                successBlock();
+        if([currentDevice.isActive isEqual:BooleanStringFromBOOL(answer)]) {
+            if(answer == YES) {
+                if(currentDevice.deviceToken != cleanToken) {
+                    currentDevice.deviceToken = cleanToken;
+                    currentDevice.isActive = BooleanStringFromBOOL(answer);
+                    [currentDevice updateObjectWithSuccessHandler:^{
+                        [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+                        if (successBlock != nil) {
+                            successBlock();
+                        }
+                    } failureHandler:failureBlock];
+                }
             }
-        } failureHandler:failureBlock];
+        } else {
+            if(currentDevice.deviceToken != cleanToken)
+                currentDevice.deviceToken = cleanToken;
+            currentDevice.isActive = BooleanStringFromBOOL(answer);
+            [currentDevice updateObjectWithSuccessHandler:^{
+                [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+                if (successBlock != nil) {
+                    successBlock();
+                }
+            } failureHandler:failureBlock];
+        }
     }
 }
 
@@ -176,14 +190,13 @@ static APDevice* currentDevice;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
         if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -216,18 +229,17 @@ static APDevice* currentDevice;
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[self postParametersUpdate] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     [self updateSnapshot];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
-        if(successBlock != nil) {
+        if (successBlock != nil) {
             successBlock(self);
         }
     } failureHandler:^(APError *error) {
         
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];
@@ -272,13 +284,12 @@ static APDevice* currentDevice;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
     [urlRequest setAllHTTPHeaderFields:[APDevice getHeaderParams]];
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
-        if(successBlock != nil) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
             successBlock();
         }
     } failureHandler:^(APError *error) {
-        if(failureBlock != nil) {
+        if (failureBlock != nil) {
             failureBlock(error);
         }
     }];

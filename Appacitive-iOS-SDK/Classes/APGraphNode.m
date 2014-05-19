@@ -13,6 +13,7 @@
 #import "APDevice.h"
 #import "APUser.h"
 #import "APConnection.h"
+#import "APLogger.h"
 
 #define SEARCH_PATH @"search/"
 
@@ -79,16 +80,14 @@ static NSMutableArray *mapKeyStack;
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:placeHolders options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             successBlock([result objectForKey:@"ids"]);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }
@@ -114,11 +113,10 @@ static NSMutableArray *mapKeyStack;
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:requestData options:kNilOptions error:&jsonError];
     if(jsonError != nil)
-        DLog(@"\n––––––––––JSON-ERROR–––––––––\n%@",jsonError);
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
     [urlRequest setHTTPBody:requestBody];
     
-    APNetworking *nwObject = [[APNetworking alloc] init];
-    [nwObject makeAsyncRequestWithURLRequest:urlRequest successHandler:^(NSDictionary *result) {
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             NSMutableDictionary *dict = [result mutableCopy];
             [dict removeObjectForKey:@"status"];
@@ -134,7 +132,6 @@ static NSMutableArray *mapKeyStack;
             successBlock(node);
         }
     } failureHandler:^(APError *error) {
-		DLog(@"\n––––––––––––ERROR––––––––––––\n%@", error);
         if (failureBlock != nil) {
             failureBlock(error);
         }

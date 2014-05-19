@@ -1,21 +1,18 @@
-//#import "Appacitive.h"
-//#import "APError.h"
-//#import "APUser.h"
+//#import "AppacitiveSDK.h"
 //
 //SPEC_BEGIN(APUserTests)
 //
 //describe(@"APUserTests", ^{
 //    
 //    beforeAll(^() {
-//        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
-//        [Appacitive useLiveEnvironment:NO];
+//        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:NO];
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
+//        [APLogger sharedLoggerWithLoggingEnabled:YES verboseMode:YES];
 //    });
 //
 //    beforeEach(^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
-//        
-//        [APUser authenticateUserWithUserName:@"ppatel" password:@"qweqwe"
+//        [APUser authenticateUserWithUserName:@"ppatel" password:@"asdasd"
 //                              successHandler:^(APUser* user) {
 //                                  isUserAuthenticateSuccessful = YES;
 //                              } failureHandler:^(APError *error) {
@@ -27,11 +24,21 @@
 //    afterAll(^(){
 //    });
 //
+//    it(@"fetching a user with a invalid user id", ^{
+//        __block BOOL isUserFetched = YES;
+//        APUser *user = [[APUser alloc] init];
+//        [user fetchUserById:@"539185894550413421l" successHandler:^(){
+//            isUserFetched = YES;
+//        } failureHandler:^(APError *error) {
+//            isUserFetched = NO;
+//        }];
+//        [[expectFutureValue(theValue(isUserFetched)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(NO)];
+//    });
 //
 //    it(@"authenticating a user with a valid user id", ^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //
-//        [APUser authenticateUserWithUserName:@"ppatel" password:@"qweqwe"
+//        [APUser authenticateUserWithUserName:@"ppatel" password:@"asdasd"
 //                successHandler:^(APUser* user) {
 //                    isUserAuthenticateSuccessful = YES;
 //                } failureHandler:^(APError *error) {
@@ -40,11 +47,13 @@
 //        [[expectFutureValue(theValue(isUserAuthenticateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
+//
+//    
 //    it(@"validating user session with a valid user token", ^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //        
 //        [APUser authenticateUserWithUserName:@"ppatel"
-//                                    password:@"qweqwe"
+//                                    password:@"asdasd"
 //                              successHandler:^(APUser* user) {
 //                                  [APUser validateCurrentUserSessionWithSuccessHandler:^(NSDictionary *result) {
 //                                      isUserAuthenticateSuccessful = (BOOL)[result objectForKey:@"result"];
@@ -59,7 +68,7 @@
 //        __block BOOL isUserLoggedOut = NO;
 //        
 //        [APUser authenticateUserWithUserName:@"ppatel"
-//                                    password:@"qweqwe"
+//                                    password:@"asdasd"
 //                              successHandler:^(APUser *user) {
 //                                  [APUser logOutCurrentUserWithSuccessHandler:^{
 //                                      if([APUser currentUser] == nil)
@@ -73,7 +82,7 @@
 //                              }];
 //        [[expectFutureValue(theValue(isUserLoggedOut)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
-//    
+//
 //    it(@"authenticating with a valid facebook id", ^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //

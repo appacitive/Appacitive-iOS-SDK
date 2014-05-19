@@ -9,5 +9,6 @@
 @interface APError : NSError
 @property (nonatomic, strong) NSString *referenceId;
 @property (nonatomic, strong) NSString *version;
+@property (nonatomic, strong) NSString *statusCode;
 @end
 

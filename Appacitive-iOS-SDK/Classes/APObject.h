@@ -8,7 +8,7 @@
 
 #import "APResponseBlocks.h"
 #import "APQuery.h"
-#import "Acl.h"
+#import "APAccessControl.h"
 
 @class APError;
 
@@ -35,7 +35,7 @@ extern NSString *const OBJECT_PATH;
     NSDate *_utcLastUpdatedDate;
     NSNumber *_revision;
     NSMutableArray *_properties;
-    Acl *_acl;
+    APAccessControl *_acl;
     NSMutableDictionary *_attributes;
     NSMutableDictionary *_snapShot;
 }
@@ -57,7 +57,7 @@ extern NSString *const OBJECT_PATH;
 @property (strong, nonatomic) NSMutableDictionary *propertiesToRemove;
 @property (strong, nonatomic) NSMutableDictionary *propertiesToIncrement;
 @property (strong, nonatomic) NSMutableDictionary *propertiesToDecrement;
-@property (strong, nonatomic) Acl *acl;
+@property (strong, nonatomic) APAccessControl *acl;
 @property (nonatomic, weak) id <APObjectPropertyMapping> delegate;
 
 #pragma mark - APObject Methods
@@ -176,6 +176,7 @@ extern NSString *const OBJECT_PATH;
 
 /**
  Method used to update an APObject.
+ @param revision the current revision number of the object on Appacitive.
  @param successBlock Block invoked when the update operation is successful.
  @param failureBlock Block invoked when the update operation fails.
  */

@@ -1,6 +1,4 @@
-//#import "Appacitive.h"
-//#import "APEmail.h"
-//#import "APError.h"
+//#import "AppacitiveSDK.h"
 //
 //SPEC_BEGIN(APEmailTests)
 //
@@ -9,6 +7,8 @@
 //    beforeAll(^() {
 //        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
 //        [Appacitive useLiveEnvironment:NO];
+//        [APLogger enableLogging:YES];
+//        [APLogger enableVerboseMode:YES];
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
 //    });
 //    

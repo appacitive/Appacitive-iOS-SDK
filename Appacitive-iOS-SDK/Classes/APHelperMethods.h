@@ -16,6 +16,7 @@
 @interface APHelperMethods : NSObject
 
 #define NSStringFromBOOL(aBOOL) aBOOL ? @"YES" : @"NO"
+#define BooleanStringFromBOOL(aBOOL) aBOOL ? @"true" : @"false"
 #ifdef DEBUG
 #   define DLog(fmt, ...) {NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);}
 #   define ELog(err) {if(err) DLog(@"%@", err)}
@@ -28,13 +29,9 @@
  Helper method used to check for any errors.
  
  @param response Response received from the server.
+ @return APError represnetation of error from response.
  */
 + (APError*) checkForErrorStatus:(id)response;
-
-/**
- Helper method used to create an error for the case when a session has not been retrieved and API calls are made.
- */
-//+ (APError*) errorForSessionNotCreated;
 
 /**
  Helper method to parse the properties from a json response
@@ -68,5 +65,13 @@
  */
 + (NSString*) jsonDateStringFromDate:(NSDate*)date;
 
+
+/**
+ Method to get error info from non 200 HTTP response codes
+ 
+ @param response Response received from the server.
+ @return APError represnetation of error from response.
+ */
++ (APError*) getErrorInfo:(NSURLResponse*)response;
 
 @end

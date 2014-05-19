@@ -189,12 +189,18 @@
 /**
  Method used to fetch an APObject.
  This method will use the type and objectId properties to fetch the object. If the objectId and type is not set, results are unexpected.
+ 
  @param propertiesToFetch Array of properties to be fetched excluding all other.
  @param successBlock Block invoked when the fetch operation is successful.
  @param failureBlock Block invoked when the fetch operation fails.
  */
 - (void) fetchWithPropertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
+/**
+ Method to fetch a reference to the current device object.
+ 
+ @return a reference to the static current device object.
+ */
 + (APDevice*) getCurrentDevice;
 
 @end

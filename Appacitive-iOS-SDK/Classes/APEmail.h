@@ -42,10 +42,7 @@
 - (void) sendEmail;
 
 /**
- Method to send a simple email.
- @param successBlock Block invoked when the email sending operation is successful.
- @param failureBlock Block invoked when the email sending operation is unsuccessful.
- @note To send an email the following properties of the email object MUST be set: toRecipients, subjectText, bodyText
+ @see sendEmailUsingSMTPConfig:successHandler:failureHandler:
  */
 - (void) sendEmailWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 

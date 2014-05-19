@@ -1,7 +1,4 @@
-//#import "Appacitive.h"
-//#import "APGraphNode.h"
-//#import "APError.h"
-//#import "APDevice.h"
+//#import "AppacitiveSDK.h"
 //
 //SPEC_BEGIN(APGraphNodeFixture)
 //
@@ -10,6 +7,8 @@
 //    beforeAll(^() {
 //        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
 //        [Appacitive useLiveEnvironment:NO];
+//        [APLogger enableLogging:YES];
+//        [APLogger enableVerboseMode:YES];
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
 //    });
 //
