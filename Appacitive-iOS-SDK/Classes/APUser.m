@@ -56,15 +56,15 @@ static NSDictionary *headerParams;
 
 #pragma mark - Authenticate methods
 
-+ (void) authenticateUserWithUserName:(NSString *)userName password:(NSString *)password {
-    [APUser authenticateUserWithUserName:userName password:password successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithUsername:(NSString *)username password:(NSString *)password {
+    [APUser authenticateUserWithUsername:username password:password successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password failureHandler:(APFailureBlock)failureBlock {
-    [APUser authenticateUserWithUserName:userName password:password successHandler:nil failureHandler:failureBlock];
++ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithUsername:username password:password successHandler:nil failureHandler:failureBlock];
 }
 
-+ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -72,7 +72,7 @@ static NSDictionary *headerParams;
     
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   userName, @"username",
+                                                                   username, @"username",
                                                                    password, @"password",
                                                                    nil]
                                                           options:kNilOptions error:&jsonError];
@@ -635,21 +635,21 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) fetchUserByUserName:(NSString *)userName {
-    [self fetchUserByUserName:userName successHandler:nil failureHandler:nil];
+- (void) fetchUserByUsername:(NSString *)username {
+    [self fetchUserByUsername:username successHandler:nil failureHandler:nil];
 }
 
-- (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock {
-    [self fetchUserByUserName:userName successHandler:successBlock failureHandler:nil];
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock {
+    [self fetchUserByUsername:username successHandler:successBlock failureHandler:nil];
 }
 
-- (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
-    [self fetchUserByUserName:userName propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+    [self fetchUserByUsername:username propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) fetchUserByUserName:(NSString *)userName propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) fetchUserByUsername:(NSString *)username propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
     
-    NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",userName];
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",username];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     
      if(propertiesToFetch != nil || propertiesToFetch.count > 0)
@@ -827,14 +827,14 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) deleteObjectWithUserName:(NSString*)userName
+- (void) deleteObjectWithUsername:(NSString*)username
 {
-    [self deleteObjectWithUserName:userName successHandler:nil failureHandler:nil];
+    [self deleteObjectWithUsername:username successHandler:nil failureHandler:nil];
 }
 
-- (void) deleteObjectWithUserName:(NSString*)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock
+- (void) deleteObjectWithUsername:(NSString*)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock
 {
-    NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",userName];
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",username];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     
@@ -1043,15 +1043,15 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) sendResetPasswordEmailWithSubject:(NSString *)emailSubject {
-    [self sendResetPasswordEmailWithSubject:emailSubject successHandler:nil failureHandler:nil];
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString *)emailSubject {
+    [self sendResetPasswordEmailForUserWithUsername:username withSubject:emailSubject successHandler:nil failureHandler:nil];
 }
 
-- (void) sendResetPasswordEmailWithSubject:(NSString *)emailSubject failureHandler:(APFailureBlock)failureBlock {
-    [self sendResetPasswordEmailWithSubject:emailSubject successHandler:nil failureHandler:failureBlock];
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString *)emailSubject failureHandler:(APFailureBlock)failureBlock {
+    [self sendResetPasswordEmailForUserWithUsername:username withSubject:emailSubject successHandler:nil failureHandler:failureBlock];
 }
 
-- (void) sendResetPasswordEmailWithSubject:(NSString *)emailSubject successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString *)emailSubject successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"sendresetpasswordemail"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -1059,7 +1059,7 @@ static NSDictionary *headerParams;
     
     NSError *jsonError = nil;
     NSData *postData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                self.username, @"username",
+                                                                username, @"username",
                                                                 emailSubject,@"subject", nil]
                                                        options:0 error:&jsonError];
     if(jsonError != nil)

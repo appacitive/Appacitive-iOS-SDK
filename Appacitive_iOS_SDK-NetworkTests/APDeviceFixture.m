@@ -14,7 +14,7 @@
 //
 //    beforeEach(^{
 //        __block bool isUserAuthenticateSuccessful;
-//        [APUser authenticateUserWithUserName:@"ppatel" password:@"qweqwe"
+//        [APUser authenticateUserWithUsername:@"ppatel" password:@"qweqwe"
 //                              successHandler:^(APUser* user) {
 //                                  isUserAuthenticateSuccessful = YES;
 //                              } failureHandler:^(APError *error) {

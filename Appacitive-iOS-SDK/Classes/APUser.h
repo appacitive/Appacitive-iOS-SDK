@@ -55,26 +55,26 @@
 /** @name Authenticating APUser */
 
 /**
- @see authenticateUserWithUserName:password:successHandler:failureHandler:
+ @see authenticateUserWithUsername:password:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password;
++ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password;
 
 /**
- @see authenticateUserWithUserName:password:successHandler:failureHandler:
+ @see authenticateUserWithUsername:password:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password failureHandler:(APFailureBlock) failureBlock;
++ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password failureHandler:(APFailureBlock) failureBlock;
 
 /**
  Method to authenticate a user
  
  If successful the currentUser is set to the authenticated user.
  
- @param userName The username of the user to authenticate.
+ @param username The username of the user to authenticate.
  @param password The password of the user to authenticate.
  @param successBlock Block invoked when authentication is successful.
  @param failureBlock Block invoked when authentication is unsuccessful.
  */
-+ (void) authenticateUserWithUserName:(NSString*)userName password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock;
++ (void) authenticateUserWithUsername:(NSString*)username password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
  @see authenticateUserWithFacebook:successHandler:failureHandler:
@@ -371,29 +371,29 @@
 - (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- @see fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:
+ @see fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:
  */
-- (void) fetchUserByUserName:(NSString *)userName;
+- (void) fetchUserByUsername:(NSString *)username;
 
 /**
- @see fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:
+ @see fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:
  */
-- (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock) successBlock;
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock) successBlock;
 
 /**
- @see fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:
+ @see fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:
  */
-- (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
- Method to retrieve User by userName
+ Method to retrieve User by username
  
- @param userName The user name of an existing user  whose details need to be retrieved.
+ @param username The user name of an existing user  whose details need to be retrieved.
  @param propertiesToFetch Array of properties to be fetched excluding all other.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) fetchUserByUserName:(NSString *)userName propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserByUsername:(NSString *)username propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
 
 /**
  @see fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:
@@ -501,18 +501,18 @@
 - (void) deleteObjectWithConnectingConnectionsSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see deleteObjectWithUserName:successHandler:failureHandler:
+ @see deleteObjectWithUsername:successHandler:failureHandler:
  */
-- (void) deleteObjectWithUserName:(NSString*)userName;
+- (void) deleteObjectWithUsername:(NSString*)username;
 
 /**
  Method to delete a User
  
- @param userName The username of the user whose details need to be deleted.
+ @param username The username of the user whose details need to be deleted.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) deleteObjectWithUserName:(NSString*)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) deleteObjectWithUsername:(NSString*)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see deleteCurrentlyLoggedInUserWithSuccessHandler:failureHandler:
@@ -608,27 +608,28 @@
 - (void) changePasswordFromOldPassword:(NSString *)oldPassword toNewPassword:(NSString *)newPassword successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see sendResetPasswordEmailWithSubject:successHandler:failureHandler:
+ @see sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:
  */
-- (void) sendResetPasswordEmailWithSubject:(NSString*)emailSubject;
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString*)emailSubject;
 
 /**
- @see sendResetPasswordEmailWithSubject:successHandler:failureHandler:
+ @see sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:
  */
-- (void) sendResetPasswordEmailWithSubject:(NSString*)emailSubject failureHandler:(APFailureBlock)failureBlock;
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString*)emailSubject failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to send a reset password email for the currently logged-in user
  
+ @param username username of the user whose password needs to be reset.
  @param emailSubject text for the subject field of the reset password email.
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) sendResetPasswordEmailWithSubject:(NSString *)emailSubject successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString *)emailSubject successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- Method to get the current user object persisted in local data store
- @return APUser instance of the saved user object
+ Method to get the current user object persisted in local data store.
+ @return APUser instance of the saved user object.
  */
 + (APUser*) getSavedUser;
 

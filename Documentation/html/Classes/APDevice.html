@@ -83,10 +83,6 @@
 	
 	<option value="//api/name/initWithDeviceToken:deviceType:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithDeviceToken:deviceType:</option>
 	
-	<option value="//api/name/registerDevice">&nbsp;&nbsp;&nbsp;&nbsp;- registerDevice</option>
-	
-	<option value="//api/name/registerDeviceWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- registerDeviceWithSuccessHandler:failureHandler:</option>
-	
 	<option value="//api/name/saveObject">&nbsp;&nbsp;&nbsp;&nbsp;- saveObject</option>
 	
 	<option value="//api/name/saveObjectWithFailureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- saveObjectWithFailureHandler:</option>
@@ -177,10 +173,6 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithDeviceToken:deviceType:">initWithDeviceToken:deviceType:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerDevice">registerDevice</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerDeviceWithSuccessHandler:failureHandler:">registerDeviceWithSuccessHandler:failureHandler:</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saveObject">saveObject</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saveObjectWithFailureHandler:">saveObjectWithFailureHandler:</a></span></li>
@@ -255,20 +247,6 @@
 	<span class="tooltip">
 		<code><a href="#//api/name/initWithDeviceToken:deviceType:">&ndash;&nbsp;initWithDeviceToken:deviceType:</a></code>
 		<span class="tooltip"><p>Create a basic instance of an APDevice Object with deviceToken and deviceType.</p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/registerDevice">&ndash;&nbsp;registerDevice</a></code>
-		<span class="tooltip"><p><a href="#//api/name/registerDeviceWithSuccessHandler:failureHandler:">registerDeviceWithSuccessHandler:failureHandler:</a></p></span>
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/registerDeviceWithSuccessHandler:failureHandler:">&ndash;&nbsp;registerDeviceWithSuccessHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Method to register a device to <a href="../Classes/Appacitive.html">Appacitive</a></p></span>
 	</span>
 	
 	
@@ -1342,107 +1320,6 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/registerDevice" title="registerDevice"></a>
-	<h3 class="subsubtitle method-title">registerDevice</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/registerDeviceWithSuccessHandler:failureHandler:">registerDeviceWithSuccessHandler:failureHandler:</a></p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)registerDevice</code></div>
-
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection see-also-section">
-		<h4 class="method-subtitle">See Also</h4>
-		<ul>
-			
-			<li><code><p><a href="#//api/name/registerDeviceWithSuccessHandler:failureHandler:">&ndash; registerDeviceWithSuccessHandler:failureHandler:</a></p></code></li>
-			
-		</ul>
-	</div>
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APDevice.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/registerDeviceWithSuccessHandler:failureHandler:" title="registerDeviceWithSuccessHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">registerDeviceWithSuccessHandler:failureHandler:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Method to register a device to <a href="../Classes/Appacitive.html">Appacitive</a></p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)registerDeviceWithSuccessHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>successBlock</em></dt>
-			<dd><p>Block ivoked on successful registration of the device.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>failureBlock</em></dt>
-			<dd><p>Block invoked in case the device registration fails.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection discussion-section">
-		<h4 class="method-subtitle">Discussion</h4>
-		<div class="note"><p><strong>Note:</strong> On successfull registration, a device Object will be returned in the successblock</p></div>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APDevice.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/saveObject" title="saveObject"></a>
 	<h3 class="subsubtitle method-title">saveObject</h3>
 	
@@ -1788,7 +1665,7 @@ This method will save an object in the background. If save is successful the pro
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-05-19)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-05-21)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						
