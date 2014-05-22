@@ -1126,8 +1126,6 @@ static NSDictionary *headerParams;
     [object removeObjectForKey:@"location"];
     self.phone = object[@"phone"];
     [object removeObjectForKey:@"phone"];
-    self.secretQuestion = object[@"secretquestion"];
-    [object removeObjectForKey:@"secretquestion"];
     self.isEmailVerified = object[@"isemailverified"];
     [object removeObjectForKey:@"isemailverified"];
     self.isOnline = object[@"isonline"];
@@ -1176,8 +1174,6 @@ static NSDictionary *headerParams;
     [object removeObjectForKey:@"location"];
     self.phone = object[@"phone"];
     [object removeObjectForKey:@"phone"];
-    self.secretQuestion = object[@"secretquestion"];
-    [object removeObjectForKey:@"secretquestion"];
     self.isEmailVerified = object[@"isemailverified"];
     [object removeObjectForKey:@"isemailverified"];
     self.isOnline = object[@"isonline"];
@@ -1207,8 +1203,6 @@ static NSDictionary *headerParams;
         [postParams setObject:self.location forKey:@"location"];
     if (self.isEnabled)
         [postParams setObject:self.isEnabled forKey:@"isenabled"];
-    if (self.secretQuestion)
-        [postParams setObject:self.secretQuestion forKey:@"secretquestion"];
     if (self.isEmailVerified)
         [postParams setObject:self.isEmailVerified forKey:@"isemailverified"];
     if (self.phone)
@@ -1256,8 +1250,6 @@ static NSDictionary *headerParams;
         [postParams setObject:self.location forKey:@"location"];
     if (self.isEnabled && self.isEnabled != [_snapShot objectForKey:@"isenabled"])
         [postParams setObject:self.isEnabled forKey:@"isenabled"];
-    if (self.secretQuestion && self.secretQuestion != [_snapShot objectForKey:@"secretquestion"])
-        [postParams setObject:self.secretQuestion forKey:@"secretquestion"];
     if (self.isEmailVerified && self.isEmailVerified != [_snapShot objectForKey:@"isemailverified"])
         [postParams setObject:self.isEmailVerified forKey:@"isemailverified"];
     if (self.phone && self.phone != [_snapShot objectForKey:@"phone"])
@@ -1310,8 +1302,6 @@ static NSDictionary *headerParams;
         _snapShot[@"location"] = self.location;
     if(self.phone)
         _snapShot[@"phone"] = self.phone;
-    if(self.secretQuestion)
-        _snapShot[@"secretquestion"] = self.secretQuestion;
     if(self.isEmailVerified)
         _snapShot[@"isemailverified"] = self.isEmailVerified;
     if(self.isOnline)
@@ -1349,7 +1339,6 @@ static NSDictionary *headerParams;
     [encoder encodeObject:self.email forKey:@"email"];
     [encoder encodeObject:self.location forKey:@"location"];
     [encoder encodeObject:self.phone forKey:@"phone"];
-    [encoder encodeObject:self.secretQuestion forKey:@"secretQuestion"];
     [encoder encodeObject:self.isEmailVerified forKey:@"isEmailVerified"];
     [encoder encodeObject:self.isEnabled forKey:@"isEnabled"];
     [encoder encodeObject:self.isOnline forKey:@"isOnline"];
@@ -1377,7 +1366,6 @@ static NSDictionary *headerParams;
         self.email = [decoder decodeObjectForKey:@"email"];
         self.location = [decoder decodeObjectForKey:@"location"];
         self.phone = [decoder decodeObjectForKey:@"phone"];
-        self.secretQuestion = [decoder decodeObjectForKey:@"secretQuestion"];
         self.isEmailVerified = [decoder decodeObjectForKey:@"isEmailVerified"];
         self.isEnabled = [decoder decodeObjectForKey:@"isEnabled"];
         self.isOnline = [decoder decodeObjectForKey:@"isOnline"];

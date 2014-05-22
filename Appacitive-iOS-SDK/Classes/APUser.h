@@ -27,7 +27,6 @@
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *location;
 @property (nonatomic, strong) NSString *phone;
-@property (nonatomic, strong) NSString *secretQuestion;
 @property (nonatomic, strong) NSString *isEmailVerified;
 @property (nonatomic, strong) NSString *isEnabled;
 @property (nonatomic, strong) NSString *isOnline;
