@@ -60,11 +60,11 @@
 	
 	<option value="//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:</option>
 	
-	<option value="//api/name/authenticateUserWithUserName:password:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUserName:password:</option>
+	<option value="//api/name/authenticateUserWithUsername:password:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUsername:password:</option>
 	
-	<option value="//api/name/authenticateUserWithUserName:password:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUserName:password:failureHandler:</option>
+	<option value="//api/name/authenticateUserWithUsername:password:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUsername:password:failureHandler:</option>
 	
-	<option value="//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUserName:password:successHandler:failureHandler:</option>
+	<option value="//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ authenticateUserWithUsername:password:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/currentUser">&nbsp;&nbsp;&nbsp;&nbsp;+ currentUser</option>
 	
@@ -79,6 +79,12 @@
 	<option value="//api/name/logOutCurrentUserWithFailureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ logOutCurrentUserWithFailureHandler:</option>
 	
 	<option value="//api/name/logOutCurrentUserWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ logOutCurrentUserWithSuccessHandler:failureHandler:</option>
+	
+	<option value="//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:">&nbsp;&nbsp;&nbsp;&nbsp;+ sendResetPasswordEmailForUserWithUsername:withSubject:</option>
+	
+	<option value="//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:</option>
+	
+	<option value="//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/setCurrentUser:">&nbsp;&nbsp;&nbsp;&nbsp;+ setCurrentUser:</option>
 	
@@ -131,9 +137,9 @@
 	
 	<option value="//api/name/deleteObjectWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- deleteObjectWithSuccessHandler:failureHandler:</option>
 	
-	<option value="//api/name/deleteObjectWithUserName:">&nbsp;&nbsp;&nbsp;&nbsp;- deleteObjectWithUserName:</option>
+	<option value="//api/name/deleteObjectWithUsername:">&nbsp;&nbsp;&nbsp;&nbsp;- deleteObjectWithUsername:</option>
 	
-	<option value="//api/name/deleteObjectWithUserName:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- deleteObjectWithUserName:successHandler:failureHandler:</option>
+	<option value="//api/name/deleteObjectWithUsername:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- deleteObjectWithUsername:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/delinkAccountWithServiceName:">&nbsp;&nbsp;&nbsp;&nbsp;- delinkAccountWithServiceName:</option>
 	
@@ -149,13 +155,13 @@
 	
 	<option value="//api/name/fetchUserById:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserById:successHandler:</option>
 	
-	<option value="//api/name/fetchUserByUserName:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUserName:</option>
+	<option value="//api/name/fetchUserByUsername:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUsername:</option>
 	
-	<option value="//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</option>
+	<option value="//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</option>
 	
-	<option value="//api/name/fetchUserByUserName:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUserName:successHandler:</option>
+	<option value="//api/name/fetchUserByUsername:successHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUsername:successHandler:</option>
 	
-	<option value="//api/name/fetchUserByUserName:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUserName:successHandler:failureHandler:</option>
+	<option value="//api/name/fetchUserByUsername:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserByUsername:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/fetchUserWithUserToken:">&nbsp;&nbsp;&nbsp;&nbsp;- fetchUserWithUserToken:</option>
 	
@@ -202,12 +208,6 @@
 	<option value="//api/name/saveObjectWithFailureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- saveObjectWithFailureHandler:</option>
 	
 	<option value="//api/name/saveObjectWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- saveObjectWithSuccessHandler:failureHandler:</option>
-	
-	<option value="//api/name/sendResetPasswordEmailWithSubject:">&nbsp;&nbsp;&nbsp;&nbsp;- sendResetPasswordEmailWithSubject:</option>
-	
-	<option value="//api/name/sendResetPasswordEmailWithSubject:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- sendResetPasswordEmailWithSubject:failureHandler:</option>
-	
-	<option value="//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;- sendResetPasswordEmailWithSubject:successHandler:failureHandler:</option>
 	
 	<option value="//api/name/updateObject">&nbsp;&nbsp;&nbsp;&nbsp;- updateObject</option>
 	
@@ -283,11 +283,11 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:">authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUserName:password:">authenticateUserWithUserName:password:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUsername:password:">authenticateUserWithUsername:password:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUserName:password:failureHandler:">authenticateUserWithUserName:password:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUsername:password:failureHandler:">authenticateUserWithUsername:password:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">authenticateUserWithUsername:password:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/currentUser">currentUser</a></span></li>
 	
@@ -302,6 +302,12 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/logOutCurrentUserWithFailureHandler:">logOutCurrentUserWithFailureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/logOutCurrentUserWithSuccessHandler:failureHandler:">logOutCurrentUserWithSuccessHandler:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:">sendResetPasswordEmailForUserWithUsername:withSubject:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:">sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setCurrentUser:">setCurrentUser:</a></span></li>
 	
@@ -355,9 +361,9 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteObjectWithSuccessHandler:failureHandler:">deleteObjectWithSuccessHandler:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteObjectWithUserName:">deleteObjectWithUserName:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteObjectWithUsername:">deleteObjectWithUsername:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteObjectWithUserName:successHandler:failureHandler:">deleteObjectWithUserName:successHandler:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deleteObjectWithUsername:successHandler:failureHandler:">deleteObjectWithUsername:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/delinkAccountWithServiceName:">delinkAccountWithServiceName:</a></span></li>
 	
@@ -373,13 +379,13 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserById:successHandler:">fetchUserById:successHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUserName:">fetchUserByUserName:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUsername:">fetchUserByUsername:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUserName:successHandler:">fetchUserByUserName:successHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUsername:successHandler:">fetchUserByUsername:successHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">fetchUserByUserName:successHandler:failureHandler:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserByUsername:successHandler:failureHandler:">fetchUserByUsername:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/fetchUserWithUserToken:">fetchUserWithUserToken:</a></span></li>
 	
@@ -426,12 +432,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saveObjectWithFailureHandler:">saveObjectWithFailureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/saveObjectWithSuccessHandler:failureHandler:">saveObjectWithSuccessHandler:failureHandler:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/sendResetPasswordEmailWithSubject:">sendResetPasswordEmailWithSubject:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/sendResetPasswordEmailWithSubject:failureHandler:">sendResetPasswordEmailWithSubject:failureHandler:</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">sendResetPasswordEmailWithSubject:successHandler:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/updateObject">updateObject</a></span></li>
 	
@@ -519,21 +519,21 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/authenticateUserWithUserName:password:">+&nbsp;authenticateUserWithUserName:password:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></p></span>
+		<code><a href="#//api/name/authenticateUserWithUsername:password:">+&nbsp;authenticateUserWithUsername:password:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">authenticateUserWithUsername:password:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/authenticateUserWithUserName:password:failureHandler:">+&nbsp;authenticateUserWithUserName:password:failureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></p></span>
+		<code><a href="#//api/name/authenticateUserWithUsername:password:failureHandler:">+&nbsp;authenticateUserWithUsername:password:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">authenticateUserWithUsername:password:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">+&nbsp;authenticateUserWithUserName:password:successHandler:failureHandler:</a></code>
+		<code><a href="#//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">+&nbsp;authenticateUserWithUsername:password:successHandler:failureHandler:</a></code>
 		<span class="tooltip"><p>Method to authenticate a user</p></span>
 	</span>
 	
@@ -868,29 +868,29 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/fetchUserByUserName:">&ndash;&nbsp;fetchUserByUserName:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></span>
+		<code><a href="#//api/name/fetchUserByUsername:">&ndash;&nbsp;fetchUserByUsername:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/fetchUserByUserName:successHandler:">&ndash;&nbsp;fetchUserByUserName:successHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></span>
+		<code><a href="#//api/name/fetchUserByUsername:successHandler:">&ndash;&nbsp;fetchUserByUsername:successHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/fetchUserByUserName:successHandler:failureHandler:">&ndash;&nbsp;fetchUserByUserName:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></span>
+		<code><a href="#//api/name/fetchUserByUsername:successHandler:failureHandler:">&ndash;&nbsp;fetchUserByUsername:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&ndash;&nbsp;fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></code>
-		<span class="tooltip"><p>Method to retrieve User by userName</p></span>
+		<code><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">&ndash;&nbsp;fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></code>
+		<span class="tooltip"><p>Method to retrieve User by username</p></span>
 	</span>
 	
 	
@@ -1024,14 +1024,14 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/deleteObjectWithUserName:">&ndash;&nbsp;deleteObjectWithUserName:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/deleteObjectWithUserName:successHandler:failureHandler:">deleteObjectWithUserName:successHandler:failureHandler:</a></p></span>
+		<code><a href="#//api/name/deleteObjectWithUsername:">&ndash;&nbsp;deleteObjectWithUsername:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/deleteObjectWithUsername:successHandler:failureHandler:">deleteObjectWithUsername:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/deleteObjectWithUserName:successHandler:failureHandler:">&ndash;&nbsp;deleteObjectWithUserName:successHandler:failureHandler:</a></code>
+		<code><a href="#//api/name/deleteObjectWithUsername:successHandler:failureHandler:">&ndash;&nbsp;deleteObjectWithUsername:successHandler:failureHandler:</a></code>
 		<span class="tooltip"><p>Method to delete a User</p></span>
 	</span>
 	
@@ -1145,21 +1145,21 @@
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/sendResetPasswordEmailWithSubject:">&ndash;&nbsp;sendResetPasswordEmailWithSubject:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">sendResetPasswordEmailWithSubject:successHandler:failureHandler:</a></p></span>
+		<code><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:">+&nbsp;sendResetPasswordEmailForUserWithUsername:withSubject:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/sendResetPasswordEmailWithSubject:failureHandler:">&ndash;&nbsp;sendResetPasswordEmailWithSubject:failureHandler:</a></code>
-		<span class="tooltip"><p><a href="#//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">sendResetPasswordEmailWithSubject:successHandler:failureHandler:</a></p></span>
+		<code><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:">+&nbsp;sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:</a></code>
+		<span class="tooltip"><p><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</a></p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">&ndash;&nbsp;sendResetPasswordEmailWithSubject:successHandler:failureHandler:</a></code>
+		<code><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">+&nbsp;sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</a></code>
 		<span class="tooltip"><p>Method to send a reset password email for the currently logged-in user</p></span>
 	</span>
 	
@@ -1167,7 +1167,7 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/getSavedUser">+&nbsp;getSavedUser</a></code>
-		<span class="tooltip"><p>Method to get the current user object persisted in local data store</p></span>
+		<span class="tooltip"><p>Method to get the current user object persisted in local data store.</p></span>
 	</span>
 	
 	
@@ -1660,18 +1660,18 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/authenticateUserWithUserName:password:" title="authenticateUserWithUserName:password:"></a>
-	<h3 class="subsubtitle method-title">authenticateUserWithUserName:password:</h3>
+	<a name="//api/name/authenticateUserWithUsername:password:" title="authenticateUserWithUsername:password:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithUsername:password:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">authenticateUserWithUsername:password:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUserName:(NSString *)<em>userName</em> password:(NSString *)<em>password</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUsername:(NSString *)<em>username</em> password:(NSString *)<em>password</em></code></div>
 
     
 	
@@ -1689,7 +1689,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">+ authenticateUserWithUserName:password:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">+ authenticateUserWithUsername:password:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -1705,18 +1705,18 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/authenticateUserWithUserName:password:failureHandler:" title="authenticateUserWithUserName:password:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">authenticateUserWithUserName:password:failureHandler:</h3>
+	<a name="//api/name/authenticateUserWithUsername:password:failureHandler:" title="authenticateUserWithUsername:password:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithUsername:password:failureHandler:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">authenticateUserWithUserName:password:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">authenticateUserWithUsername:password:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUserName:(NSString *)<em>userName</em> password:(NSString *)<em>password</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUsername:(NSString *)<em>username</em> password:(NSString *)<em>password</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -1734,7 +1734,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:">+ authenticateUserWithUserName:password:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:">+ authenticateUserWithUsername:password:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -1750,8 +1750,8 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/authenticateUserWithUserName:password:successHandler:failureHandler:" title="authenticateUserWithUserName:password:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">authenticateUserWithUserName:password:successHandler:failureHandler:</h3>
+	<a name="//api/name/authenticateUserWithUsername:password:successHandler:failureHandler:" title="authenticateUserWithUsername:password:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">authenticateUserWithUsername:password:successHandler:failureHandler:</h3>
 	
 	
 	
@@ -1761,7 +1761,7 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUserName:(NSString *)<em>userName</em> password:(NSString *)<em>password</em> successHandler:(APUserSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (void)authenticateUserWithUsername:(NSString *)<em>username</em> password:(NSString *)<em>password</em> successHandler:(APUserSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -1769,7 +1769,7 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>userName</em></dt>
+			<dt><em>username</em></dt>
 			<dd><p>The username of the user to authenticate.</p></dd>
 		</dl>
 		
@@ -1959,7 +1959,7 @@
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Method to get the current user object persisted in local data store</p>
+		<p>Method to get the current user object persisted in local data store.</p>
 	</div>		
 	
     
@@ -1972,7 +1972,7 @@
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>APUser instance of the saved user object</p>
+		<p>APUser instance of the saved user object.</p>
 	</div>
 	
 	
@@ -2101,6 +2101,157 @@
 	
 	<div class="method-subsection arguments-section parameters">
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>successBlock</em></dt>
+			<dd><p>Block invoked when operation is successful.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>failureBlock</em></dt>
+			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:" title="sendResetPasswordEmailForUserWithUsername:withSubject:"></a>
+	<h3 class="subsubtitle method-title">sendResetPasswordEmailForUserWithUsername:withSubject:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)sendResetPasswordEmailForUserWithUsername:(NSString *)<em>username</em> withSubject:(NSString *)<em>emailSubject</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">+ sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:" title="sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">sendResetPasswordEmailForUserWithUsername:withSubject:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</a></p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)sendResetPasswordEmailForUserWithUsername:(NSString *)<em>username</em> withSubject:(NSString *)<em>emailSubject</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection see-also-section">
+		<h4 class="method-subtitle">See Also</h4>
+		<ul>
+			
+			<li><code><p><a href="#//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:">+ sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</a></p></code></li>
+			
+		</ul>
+	</div>
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APUser.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:" title="sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">sendResetPasswordEmailForUserWithUsername:withSubject:successHandler:failureHandler:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to send a reset password email for the currently logged-in user</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)sendResetPasswordEmailForUserWithUsername:(NSString *)<em>username</em> withSubject:(NSString *)<em>emailSubject</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>username</em></dt>
+			<dd><p>username of the user whose password needs to be reset.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>emailSubject</em></dt>
+			<dd><p>text for the subject field of the reset password email.</p></dd>
+		</dl>
 		
 		<dl class="argument-def parameter-def">
 			<dt><em>successBlock</em></dt>
@@ -3282,18 +3433,18 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/deleteObjectWithUserName:" title="deleteObjectWithUserName:"></a>
-	<h3 class="subsubtitle method-title">deleteObjectWithUserName:</h3>
+	<a name="//api/name/deleteObjectWithUsername:" title="deleteObjectWithUsername:"></a>
+	<h3 class="subsubtitle method-title">deleteObjectWithUsername:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/deleteObjectWithUserName:successHandler:failureHandler:">deleteObjectWithUserName:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/deleteObjectWithUsername:successHandler:failureHandler:">deleteObjectWithUsername:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)deleteObjectWithUserName:(NSString *)<em>userName</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)deleteObjectWithUsername:(NSString *)<em>username</em></code></div>
 
     
 	
@@ -3311,7 +3462,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/deleteObjectWithUserName:successHandler:failureHandler:">&ndash; deleteObjectWithUserName:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/deleteObjectWithUsername:successHandler:failureHandler:">&ndash; deleteObjectWithUsername:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -3327,8 +3478,8 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/deleteObjectWithUserName:successHandler:failureHandler:" title="deleteObjectWithUserName:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">deleteObjectWithUserName:successHandler:failureHandler:</h3>
+	<a name="//api/name/deleteObjectWithUsername:successHandler:failureHandler:" title="deleteObjectWithUsername:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">deleteObjectWithUsername:successHandler:failureHandler:</h3>
 	
 	
 	
@@ -3338,7 +3489,7 @@
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)deleteObjectWithUserName:(NSString *)<em>userName</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)deleteObjectWithUsername:(NSString *)<em>username</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -3346,7 +3497,7 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>userName</em></dt>
+			<dt><em>username</em></dt>
 			<dd><p>The username of the user whose details need to be deleted.</p></dd>
 		</dl>
 		
@@ -3725,18 +3876,18 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchUserByUserName:" title="fetchUserByUserName:"></a>
-	<h3 class="subsubtitle method-title">fetchUserByUserName:</h3>
+	<a name="//api/name/fetchUserByUsername:" title="fetchUserByUsername:"></a>
+	<h3 class="subsubtitle method-title">fetchUserByUsername:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUserName:(NSString *)<em>userName</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUsername:(NSString *)<em>username</em></code></div>
 
     
 	
@@ -3754,7 +3905,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -3770,18 +3921,18 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:" title="fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</h3>
+	<a name="//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:" title="fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Method to retrieve User by userName</p>
+		<p>Method to retrieve User by username</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUserName:(NSString *)<em>userName</em> propertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUsername:(NSString *)<em>username</em> propertiesToFetch:(NSArray *)<em>propertiesToFetch</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -3789,7 +3940,7 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>userName</em></dt>
+			<dt><em>username</em></dt>
 			<dd><p>The user name of an existing user  whose details need to be retrieved.</p></dd>
 		</dl>
 		
@@ -3831,18 +3982,18 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchUserByUserName:successHandler:" title="fetchUserByUserName:successHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchUserByUserName:successHandler:</h3>
+	<a name="//api/name/fetchUserByUsername:successHandler:" title="fetchUserByUsername:successHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchUserByUsername:successHandler:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUserName:(NSString *)<em>userName</em> successHandler:(APSuccessBlock)<em>successBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUsername:(NSString *)<em>username</em> successHandler:(APSuccessBlock)<em>successBlock</em></code></div>
 
     
 	
@@ -3860,7 +4011,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -3876,18 +4027,18 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/fetchUserByUserName:successHandler:failureHandler:" title="fetchUserByUserName:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">fetchUserByUserName:successHandler:failureHandler:</h3>
+	<a name="//api/name/fetchUserByUsername:successHandler:failureHandler:" title="fetchUserByUsername:successHandler:failureHandler:"></a>
+	<h3 class="subsubtitle method-title">fetchUserByUsername:successHandler:failureHandler:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p>
+		<p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUserName:(NSString *)<em>userName</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (void)fetchUserByUsername:(NSString *)<em>username</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
 
     
 	
@@ -3905,7 +4056,7 @@
 		<h4 class="method-subtitle">See Also</h4>
 		<ul>
 			
-			<li><code><p><a href="#//api/name/fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUserName:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
+			<li><code><p><a href="#//api/name/fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:">&ndash; fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:</a></p></code></li>
 			
 		</ul>
 	</div>
@@ -5069,152 +5220,6 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/sendResetPasswordEmailWithSubject:" title="sendResetPasswordEmailWithSubject:"></a>
-	<h3 class="subsubtitle method-title">sendResetPasswordEmailWithSubject:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">sendResetPasswordEmailWithSubject:successHandler:failureHandler:</a></p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)sendResetPasswordEmailWithSubject:(NSString *)<em>emailSubject</em></code></div>
-
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection see-also-section">
-		<h4 class="method-subtitle">See Also</h4>
-		<ul>
-			
-			<li><code><p><a href="#//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">&ndash; sendResetPasswordEmailWithSubject:successHandler:failureHandler:</a></p></code></li>
-			
-		</ul>
-	</div>
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APUser.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/sendResetPasswordEmailWithSubject:failureHandler:" title="sendResetPasswordEmailWithSubject:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">sendResetPasswordEmailWithSubject:failureHandler:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p><a href="#//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">sendResetPasswordEmailWithSubject:successHandler:failureHandler:</a></p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)sendResetPasswordEmailWithSubject:(NSString *)<em>emailSubject</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
-
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection see-also-section">
-		<h4 class="method-subtitle">See Also</h4>
-		<ul>
-			
-			<li><code><p><a href="#//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:">&ndash; sendResetPasswordEmailWithSubject:successHandler:failureHandler:</a></p></code></li>
-			
-		</ul>
-	</div>
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APUser.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/sendResetPasswordEmailWithSubject:successHandler:failureHandler:" title="sendResetPasswordEmailWithSubject:successHandler:failureHandler:"></a>
-	<h3 class="subsubtitle method-title">sendResetPasswordEmailWithSubject:successHandler:failureHandler:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Method to send a reset password email for the currently logged-in user</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)sendResetPasswordEmailWithSubject:(NSString *)<em>emailSubject</em> successHandler:(APSuccessBlock)<em>successBlock</em> failureHandler:(APFailureBlock)<em>failureBlock</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>emailSubject</em></dt>
-			<dd><p>text for the subject field of the reset password email.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>successBlock</em></dt>
-			<dd><p>Block invoked when operation is successful.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>failureBlock</em></dt>
-			<dd><p>Block invoked when operation is unsuccessful.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APUser.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/updateObject" title="updateObject"></a>
 	<h3 class="subsubtitle method-title">updateObject</h3>
 	
@@ -5373,7 +5378,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-05-19)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-05-22)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

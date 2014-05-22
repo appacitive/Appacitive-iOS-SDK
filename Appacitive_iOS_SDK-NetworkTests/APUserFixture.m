@@ -12,7 +12,7 @@
 //
 //    beforeEach(^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
-//        [APUser authenticateUserWithUserName:@"ppatel" password:@"asdasd"
+//        [APUser authenticateUserWithUsername:@"ppatel" password:@"asdasd"
 //                              successHandler:^(APUser* user) {
 //                                  isUserAuthenticateSuccessful = YES;
 //                              } failureHandler:^(APError *error) {
@@ -38,7 +38,7 @@
 //    it(@"authenticating a user with a valid user id", ^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //
-//        [APUser authenticateUserWithUserName:@"ppatel" password:@"asdasd"
+//        [APUser authenticateUserWithUsername:@"ppatel" password:@"asdasd"
 //                successHandler:^(APUser* user) {
 //                    isUserAuthenticateSuccessful = YES;
 //                } failureHandler:^(APError *error) {
@@ -52,7 +52,7 @@
 //    it(@"validating user session with a valid user token", ^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //        
-//        [APUser authenticateUserWithUserName:@"ppatel"
+//        [APUser authenticateUserWithUsername:@"ppatel"
 //                                    password:@"asdasd"
 //                              successHandler:^(APUser* user) {
 //                                  [APUser validateCurrentUserSessionWithSuccessHandler:^(NSDictionary *result) {
@@ -67,7 +67,7 @@
 //    it(@"logging out a user", ^{
 //        __block BOOL isUserLoggedOut = NO;
 //        
-//        [APUser authenticateUserWithUserName:@"ppatel"
+//        [APUser authenticateUserWithUsername:@"ppatel"
 //                                    password:@"asdasd"
 //                              successHandler:^(APUser *user) {
 //                                  [APUser logOutCurrentUserWithSuccessHandler:^{
@@ -242,12 +242,12 @@
 //        user.birthDate = @"1982-11-17";
 //        user.firstName = @"giles1";
 //        user.lastName = @"giles1";
-//        user.email = @"giles1@test.com";
+//        user.email = @"ppatel@appacitive.com";
 //        user.password = @"test1234";
 //        user.phone = @"12345";
 //        
 //        [user createUserWithSuccessHandler:^() {
-//            [user sendResetPasswordEmailWithSubject:@"YourNewPassword" successHandler:^{
+//            [APUser sendResetPasswordEmailForUserWithUsername:@"ppatel" withSubject:@"YourNewPassword" successHandler:^{
 //                isPasswordReset = YES;
 //                [user deleteObject];
 //            } failureHandler:^(APError *error) {
@@ -259,7 +259,7 @@
 //        }];
 //        [[expectFutureValue(theValue(isPasswordReset)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
-//    
+//
 //    it(@"changing a user's password", ^{
 //        __block BOOL isPasswordChanged = NO;
 //        

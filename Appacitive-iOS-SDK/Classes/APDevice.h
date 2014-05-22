@@ -37,19 +37,6 @@
 /** Registering an APDevice */
 
 /**
- @see registerDeviceWithSuccessHandler:failureHandler:
- */
-- (void) registerDevice;
-
-/**
- Method to register a device to Appacitive
- @param successBlock Block ivoked on successful registration of the device.
- @param failureBlock Block invoked in case the device registration fails.
- @note On successfull registration, a device Object will be returned in the successblock
- */
-- (void) registerDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
-
-/**
  @see registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:successHandler:failureHandler:
  */
 + (void) registerCurrentDeviceWithPushDeviceToken:(NSData*)token enablePushNotifications:(BOOL)answer;
