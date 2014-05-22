@@ -19,17 +19,6 @@ static NSDictionary *headerParams;
 
 @implementation APUser
 
-//+ (NSDictionary*)getHeaderParams
-//{
-//    headerParams = [NSDictionary dictionaryWithObjectsAndKeys:
-//                    [Appacitive getApiKey], APIkeyHeaderKey,
-//                    [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
-//                    currentUser.userToken, UserAuthHeaderKey,
-//                    @"application/json", @"Content-Type",
-//                    nil];
-//    return headerParams;
-//}
-
 - (instancetype) init {
     return self = [super initWithTypeName:@"user"];
 }
@@ -41,6 +30,7 @@ static NSDictionary *headerParams;
 + (void) setCurrentUser:(APUser *)user {
     currentUser = user;
     [APUser saveCustomObject:user forKey:@"currentAPUser"];
+    [APNetworking addHTTPHeaderValue:currentUser.userToken forKey:UserAuthHeaderKey];
 }
 
 + (APUser*)getSavedUser {
@@ -82,7 +72,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
@@ -125,7 +115,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__
                               successHandler:^(NSDictionary *result) {
@@ -173,7 +163,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__
                               successHandler:^(NSDictionary *result) {
@@ -221,7 +211,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
 
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
@@ -265,7 +255,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -303,7 +293,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -343,7 +333,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -371,7 +361,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -395,7 +385,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -419,7 +409,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -455,7 +445,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [self updateSnapshot];
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -620,7 +610,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -659,7 +649,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [self updateSnapshot];
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -697,7 +687,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [self updateSnapshot];
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         APUser *user = [[APUser alloc] initWithTypeName:@"user"];
@@ -737,7 +727,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [self updateSnapshot];
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         APUser *user = [[APUser alloc] initWithTypeName:@"user"];
@@ -807,7 +797,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if(currentUser != nil) {
@@ -840,7 +830,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -921,7 +911,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -949,7 +939,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         NSString *responseJSON = [NSString stringWithFormat:@"%@",[result objectForKey:@"result"]];
@@ -987,7 +977,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = nil;
@@ -1030,7 +1020,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:postData];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self updateSnapshot];
         if (successBlock != nil) {
@@ -1068,7 +1058,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:postData];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             successBlock();
