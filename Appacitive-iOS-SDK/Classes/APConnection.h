@@ -275,7 +275,7 @@
  @param keyName key of the data item to be stored.
  @param object Corresponding value to the key.
  */
-- (void) addPropertyWithKey:(NSString*) keyName value:(id) object;
+- (void) addPropertyWithKey:(NSString*)keyName value:(id) object;
 
 /**
  Method used to update an existing property.
@@ -284,7 +284,7 @@
  @param keyName key of the data item to be updated.
  @param object Corresponding value to the key.
  */
-- (void) updatePropertyWithKey:(NSString*) keyName value:(id) object;
+- (void) updatePropertyWithKey:(NSString*)keyName value:(id) object;
 
 /**
  Method used to delete a property.
@@ -292,14 +292,14 @@
  
  @param keyName key of the data item to be removed.
  */
-- (void) removePropertyWithKey:(NSString*) keyName;
+- (void) removePropertyWithKey:(NSString*)keyName;
 
 /**
  Method used to retrieve a property using its key.
  
  @param keyName key of the date item to be removed.
  */
-- (instancetype) getPropertyWithKey:(NSString*) keyName;
+- (instancetype) getPropertyWithKey:(NSString*)keyName;
 
 /**
  Method used to add an attibute to the APObject. Attributes are used to store extra information.
@@ -307,7 +307,7 @@
  @param keyName key of the data item to be stored.
  @param object Corresponding value to the key.
  */
-- (void) addAttributeWithKey:(NSString*) keyName value:(id) object;
+- (void) addAttributeWithKey:(NSString*)keyName value:(id) object;
 
 /**
  Method used to update an attribute.
@@ -316,7 +316,7 @@
  @param keyName key of the attribute to be updated.
  @param object Corresponding value to the key.
  */
-- (void) updateAttributeWithKey:(NSString*) keyName value:(id) object;
+- (void) updateAttributeWithKey:(NSString*)keyName value:(id) object;
 
 /**
  Method used to remove an attribute.
@@ -324,7 +324,7 @@
  
  @param keyName key of the attribute to be removed.
  */
-- (void) removeAttributeWithKey:(NSString*) keyName;
+- (void) removeAttributeWithKey:(NSString*)keyName;
 @end
 
 /**

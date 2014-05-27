@@ -31,7 +31,7 @@
  @param response Response received from the server.
  @return APError represnetation of error from response.
  */
-+ (APError*) checkForErrorStatus:(id)response;
++ (APError*)checkForErrorStatus:(id)response;
 
 /**
  Helper method to parse the properties from a json response
@@ -39,7 +39,7 @@
  @param response Response received from the server.
  @return An array of properties
  */
-+ (NSArray*) arrayOfPropertiesFromJSONResponse:(id)response;
++ (NSArray*)arrayOfPropertiesFromJSONResponse:(id)response;
 
 /**
  Helper method to parse the properties from a json response
@@ -47,7 +47,7 @@
  @param response Response received from the server.
  @return A dictionary of properties
  */
-+ (NSMutableDictionary*) dictionaryOfPropertiesFromJSONResponse:(id)response;
++ (NSMutableDictionary*)dictionaryOfPropertiesFromJSONResponse:(id)response;
 
 /**
  Helper method to parse json response to NSDate
@@ -55,7 +55,7 @@
  @param jsonDateString Date in JSON string format.
  @return date as NSDate object.
  */
-+ (NSDate*) deserializeJsonDateString:(NSString*)jsonDateString;
++ (NSDate*)deserializeJsonDateString:(NSString*)jsonDateString;
 
 /**
  Helper method to parse NSDate to NSString.
@@ -63,7 +63,7 @@
  @param date NSDate to parse.
  @return String from NSDate.
  */
-+ (NSString*) jsonDateStringFromDate:(NSDate*)date;
++ (NSString*)jsonDateStringFromDate:(NSDate*)date;
 
 
 /**
@@ -72,6 +72,6 @@
  @param response Response received from the server.
  @return APError represnetation of error from response.
  */
-+ (APError*) getErrorInfo:(NSURLResponse*)response;
++ (APError*)getErrorInfo:(NSURLResponse*)response;
 
 @end

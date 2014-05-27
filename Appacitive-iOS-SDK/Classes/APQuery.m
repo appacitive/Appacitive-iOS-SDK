@@ -27,7 +27,7 @@
 
 @implementation APSimpleQuery
 
-- (NSString*) stringValue {
+- (NSString*)stringValue {
     if(self.fieldName != nil && self.fieldType != nil && self.operation != nil && self.value != nil)
         return [NSString stringWithFormat:@"%@ %@ %@",
                 [self getFormattedFieldNameFor:self.fieldName  WithFieldType:self.fieldType],
@@ -36,7 +36,7 @@
     return nil;
 }
 
-- (NSString*) getFormattedFieldNameFor:(NSString*)name WithFieldType:(NSString*)type {
+- (NSString*)getFormattedFieldNameFor:(NSString*)name WithFieldType:(NSString*)type {
     if ([type isEqualToString:@"attribute"])
         return [NSString stringWithFormat:@"@%@",name];
     else if ([type isEqualToString:@"aggregate"])
@@ -58,7 +58,7 @@
     return self;
 }
 
-- (NSString*) stringValue {
+- (NSString*)stringValue {
     NSString *query = [[NSString alloc] init];
     query = @"(";
     for(int i =0; i<self.innerQueries.count-1; i++)
@@ -83,7 +83,7 @@
     return self;
 }
 
-- (APSimpleQuery *) isEqualTo:(NSString*)value {
+- (APSimpleQuery *)isEqualTo:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -95,7 +95,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isEqualToDate:(NSDate*)date {
+- (APSimpleQuery *)isEqualToDate:(NSDate*)date {
     if(date != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -107,7 +107,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isNotEqualTo:(NSString*)value {
+- (APSimpleQuery *)isNotEqualTo:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -119,7 +119,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isNotEqualToDate:(NSDate*)date {
+- (APSimpleQuery *)isNotEqualToDate:(NSDate*)date {
     if(date != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -131,7 +131,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isLike:(NSString*)value {
+- (APSimpleQuery *)isLike:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -143,7 +143,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) startsWith:(NSString*)value {
+- (APSimpleQuery *)startsWith:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -155,7 +155,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) endsWith:(NSString*)value {
+- (APSimpleQuery *)endsWith:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -167,7 +167,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) matches:(NSString*)value {
+- (APSimpleQuery *)matches:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -179,7 +179,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isGreaterThan:(NSString*)value {
+- (APSimpleQuery *)isGreaterThan:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -191,7 +191,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isLessThan:(NSString*)value {
+- (APSimpleQuery *)isLessThan:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -203,7 +203,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isGreaterThanOrEqualTo:(NSString*)value {
+- (APSimpleQuery *)isGreaterThanOrEqualTo:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -215,7 +215,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isLessThanOrEqualTo:(NSString*)value {
+- (APSimpleQuery *)isLessThanOrEqualTo:(NSString*)value {
     if (value != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -227,7 +227,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isBetween:(NSString*)value1 and:(NSString*)value2 {
+- (APSimpleQuery *)isBetween:(NSString*)value1 and:(NSString*)value2 {
     if (value1 != nil && value2 != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -239,7 +239,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isGreaterThanDate:(NSDate*)date {
+- (APSimpleQuery *)isGreaterThanDate:(NSDate*)date {
     if (date != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -251,7 +251,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isLessThanDate:(NSDate*)date {
+- (APSimpleQuery *)isLessThanDate:(NSDate*)date {
     if (date != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -263,7 +263,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isGreaterThanOrEqualToDate:(NSDate*)date {
+- (APSimpleQuery *)isGreaterThanOrEqualToDate:(NSDate*)date {
     if (date != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -275,7 +275,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isLessThanOrEqualToDate:(NSDate*)date {
+- (APSimpleQuery *)isLessThanOrEqualToDate:(NSDate*)date {
     if (date != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -287,7 +287,7 @@
     return nil;
 }
 
-- (APSimpleQuery *) isBetweenDates:(NSDate*)date1 and:(NSDate*)date2 {
+- (APSimpleQuery *)isBetweenDates:(NSDate*)date1 and:(NSDate*)date2 {
     if (date1 != nil && date2 != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -349,33 +349,33 @@
     return queryString;
 }
 
-+ (APQueryExpression*) queryExpressionWithProperty:(NSString*)propertyName {
++ (APQueryExpression*)queryExpressionWithProperty:(NSString*)propertyName {
     return [[APQueryExpression alloc] initWithProperty:propertyName ofType:@"property"];
 }
 
-+ (APQueryExpression*) queryExpressionWithAttribute:(NSString*)attributeName {
++ (APQueryExpression*)queryExpressionWithAttribute:(NSString*)attributeName {
     return [[APQueryExpression alloc] initWithProperty:attributeName ofType:@"attribute"];
 }
 
-+ (APQueryExpression*) queryExpressionWithAggregate:(NSString*)aggregateName {
++ (APQueryExpression*)queryExpressionWithAggregate:(NSString*)aggregateName {
     return [[APQueryExpression alloc] initWithProperty:aggregateName ofType:@"aggergate"];
 }
 
-+ (APCompoundQuery *) booleanAnd:(NSArray*)queries {
++ (APCompoundQuery *)booleanAnd:(NSArray*)queries {
     APCompoundQuery* compoundQuery = [[APCompoundQuery alloc] init];
     compoundQuery.boolOperator = kAnd;
     [[compoundQuery innerQueries] addObjectsFromArray:queries];
     return compoundQuery;
 }
 
-+ (APCompoundQuery *) booleanOr:(NSArray*)queries {
++ (APCompoundQuery *)booleanOr:(NSArray*)queries {
     APCompoundQuery* compoundQuery = [[APCompoundQuery alloc] init];
     compoundQuery.boolOperator = kOr;
     [[compoundQuery innerQueries] addObjectsFromArray:queries];
     return compoundQuery;
 }
 
-+ (APSimpleQuery*) queryWithRadialSearchForProperty:(NSString*)propertyName nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric {
++ (APSimpleQuery*)queryWithRadialSearchForProperty:(NSString*)propertyName nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric {
     if(location != nil && radius != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = propertyName;
@@ -393,7 +393,7 @@
     return nil;
 }
 
-+ (APSimpleQuery*) queryWithPolygonSearchForProperty:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates {
++ (APSimpleQuery*)queryWithPolygonSearchForProperty:(NSString*)propertyName withPolygonCoordinates:(NSArray*)coordinates {
     if (coordinates != nil && coordinates.count >= 3) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = propertyName;
@@ -415,7 +415,7 @@
     return nil;
 }
 
-+ (APSimpleQuery*) queryWithSearchUsingOneOrMoreTags:(NSArray*)tags {
++ (APSimpleQuery*)queryWithSearchUsingOneOrMoreTags:(NSArray*)tags {
     if (tags != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = @"";
@@ -439,7 +439,7 @@
     return nil;
 }
 
-+ (APSimpleQuery*) queryWithSearchUsingAllTags:(NSArray*)tags {
++ (APSimpleQuery*)queryWithSearchUsingAllTags:(NSArray*)tags {
     if (tags != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = @"";

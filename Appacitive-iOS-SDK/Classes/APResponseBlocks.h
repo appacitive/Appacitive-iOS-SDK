@@ -51,7 +51,7 @@ typedef void (^APUserSuccessBlock)(APUser* user);
 /**
  Block parameter expected for image download
  */
-typedef void (^APImageBlock) (UIImage* fetchedImage, NSURL* url, BOOL isInCache);
+typedef void (^APImageBlock)(UIImage* fetchedImage, NSURL* url, BOOL isInCache);
 
 /**
  Block paramter expected for a success response which returns a 'APGraphNode'.

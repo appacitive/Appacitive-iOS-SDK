@@ -15,7 +15,7 @@
 
 @implementation APHelperMethods
 
-+ (APError*) getErrorInfo:(NSHTTPURLResponse*)response {
++ (APError*)getErrorInfo:(NSHTTPURLResponse*)response {
     if(response != nil) {
         NSString *errorMessage = [NSString stringWithFormat:@"Message: HTTP Error"];
         NSDictionary *dictionary = @{NSLocalizedDescriptionKey: errorMessage};
@@ -26,7 +26,7 @@
     return nil;
 }
 
-+ (APError*) checkForErrorStatus:(id)response {
++ (APError*)checkForErrorStatus:(id)response {
     NSDictionary *status;
     if (response[@"status"]) {
         status = response[@"status"];
@@ -51,7 +51,7 @@
     return nil;
 }
 
-+ (NSArray*) arrayOfPropertiesFromJSONResponse:(id)response {
++ (NSArray*)arrayOfPropertiesFromJSONResponse:(id)response {
     if (response) {
         __block NSMutableArray *properties;
         [response enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -67,7 +67,7 @@
     return nil;
 }
 
-+ (NSMutableDictionary*) dictionaryOfPropertiesFromJSONResponse:(id)response {
++ (NSMutableDictionary*)dictionaryOfPropertiesFromJSONResponse:(id)response {
     if (response) {
         __block NSMutableDictionary *properties;
         [response enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
@@ -83,13 +83,13 @@
     return nil;
 }
 
-+ (NSDate *) deserializeJsonDateString:(NSString *)jsonDateString {
++ (NSDate *)deserializeJsonDateString:(NSString *)jsonDateString {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'"];
     return [dateFormatter dateFromString:jsonDateString];
 }
 
-+ (NSString *) jsonDateStringFromDate:(NSDate *)date {
++ (NSString *)jsonDateStringFromDate:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'"];
     return [dateFormatter stringFromDate:date];

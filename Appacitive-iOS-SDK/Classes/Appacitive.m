@@ -10,13 +10,14 @@
 #import "APConstants.h"
 #import "APHelperMethods.h"
 #import "APUser.h"
+#import "APDevice.h"
 
 static NSString* _apiKey;
 static BOOL isEnvironmentLive = NO;
 
 @implementation Appacitive
 
-+ (NSString*) getCurrentEnvironment {
++ (NSString*)getCurrentEnvironment {
     if (isEnvironmentLive) {
         return @"live";
     }
@@ -27,7 +28,7 @@ static BOOL isEnvironmentLive = NO;
     isEnvironmentLive = answer;
 }
 
-+ (NSString*) getApiKey {
++ (NSString*)getApiKey {
     return _apiKey;
 }
 
@@ -35,7 +36,10 @@ static BOOL isEnvironmentLive = NO;
     _apiKey = apiKey;
     isEnvironmentLive = answer;
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentAPUser"] != nil) {
-        [APUser setCurrentUser:[APUser getSavedUser]];
+        [APUser restoreCurrentUser];
+    }
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentAPDevice"] != nil) {
+        [APDevice restoreCurrentDevice];
     }
 }
 

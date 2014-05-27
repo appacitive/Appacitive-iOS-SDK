@@ -12,7 +12,7 @@
 //
 //    beforeEach(^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
-//        [APUser authenticateUserWithUserName:@"ppatel" password:@"asdasd"
+//        [APUser authenticateUserWithUsername:@"ppatel" password:@"asdasd" sessionExpiresAfter:nil limitAPICallsTo:nil
 //                              successHandler:^(APUser* user) {
 //                                  isUserAuthenticateSuccessful = YES;
 //                              } failureHandler:^(APError *error) {

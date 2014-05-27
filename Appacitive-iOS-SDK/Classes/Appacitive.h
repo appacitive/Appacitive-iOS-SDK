@@ -18,7 +18,7 @@
 /**
  Returns the current ApiKey
  */
-+ (NSString*) getApiKey;
++ (NSString*)getApiKey;
 
 /**
  Sets the APIkey
@@ -31,7 +31,7 @@
  Returns the current environment setting. By default the environment is set to sandbox.
  @return The current environment setting.
  */
-+ (NSString*) getCurrentEnvironment;
++ (NSString*)getCurrentEnvironment;
 
 /**
  Method to set application environment to live

@@ -369,7 +369,7 @@
     return self = [super initWithNotificationType:kWPNotificationTypeTile];
 }
 
-- (TileNotification*) createNewFlipTile:(FlipTile*)tile  {
+- (TileNotification*)createNewFlipTile:(FlipTile*)tile  {
     if (tile != nil) {
         _wp75Tile = tile;
         _wp7Tile = tile;
@@ -378,7 +378,7 @@
     return self;
 }
 
-- (TileNotification*) createNewIconicTile:(IconicTile*)tile  flipTileForWP75AndBelow:(FlipTile*)flipTile{
+- (TileNotification*)createNewIconicTile:(IconicTile*)tile  flipTileForWP75AndBelow:(FlipTile*)flipTile{
     if (tile != nil)
         _wp8Tile = tile;
     _wp75Tile = flipTile;
@@ -386,7 +386,7 @@
     return self;
 }
 
-- (TileNotification*) createNewCyclicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)flipTile {
+- (TileNotification*)createNewCyclicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)flipTile {
     if (tile != nil )
         _wp8Tile = tile;
     _wp75Tile = flipTile;

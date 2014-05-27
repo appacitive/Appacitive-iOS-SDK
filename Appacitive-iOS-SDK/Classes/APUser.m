@@ -19,17 +19,6 @@ static NSDictionary *headerParams;
 
 @implementation APUser
 
-//+ (NSDictionary*)getHeaderParams
-//{
-//    headerParams = [NSDictionary dictionaryWithObjectsAndKeys:
-//                    [Appacitive getApiKey], APIkeyHeaderKey,
-//                    [Appacitive getCurrentEnvironment], EnvironmentHeaderKey,
-//                    currentUser.userToken, UserAuthHeaderKey,
-//                    @"application/json", @"Content-Type",
-//                    nil];
-//    return headerParams;
-//}
-
 - (instancetype) init {
     return self = [super initWithTypeName:@"user"];
 }
@@ -41,39 +30,45 @@ static NSDictionary *headerParams;
 + (void) setCurrentUser:(APUser *)user {
     currentUser = user;
     [APUser saveCustomObject:user forKey:@"currentAPUser"];
+    [APNetworking addHTTPHeaderValue:currentUser.userToken forKey:UserAuthHeaderKey];
 }
 
-+ (APUser*)getSavedUser {
++ (void) restoreCurrentUser {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"currentAPUser"] != nil) {
         NSData *encodedObject = [defaults objectForKey:@"currentAPUser"];
         APUser *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
-        return object;
-    } else {
-        return nil;
+        [self setCurrentUser:object];
     }
 }
 
 #pragma mark - Authenticate methods
 
-+ (void) authenticateUserWithUserName:(NSString *)userName password:(NSString *)password {
-    [APUser authenticateUserWithUserName:userName password:password successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithUsername:(NSString *)username password:(NSString *)password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
+    [APUser authenticateUserWithUsername:username password:password sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password failureHandler:(APFailureBlock)failureBlock {
-    [APUser authenticateUserWithUserName:userName password:password successHandler:nil failureHandler:failureBlock];
++ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithUsername:username password:password sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureBlock];
 }
 
-+ (void) authenticateUserWithUserName:(NSString*) userName password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
-    
+    if(minutes == nil) {
+        minutes = @86400000;
+    }
+    if(calls == nil) {
+        calls = @-1;
+    }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   userName, @"username",
+                                                                   username, @"username",
                                                                    password, @"password",
+                                                                   minutes, @"expiry",
+                                                                   calls, @"attempts",
                                                                    nil]
                                                           options:kNilOptions error:&jsonError];
     if(jsonError != nil)
@@ -82,7 +77,6 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
@@ -99,25 +93,32 @@ static NSDictionary *headerParams;
     }];
 }
 
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken {
-    [APUser authenticateUserWithFacebook:accessToken successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
+    [APUser authenticateUserWithFacebook:accessToken signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken failureHandler:(APFailureBlock)failureBlock {
-    [APUser authenticateUserWithFacebook:accessToken successHandler:nil failureHandler:failureBlock];
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithFacebook:accessToken signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureBlock];
 }
 
-+ (void) authenticateUserWithFacebook:(NSString *) accessToken successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
-    
+    if (minutes == nil) {
+        minutes = @86400000;
+    }
+    if(calls == nil) {
+        calls = @-1;
+    }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   @"true",@"createnew",
+                                                                   signUp?@"true":@"false",@"createnew",
                                                                    @"facebook",@"type",
                                                                    accessToken, @"accesstoken",
+                                                                   minutes, @"expiry",
+                                                                   calls, @"attempts",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
         [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
@@ -125,7 +126,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__
                               successHandler:^(NSDictionary *result) {
@@ -146,26 +147,34 @@ static NSDictionary *headerParams;
 
 
 
-+ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret failureHandler:(APFailureBlock)failureHandler {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret successHandler:nil failureHandler:failureHandler];
++ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureHandler {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureHandler];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock {
++ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     
+    if(minutes == nil) {
+        minutes = @86400000;
+    }
+    if(calls == nil) {
+        calls = @-1;
+    }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   @"true",@"createNew",
+                                                                   signUp?@"true":@"false",@"createnew",
                                                                    @"twitter",@"type",
                                                                    oauthToken, @"oauthtoken",
                                                                    oauthSecret, @"oauthsecret",
+                                                                   minutes, @"expiry",
+                                                                   calls, @"attempts",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
         [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
@@ -173,7 +182,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__
                               successHandler:^(NSDictionary *result) {
@@ -192,28 +201,36 @@ static NSDictionary *headerParams;
                               }];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret failureHandler:(APFailureBlock)failureBlock {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:failureBlock];
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureBlock];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     
+    if(minutes == nil) {
+        minutes = @86400000;
+    }
+    if(calls == nil) {
+        calls = @-1;
+    }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   @"true",@"createNew",
+                                                                   signUp?@"true":@"false",@"createnew",
                                                                    @"twitter",@"type",
                                                                    oauthToken, @"oauthtoken",
                                                                    oauthSecret, @"oauthsecret",
                                                                    consumerKey, @"consumerKey",
                                                                    consumerSecret, @"consumerSecret",
+                                                                   minutes, @"expiry",
+                                                                   calls, @"attempts",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
         [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
@@ -221,7 +238,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
 
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
@@ -265,7 +282,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -303,7 +320,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -343,7 +360,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -371,7 +388,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -395,7 +412,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -419,7 +436,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -438,11 +455,11 @@ static NSDictionary *headerParams;
     [self createUserWithSuccessHandler:nil failureHandler:nil];
 }
 
-- (void) createUserWithSuccessHandler:(APSuccessBlock) successBlock {
+- (void) createUserWithSuccessHandler:(APSuccessBlock)successBlock {
     [self createUserWithSuccessHandler:successBlock failureHandler:nil];
 }
 
-- (void) createUserWithSuccessHandler:(APSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) createUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"create"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -455,7 +472,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"PUT"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [self updateSnapshot];
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -600,15 +617,15 @@ static NSDictionary *headerParams;
     [self fetchUserById:userId successHandler:nil failureHandler:nil];
 }
 
-- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock) successBlock {
+- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock {
     [self fetchUserById:userId successHandler:successBlock failureHandler:nil];
 }
 
-- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     [self fetchUserById:userId propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@",userId];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -620,7 +637,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -635,21 +652,21 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) fetchUserByUserName:(NSString *)userName {
-    [self fetchUserByUserName:userName successHandler:nil failureHandler:nil];
+- (void) fetchUserByUsername:(NSString *)username {
+    [self fetchUserByUsername:username successHandler:nil failureHandler:nil];
 }
 
-- (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock {
-    [self fetchUserByUserName:userName successHandler:successBlock failureHandler:nil];
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock {
+    [self fetchUserByUsername:username successHandler:successBlock failureHandler:nil];
 }
 
-- (void) fetchUserByUserName:(NSString *)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
-    [self fetchUserByUserName:userName propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    [self fetchUserByUsername:username propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) fetchUserByUserName:(NSString *)userName propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) fetchUserByUsername:(NSString *)username propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
-    NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",userName];
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",username];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     
      if(propertiesToFetch != nil || propertiesToFetch.count > 0)
@@ -659,7 +676,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [self updateSnapshot];
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self setPropertyValuesFromDictionary:result];
@@ -697,7 +714,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"GET"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [self updateSnapshot];
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         APUser *user = [[APUser alloc] initWithTypeName:@"user"];
@@ -723,7 +740,7 @@ static NSDictionary *headerParams;
     [self updateObjectWithRevisionNumber:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) updateObjectWithRevisionNumber:(NSNumber *)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) updateObjectWithRevisionNumber:(NSNumber *)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@",self.objectId];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -737,7 +754,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [self updateSnapshot];
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         APUser *user = [[APUser alloc] initWithTypeName:@"user"];
@@ -799,7 +816,7 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@",self.objectId];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -807,7 +824,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if(currentUser != nil) {
@@ -827,20 +844,20 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) deleteObjectWithUserName:(NSString*)userName
+- (void) deleteObjectWithUsername:(NSString*)username
 {
-    [self deleteObjectWithUserName:userName successHandler:nil failureHandler:nil];
+    [self deleteObjectWithUsername:username successHandler:nil failureHandler:nil];
 }
 
-- (void) deleteObjectWithUserName:(NSString*)userName successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock
+- (void) deleteObjectWithUsername:(NSString*)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock
 {
-    NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",userName];
+    NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",username];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -921,7 +938,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
@@ -949,8 +966,6 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
-    
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         NSString *responseJSON = [NSString stringWithFormat:@"%@",[result objectForKey:@"result"]];
         if([responseJSON isEqualToString:@"1"])
@@ -963,6 +978,8 @@ static NSDictionary *headerParams;
             currentUser = nil;
             [APNetworking resetDefaultHTTPHeaders];
             [APUser saveCustomObject:nil forKey:@"currentAPUser"];
+            if (successBlock != nil)
+                successBlock(result);
         }
     } failureHandler:^(APError *error) {
         if (failureBlock != nil) {
@@ -987,7 +1004,7 @@ static NSDictionary *headerParams;
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = nil;
@@ -1030,7 +1047,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:postData];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         [self updateSnapshot];
         if (successBlock != nil) {
@@ -1043,15 +1060,15 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) sendResetPasswordEmailWithSubject:(NSString *)emailSubject {
-    [self sendResetPasswordEmailWithSubject:emailSubject successHandler:nil failureHandler:nil];
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString *)emailSubject {
+    [self sendResetPasswordEmailForUserWithUsername:username withSubject:emailSubject successHandler:nil failureHandler:nil];
 }
 
-- (void) sendResetPasswordEmailWithSubject:(NSString *)emailSubject failureHandler:(APFailureBlock)failureBlock {
-    [self sendResetPasswordEmailWithSubject:emailSubject successHandler:nil failureHandler:failureBlock];
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString *)emailSubject failureHandler:(APFailureBlock)failureBlock {
+    [self sendResetPasswordEmailForUserWithUsername:username withSubject:emailSubject successHandler:nil failureHandler:failureBlock];
 }
 
-- (void) sendResetPasswordEmailWithSubject:(NSString *)emailSubject successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString *)emailSubject successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"sendresetpasswordemail"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -1059,7 +1076,7 @@ static NSDictionary *headerParams;
     
     NSError *jsonError = nil;
     NSData *postData = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                self.username, @"username",
+                                                                username, @"username",
                                                                 emailSubject,@"subject", nil]
                                                        options:0 error:&jsonError];
     if(jsonError != nil)
@@ -1068,7 +1085,7 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:postData];
-    //[urlRequest setAllHTTPHeaderFields:[APUser getHeaderParams]];
+    
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             successBlock();
@@ -1136,8 +1153,6 @@ static NSDictionary *headerParams;
     [object removeObjectForKey:@"location"];
     self.phone = object[@"phone"];
     [object removeObjectForKey:@"phone"];
-    self.secretQuestion = object[@"secretquestion"];
-    [object removeObjectForKey:@"secretquestion"];
     self.isEmailVerified = object[@"isemailverified"];
     [object removeObjectForKey:@"isemailverified"];
     self.isOnline = object[@"isonline"];
@@ -1186,8 +1201,6 @@ static NSDictionary *headerParams;
     [object removeObjectForKey:@"location"];
     self.phone = object[@"phone"];
     [object removeObjectForKey:@"phone"];
-    self.secretQuestion = object[@"secretquestion"];
-    [object removeObjectForKey:@"secretquestion"];
     self.isEmailVerified = object[@"isemailverified"];
     [object removeObjectForKey:@"isemailverified"];
     self.isOnline = object[@"isonline"];
@@ -1217,8 +1230,6 @@ static NSDictionary *headerParams;
         [postParams setObject:self.location forKey:@"location"];
     if (self.isEnabled)
         [postParams setObject:self.isEnabled forKey:@"isenabled"];
-    if (self.secretQuestion)
-        [postParams setObject:self.secretQuestion forKey:@"secretquestion"];
     if (self.isEmailVerified)
         [postParams setObject:self.isEmailVerified forKey:@"isemailverified"];
     if (self.phone)
@@ -1266,8 +1277,6 @@ static NSDictionary *headerParams;
         [postParams setObject:self.location forKey:@"location"];
     if (self.isEnabled && self.isEnabled != [_snapShot objectForKey:@"isenabled"])
         [postParams setObject:self.isEnabled forKey:@"isenabled"];
-    if (self.secretQuestion && self.secretQuestion != [_snapShot objectForKey:@"secretquestion"])
-        [postParams setObject:self.secretQuestion forKey:@"secretquestion"];
     if (self.isEmailVerified && self.isEmailVerified != [_snapShot objectForKey:@"isemailverified"])
         [postParams setObject:self.isEmailVerified forKey:@"isemailverified"];
     if (self.phone && self.phone != [_snapShot objectForKey:@"phone"])
@@ -1320,8 +1329,6 @@ static NSDictionary *headerParams;
         _snapShot[@"location"] = self.location;
     if(self.phone)
         _snapShot[@"phone"] = self.phone;
-    if(self.secretQuestion)
-        _snapShot[@"secretquestion"] = self.secretQuestion;
     if(self.isEmailVerified)
         _snapShot[@"isemailverified"] = self.isEmailVerified;
     if(self.isOnline)
@@ -1359,7 +1366,6 @@ static NSDictionary *headerParams;
     [encoder encodeObject:self.email forKey:@"email"];
     [encoder encodeObject:self.location forKey:@"location"];
     [encoder encodeObject:self.phone forKey:@"phone"];
-    [encoder encodeObject:self.secretQuestion forKey:@"secretQuestion"];
     [encoder encodeObject:self.isEmailVerified forKey:@"isEmailVerified"];
     [encoder encodeObject:self.isEnabled forKey:@"isEnabled"];
     [encoder encodeObject:self.isOnline forKey:@"isOnline"];
@@ -1387,7 +1393,6 @@ static NSDictionary *headerParams;
         self.email = [decoder decodeObjectForKey:@"email"];
         self.location = [decoder decodeObjectForKey:@"location"];
         self.phone = [decoder decodeObjectForKey:@"phone"];
-        self.secretQuestion = [decoder decodeObjectForKey:@"secretQuestion"];
         self.isEmailVerified = [decoder decodeObjectForKey:@"isEmailVerified"];
         self.isEnabled = [decoder decodeObjectForKey:@"isEnabled"];
         self.isOnline = [decoder decodeObjectForKey:@"isOnline"];

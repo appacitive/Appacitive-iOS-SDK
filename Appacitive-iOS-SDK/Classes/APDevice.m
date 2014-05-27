@@ -17,6 +17,7 @@
 #define DEVICE_PATH @"device/"
 
 @implementation APDevice
+
 static NSDictionary* headerParams;
 static APDevice* currentDevice;
 
@@ -51,40 +52,6 @@ static APDevice* currentDevice;
 }
 
 #pragma mark - Register methods
-- (void) registerDevice {
-    [self registerDeviceWithSuccessHandler:nil failureHandler:nil];
-}
-
-- (void) registerDeviceWithFailureHandler:(APFailureBlock)failureBlock {
-    [self registerDeviceWithSuccessHandler:nil failureHandler:failureBlock];
-}
-
-- (void) registerDeviceWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    NSString *path = HOST_NAME;
-    path = [path stringByAppendingPathComponent:DEVICE_PATH];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/register",path]];
-    NSMutableDictionary *bodyDict = [self postParameters];
-    [bodyDict addEntriesFromDictionary:[self createRequestBody]];
-    NSError *jsonError = nil;
-    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
-    if(jsonError != nil)
-        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPBody:requestBody];
-    [urlRequest setAllHTTPHeaderFields:[APDevice getHeaderParams]];
-    [urlRequest setHTTPMethod:@"PUT"];
-    [self updateSnapshot];
-    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
-        if (successBlock != nil) {
-            [self setPropertyValuesFromDictionary:result];
-            successBlock();
-        }
-    } failureHandler:^(APError *error) {
-        if (failureBlock != nil) {
-            failureBlock(error);
-        }
-    }];
-}
 
 + (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer{
     [self registerCurrentDeviceWithPushDeviceToken:token enablePushNotifications:answer successHandler:nil failureHandler:nil];
@@ -100,18 +67,36 @@ static APDevice* currentDevice;
         cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
         cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     }
-    
-    if([APDevice getCurrentDevice] == nil) {
+    if(currentDevice == nil) {
         currentDevice = [[APDevice alloc] initWithDeviceToken:cleanToken deviceType:@"ios"];
         currentDevice.isActive = @"false";
         if(answer == YES)
             currentDevice.isActive = @"true";
-        [currentDevice registerDeviceWithSuccessHandler:^{
+        NSString *path = HOST_NAME;
+    path = [path stringByAppendingPathComponent:DEVICE_PATH];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/register",path]];
+    NSMutableDictionary *bodyDict = [currentDevice postParameters];
+    [bodyDict addEntriesFromDictionary:[currentDevice createRequestBody]];
+    NSError *jsonError = nil;
+    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
+    if(jsonError != nil)
+        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPBody:requestBody];
+    [urlRequest setAllHTTPHeaderFields:[APDevice getHeaderParams]];
+    [urlRequest setHTTPMethod:@"PUT"];
+    [currentDevice updateSnapshot];
+    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+        if (successBlock != nil) {
+            [currentDevice setPropertyValuesFromDictionary:result];
             [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
-            if (successBlock != nil) {
-                successBlock();
-            }
-        } failureHandler:failureBlock];
+            successBlock();
+        }
+    } failureHandler:^(APError *error) {
+        if (failureBlock != nil) {
+            failureBlock(error);
+        }
+    }];
     } else {
         if([currentDevice.isActive isEqual:BooleanStringFromBOOL(answer)]) {
             if(answer == YES) {
@@ -163,7 +148,7 @@ static APDevice* currentDevice;
 }
 
 - (void) saveObjectWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
-    [self registerDeviceWithSuccessHandler:successBlock failureHandler:failureBlock];
+    [self updateObjectWithSuccessHandler:successBlock failureHandler:failureBlock];
 }
 
 #pragma mark - Fetch methods
@@ -296,7 +281,7 @@ static APDevice* currentDevice;
 }
 
 #pragma mark - Private methods
-- (NSMutableDictionary*) createRequestBody {
+- (NSMutableDictionary*)createRequestBody {
     NSMutableDictionary *requestBody = [[NSMutableDictionary alloc] init];
     if (self.deviceToken)
         [requestBody setObject:self.deviceToken forKey:@"devicetoken"];
@@ -313,7 +298,7 @@ static APDevice* currentDevice;
     return requestBody;
 }
 
-- (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
+- (void) setPropertyValuesFromDictionary:(NSDictionary*)dictionary {
     
     NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
     
@@ -343,10 +328,10 @@ static APDevice* currentDevice;
     self.badge = object[@"badge"];
     [object removeObjectForKey:@"badge"];
     
-    self.createdBy = (NSString*) object[@"__createdby"];
+    self.createdBy = (NSString*)object[@"__createdby"];
     _objectId = object[@"__id"];
-    _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
-    _revision = (NSNumber*) object[@"__revision"];
+    _lastModifiedBy = (NSString*)object[@"__lastmodifiedby"];
+    _revision = (NSNumber*)object[@"__revision"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
     _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
     _attributes = [object[@"__attributes"] mutableCopy];
@@ -357,7 +342,7 @@ static APDevice* currentDevice;
     [self updateSnapshot];
 }
 
-- (void) setPropertyValuesForCurrentDeviceFromDictionary:(NSDictionary*) dictionary {
+- (void) setPropertyValuesForCurrentDeviceFromDictionary:(NSDictionary*)dictionary {
     
     NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
     
@@ -379,10 +364,10 @@ static APDevice* currentDevice;
     self.badge = object[@"badge"];
     [object removeObjectForKey:@"badge"];
     
-    self.createdBy = (NSString*) object[@"__createdby"];
+    self.createdBy = (NSString*)object[@"__createdby"];
     _objectId = object[@"__id"];
-    _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
-    _revision = (NSNumber*) object[@"__revision"];
+    _lastModifiedBy = (NSString*)object[@"__lastmodifiedby"];
+    _revision = (NSNumber*)object[@"__revision"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
     _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
     _attributes = [object[@"__attributes"] mutableCopy];
@@ -393,7 +378,7 @@ static APDevice* currentDevice;
     [self updateSnapshot];
 }
 
-- (NSMutableDictionary*) postParameters {
+- (NSMutableDictionary*)postParameters {
     
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
     
@@ -434,7 +419,7 @@ static APDevice* currentDevice;
     return postParams;
 }
 
-- (NSMutableDictionary*) postParametersUpdate {
+- (NSMutableDictionary*)postParametersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
     
     if (self.attributes && [self.attributes count] > 0) {
@@ -458,9 +443,9 @@ static APDevice* currentDevice;
     
     if (self.deviceLocation != nil && self.deviceLocation != [_snapShot objectForKey:@"devicelocation"])
         postParams[@"devicelocation"] = self.deviceLocation;
-    if (self.deviceToken != nil && self.deviceToken != [_snapShot objectForKey:@"devicetoken"])
+    if (self.deviceToken != nil && self.deviceToken != [_snapShot objectForKey:@"devicetoken"] && self.objectId == currentDevice.objectId)
         postParams[@"devicetoken"] = self.deviceToken;
-    if (self.deviceType != nil && self.deviceType != [_snapShot objectForKey:@"devicetype"])
+    if (self.deviceType != nil && self.deviceType != [_snapShot objectForKey:@"devicetype"] && self.objectId == currentDevice.objectId)
         postParams[@"devicetype"] = self.deviceType;
     if(self.channels != nil && [self.channels count] >0  && self.channels != [_snapShot objectForKey:@"channels"])
         postParams[@"channels"] = self.channels;
@@ -566,14 +551,11 @@ static APDevice* currentDevice;
     }
 }
 
-+ (APDevice*) getCurrentDevice {
++ (void)restoreCurrentDevice {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"currentAPDevice"] != nil) {
         NSData *encodedObject = [defaults objectForKey:@"currentAPDevice"];
-        APDevice *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
-        return object;
-    } else {
-        return nil;
+        currentDevice = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
     }
 }
 

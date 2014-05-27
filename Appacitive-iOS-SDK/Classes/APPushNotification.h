@@ -198,21 +198,21 @@ typedef enum {
  @param tile The flip tile to be used for creating the tile notification object.
  @return Returns an object of 'TileNotification' type.
  */
-- (TileNotification*) createNewFlipTile:(FlipTile*)tile;
+- (TileNotification*)createNewFlipTile:(FlipTile*)tile;
 
 /**
  Method to create a new iconic tile notification.
  @param tile The iconic tile to be used for creating the tile notification.
  @param flipTile The flip tile to be used for devices that are on platform WindowsPhone-7.5 and below.
  */
-- (TileNotification*) createNewIconicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)flipTile;
+- (TileNotification*)createNewIconicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)flipTile;
 
 /**
  Method to create a new cyclic tile notification.
  @param tile The cyclic tile to be used for creating the tile notification.
  @param flipTile The flip tile to be used for devices that are on platform WindowsPhone-7.5 and below.
  */
-- (TileNotification*) createNewCyclicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)flipTile;
+- (TileNotification*)createNewCyclicTile:(IconicTile*)tile flipTileForWP75AndBelow:(FlipTile*)flipTile;
 
 /**
  Method to initialize a windows phone tile notification object.

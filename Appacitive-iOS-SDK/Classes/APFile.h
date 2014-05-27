@@ -82,7 +82,7 @@
 /**
  @see downloadFileWithName:urlExpiresAfter:successHandler:failureHandler:
  */
-+ (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock;
++ (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock)successBlock;
 
 /**
  Method used to download data from the remote server.
@@ -92,7 +92,7 @@
  @param successBlock Block invoked when download is successful.
  @param failureBlock Block invoked when download fails.
  */
-+ (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock;
++ (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see deleteFileWithName:successHandler:failureHandler:

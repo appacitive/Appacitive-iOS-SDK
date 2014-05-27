@@ -412,7 +412,7 @@
 
 #pragma mark - Add properties method
 
-- (void) addPropertyWithKey:(NSString*) keyName value:(id) object {
+- (void) addPropertyWithKey:(NSString*)keyName value:(id) object {
     if (!self.properties) {
         _properties = [NSMutableArray array];
     }
@@ -421,24 +421,24 @@
 
 #pragma mark - Add attributes method
 
-- (void) addAttributeWithKey:(NSString*) keyName value:(id) object {
+- (void) addAttributeWithKey:(NSString*)keyName value:(id) object {
     if (!self.attributes) {
         _attributes = [NSMutableDictionary dictionary];
     }
     [_attributes setObject:object forKey:keyName];
 }
 
-- (void) updateAttributeWithKey:(NSString*) keyName value:(id) object {
+- (void) updateAttributeWithKey:(NSString*)keyName value:(id) object {
     [_attributes setObject:object forKey:keyName];
 }
 
-- (void) removeAttributeWithKey:(NSString*) keyName {
+- (void) removeAttributeWithKey:(NSString*)keyName {
     [_attributes setObject:[NSNull null] forKey:keyName];
 }
 
 #pragma mark - Update properties method
 
-- (void) updatePropertyWithKey:(NSString*) keyName value:(id) object {
+- (void) updatePropertyWithKey:(NSString*)keyName value:(id) object {
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
         if ([dict objectForKey:keyName] != nil) {
@@ -450,7 +450,7 @@
 
 #pragma mark - Delete property
 
-- (void) removePropertyWithKey:(NSString*) keyName {
+- (void) removePropertyWithKey:(NSString*)keyName {
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
         if ([dict objectForKey:keyName] != nil) {
@@ -462,7 +462,7 @@
 
 #pragma mark - Retrieve property
 
-- (instancetype) getPropertyWithKey:(NSString*) keyName {
+- (instancetype) getPropertyWithKey:(NSString*)keyName {
     __block id property;
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
@@ -496,7 +496,7 @@
 #pragma mark - Private methods
 
 
-- (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
+- (void) setPropertyValuesFromDictionary:(NSDictionary*)dictionary {
     NSDictionary *connection = [[NSDictionary alloc] init];
     if([[dictionary allKeys] containsObject:@"connection"])
         connection = dictionary[@"connection"];
@@ -504,16 +504,16 @@
         connection = dictionary;
     _objectAId = (NSString*)connection[@"__endpointa"][@"objectid"];
     _objectBId = (NSString*)connection[@"__endpointb"][@"objectid"];
-    _createdBy = (NSString*) connection[@"__createdby"];
-    _objectId = (NSString*) connection[@"__id"];
-    _labelA = (NSString*) connection[@"__endpointa"][@"label"];
-    _labelB = (NSString*) connection[@"__endpointb"][@"label"];
-    _typeA = (NSString*) connection[@"__endpointa"][@"type"];
-    _typeB = (NSString*) connection[@"__endpointb"][@"type"];
-    _lastModifiedBy = (NSString*) connection[@"__lastmodifiedby"];
-    _relationId = (NSString*) connection[@"__relationid"];
-    _relationType = (NSString*) connection[@"__relationtype"];
-    _revision = (NSNumber*) connection[@"__revision"];
+    _createdBy = (NSString*)connection[@"__createdby"];
+    _objectId = (NSString*)connection[@"__id"];
+    _labelA = (NSString*)connection[@"__endpointa"][@"label"];
+    _labelB = (NSString*)connection[@"__endpointb"][@"label"];
+    _typeA = (NSString*)connection[@"__endpointa"][@"type"];
+    _typeB = (NSString*)connection[@"__endpointb"][@"type"];
+    _lastModifiedBy = (NSString*)connection[@"__lastmodifiedby"];
+    _relationId = (NSString*)connection[@"__relationid"];
+    _relationType = (NSString*)connection[@"__relationtype"];
+    _revision = (NSNumber*)connection[@"__revision"];
     _tags = connection[@"__tags"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:connection[@"__utcdatecreated"]];
     _utcLastModifiedDate = [APHelperMethods deserializeJsonDateString:connection[@"__utclastupdateddate"]];
@@ -524,7 +524,7 @@
     [self updateSnapshot];
 }
 
-- (NSMutableDictionary*) parameters {
+- (NSMutableDictionary*)parameters {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     if (self.objectAId) {
         if (!parameters[@"__endpointa"]) {
@@ -612,7 +612,7 @@
     return parameters;
 }
 
-- (NSMutableDictionary*) postParamertersUpdate {
+- (NSMutableDictionary*)postParamertersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
 
     if (self.attributes && [self.attributes count] > 0)
@@ -654,7 +654,7 @@
         _snapShot[@"__properties"] = [self.properties mutableCopy];
 }
 
-- (NSString*) description {
+- (NSString*)description {
     return [NSString stringWithFormat:@"ObjectAId:%@, ObjectBId:%@, Attributes:%@, CreatedBy:%@, Connection Id:%@, LabelA:%@, LabelB:%@, LastUpdatedBy:%@, Properties:%@, RelationId:%@, Relation Type:%@, Revision:%d, Tags:%@, UtcDateCreated:%@, UtcLastUpdatedDate:%@", self.objectAId, self.objectBId, self.attributes, self.createdBy, self.objectId, self.labelA, self.labelB, self.lastModifiedBy, self.properties, self.relationId, self.relationType, [self.revision intValue], self.tags ,self.utcDateCreated, self.utcLastModifiedDate];
 }
 @end
@@ -867,7 +867,7 @@
     __block NSString *path = [CONNECTION_PATH stringByAppendingFormat:@"%@/multiget/", relationType];
     
     [objectIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSString *string = (NSString*) obj;
+        NSString *string = (NSString*)obj;
         path = [path stringByAppendingFormat:@"%@", string];
         if (idx != objectIds.count - 1) {
             path = [path stringByAppendingString:@","];
