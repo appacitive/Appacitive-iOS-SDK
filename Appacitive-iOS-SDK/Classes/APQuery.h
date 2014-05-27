@@ -29,7 +29,7 @@ typedef enum {
 /**
  Helper method to cast the query object into an appropriate string query that can be interpreted by the Appacitive API
  */
-- (NSString*) stringValue;
+- (NSString*)stringValue;
 
 @end
 
@@ -260,7 +260,7 @@ typedef enum {
  Example query would be +[APBaseQuery queryForGeoCodeProperty:@"location" nearLocation:{123, 123} distanceMetric:kilometers radius:12]
  This would return "*location within_circle 123,123,12" which is the format Appacitive understands.
  */
-+ (APSimpleQuery*)queryWithRadialSearchForProperty:(NSString*) propertyName  nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric;
++ (APSimpleQuery*)queryWithRadialSearchForProperty:(NSString*)propertyName  nearLocation:(CLLocation*)location withinRadius:(NSNumber*)radius usingDistanceMetric:(DistanceMetric)distanceMetric;
 
 /**
  Helper method to generate a query string for polygon search.

@@ -42,26 +42,19 @@
  
  @return APUser or nil
  */
-+ (APUser*) currentUser;
-
-/**
- Helper method to set the current user.
- 
- @param user The new current user
- */
-+ (void) setCurrentUser:(APUser*) user;
++ (APUser*)currentUser;
 
 /** @name Authenticating APUser */
 
 /**
- @see authenticateUserWithUsername:password:successHandler:failureHandler:
+ @see authenticateUserWithUsername:password:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password;
++ (void) authenticateUserWithUsername:(NSString*)username password:(NSString*)password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls;
 
 /**
- @see authenticateUserWithUsername:password:successHandler:failureHandler:
+ @see authenticateUserWithUsername:password:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password failureHandler:(APFailureBlock) failureBlock;
++ (void) authenticateUserWithUsername:(NSString*)username password:(NSString*)password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to authenticate a user
@@ -70,21 +63,23 @@
  
  @param username The username of the user to authenticate.
  @param password The password of the user to authenticate.
+ @param minutes Timeout for token in minutes.
+ @param calls The number of API calls that can be made using the authentication token.
  @param successBlock Block invoked when authentication is successful.
  @param failureBlock Block invoked when authentication is unsuccessful.
  */
-+ (void) authenticateUserWithUsername:(NSString*)username password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock;
++ (void) authenticateUserWithUsername:(NSString*)username password:(NSString*)password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see authenticateUserWithFacebook:successHandler:failureHandler:
+ @see authenticateUserWithFacebook:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken;
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls;
 
 
 /**
- @see authenticateUserWithFacebook:successHandler:failureHandler:
+ @see authenticateUserWithFacebook:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken failureHandler:(APFailureBlock)failureBlock;
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to authenticate a user with facebook.
@@ -92,21 +87,23 @@
  If successful the currentUser is set to the authenticated user.
  
  @param accessToken The access token retrieved after a successful facebook login.
+ @param minutes Timeout for token in minutes.
+ @param calls The number of API calls that can be made using the authentication token.
  @param successBlock Block invoked when authentication with facebook is successful.
  @param failureBlock Block invoked when authentication with facebook is unsuccessful.
  */
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock;
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:
+ @see authenticateUserWithTwitter:oauthSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*) oauthSecret;
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls;
 
 
 /**
- @see authenticateUserWithTwitter:oauthSecret:successHandler:failureHandler:
+ @see authenticateUserWithTwitter:oauthSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*) oauthSecret failureHandler:(APFailureBlock)failureHandler;
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureHandler;
 
 /**
  Method to authenticate a user with Twitter.
@@ -115,20 +112,22 @@
  
  @param oauthToken The oauth token retrieved after twitter login.
  @param oauthSecret The oauth secret.
+ @param minutes Timeout for token in minutes.
+ @param calls The number of API calls that can be made using the authentication token.
  @param successBlock Block invoked when login with twitter is successful.
  @param failureBlock Block invoked when login with twitter is unsuccessful.
  */
-+ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*) oauthSecret successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock;
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:
+ @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret;
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls;
 
 /**
- @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:successHandler:failureHandler:
+ @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret failureHandler:(APFailureBlock)failureBlock;
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to authenticate a user with Twitter.
@@ -139,10 +138,12 @@
  @param oauthSecret The oauth secret.
  @param consumerKey The consumer key of the application created on twitter.
  @param consumerSecret The consumer secret of the application created on twitter.
+ @param minutes Timeout for token in minutes.
+ @param calls The number of API calls that can be made using the authentication token.
  @param successBlock Block invoked when authentication with twitter is successful.
  @param failureBlock Block invoked when authentication with twitter is unsuccessful.
  */
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /** @name Linking external identities with APUser */
 
@@ -267,7 +268,7 @@
 /**
  @see createUserWithSuccessHandler:failureHandler:
  */
-- (void) createUserWithSuccessHandler:(APSuccessBlock) successBlock;
+- (void) createUserWithSuccessHandler:(APSuccessBlock)successBlock;
 
 /**
  Method to create a new user
@@ -279,7 +280,7 @@
  @param successBlock Block invoked when the create request is successful.
  @param failureBlock Block invoked when the create request is unsuccessful.
  */
-- (void) createUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) createUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see createUserWithFacebook:successHandler:failureHandler:
@@ -320,7 +321,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+- (void) createUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /** @name Saving APUser */
 
@@ -355,9 +356,9 @@
 /**
  @see fetchUserById:propertiesToFetch:successHandler:failureHandler:
  */
-- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock) successBlock;
+- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock;
 
-- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to retrieve User by ID
@@ -367,7 +368,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:
@@ -377,12 +378,12 @@
 /**
  @see fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:
  */
-- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock) successBlock;
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock;
 
 /**
  @see fetchUserByUsername:propertiesToFetch:successHandler:failureHandler:
  */
-- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to retrieve User by username
@@ -392,7 +393,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) fetchUserByUsername:(NSString *)username propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserByUsername:(NSString *)username propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:
@@ -402,12 +403,12 @@
 /**
  @see fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:
  */
-- (void) fetchUserWithUserToken:(NSString *)userToken successHandler:(APSuccessBlock) successBlock;
+- (void) fetchUserWithUserToken:(NSString *)userToken successHandler:(APSuccessBlock)successBlock;
 
 /**
  @see fetchUserWithUserToken:propertiesToFetch:successHandler:failureHandler:
  */
-- (void) fetchUserWithUserToken:(NSString *)userToken successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserWithUserToken:(NSString *)userToken successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  Method to retrieve of currently logged-in User
@@ -417,7 +418,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) fetchUserWithUserToken:(NSString *)userToken propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) fetchUserWithUserToken:(NSString *)userToken propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see fetchWithPropertiesToFetch:successHandler:failureHandler:
@@ -479,7 +480,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-- (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
+- (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see deleteObjectWithConnectingConnectionsSuccessHandler:failureHandler:
@@ -524,7 +525,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-+ (void) deleteCurrentlyLoggedInUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
++ (void) deleteCurrentlyLoggedInUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /** @name Checking-in a user to a location */
 
@@ -547,7 +548,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-+ (void) setUserLocationToLatitude:(NSString*)latitude longitude:(NSString*)longitude forUserWithUserId:(NSString*)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
++ (void) setUserLocationToLatitude:(NSString*)latitude longitude:(NSString*)longitude forUserWithUserId:(NSString*)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /** @name Validating APUser session*/
 
@@ -562,7 +563,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-+ (void) validateCurrentUserSessionWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
++ (void) validateCurrentUserSessionWithSuccessHandler:(APResultSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /** Logging-out an APUser */
 
@@ -582,7 +583,7 @@
  @param successBlock Block invoked when operation is successful.
  @param failureBlock Block invoked when operation is unsuccessful.
  */
-+ (void) logOutCurrentUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock;
++ (void) logOutCurrentUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /** Password management for APUser */
 
@@ -627,9 +628,9 @@
 + (void) sendResetPasswordEmailForUserWithUsername:(NSString*)username withSubject:(NSString *)emailSubject successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
- Method to get the current user object persisted in local data store.
+ Method to restore the current user object persisted in the local data store.
  @return APUser instance of the saved user object.
  */
-+ (APUser*) getSavedUser;
++ (void) restoreCurrentUser;
 
 @end

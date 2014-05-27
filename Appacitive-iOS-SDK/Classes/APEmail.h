@@ -94,7 +94,7 @@
  @param port SMTP server port.
  @param enableSSL Whether to user SSL or not.
  */
-+ (NSDictionary*) makeSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL;
++ (NSDictionary*)makeSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL;
 
 
 @end

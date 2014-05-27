@@ -718,10 +718,10 @@ You can execute a saved graph query (filter or projection) by using it’s name 
 Executing saved projection queries works the same way as executing saved filter queries. The only difference is that you also need to pass the initial ids as an array of strings to feed the projection query. The response to a projection query will depend on how you design your projection query. Do test them out using the query builder from the query tab on the management portal and from the test harness.
 
 ```objectivec
-APGraphNode *projectionGraphQuery = [[APGraphNode alloc] init];
-    [projectionGraphQuery applyProjectionGraphQuery:@"project_sales" usingPlaceHolders:nil forObjectsIds:@[@"12345",@"34567"] successHandler:^(APGraphNode *node) {
+[APGraphNode applyProjectionGraphQuery:@"project_sales" usingPlaceHolders:nil forObjectsIds:@[@"12345",@"34567"] successHandler:^(NSArray *nodes) {
+    for(APGraphNode *node in nodes)
         NSLog(@"Sales Projection:%@",[node description]);
-    }];
+}];
 ```
 -----------
 
@@ -829,7 +829,7 @@ Authentication is the core of user management. You can authenticate (log in) use
 You can ask your users to authenticate via their username and password.
 
 ```objectivec
-[APUser authenticateUserWithUserName:@"spencer.maguire" password:@"H3LL0_K177Y"];
+[APUser authenticateUserWithUserName:@"spencer.maguire" password:@"H3LL0_K177Y" sessionExpiresAfter:nil limitAPICallsTo:nil];
 ```
 
 
@@ -838,7 +838,7 @@ You can ask your users to authenticate via their username and password.
 You can ask your users to log in via Facebook. The process is very similar to signing up with fFacebook.
 
 ```objectivec
-[APUser authenticateUserWithFacebook:@"23klj4bkjl23bn4knb23k4ln"];
+[APUser authenticateUserWithFacebook:@"23klj4bkjl23bn4knb23k4ln" signUp:NO sessionExpiresAfter:nil limitAPICallsTo:nil];
 ```
 
 #### Login with Twitter
@@ -847,10 +847,10 @@ You can ask your users to log in via Twitter. This'll require you to implement t
 
 ```objectivec
 //Oauth1.0
-[APUser authenticateUserWithTwitter:@"kjbknkn23k4234" oauthSecret:@"5n33h4b5b"];
+[APUser authenticateUserWithTwitter:@"kjbknkn23k4234" oauthSecret:@"5n33h4b5b" signUp:NO sessionExpiresAfter:nil limitAPICallsTo:nil];
 
 //Oauth2.0
-    [APUser authenticateUserWithTwitter:@"3kjn2k34n" oauthSecret:@"2m34234n" consumerKey:@"2vhgv34v32hg" consumerSecret:@"sdfg087fd9"];
+    [APUser authenticateUserWithTwitter:@"3kjn2k34n" oauthSecret:@"2m34234n" consumerKey:@"2vhgv34v32hg" consumerSecret:@"sdfg087fd9" signUp:NO sessionExpiresAfter:nil limitAPICallsTo:nil];
 ```
 
 ### User Session Management
@@ -1037,20 +1037,9 @@ emailObj.templateBody = @{@"username":@"Robin", @"appname":@"DealHunter"};
 
 ## Device
 
-Appacitive provides an out-of-the box data type called device. This type helps you in managing the devices that your apps are installed on. You can use the device class to track your user's devices and send push notifications.
+Appacitive provides an out-of-the box data type called device. This type helps you in managing the devices that your apps are installed on. You can use the device class to track your user's current device and send push notifications. The SDK only supports registering a single device which on success populates the static APDevice object of the APDevice class. You can fetch other devices through the `fetch` methods. You cannot modify the `devicetype` and `devicetoken` properties of devices other than the current device.
 
 ### Register
-
-There are two types of device registrations provided by the SDK. the `registerDevice` method will create a device instance in your app at appacitive and also give you an instance to the newly created device, just like when you create an object.
-
-```objectivec
-    APDevice *mydevice = [[APDevice alloc] initWithDeviceToken:@"1gh32fh5fgh37fx58c" deviceType:@"ios"];
-    [mydevice registerDeviceWithSuccessHandler:^() {
-        NSLog(@"Device created!");
-    } failureHandler:^(APError *error) {
-        NSLog(@"Some error occurred: %@",[error description]);
-    }];
-``` 
 
 The `registerCurrentDeviceWithPushDeviceToken` method will create a device instance in your app at Appacitive with the push device token and also set it active for receiving push notifications. the device instance that gets instantiated is the static APdevice instance `currentDevice`. Make sure that the push device token that you enter as the parameter for the register call is the same token that you receive from iOS for receiving push notifications.
 
@@ -1243,7 +1232,7 @@ successHandler:^{
 
 You can also manage access controls on your objects using the acl property of the APObect, APUser or the APDevice classes and their sub classes.
 
-You can either allow, deny or reset permissions for users or usergroups on your object.
+You can either allow, deny or reset permissions(read, update, delete, manage access) for users or usergroups on your objects.
 
 **NOTE:** Access controls cannot be enforced on connection objects.
 

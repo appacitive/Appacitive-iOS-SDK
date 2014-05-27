@@ -188,6 +188,6 @@
  
  @return a reference to the static current device object.
  */
-+ (APDevice*) getCurrentDevice;
++ (void)restoreCurrentDevice;
 
 @end

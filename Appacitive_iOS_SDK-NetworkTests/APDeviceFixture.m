@@ -7,14 +7,14 @@
 //    beforeAll(^() {
 //        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
 //        [Appacitive useLiveEnvironment:NO];
-//        [APLogger enableLogging:YES];
-//        [APLogger enableVerboseMode:YES];
+//        [[APLogger sharedLogger] enableLogging:YES];
+//        [[APLogger sharedLogger] enableVerboseMode:YES];
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
 //    });
 //
 //    beforeEach(^{
 //        __block bool isUserAuthenticateSuccessful;
-//        [APUser authenticateUserWithUsername:@"ppatel" password:@"qweqwe"
+//        [APUser authenticateUserWithUsername:@"ppatel" password:@"qweqwe" sessionExpiresAfter:nil limitAPICallsTo:nil
 //                              successHandler:^(APUser* user) {
 //                                  isUserAuthenticateSuccessful = YES;
 //                              } failureHandler:^(APError *error) {
@@ -32,7 +32,7 @@
 //        __block BOOL isDeviceCreated = NO;
 //        
 //        APDevice *mydevice = [[APDevice alloc] initWithDeviceToken:@"9999999999" deviceType:@"ios"];
-//        [mydevice registerDeviceWithSuccessHandler:^() {
+//        [mydevice saveObjectWithSuccessHandler:^(NSDictionary *result) {
 //            isDeviceCreated = YES;
 //            [mydevice deleteObject];
 //        } failureHandler:^(APError *error) {
@@ -62,7 +62,7 @@
 //        __block BOOL isDeviceDeleted = NO;
 //
 //        APDevice *mydevice = [[APDevice alloc] initWithDeviceToken:@"9999999999" deviceType:@"ios"];
-//        [mydevice registerDeviceWithSuccessHandler:^() {
+//        [mydevice saveObjectWithSuccessHandler:^(NSDictionary *result) {
 //            [mydevice deleteObjectWithConnectingConnectionsSuccessHandler:^{
 //                isDeviceDeleted = YES;
 //            } failureHandler:^(APError *error) {
@@ -81,7 +81,7 @@
 //        __block BOOL isDeviecUpdated = NO;
 //        
 //        APDevice *mydevice = [[APDevice alloc] initWithDeviceToken:@"9999999999" deviceType:@"ios"];
-//        [mydevice registerDeviceWithSuccessHandler:^() {
+//        [mydevice saveObjectWithSuccessHandler:^(NSDictionary *result) {
 //            [mydevice addAttributeWithKey:@"testCase" value:@"testCase"];
 //            [mydevice updateObjectWithSuccessHandler:^(){
 //                [mydevice deleteObject];
@@ -105,7 +105,7 @@
 //        __block BOOL isDeviecUpdated = NO;
 //        
 //        APDevice *mydevice = [[APDevice alloc] initWithDeviceToken:@"9999999999" deviceType:@"ios"];
-//        [mydevice registerDeviceWithSuccessHandler:^() {
+//        [mydevice saveObjectWithSuccessHandler:^(NSDictionary *result) {
 //            [mydevice fetchWithSuccessHandler:^() {
 //                isDeviecUpdated = YES;
 //                [mydevice deleteObject];

@@ -22,7 +22,7 @@
  
  @return NSURLSession object
  */
-+ (NSURLSession*) getSharedNSURLSession;
++ (NSURLSession*)getSharedNSURLSession;
 
 /**
  Method to add additional HTTP headers to the shared NSURLSession

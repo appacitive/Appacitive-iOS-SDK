@@ -58,12 +58,12 @@ NSString *const OBJECT_PATH = @"object/";
     return [self initWithTypeName:typeName objectId:nil];
 }
 
-+ (APObject*) objectWithTypeName:(NSString*)typeName {
++ (APObject*)objectWithTypeName:(NSString*)typeName {
     APObject *object = [[APObject alloc] initWithTypeName:typeName];
     return object;
 }
 
-+ (APObject*) objectWithTypeName:(NSString*)typeName objectId:(NSString*)objectId {
++ (APObject*)objectWithTypeName:(NSString*)typeName objectId:(NSString*)objectId {
     APObject *object = [[APObject alloc] initWithTypeName:typeName objectId:objectId];
     return object;
 }
@@ -174,7 +174,7 @@ NSString *const OBJECT_PATH = @"object/";
     __block NSString *path = [OBJECT_PATH stringByAppendingFormat:@"%@/multiget/", typeName];
     
     [objectIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSString *string= (NSString*) obj;
+        NSString *string= (NSString*)obj;
         path = [path stringByAppendingFormat:@"%@", string];
         if (idx != objectIds.count - 1) {
             path = [path stringByAppendingString:@","];
@@ -339,7 +339,7 @@ NSString *const OBJECT_PATH = @"object/";
 
 #pragma mark - Update properties method
 
-- (void) updatePropertyWithKey:(NSString*) keyName value:(id) object {
+- (void) updatePropertyWithKey:(NSString*)keyName value:(id) object {
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
         if ([dict objectForKey:keyName] != nil) {
@@ -351,7 +351,7 @@ NSString *const OBJECT_PATH = @"object/";
 
 #pragma mark - Delete property
 
-- (void) removePropertyWithKey:(NSString*) keyName {
+- (void) removePropertyWithKey:(NSString*)keyName {
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
         if ([dict objectForKey:keyName] != nil) {
@@ -363,7 +363,7 @@ NSString *const OBJECT_PATH = @"object/";
 
 #pragma mark - Retrieve property
 
-- (id) getPropertyWithKey:(NSString*) keyName {
+- (id) getPropertyWithKey:(NSString*)keyName {
     __block id property;
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
@@ -448,22 +448,22 @@ NSString *const OBJECT_PATH = @"object/";
 
 #pragma mark - Add attributes method
 
-- (void) addAttributeWithKey:(NSString*) keyName value:(id) object {
+- (void) addAttributeWithKey:(NSString*)keyName value:(id) object {
     if (!self.attributes) {
         _attributes = [NSMutableDictionary dictionary];
     }
     [_attributes setObject:object forKey:keyName];
 }
 
-- (void) updateAttributeWithKey:(NSString*) keyName value:(id) object {
+- (void) updateAttributeWithKey:(NSString*)keyName value:(id) object {
     [_attributes setObject:object forKey:keyName];
 }
 
-- (void) removeAttributeWithKey:(NSString*) keyName {
+- (void) removeAttributeWithKey:(NSString*)keyName {
     [_attributes setObject:[NSNull null] forKey:keyName];
 }
 
-- (NSString*) description {
+- (NSString*)description {
     NSString *description = [NSString stringWithFormat:@"Object Id:%@, Created by:%@, Last modified by:%@, UTC date created:%@, UTC date updated:%@, Revision:%d, Properties:%@, Attributes:%@, type:%@, Tag:%@", self.objectId, self.createdBy, self.lastModifiedBy, self.utcDateCreated, self.utcLastUpdatedDate, [self.revision intValue], self.properties, self.attributes, self.type, self.tags];
     return description;
 }
@@ -490,16 +490,16 @@ NSString *const OBJECT_PATH = @"object/";
 #pragma mark - Private methods
 
 
-- (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
+- (void) setPropertyValuesFromDictionary:(NSDictionary*)dictionary {
     NSDictionary *object = [[NSDictionary alloc] init];
     if([[dictionary allKeys] containsObject:@"object"])
         object = dictionary[@"object"];
     else
         object = dictionary;
-    _createdBy = (NSString*) object[@"__createdby"];
+    _createdBy = (NSString*)object[@"__createdby"];
     _objectId = object[@"__id"];
-    _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
-    _revision = (NSNumber*) object[@"__revision"];
+    _lastModifiedBy = (NSString*)object[@"__lastmodifiedby"];
+    _revision = (NSNumber*)object[@"__revision"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
     _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
     _attributes = [object[@"__attributes"] mutableCopy];
@@ -511,7 +511,7 @@ NSString *const OBJECT_PATH = @"object/";
 }
 
 
-- (NSMutableDictionary*) postParameters {
+- (NSMutableDictionary*)postParameters {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
     if (_objectId != nil)
         postParams[@"__id"] = self.objectId;
@@ -523,7 +523,11 @@ NSString *const OBJECT_PATH = @"object/";
         postParams[@"__revision"] = _revision;
     for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [postParams setObject:obj forKey:key];
+            if([obj isKindOfClass:[NSDate class]]) {
+                [postParams setObject:[APHelperMethods jsonDateStringFromDate:obj] forKey:key];
+            } else {
+                [postParams setObject:obj forKey:key];
+            }
             *stop = YES;
         }];
     }
@@ -536,7 +540,7 @@ NSString *const OBJECT_PATH = @"object/";
     return postParams;
 }
 
-- (NSMutableDictionary*) postParametersUpdate {
+- (NSMutableDictionary*)postParametersUpdate {
     
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
     

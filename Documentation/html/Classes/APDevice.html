@@ -48,13 +48,13 @@
 	
 	<option value="//api/name/deregisterCurrentDeviceWithSuccessHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ deregisterCurrentDeviceWithSuccessHandler:failureHandler:</option>
 	
-	<option value="//api/name/getCurrentDevice">&nbsp;&nbsp;&nbsp;&nbsp;+ getCurrentDevice</option>
-	
 	<option value="//api/name/registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:">&nbsp;&nbsp;&nbsp;&nbsp;+ registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:</option>
 	
 	<option value="//api/name/registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:failureHandler:</option>
 	
 	<option value="//api/name/registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:successHandler:failureHandler:">&nbsp;&nbsp;&nbsp;&nbsp;+ registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:successHandler:failureHandler:</option>
+	
+	<option value="//api/name/restoreCurrentDevice">&nbsp;&nbsp;&nbsp;&nbsp;+ restoreCurrentDevice</option>
 	
 	
 	
@@ -137,13 +137,13 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/deregisterCurrentDeviceWithSuccessHandler:failureHandler:">deregisterCurrentDeviceWithSuccessHandler:failureHandler:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getCurrentDevice">getCurrentDevice</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:">registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:failureHandler:">registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:failureHandler:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:successHandler:failureHandler:">registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:successHandler:failureHandler:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/restoreCurrentDevice">restoreCurrentDevice</a></span></li>
 	
 </ul></li>
 
@@ -439,7 +439,7 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/getCurrentDevice">+&nbsp;getCurrentDevice</a></code>
+		<code><a href="#//api/name/restoreCurrentDevice">+&nbsp;restoreCurrentDevice</a></code>
 		<span class="tooltip"><p>Method to <a href="#//api/name/fetch">fetch</a> a reference to the current device object.</p></span>
 	</span>
 	
@@ -601,47 +601,6 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/getCurrentDevice" title="getCurrentDevice"></a>
-	<h3 class="subsubtitle method-title">getCurrentDevice</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Method to <a href="#//api/name/fetch">fetch</a> a reference to the current device object.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>+ (APDevice *)getCurrentDevice</code></div>
-
-    
-	
-	
-	
-	<div class="method-subsection return">
-		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>a reference to the static current device object.</p>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">APDevice.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:" title="registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:"></a>
 	<h3 class="subsubtitle method-title">registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:</h3>
 	
@@ -773,6 +732,47 @@ This method will use the type and objectId properties to <a href="#//api/name/fe
 	</div>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">APDevice.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/restoreCurrentDevice" title="restoreCurrentDevice"></a>
+	<h3 class="subsubtitle method-title">restoreCurrentDevice</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Method to <a href="#//api/name/fetch">fetch</a> a reference to the current device object.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (void)restoreCurrentDevice</code></div>
+
+    
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>a reference to the static current device object.</p>
+	</div>
 	
 	
 	
@@ -1665,7 +1665,7 @@ This method will save an object in the background. If save is successful the pro
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-05-22)</span><br />
+						<p><span class="copyright">&copy; 2014 Appacitive software. All rights reserved. (Last updated: 2014-05-27)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 840)</a>.</span></p>
 						

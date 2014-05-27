@@ -23,7 +23,7 @@
 @property (strong, nonatomic) APConnection* connection;
 @property (strong, nonatomic) NSDictionary* map;
 
-- (NSArray*) getChildrenOf:(NSString*)objectId;
+- (NSArray*)getChildrenOf:(NSString*)objectId;
 
 /** @name Apply graph queries */
 
@@ -47,7 +47,7 @@
 /**
  @see applyProjectionGraphQuery:usingPlaceHolders:forObjectsIds:successHandler:failureHandler:
  */
-- (void) applyProjectionGraphQuery:(NSString *)query usingPlaceHolders:(NSDictionary*)placeHolders forObjectsIds:(NSArray*)objectIds successHandler:(APGraphNodeSuccessBlock)successBlock;
++ (void) applyProjectionGraphQuery:(NSString *)query usingPlaceHolders:(NSDictionary*)placeHolders forObjectsIds:(NSArray*)objectIds successHandler:(APObjectsSuccessBlock)successBlock;
 
 /**
  Searches for APObjects that satisfy the projection graph query.
@@ -60,6 +60,6 @@
  @param successBlock Block invoked when query is successfully executed.
  @param failureBlock Block invoked when query execution fails.
  */
-- (void) applyProjectionGraphQuery:(NSString *)query usingPlaceHolders:(NSDictionary*)placeHolders forObjectsIds:(NSArray*)objectIds successHandler:(APGraphNodeSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
++ (void) applyProjectionGraphQuery:(NSString *)query usingPlaceHolders:(NSDictionary*)placeHolders forObjectsIds:(NSArray*)objectIds successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 @end
