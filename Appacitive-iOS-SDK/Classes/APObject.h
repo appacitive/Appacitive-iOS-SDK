@@ -18,7 +18,7 @@ extern NSString *const OBJECT_PATH;
 
 @required
 
-- (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary;
+- (void) setPropertyValuesFromDictionary:(NSDictionary*)dictionary;
 
 @end
 /**
@@ -81,14 +81,14 @@ extern NSString *const OBJECT_PATH;
  Initialize and return an autoreleased APObject for the provided type name.
  @param typeName The type this object represents.
  */
-+ (APObject*) objectWithTypeName:(NSString*)typeName;
++ (APObject*)objectWithTypeName:(NSString*)typeName;
 
 /**
  Initialize and return an autoreleased APObject for the provided type name and objectId.
  @param typeName The type this object represents.
  @param objectId objectId of the object
  */
-+ (APObject*) objectWithTypeName:(NSString*)typeName objectId:(NSString*)objectId;
++ (APObject*)objectWithTypeName:(NSString*)typeName objectId:(NSString*)objectId;
 
 /** @name Fetching APObject */
 

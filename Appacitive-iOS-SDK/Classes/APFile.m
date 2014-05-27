@@ -155,12 +155,12 @@
     }];
 }
 
-+ (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock {
++ (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock)successBlock {
     [self downloadFileWithName:name urlExpiresAfter:minutes successHandler:successBlock failureHandler:nil];
 }
 
 
-+ (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) downloadFileWithName:(NSString*)name urlExpiresAfter:(NSNumber*)minutes successHandler:(APFileDownloadSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     NSString *path = [HOST_NAME stringByAppendingString:FILE_PATH];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@download/%@?expires=%@",path,name,minutes]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];

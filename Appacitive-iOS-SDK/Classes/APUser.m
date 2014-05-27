@@ -33,37 +33,42 @@ static NSDictionary *headerParams;
     [APNetworking addHTTPHeaderValue:currentUser.userToken forKey:UserAuthHeaderKey];
 }
 
-+ (APUser*)getSavedUser {
++ (void) restoreCurrentUser {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"currentAPUser"] != nil) {
         NSData *encodedObject = [defaults objectForKey:@"currentAPUser"];
         APUser *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
-        return object;
-    } else {
-        return nil;
+        [self setCurrentUser:object];
     }
 }
 
 #pragma mark - Authenticate methods
 
-+ (void) authenticateUserWithUsername:(NSString *)username password:(NSString *)password {
-    [APUser authenticateUserWithUsername:username password:password successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithUsername:(NSString *)username password:(NSString *)password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
+    [APUser authenticateUserWithUsername:username password:password sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password failureHandler:(APFailureBlock)failureBlock {
-    [APUser authenticateUserWithUsername:username password:password successHandler:nil failureHandler:failureBlock];
++ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithUsername:username password:password sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureBlock];
 }
 
-+ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) authenticateUserWithUsername:(NSString*) username password:(NSString*) password sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
-    
+    if(minutes == nil) {
+        minutes = @86400000;
+    }
+    if(calls == nil) {
+        calls = @-1;
+    }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
                                                                    username, @"username",
                                                                    password, @"password",
+                                                                   minutes, @"expiry",
+                                                                   calls, @"attempts",
                                                                    nil]
                                                           options:kNilOptions error:&jsonError];
     if(jsonError != nil)
@@ -72,7 +77,6 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody:requestBody];
     [urlRequest setHTTPMethod:@"POST"];
-    
     
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         currentUser = [[APUser alloc] initWithTypeName:@"user"];
@@ -89,25 +93,32 @@ static NSDictionary *headerParams;
     }];
 }
 
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken {
-    [APUser authenticateUserWithFacebook:accessToken successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
+    [APUser authenticateUserWithFacebook:accessToken signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithFacebook:(NSString *)accessToken failureHandler:(APFailureBlock)failureBlock {
-    [APUser authenticateUserWithFacebook:accessToken successHandler:nil failureHandler:failureBlock];
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithFacebook:accessToken signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureBlock];
 }
 
-+ (void) authenticateUserWithFacebook:(NSString *) accessToken successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
-    
+    if (minutes == nil) {
+        minutes = @86400000;
+    }
+    if(calls == nil) {
+        calls = @-1;
+    }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   @"true",@"createnew",
+                                                                   signUp?@"true":@"false",@"createnew",
                                                                    @"facebook",@"type",
                                                                    accessToken, @"accesstoken",
+                                                                   minutes, @"expiry",
+                                                                   calls, @"attempts",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
         [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
@@ -136,26 +147,34 @@ static NSDictionary *headerParams;
 
 
 
-+ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret failureHandler:(APFailureBlock)failureHandler {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret successHandler:nil failureHandler:failureHandler];
++ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureHandler {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureHandler];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret successHandler:(APUserSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock {
++ (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     
+    if(minutes == nil) {
+        minutes = @86400000;
+    }
+    if(calls == nil) {
+        calls = @-1;
+    }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   @"true",@"createNew",
+                                                                   signUp?@"true":@"false",@"createnew",
                                                                    @"twitter",@"type",
                                                                    oauthToken, @"oauthtoken",
                                                                    oauthSecret, @"oauthsecret",
+                                                                   minutes, @"expiry",
+                                                                   calls, @"attempts",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
         [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
@@ -182,28 +201,36 @@ static NSDictionary *headerParams;
                               }];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:nil];
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret failureHandler:(APFailureBlock)failureBlock {
-    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret successHandler:nil failureHandler:failureBlock];
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureBlock {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureBlock];
 }
 
-+ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
     
+    if(minutes == nil) {
+        minutes = @86400000;
+    }
+    if(calls == nil) {
+        calls = @-1;
+    }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   @"true",@"createNew",
+                                                                   signUp?@"true":@"false",@"createnew",
                                                                    @"twitter",@"type",
                                                                    oauthToken, @"oauthtoken",
                                                                    oauthSecret, @"oauthsecret",
                                                                    consumerKey, @"consumerKey",
                                                                    consumerSecret, @"consumerSecret",
+                                                                   minutes, @"expiry",
+                                                                   calls, @"attempts",
                                                                    nil] options:kNilOptions error:&jsonError];
     if(jsonError != nil)
         [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
@@ -428,11 +455,11 @@ static NSDictionary *headerParams;
     [self createUserWithSuccessHandler:nil failureHandler:nil];
 }
 
-- (void) createUserWithSuccessHandler:(APSuccessBlock) successBlock {
+- (void) createUserWithSuccessHandler:(APSuccessBlock)successBlock {
     [self createUserWithSuccessHandler:successBlock failureHandler:nil];
 }
 
-- (void) createUserWithSuccessHandler:(APSuccessBlock) successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) createUserWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"create"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -590,15 +617,15 @@ static NSDictionary *headerParams;
     [self fetchUserById:userId successHandler:nil failureHandler:nil];
 }
 
-- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock) successBlock {
+- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock {
     [self fetchUserById:userId successHandler:successBlock failureHandler:nil];
 }
 
-- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) fetchUserById:(NSString *)userId successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     [self fetchUserById:userId propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) fetchUserById:(NSString *)userId propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@",userId];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -633,11 +660,11 @@ static NSDictionary *headerParams;
     [self fetchUserByUsername:username successHandler:successBlock failureHandler:nil];
 }
 
-- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) fetchUserByUsername:(NSString *)username successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     [self fetchUserByUsername:username propertiesToFetch:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) fetchUserByUsername:(NSString *)username propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) fetchUserByUsername:(NSString *)username propertiesToFetch:(NSArray*)propertiesToFetch successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@?useridtype=username",username];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -713,7 +740,7 @@ static NSDictionary *headerParams;
     [self updateObjectWithRevisionNumber:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
-- (void) updateObjectWithRevisionNumber:(NSNumber *)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) updateObjectWithRevisionNumber:(NSNumber *)revision successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@",self.objectId];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -789,7 +816,7 @@ static NSDictionary *headerParams;
     }];
 }
 
-- (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock) failureBlock {
+- (void) deleteObjectWithSuccessHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingFormat:@"%@",self.objectId];
     path = [HOST_NAME stringByAppendingPathComponent:path];
@@ -939,8 +966,6 @@ static NSDictionary *headerParams;
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
     
-    
-    
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         NSString *responseJSON = [NSString stringWithFormat:@"%@",[result objectForKey:@"result"]];
         if([responseJSON isEqualToString:@"1"])
@@ -953,6 +978,8 @@ static NSDictionary *headerParams;
             currentUser = nil;
             [APNetworking resetDefaultHTTPHeaders];
             [APUser saveCustomObject:nil forKey:@"currentAPUser"];
+            if (successBlock != nil)
+                successBlock(result);
         }
     } failureHandler:^(APError *error) {
         if (failureBlock != nil) {

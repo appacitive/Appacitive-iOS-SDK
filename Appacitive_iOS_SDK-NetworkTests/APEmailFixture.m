@@ -7,8 +7,8 @@
 //    beforeAll(^() {
 //        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
 //        [Appacitive useLiveEnvironment:NO];
-//        [APLogger enableLogging:YES];
-//        [APLogger enableVerboseMode:YES];
+//        [[APLogger sharedLogger] enableLogging:YES];
+//        [[APLogger sharedLogger] enableVerboseMode:YES];
 //        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
 //    });
 //    

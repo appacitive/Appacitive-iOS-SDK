@@ -19,14 +19,16 @@
 
 @implementation APGraphNode
 
+static int level = 0;
 static NSMutableArray *parentIdStack;
 static NSMutableArray *parentTypeStack;
 static NSMutableArray *nodeStack;
 static NSMutableArray *mapKeyStack;
+static NSMutableArray *nodes;
 
 #pragma mark - Get children method
 
-- (NSArray*) getChildrenOf:(NSString*)objectId {
+- (NSArray*)getChildrenOf:(NSString*)objectId {
     
     if(objectId != nil && self != nil) {
         
@@ -94,11 +96,11 @@ static NSMutableArray *mapKeyStack;
     }];
 }
 
-- (void) applyProjectionGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary *)placeHolders forObjectsIds:(NSArray *)objectIds successHandler:(APGraphNodeSuccessBlock)successBlock {
++ (void) applyProjectionGraphQuery:(NSString*)query usingPlaceHolders:(NSDictionary *)placeHolders forObjectsIds:(NSArray *)objectIds successHandler:(APObjectsSuccessBlock)successBlock {
     [self applyProjectionGraphQuery:query usingPlaceHolders:placeHolders forObjectsIds:objectIds  successHandler:successBlock failureHandler:nil];
 }
 
-- (void) applyProjectionGraphQuery:(NSString *)query usingPlaceHolders:(NSDictionary *)placeHolders forObjectsIds:(NSArray *)objectIds successHandler:(APGraphNodeSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
++ (void) applyProjectionGraphQuery:(NSString *)query usingPlaceHolders:(NSDictionary *)placeHolders forObjectsIds:(NSArray *)objectIds successHandler:(APObjectsSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     NSString *path = [SEARCH_PATH stringByAppendingString:[NSString stringWithFormat:@"%@/project",query]];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
@@ -120,16 +122,18 @@ static NSMutableArray *mapKeyStack;
         if (successBlock != nil) {
             NSMutableDictionary *dict = [result mutableCopy];
             [dict removeObjectForKey:@"status"];
+            nodes = [[NSMutableArray alloc] init];
             NSArray *objs = [dict allValues];
             NSArray *subDicts = [[objs lastObject] valueForKey:@"values"];
             APGraphNode *node = [[APGraphNode alloc] init];
             [node parseProjectionQueryResult:subDicts];
-            node = [nodeStack firstObject];
             nodeStack = nil;
             parentIdStack = nil;
             parentTypeStack = nil;
             mapKeyStack = nil;
-            successBlock(node);
+            level = 0;
+            successBlock(nodes);
+            nodes = nil;
         }
     } failureHandler:^(APError *error) {
         if (failureBlock != nil) {
@@ -210,11 +214,15 @@ static NSMutableArray *mapKeyStack;
                     [mapKeyStack addObject:key];
                     if(![[node.map allKeys] containsObject:key])
                         [node.map setValue:[children mutableCopy] forKey:key];
+                    level = level + 1;
                     [self parseProjectionQueryResult:[[[result valueForKey:@"__children"] objectForKey:key] valueForKey:@"values"]];
+                    level = level - 1;
                 }
             } //end of for loop for __children dictionary
             
             if([nodeStack count] > 1) {
+                if(level <= 0)
+                    [nodes addObject:[nodeStack lastObject]];
                 [nodeStack removeLastObject];
             }
             
@@ -230,6 +238,8 @@ static NSMutableArray *mapKeyStack;
             [[((APGraphNode*)[nodeStack lastObject]).map valueForKey:[mapKeyStack lastObject]] addObject:node];
         }
     } //end of for loop __values array
+    if(level <= 0)
+       [nodes addObject:[nodeStack lastObject]];
 }
 
 @end

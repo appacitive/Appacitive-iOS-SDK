@@ -132,7 +132,7 @@
     }];
 }
 
-+ (NSDictionary*) makeSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL {
++ (NSDictionary*)makeSMTPConfigurationDictionaryWithUsername:(NSString*)username password:(NSString*)password host:(NSString*)host port:(NSNumber*)port enableSSL:(BOOL)enableSSL {
     NSNumber *sslSwitch = [NSNumber numberWithBool:enableSSL];
     return [NSDictionary dictionaryWithObjectsAndKeys:
             username, @"username",

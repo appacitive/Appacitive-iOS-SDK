@@ -12,7 +12,7 @@
 //
 //    beforeEach(^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
-//        [APUser authenticateUserWithUsername:@"ppatel" password:@"asdasd"
+//        [APUser authenticateUserWithUsername:@"ppatel" password:@"asdasd" sessionExpiresAfter:nil limitAPICallsTo:nil
 //                              successHandler:^(APUser* user) {
 //                                  isUserAuthenticateSuccessful = YES;
 //                              } failureHandler:^(APError *error) {
@@ -38,7 +38,7 @@
 //    it(@"authenticating a user with a valid user id", ^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //
-//        [APUser authenticateUserWithUsername:@"ppatel" password:@"asdasd"
+//        [APUser authenticateUserWithUsername:@"ppatel" password:@"asdasd" sessionExpiresAfter:nil limitAPICallsTo:nil
 //                successHandler:^(APUser* user) {
 //                    isUserAuthenticateSuccessful = YES;
 //                } failureHandler:^(APError *error) {
@@ -53,7 +53,7 @@
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //        
 //        [APUser authenticateUserWithUsername:@"ppatel"
-//                                    password:@"asdasd"
+//                                    password:@"asdasd" sessionExpiresAfter:nil limitAPICallsTo:nil
 //                              successHandler:^(APUser* user) {
 //                                  [APUser validateCurrentUserSessionWithSuccessHandler:^(NSDictionary *result) {
 //                                      isUserAuthenticateSuccessful = (BOOL)[result objectForKey:@"result"];
@@ -68,7 +68,7 @@
 //        __block BOOL isUserLoggedOut = NO;
 //        
 //        [APUser authenticateUserWithUsername:@"ppatel"
-//                                    password:@"asdasd"
+//                                    password:@"asdasd" sessionExpiresAfter:nil limitAPICallsTo:nil
 //                              successHandler:^(APUser *user) {
 //                                  [APUser logOutCurrentUserWithSuccessHandler:^{
 //                                      if([APUser currentUser] == nil)
@@ -86,7 +86,7 @@
 //    it(@"authenticating with a valid facebook id", ^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //
-//        [APUser authenticateUserWithFacebook:@"CAACEdEose0cBANKCD3n6Gq1hSeLIF0ZBbRehHLT5GsJZCxfCJPnglYU3zZBMAB7ZBgEMBEFbZBtZA7FHZAx7HhyYZCBTQlzSFaxzVsK6RPeuX6NlNMPrTHp3ozoyXwIcRmGOpJ8xZBUApJGjEDBZAPHivF5RZBk9H3au7TroZCetmaLt7ZCxdwCkgZCb4EFRQoUmSrZAwwZD"
+//        [APUser authenticateUserWithFacebook:@"CAACEdEose0cBANKCD3n6Gq1hSeLIF0ZBbRehHLT5GsJZCxfCJPnglYU3zZBMAB7ZBgEMBEFbZBtZA7FHZAx7HhyYZCBTQlzSFaxzVsK6RPeuX6NlNMPrTHp3ozoyXwIcRmGOpJ8xZBUApJGjEDBZAPHivF5RZBk9H3au7TroZCetmaLt7ZCxdwCkgZCb4EFRQoUmSrZAwwZD" signUp:NO sessionExpiresAfter:nil limitAPICallsTo:nil
 //                        successHandler:^(APUser *user){
 //                            isUserAuthenticateSuccessful = YES;
 //                        } failureHandler:^(APError* error) {
@@ -99,7 +99,7 @@
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //        
 //        [APUser authenticateUserWithTwitter:@"86197729-p6a3vPdCxWnzcXGdCc61Fn792b8P7vvsCcHbMS2oe"
-//                oauthSecret:@"qTIkQt5punO5dClxuHLolVsXuF8q6VXA3pBfjTWiUUHgI"
+//                oauthSecret:@"qTIkQt5punO5dClxuHLolVsXuF8q6VXA3pBfjTWiUUHgI" signUp:NO sessionExpiresAfter:nil limitAPICallsTo:nil
 //                successHandler:^(APUser *user){
 //                    isUserAuthenticateSuccessful = YES;
 //                } failureHandler:^(APError *error) {
@@ -115,7 +115,7 @@
 //        [APUser authenticateUserWithTwitter:@"86197729-p6a3vPdCxWnzcXGdCc61Fn792b8P7vvsCcHbMS2oe"
 //                                oauthSecret:@"qTIkQt5punO5dClxuHLolVsXuF8q6VXA3pBfjTWiUUHgI"
 //                                consumerKey:@"eygSW2TOkWexHIJwvhK2w"
-//                                consumerSecret:@"VYz5yyF9LMbvivnRea8mLp85CwsX0QLuEvEJrzvrsMU"
+//                                consumerSecret:@"VYz5yyF9LMbvivnRea8mLp85CwsX0QLuEvEJrzvrsMU" signUp:NO sessionExpiresAfter:nil limitAPICallsTo:nil
 //                                successHandler:^(APUser *user){
 //                                    isUserAuthenticateSuccessful = YES;
 //                                } failureHandler:^(APError *error) {

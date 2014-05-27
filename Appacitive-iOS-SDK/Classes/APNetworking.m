@@ -28,7 +28,7 @@ static NSMutableDictionary *additionalHeaders = nil;
     additionalHeaders = nil;
 }
 
-+ (NSURLSession*) getSharedNSURLSession {
++ (NSURLSession*)getSharedNSURLSession {
     if(sharedNSURLSession != nil)
         return sharedNSURLSession;
     

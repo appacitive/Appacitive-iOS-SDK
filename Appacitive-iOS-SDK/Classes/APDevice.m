@@ -17,6 +17,7 @@
 #define DEVICE_PATH @"device/"
 
 @implementation APDevice
+
 static NSDictionary* headerParams;
 static APDevice* currentDevice;
 
@@ -66,8 +67,7 @@ static APDevice* currentDevice;
         cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
         cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     }
-    
-    if([APDevice getCurrentDevice] == nil) {
+    if(currentDevice == nil) {
         currentDevice = [[APDevice alloc] initWithDeviceToken:cleanToken deviceType:@"ios"];
         currentDevice.isActive = @"false";
         if(answer == YES)
@@ -89,6 +89,7 @@ static APDevice* currentDevice;
     [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
         if (successBlock != nil) {
             [currentDevice setPropertyValuesFromDictionary:result];
+            [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
             successBlock();
         }
     } failureHandler:^(APError *error) {
@@ -280,7 +281,7 @@ static APDevice* currentDevice;
 }
 
 #pragma mark - Private methods
-- (NSMutableDictionary*) createRequestBody {
+- (NSMutableDictionary*)createRequestBody {
     NSMutableDictionary *requestBody = [[NSMutableDictionary alloc] init];
     if (self.deviceToken)
         [requestBody setObject:self.deviceToken forKey:@"devicetoken"];
@@ -297,7 +298,7 @@ static APDevice* currentDevice;
     return requestBody;
 }
 
-- (void) setPropertyValuesFromDictionary:(NSDictionary*) dictionary {
+- (void) setPropertyValuesFromDictionary:(NSDictionary*)dictionary {
     
     NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
     
@@ -327,10 +328,10 @@ static APDevice* currentDevice;
     self.badge = object[@"badge"];
     [object removeObjectForKey:@"badge"];
     
-    self.createdBy = (NSString*) object[@"__createdby"];
+    self.createdBy = (NSString*)object[@"__createdby"];
     _objectId = object[@"__id"];
-    _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
-    _revision = (NSNumber*) object[@"__revision"];
+    _lastModifiedBy = (NSString*)object[@"__lastmodifiedby"];
+    _revision = (NSNumber*)object[@"__revision"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
     _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
     _attributes = [object[@"__attributes"] mutableCopy];
@@ -341,7 +342,7 @@ static APDevice* currentDevice;
     [self updateSnapshot];
 }
 
-- (void) setPropertyValuesForCurrentDeviceFromDictionary:(NSDictionary*) dictionary {
+- (void) setPropertyValuesForCurrentDeviceFromDictionary:(NSDictionary*)dictionary {
     
     NSMutableDictionary *object = [[NSMutableDictionary alloc] init];
     
@@ -363,10 +364,10 @@ static APDevice* currentDevice;
     self.badge = object[@"badge"];
     [object removeObjectForKey:@"badge"];
     
-    self.createdBy = (NSString*) object[@"__createdby"];
+    self.createdBy = (NSString*)object[@"__createdby"];
     _objectId = object[@"__id"];
-    _lastModifiedBy = (NSString*) object[@"__lastmodifiedby"];
-    _revision = (NSNumber*) object[@"__revision"];
+    _lastModifiedBy = (NSString*)object[@"__lastmodifiedby"];
+    _revision = (NSNumber*)object[@"__revision"];
     _utcDateCreated = [APHelperMethods deserializeJsonDateString:object[@"__utcdatecreated"]];
     _utcLastUpdatedDate = [APHelperMethods deserializeJsonDateString:object[@"__utclastupdateddate"]];
     _attributes = [object[@"__attributes"] mutableCopy];
@@ -377,7 +378,7 @@ static APDevice* currentDevice;
     [self updateSnapshot];
 }
 
-- (NSMutableDictionary*) postParameters {
+- (NSMutableDictionary*)postParameters {
     
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
     
@@ -418,7 +419,7 @@ static APDevice* currentDevice;
     return postParams;
 }
 
-- (NSMutableDictionary*) postParametersUpdate {
+- (NSMutableDictionary*)postParametersUpdate {
     NSMutableDictionary *postParams = [NSMutableDictionary dictionary];
     
     if (self.attributes && [self.attributes count] > 0) {
@@ -550,14 +551,11 @@ static APDevice* currentDevice;
     }
 }
 
-+ (APDevice*) getCurrentDevice {
++ (void)restoreCurrentDevice {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults objectForKey:@"currentAPDevice"] != nil) {
         NSData *encodedObject = [defaults objectForKey:@"currentAPDevice"];
-        APDevice *object = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
-        return object;
-    } else {
-        return nil;
+        currentDevice = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
     }
 }
 

@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Appacitive Software Pvt. Ltd. All rights reserved.
 //
 
-
-
 #import "APAccessControl.h"
 
 @implementation APAccessControl
@@ -169,7 +167,7 @@
 }
 
 
-- (NSArray*) getFormattedAccessList {
+- (NSArray*)getFormattedAccessList {
     NSMutableArray *aclList = [[NSMutableArray alloc] init];
     for(id key in _userAccessDict) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
