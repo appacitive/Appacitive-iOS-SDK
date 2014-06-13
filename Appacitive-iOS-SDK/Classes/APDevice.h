@@ -28,11 +28,19 @@
 /** @name Initializing an APDevice instance */
 
 - (instancetype) init;
+
 /** Create a basic instance of an APDevice Object with deviceToken and deviceType.
  @param deviceToken Device token provided by Appacitive.
  @param deviceType Type of device voz. iOS/Android/WindowsPhone
 */
 - (instancetype) initWithDeviceToken:(NSString*)deviceToken deviceType:(NSString*)deviceType;
+
+/**
+ Method to get the currentDevice object
+ 
+ @return currentDevice instance
+ */
++ (APDevice*) currentDevice;
 
 /** Registering an APDevice */
 

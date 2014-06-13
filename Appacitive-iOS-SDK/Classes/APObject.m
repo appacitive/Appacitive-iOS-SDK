@@ -332,6 +332,8 @@ NSString *const OBJECT_PATH = @"object/";
 #pragma mark - Add properties method
 
 - (void) addPropertyWithKey:(NSString*)keyName value:(id)object {
+    if(object == nil)
+        object = [NSNull null];
     if (!self.properties)
         _properties = [NSMutableArray array];
     [_properties addObject:@{keyName: object}.mutableCopy];
@@ -340,6 +342,8 @@ NSString *const OBJECT_PATH = @"object/";
 #pragma mark - Update properties method
 
 - (void) updatePropertyWithKey:(NSString*)keyName value:(id) object {
+    if(object == nil)
+        object = [NSNull null];
     [self.properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSMutableDictionary *dict = (NSMutableDictionary *)obj;
         if ([dict objectForKey:keyName] != nil) {
@@ -449,6 +453,8 @@ NSString *const OBJECT_PATH = @"object/";
 #pragma mark - Add attributes method
 
 - (void) addAttributeWithKey:(NSString*)keyName value:(id) object {
+    if(object == nil)
+        object = [NSNull null];
     if (!self.attributes) {
         _attributes = [NSMutableDictionary dictionary];
     }
@@ -456,6 +462,8 @@ NSString *const OBJECT_PATH = @"object/";
 }
 
 - (void) updateAttributeWithKey:(NSString*)keyName value:(id) object {
+    if(object == nil)
+        object = [NSNull null];
     [_attributes setObject:object forKey:keyName];
 }
 
@@ -554,10 +562,17 @@ NSString *const OBJECT_PATH = @"object/";
     
     for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            if(![[_snapShot allKeys] containsObject:key])
-                [postParams setObject:obj forKey:key];
-            else if([_snapShot objectForKey:key] != [prop objectForKey:key])
-                [postParams setObject:obj forKey:key];
+            if([obj isKindOfClass:[NSDate class]]) {
+                if(![[_snapShot allKeys] containsObject:key])
+                    [postParams setObject:[APHelperMethods jsonDateStringFromDate:obj] forKey:key];
+                else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                    [postParams setObject:[APHelperMethods jsonDateStringFromDate:obj] forKey:key];
+            } else {
+                if(![[_snapShot allKeys] containsObject:key])
+                    [postParams setObject:obj forKey:key];
+                else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                    [postParams setObject:obj forKey:key];
+            }
             *stop = YES;
         }];
     }

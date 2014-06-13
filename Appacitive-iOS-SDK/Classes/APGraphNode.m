@@ -210,6 +210,7 @@ static NSMutableArray *nodes;
             
             //for each child in __children dictionary
             for(NSString *key in [[result valueForKey:@"__children"] allKeys]) {
+                
                 if([[[[result valueForKey:@"__children"] objectForKey:key] valueForKey:@"values"] count] > 0) {
                     [mapKeyStack addObject:key];
                     if(![[node.map allKeys] containsObject:key])
@@ -217,12 +218,15 @@ static NSMutableArray *nodes;
                     level = level + 1;
                     [self parseProjectionQueryResult:[[[result valueForKey:@"__children"] objectForKey:key] valueForKey:@"values"]];
                     level = level - 1;
+                } else {
+                    [mapKeyStack addObject:@"dummy"];
                 }
             } //end of for loop for __children dictionary
             
             if([nodeStack count] > 1) {
-                if(level <= 0)
+                if(level <= 0) {
                     [nodes addObject:[nodeStack lastObject]];
+                }
                 [nodeStack removeLastObject];
             }
             
@@ -232,14 +236,15 @@ static NSMutableArray *nodes;
             
             [parentIdStack removeLastObject];
             [parentTypeStack removeLastObject];
-        }
+        }// end of if children exist
         
-        if([nodeStack lastObject] != node) {
+        if([nodeStack lastObject] != node && level > 0) {
             [[((APGraphNode*)[nodeStack lastObject]).map valueForKey:[mapKeyStack lastObject]] addObject:node];
         }
     } //end of for loop __values array
-    if(level <= 0)
-       [nodes addObject:[nodeStack lastObject]];
+    if(level <= 0) {
+        [nodes addObject:[nodeStack lastObject]];
+    }
 }
 
 @end
