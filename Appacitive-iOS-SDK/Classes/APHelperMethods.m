@@ -83,15 +83,19 @@
     return nil;
 }
 
-+ (NSDate *)deserializeJsonDateString:(NSString *)jsonDateString {
++ (NSDate *) deserializeJsonDateString:(NSString *)jsonDateString {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     return [dateFormatter dateFromString:jsonDateString];
 }
 
-+ (NSString *)jsonDateStringFromDate:(NSDate *)date {
++ (NSString *) jsonDateStringFromDate:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'"];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     return [dateFormatter stringFromDate:date];
 }
 

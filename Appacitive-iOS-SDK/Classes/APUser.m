@@ -24,6 +24,7 @@ static NSDictionary *headerParams;
 }
 
 + (APUser *) currentUser {
+    [self restoreCurrentUser];
     return currentUser;
 }
 
@@ -1251,7 +1252,11 @@ static NSDictionary *headerParams;
     
     for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [postParams setObject:obj forKey:key];
+            if([obj isKindOfClass:[NSDate class]]) {
+                [postParams setObject:[APHelperMethods jsonDateStringFromDate:obj] forKey:key];
+            } else {
+                [postParams setObject:obj forKey:key];
+            }
             *stop = YES;
         }];
     }
@@ -1294,10 +1299,17 @@ static NSDictionary *headerParams;
     
     for(NSDictionary *prop in _properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            if(![[_snapShot allKeys] containsObject:key])
-                [postParams setObject:obj forKey:key];
-            else if([_snapShot objectForKey:key] != [prop objectForKey:key])
-                [postParams setObject:obj forKey:key];
+            if([obj isKindOfClass:[NSDate class]]) {
+                if(![[_snapShot allKeys] containsObject:key])
+                    [postParams setObject:[APHelperMethods jsonDateStringFromDate:obj] forKey:key];
+                else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                    [postParams setObject:[APHelperMethods jsonDateStringFromDate:obj] forKey:key];
+            } else {
+                if(![[_snapShot allKeys] containsObject:key])
+                    [postParams setObject:obj forKey:key];
+                else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                    [postParams setObject:obj forKey:key];
+            }
             *stop = YES;
         }];
     }

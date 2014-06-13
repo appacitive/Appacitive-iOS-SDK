@@ -412,7 +412,17 @@ static APDevice* currentDevice;
     
     for(NSDictionary *prop in self.properties) {
         [prop enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-            [postParams setObject:obj forKey:key];
+            if([obj isKindOfClass:[NSDate class]]) {
+                if(![[_snapShot allKeys] containsObject:key])
+                    [postParams setObject:[APHelperMethods jsonDateStringFromDate:obj] forKey:key];
+                else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                    [postParams setObject:[APHelperMethods jsonDateStringFromDate:obj] forKey:key];
+            } else {
+                if(![[_snapShot allKeys] containsObject:key])
+                    [postParams setObject:obj forKey:key];
+                else if([_snapShot objectForKey:key] != [prop objectForKey:key])
+                    [postParams setObject:obj forKey:key];
+            }
             *stop = YES;
         }];
     }
@@ -565,6 +575,11 @@ static APDevice* currentDevice;
     CFStringRef string = CFUUIDCreateString(NULL, theUUID);
     CFRelease(theUUID);
     return (__bridge NSString *)string;
+}
+
++ (APDevice*) currentDevice {
+    [self restoreCurrentDevice];
+    return currentDevice;
 }
 
 @end

@@ -82,17 +82,18 @@ iOS client SDK for Appacitive platform.
 
 ## Setup
 
-There are two ways to integrate the Appacitive iOS SDK into your Xcode project.
+To send and receive your data from Appacitive, you will need to integrate the Appacitive iOS SDK in your iOS Xcode project.
+There are two ways you can do that.
 
-**1. Adding the framework bundle to your project:** Simply drag and drop the framework bundle into your Xcode project and check the box that says *copy items into destination group's folder (if needed)* and also check the box against the target name in the *Add to targets* section. You can download the framework bundle from [here](http://somelink.com).
+**1. Adding the framework bundle to your project:** Open your Xcode project, drag the `Appacitive.framework` file to the Xcode window and drop it into the `Frameworks` group in the project navigator. Xcode will show a pop-up, check the box that says *copy items into destination group's folder (if needed)* and also check the box against the target name in the *Add to targets* section. You can also simply select the `Frameworks` group and click `Add Files` from the `Files` menu, navigate to the location where you have stored the `Appacitive.framework` file and select the file. Make sure the check-box labelled `Copy items into destination group's folder (if needed)` is checked and also check the check-boxes against all the targets, from the 'Add to targets' section, in which you wish to use the Appacitive iOS SDK. You can download the SDK framework bundle from [here](http://somelink.com).
 
 **2. Using the CocoPods dependency manager:** Check [this link](http://appacitive.github.io/docs/current/ios/guides/) for a comprehensive guide on integrating the Appacitive iOS SDK using CocoaPods.
 
 ## Initialize
 
-Before we dive into using the SDK, we need to grok a couple of things about the apikey.
+Appacitive is session-less. Therefore, every API call made to the Appacitive API needs to be authenticated. To do so, we use the API key which is unique to your Appacitive application. There are two types of API keys viz. the `master API key` and the `client API key`. In the most typical scenarios, you will be using the client API key. The difference between the master and client API keys is that, the access control is completely ignored if you use the master API key, which means you will have access to all the data despite access control being defined on objects. In order to make sure that the access controls get enforced, you should use the client API key.
 
-ApiKey is central to interacting with the API as every call to the API needs to be authenticated. To access the ApiKey for your app, go to app listing via the [portal](https://portal.appacitive.com) and click on the key icon on right side.
+To get the API keys for your Appacitive application, Log-in to the [Appacitive Portal](https://portal.appacitive.com) with your account credentials. You will be presented with a dashboard page where you will see some statistics about your account and your apps below the statistics. Select the application you are working on and you will be presented with the application details screen where you will find the Master and Client API keys.
 
 !["Getting your apikey"](http:\/\/appacitive.github.io\/images\/portal-apikey-small.png)
 
@@ -104,14 +105,14 @@ Make sure you add the import statement for AppacitiveSDK.
 [Appacitive registerAPIKey:@"<insert_apiKey_here>" useLiveEnvironment:NO];
 ```
 
-The above line of code will initialize the Appacitive SDK with the default environment setting set to _sandbox_. To enable the _live_ environment set the `useLiveEnvironment parameter to YES`.
+The above line of code will initialize the Appacitive SDK with the environment setting set to _sandbox_. To enable the _live_ environment set the `useLiveEnvironment parameter to YES`.
 
 ```objectivec
 [Appacitive registerAPIKey:@"<insert_apiKey_here>" useLiveEnvironment:YES];
 ```
 
 ## Conventions
-All the network calls made by the Appacitive iOS SDK are asynchronous. Therefore, most of the methods in the SDK make use of blocks. There are two types of blocks, _successBlocks_ and _failureBlocks_ usually called _successHandler_ and _failureHandler_ in method names. When using an SDK method, put the code that you wish to get executed when the operation is successful into the _successBlock_ and put the code that you wish to get executed when the operation fails in the _failureBlock_. Whatever you pass in the success or failure blocks will be executed on the main thread. refer the code below to get an idea of how the blocks work.
+All the network calls made by the Appacitive iOS SDK are asynchronous. Therefore, most of the methods in the SDK make use of blocks. There are two types of blocks, _successBlocks_ and _failureBlocks_ usually called _successHandler_ and _failureHandler_ in method names. When using an SDK method, put the code that you wish to get executed when the operation is successful into the _successBlock_ and put the code that you wish to get executed when the operation fails in the _failureBlock_. Whatever you pass in the success or failure blocks will be executed on the main thread.
 
 ```objectivec
 APObject *post = [[APObject alloc] initWithTypeName:@"post"];
@@ -139,7 +140,9 @@ failureHandler:^(APError *error)
 
 ## Data storage and retrieval
 
-All data is represented as entities. This will become clearer as you read on. Lets assume that we are building a game and we need to store player data on the server.
+All data is represented as objects. You can perform the basic create, read, update and delete operations on these objects. Additionally, you can also search/find objects.
+
+In the iOS SDK, the Appacitive `type` is represented by the `APObject` class, Appacitive `relation` is represented by `APConnection` class, Appacitive `user` by `APUser` class and the Appacitive `device` by `APDevice` class.
 
 ### Creating
 
@@ -147,36 +150,42 @@ All data is represented as entities. This will become clearer as you read on. Le
 APObject *player = [[APObject alloc] initWithTypeName:@"player"];
 ```
 
-An `APObject` comprises of an entity (referred to as 'object' in Appacitive jargon). To initialize an object, we need to provide it some options. The mandatory argument is the `type` argument.
+While initializing an APObject instance, the type parameter is mandatory and it should be set to the name of the `type` whose object you wish to create.
 
-What is a type? In short, think of types as tables in a contemporary relational database. A type has properties which hold values just like columns in a table. A property has a data type and additional constraints are configured according to your application's need. Thus we are specifying that the player is supposed to contain an entity of the type 'player' (which should already be defined in your application).
+A type is like a table of a relational database. Just like tables have columns with a data-type, an Appacitive type has properties with data-type. You can set the constraints on the properties depending upon the need of your application just like you define constraints on the columns of a table.
 
-The player object is an instance of `APObject`. An `APObject` is a class which encapsulates the data (the actual entity or the object) and methods that provide ways to update it, delete it etc.
+The above defined player object is an instance of the `APObject` class which encapsulates the data and methods that provide ways to manipulate the data.
 
 #### Setting Values
-Now we need to name our player 'John Doe'. This can be done as follows
+
+To add a property use the `addPropertyWithKey:value:` method.
 
 ```objectivec
 APObject *player = [[APObject] initWithType:@"player"];
-
 [player addPropertyWithKey:@"name" value:@"John Doe"];
 
 ```
 
+To update existing property, use the `updatePropertyWithKey:value:` method.
+
+```objectivec
+APObject *player = [[APObject] initWithType:@"player"];
+[player addPropertyWithKey:@"name" value:@"John Doe"];
+[player updatePropertyWithKey:@"name" value"Johnny Doel"];
+
+```
+
 #### Getting values
-Lets verify that our player is indeed called 'John Doe'.
+To get the property of an attribute use the `getPropertyWithKey` method.
 
 ```objectivec
 // using the getters
 NSLog(@"Player Name: %@",[player getPropertyWithKey:@"name"]);
 
-// direct access via the raw object data
-NSLog(@"Player Name: %@",[player.properties valueForKey:@"name"]);  // John Doe
-
 ```
 
 #### Saving
-Saving a player to the server is easy.
+To save an object to Appacitive use the `saveObject` method.
 
 ```objectivec
 [player addPropertyWithKey:@"age" value:25];
@@ -187,7 +196,8 @@ Saving a player to the server is easy.
 }];
 ```
 
-When you call save, the entity is taken and stored on Appacitive's servers. A unique identifier called `__id` is generated and is stored along with the player object. This identifier is also returned to the object on the client-side. You can access it using `player.objectId`.
+When you save an object, a unique identifier `__id` is generated and stored along with the player object. This identifier is also returned to the object on the client-side. You can access it using `player.objectId` or `[player objectId]`.
+
 This is what is available in the `player` object after a successful save.
 
 ```objectivec
@@ -206,7 +216,8 @@ This is what is available in the `player` object after a successful save.
 }
 ```
 
-You'll see a bunch of fields that were created automatically by the server. They are used for housekeeping and storing meta-information about the object. All system generated fields start with `__`, avoid changing their values. Your values will be different than the ones shown here.
+You'll see a a lot of fields that were created automatically by the server. They are used for housekeeping and storing meta-information about the object. All system generated fields start with `__`, avoid changing their values. Your values will be different than the ones shown here.
+
 
 ### Retrieving
  To retrieve an object, simply call the fetch method on the instance and on success the instance will be populated with the object from Appacitive.
@@ -757,12 +768,11 @@ You can give your users the option of signing up or logging in via Facebook. For
  2. Follow [these](https://developers.Facebook.com/docs/reference/ios/current/) instructions to [include Facebook SDK](https://developers.Facebook.com/docs/reference/ios/current/) in your app.
 
 
-To create a user with Facebook, you need the user's Facebook access token and you need to pass it to the `createUserWithFacebook:` method.
+To create a user with Facebook, you need the user's Facebook access token and you need to pass it to the `createUserWithFacebook:` method. If you set the `signUp` parameter to `YES`, the API will also create a new user based on the Facebook account. The `sessionExpiresAfter:` parameter takes number of minutes as an argument. If you set it to nil, the user token will be valid forever. The `limitAPICallsTo:` parameter will limit the number of API calls you can make to Appacitive with
 
 ```objectivec
 APUser *spencer = [[APUser alloc] init];
-[spencer createUserWithFacebook:@"Hsdfbk234kjnbkb23k4JLKJ234kjnkkJK2341nkjnJSD"];
-```
+[spencer createUserWithFacebook:@"Hsdfbk234kjnbkb23k4JLKJ234kjnkkJK2341nkjnJSD" signUp:NO sessionExpiresAfter:nil limi
 
 Similarly you can also create a user with Twitter Oauth v1.0 and Oauth v2.0.
 
