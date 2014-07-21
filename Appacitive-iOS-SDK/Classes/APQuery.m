@@ -227,7 +227,7 @@
     return nil;
 }
 
-- (APSimpleQuery *)isBetween:(NSString*)value1 and:(NSString*)value2 {
+- (APSimpleQuery *)isBetweenValue:(NSString*)value1 andValue:(NSString*)value2 {
     if (value1 != nil && value2 != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;
@@ -287,7 +287,7 @@
     return nil;
 }
 
-- (APSimpleQuery *)isBetweenDates:(NSDate*)date1 and:(NSDate*)date2 {
+- (APSimpleQuery *)isBetweenDate:(NSDate*)date1 andDate:(NSDate*)date2 {
     if (date1 != nil && date2 != nil) {
         APSimpleQuery *query = [[APSimpleQuery alloc] init];
         query.fieldName = _name;

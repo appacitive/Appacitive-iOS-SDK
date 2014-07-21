@@ -188,14 +188,14 @@ typedef enum {
  @param value1 the lower end value of the property
  @param value2 the higher end value of the property
  */
-- (APSimpleQuery *)isBetween:(NSString*)value1 and:(NSString*)value2;
+- (APSimpleQuery *)isBetweenValue:(NSString*)value1 andValue:(NSString*)value2;
 
 /**
  Helper method to generate a between query string.
  @param date1 the lower end date value of the property
  @param date2 the higher end date value of the property
  */
-- (APSimpleQuery *)isBetweenDates:(NSDate*)date1 and:(NSDate*)date2;
+- (APSimpleQuery *)isBetweenDate:(NSDate*)date1 andDate:(NSDate*)date2;
 
 /**
  Method to initialize a queryExpression object with property name and type.

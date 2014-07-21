@@ -19,8 +19,8 @@
                 if([[aclDict objectForKey:@"deny"] containsObject:permission]) {
                     [[aclDict objectForKey:@"deny"] removeObject:permission];
                 }
-                if([[aclDict objectForKey:@"reset"] containsObject:permission]) {
-                    [[aclDict objectForKey:@"reset"] removeObject:permission];
+                if([[aclDict objectForKey:@"dontcare"] containsObject:permission]) {
+                    [[aclDict objectForKey:@"dontcare"] removeObject:permission];
                 }
                 if(![[aclDict objectForKey:@"allow"] containsObject:permission]) {
                     [[aclDict objectForKey:@"allow"] addObject:permission];
@@ -45,8 +45,8 @@
                 if([[aclDict objectForKey:@"deny"] containsObject:permission]) {
                     [[aclDict objectForKey:@"deny"] removeObject:permission];
                 }
-                if([[aclDict objectForKey:@"reset"] containsObject:permission]) {
-                    [[aclDict objectForKey:@"reset"] removeObject:permission];
+                if([[aclDict objectForKey:@"dontcare"] containsObject:permission]) {
+                    [[aclDict objectForKey:@"dontcare"] removeObject:permission];
                 }
                 if(![[aclDict objectForKey:@"allow"] containsObject:permission]) {
                     [[aclDict objectForKey:@"allow"] addObject:permission];
@@ -71,8 +71,8 @@
                 if([[aclDict objectForKey:@"allow"] containsObject:permission]) {
                     [[aclDict objectForKey:@"allow"] removeObject:permission];
                 }
-                if([[aclDict objectForKey:@"reset"] containsObject:permission]) {
-                    [[aclDict objectForKey:@"reset"] removeObject:permission];
+                if([[aclDict objectForKey:@"dontcare"] containsObject:permission]) {
+                    [[aclDict objectForKey:@"dontcare"] removeObject:permission];
                 }
                 if(![[aclDict objectForKey:@"deny"] containsObject:permission]) {
                     [[aclDict objectForKey:@"deny"] addObject:permission];
@@ -97,8 +97,8 @@
                 if([[aclDict objectForKey:@"allow"] containsObject:permission]) {
                     [[aclDict objectForKey:@"allow"] removeObject:permission];
                 }
-                if([[aclDict objectForKey:@"reset"] containsObject:permission]) {
-                    [[aclDict objectForKey:@"reset"] removeObject:permission];
+                if([[aclDict objectForKey:@"dontcare"] containsObject:permission]) {
+                    [[aclDict objectForKey:@"dontcare"] removeObject:permission];
                 }
                 if(![[aclDict objectForKey:@"deny"] containsObject:permission]) {
                     [[aclDict objectForKey:@"deny"] addObject:permission];
@@ -126,12 +126,12 @@
                 if([[aclDict objectForKey:@"allow"] containsObject:permission]) {
                     [[aclDict objectForKey:@"allow"] removeObject:permission];
                 }
-                if(![[aclDict objectForKey:@"reset"] containsObject:permission]) {
-                    [[aclDict objectForKey:@"reset"] addObject:permission];
+                if(![[aclDict objectForKey:@"dontcare"] containsObject:permission]) {
+                    [[aclDict objectForKey:@"dontcare"] addObject:permission];
                 }
             }
         } else {
-            [aclDict setObject:permissions forKey:@"reset"];
+            [aclDict setObject:permissions forKey:@"dontcare"];
             if(_userAccessDict == nil) {
                 _userAccessDict = [[NSMutableDictionary alloc] init];
             }
@@ -152,12 +152,12 @@
                 if([[aclDict objectForKey:@"allow"] containsObject:permission]) {
                     [[aclDict objectForKey:@"allow"] removeObject:permission];
                 }
-                if(![[aclDict objectForKey:@"reset"] containsObject:permission]) {
-                    [[aclDict objectForKey:@"reset"] addObject:permission];
+                if(![[aclDict objectForKey:@"dontcare"] containsObject:permission]) {
+                    [[aclDict objectForKey:@"dontcare"] addObject:permission];
                 }
             }
         } else {
-            [aclDict setObject:permissions forKey:@"reset"];
+            [aclDict setObject:permissions forKey:@"dontcare"];
             if(_groupAccessDict == nil) {
                 _groupAccessDict = [[NSMutableDictionary alloc] init];
             }
@@ -175,7 +175,7 @@
         [dict setValue:@"user" forKey:@"type"];
         [dict setValue:[[_userAccessDict valueForKey:key] valueForKey:@"allow"] forKey:@"allow"];
         [dict setValue:[[_userAccessDict valueForKey:key] valueForKey:@"deny"] forKey:@"deny"];
-        [dict setValue:[[_userAccessDict valueForKey:key] valueForKey:@"reset"] forKey:@"reset"];
+        [dict setValue:[[_userAccessDict valueForKey:key] valueForKey:@"dontcare"] forKey:@"dontcare"];
         [aclList addObject:dict];
     }
     for(id key in _groupAccessDict) {
@@ -184,7 +184,7 @@
         [dict setValue:@"group" forKey:@"type"];
         [dict setValue:[[_userAccessDict valueForKey:key] valueForKey:@"allow"] forKey:@"allow"];
         [dict setValue:[[_userAccessDict valueForKey:key] valueForKey:@"deny"] forKey:@"deny"];
-        [dict setValue:[[_userAccessDict valueForKey:key] valueForKey:@"reset"] forKey:@"reset"];
+        [dict setValue:[[_userAccessDict valueForKey:key] valueForKey:@"dontcare"] forKey:@"dontcare"];
         [aclList addObject:dict];
     }
     return aclList;
