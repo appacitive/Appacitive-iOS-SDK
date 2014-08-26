@@ -14,9 +14,21 @@
 #import "APGraphNode.h"
 #import "APLogger.h"
 
+@interface APConnection()
+
+@end
+
 @implementation APConnection
 
 #define CONNECTION_PATH @"connection/"
+
+//- (id)copyWithZone:(NSZone *)zone {
+//    APConnection *objectCopy = [[APConnection allocWithZone:zone] init];
+//    // Copy over all instance variables from self to objectCopy.
+//    // Use deep copies for all strong pointers, shallow copies for weak.
+//    return objectCopy;
+//}
+
 
 #pragma mark - Initialization methods
 

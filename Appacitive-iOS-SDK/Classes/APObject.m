@@ -14,10 +14,15 @@
 #import "APLogger.h"
 #import "APLogger.h"
 
+@interface APObject()
+
+@end
+
 @implementation APObject
 
 NSString *const OBJECT_PATH = @"object/";
 #define SEARCH_PATH @"search/"
+
 
 #pragma mark - Initialization methods
 

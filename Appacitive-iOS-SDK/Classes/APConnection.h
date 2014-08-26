@@ -325,6 +325,9 @@
  @param keyName key of the attribute to be removed.
  */
 - (void) removeAttributeWithKey:(NSString*)keyName;
+
+- (NSMutableDictionary*) parameters;
+- (NSMutableDictionary*) postParamertersUpdate;
 @end
 
 /**
@@ -518,6 +521,9 @@
  @param failureBlock Block invoked when the delete call fails.
  */
 + (void) deleteConnectionsWithRelationType:(NSString*)relationType objectIds:(NSArray*)objectIds successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+
+
 
 @end
 

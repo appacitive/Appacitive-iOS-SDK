@@ -125,6 +125,9 @@
 		61D62C1615F8857100C57AA3 /* APQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D62C0915F8857100C57AA3 /* APQuery.m */; };
 		61D62C1715F8857100C57AA3 /* APResponseBlocks.h in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61D62C1A15F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */; settings = {ATTRIBUTES = (Public, ); }; };
+		B52E08C619AC8AFA0022E253 /* APMultiCallerFixture.m in Sources */ = {isa = PBXBuildFile; fileRef = B52E08C519AC8AFA0022E253 /* APMultiCallerFixture.m */; };
+		B58C2B8E19A7414700AFEB45 /* APMultiCaller.h in Headers */ = {isa = PBXBuildFile; fileRef = B58C2B8C19A7414700AFEB45 /* APMultiCaller.h */; };
+		B58C2B8F19A7414700AFEB45 /* APMultiCaller.m in Sources */ = {isa = PBXBuildFile; fileRef = B58C2B8D19A7414700AFEB45 /* APMultiCaller.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -218,6 +221,9 @@
 		61D62C0915F8857100C57AA3 /* APQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APQuery.m; path = "Appacitive-iOS-SDK/Classes/APQuery.m"; sourceTree = SOURCE_ROOT; };
 		61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APResponseBlocks.h; path = "Appacitive-iOS-SDK/Classes/APResponseBlocks.h"; sourceTree = SOURCE_ROOT; };
 		61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Appacitive-iOS-SDK-Prefix.pch"; path = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		B52E08C519AC8AFA0022E253 /* APMultiCallerFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMultiCallerFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APMultiCallerFixture.m"; sourceTree = SOURCE_ROOT; };
+		B58C2B8C19A7414700AFEB45 /* APMultiCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APMultiCaller.h; path = "Appacitive-iOS-SDK/Classes/APMultiCaller.h"; sourceTree = SOURCE_ROOT; };
+		B58C2B8D19A7414700AFEB45 /* APMultiCaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMultiCaller.m; path = "Appacitive-iOS-SDK/Classes/APMultiCaller.m"; sourceTree = SOURCE_ROOT; };
 		C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig"; path = "Pods/Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -277,6 +283,7 @@
 				4C176F151929FB6B00FFA4CB /* APUserGroupFixture.m */,
 				6191E993169A926A00F87656 /* test_image.png */,
 				2CEB0E98162BD2AB0074DA50 /* Supporting Files */,
+				B52E08C519AC8AFA0022E253 /* APMultiCallerFixture.m */,
 			);
 			name = "Appacitive_iOS_SDK-NetworkTests";
 			path = Appacitive_iOS_AsyncTests;
@@ -545,6 +552,7 @@
 		612E3E3415EDF9B200F98FB8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B58C2B8B19A7412F00AFEB45 /* Multicaller */,
 				4C2EFE0E18767B8900733CE2 /* Appacitive */,
 				4CB768B11872CD5400A69FE4 /* Networking */,
 				4C581BE91859B7B200518557 /* Object */,
@@ -563,6 +571,15 @@
 				4C2250081921CDFC000FA315 /* Logger */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		B58C2B8B19A7412F00AFEB45 /* Multicaller */ = {
+			isa = PBXGroup;
+			children = (
+				B58C2B8C19A7414700AFEB45 /* APMultiCaller.h */,
+				B58C2B8D19A7414700AFEB45 /* APMultiCaller.m */,
+			);
+			name = Multicaller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -610,6 +627,7 @@
 				4CDE6EF0190E582600CFD5A2 /* APAccessControl.h in Headers */,
 				61D62C1715F8857100C57AA3 /* APResponseBlocks.h in Headers */,
 				4CB768AF1872C43B00A69FE4 /* APNetworking.h in Headers */,
+				B58C2B8E19A7414700AFEB45 /* APMultiCaller.h in Headers */,
 				61D62C1A15F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch in Headers */,
 				4CCA7CD818740F5800D89FFA /* APDevice.h in Headers */,
 				6169128F161160110086C006 /* AppacitiveSDK.h in Headers */,
@@ -863,6 +881,7 @@
 				4C176F161929FB6B00FFA4CB /* APUserGroupFixture.m in Sources */,
 				4C0902721878336000CA5D42 /* APDeviceFixture.m in Sources */,
 				61D4A0EA1635223400DB5FD9 /* APObjectFixture.m in Sources */,
+				B52E08C619AC8AFA0022E253 /* APMultiCallerFixture.m in Sources */,
 				6102BAEA169A93E300D78642 /* APBlobFixture.m in Sources */,
 				618FEE55169AEAEC006A1888 /* APUserFixture.m in Sources */,
 			);
@@ -895,6 +914,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B58C2B8F19A7414700AFEB45 /* APMultiCaller.m in Sources */,
 				4CB768B01872C43B00A69FE4 /* APNetworking.m in Sources */,
 				61D62C0C15F8857100C57AA3 /* APConnection.m in Sources */,
 				4C7A8608185EC8D900BD06FF /* APEmail.m in Sources */,

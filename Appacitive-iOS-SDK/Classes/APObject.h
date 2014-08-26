@@ -349,6 +349,10 @@ extern NSString *const OBJECT_PATH;
  */
 - (void) removeTag:(NSString*)tag;
 
+- (NSMutableDictionary * ) postParameters;
+
+- (NSMutableDictionary *) postParametersUpdate;
+
 @end
 
 #pragma mark - APOBjects Interface
