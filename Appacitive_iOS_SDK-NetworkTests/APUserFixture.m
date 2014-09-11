@@ -1,25 +1,29 @@
-//#import "AppacitiveSDK.h"
-//
-//SPEC_BEGIN(APUserTests)
-//
-//describe(@"APUserTests", ^{
-//    
-//    beforeAll(^() {
-//        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:NO];
-//        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
-//        [APLogger sharedLoggerWithLoggingEnabled:YES verboseMode:YES];
-//    });
-//
-//    beforeEach(^{
-//        __block BOOL isUserAuthenticateSuccessful = NO;
-//        [APUser authenticateUserWithUsername:@"ppatel" password:@"asdasd" sessionExpiresAfter:nil limitAPICallsTo:nil
-//                              successHandler:^(APUser* user) {
-//                                  isUserAuthenticateSuccessful = YES;
-//                              } failureHandler:^(APError *error) {
-//                                  isUserAuthenticateSuccessful = NO;
-//                              }];
-//        [[expectFutureValue(theValue(isUserAuthenticateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
-//    });
+#import "AppacitiveSDK.h"
+
+SPEC_BEGIN(APUserTests)
+
+describe(@"APUserTests", ^{
+    
+    beforeAll(^() {
+        
+        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:NO];
+        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
+        [APLogger sharedLoggerWithLoggingEnabled:YES verboseMode:YES];
+    });
+
+    beforeEach(^{
+//        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:@""];
+        __block BOOL isUserAuthenticateSuccessful = NO;
+        [APUser authenticateUserWithFacebook:@"CAACe3GpyeHABAFrZBtxj3hIUNTY6Y8vZCQoxrtCI3BQD7DZBrDCjfHDsqEw11HM3nsoFM4cNOqB9nZArkrKlmo0xXUHNaU9P9VEZBLSiWaB2qZCUYYRI6Y7rW2u3leutqz0q9tSfnoEclEkoJzNjydgCoVj2L2N0U1uCAV1UUoZAApXPtjFMtPtGnbZCUQZBUa1SFp1o6nZCcO4kTgXX3i60CpI0koCO0h5OVtXW4SZCtP7MgZDZD" signUp:NO
+                              successHandler:^(APUser *user){
+                                  isUserAuthenticateSuccessful = YES;
+                              } failureHandler:^(APError* error) {
+                                  isUserAuthenticateSuccessful = NO;
+                              }];
+        [[expectFutureValue(theValue(isUserAuthenticateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
+    });
 //
 //    afterAll(^(){
 //    });
@@ -83,18 +87,18 @@
 //        [[expectFutureValue(theValue(isUserLoggedOut)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
 //
-//    it(@"authenticating with a valid facebook id", ^{
-//        __block BOOL isUserAuthenticateSuccessful = NO;
+    it(@"authenticating with a valid facebook id", ^{
+        __block BOOL isUserAuthenticateSuccessful = NO;
+
+        [APUser authenticateUserWithFacebook:@"CAACe3GpyeHABAFrZBtxj3hIUNTY6Y8vZCQoxrtCI3BQD7DZBrDCjfHDsqEw11HM3nsoFM4cNOqB9nZArkrKlmo0xXUHNaU9P9VEZBLSiWaB2qZCUYYRI6Y7rW2u3leutqz0q9tSfnoEclEkoJzNjydgCoVj2L2N0U1uCAV1UUoZAApXPtjFMtPtGnbZCUQZBUa1SFp1o6nZCcO4kTgXX3i60CpI0koCO0h5OVtXW4SZCtP7MgZDZD" signUp:NO sessionExpiresAfter:nil limitAPICallsTo:nil
+                        successHandler:^(APUser *user){
+                            isUserAuthenticateSuccessful = YES;
+                        } failureHandler:^(APError* error) {
+                            isUserAuthenticateSuccessful = NO;
+                        }];
+        [[expectFutureValue(theValue(isUserAuthenticateSuccessful)) shouldEventuallyBeforeTimingOutAfter(10.0)] equal:theValue(YES)];
+    });
 //
-//        [APUser authenticateUserWithFacebook:@"CAACEdEose0cBANKCD3n6Gq1hSeLIF0ZBbRehHLT5GsJZCxfCJPnglYU3zZBMAB7ZBgEMBEFbZBtZA7FHZAx7HhyYZCBTQlzSFaxzVsK6RPeuX6NlNMPrTHp3ozoyXwIcRmGOpJ8xZBUApJGjEDBZAPHivF5RZBk9H3au7TroZCetmaLt7ZCxdwCkgZCb4EFRQoUmSrZAwwZD" signUp:NO sessionExpiresAfter:nil limitAPICallsTo:nil
-//                        successHandler:^(APUser *user){
-//                            isUserAuthenticateSuccessful = YES;
-//                        } failureHandler:^(APError* error) {
-//                            isUserAuthenticateSuccessful = NO;
-//                        }];
-//        [[expectFutureValue(theValue(isUserAuthenticateSuccessful)) shouldEventuallyBeforeTimingOutAfter(10.0)] equal:theValue(YES)];
-//    });
-//    
 //    it(@"authenticating with a valid twitter oauth token and oauth secret", ^{
 //        __block BOOL isUserAuthenticateSuccessful = NO;
 //        
@@ -388,6 +392,6 @@
 //    });
 //
 //
-//});
-//SPEC_END
-//
+});
+SPEC_END
+
