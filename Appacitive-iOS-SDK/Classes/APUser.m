@@ -128,7 +128,7 @@ static NSDictionary *headerParams;
     }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   signUp?@"true":@"false",@"createnew",
+                                                                   signUp?@YES:@NO,@"createnew",
                                                                    @"facebook",@"type",
                                                                    accessToken, @"accesstoken",
                                                                    minutes, @"expiry",

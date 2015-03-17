@@ -1,18 +1,19 @@
-//#import "AppacitiveSDK.h"
-//
-//SPEC_BEGIN(APDeviceTests)
-//
-//describe(@"APDeviceTests", ^{
-//
-//    beforeAll(^() {
-//        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:YES];
-//        [Appacitive useLiveEnvironment:NO];
-//        [[APLogger sharedLogger] enableLogging:YES];
-//        [[APLogger sharedLogger] enableVerboseMode:YES];
-//        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
-//    });
-//
-//    beforeEach(^{
+#import "AppacitiveSDK.h"
+
+SPEC_BEGIN(APDeviceTests)
+
+describe(@"APDeviceTests", ^{
+
+    beforeAll(^() {
+        [Appacitive registerAPIKey:API_KEY useLiveEnvironment:NO];
+        [Appacitive useLiveEnvironment:NO];
+        [[APLogger sharedLogger] enableLogging:YES];
+        [[APLogger sharedLogger] enableVerboseMode:YES];
+        [[expectFutureValue([Appacitive getApiKey]) shouldEventuallyBeforeTimingOutAfter(5.0)] beNonNil];
+        [APDevice deregisterCurrentDevice];
+    });
+
+    beforeEach(^{
 //        __block bool isUserAuthenticateSuccessful;
 //        [APUser authenticateUserWithUsername:@"ppatel" password:@"qweqwe" sessionExpiresAfter:nil limitAPICallsTo:nil
 //                              successHandler:^(APUser* user) {
@@ -21,13 +22,39 @@
 //                                  isUserAuthenticateSuccessful = NO;
 //                              }];
 //        [[expectFutureValue(theValue(isUserAuthenticateSuccessful)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
-//    });
-//
-//    afterAll(^(){
-//    });
-//
-//#pragma mark - REGISTER_DEVICE_TEST
-//
+    });
+
+    afterAll(^(){
+    });
+
+#pragma mark - REGISTER_DEVICE_TEST
+
+    
+        it(@"registering current device", ^{
+            __block BOOL isDeviceCreated = NO;
+            
+
+            [[NSUserDefaults standardUserDefaults] setValue:nil forKey:@"currentAPDevice"];
+            NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+            [dict setValue:@"Neil's IPhone" forKey:@"name"];
+            [APDevice registerCurrentDeviceWithPushDeviceToken:nil andProperties:dict enablePushNotifications:NO successHandler:^{
+                isDeviceCreated = YES;
+                [APDevice deregisterCurrentDevice];
+                
+            } failureHandler:^(APError *error) {
+                isDeviceCreated = NO;
+            }];
+//            [mydevice saveObjectWithSuccessHandler:^(NSDictionary *result) {
+//                isDeviceCreated = YES;
+//                [mydevice deleteObject];
+//            } failureHandler:^(APError *error) {
+//                isDeviceCreated = NO;
+//            }];
+    
+            [[expectFutureValue(theValue(isDeviceCreated)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
+        });
+
+    
 //    it(@"registering a device", ^{
 //        __block BOOL isDeviceCreated = NO;
 //        
@@ -158,7 +185,7 @@
 //        
 //        [[expectFutureValue(theValue(isPushSent)) shouldEventuallyBeforeTimingOutAfter(5.0)] equal:theValue(YES)];
 //    });
-//    
-//});
-//SPEC_END
-//
+    
+});
+SPEC_END
+

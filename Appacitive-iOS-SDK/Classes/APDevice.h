@@ -66,6 +66,29 @@
 
 
 /**
+ @see registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:successHandler:failureHandler:
+ */
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData*)token andProperties:(NSDictionary *) properties enablePushNotifications:(BOOL)answer;
+
+/**
+ @see registerCurrentDeviceWithPushDeviceToken:enablePushNotifications:successHandler:failureHandler:
+ */
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData*)token andProperties:(NSDictionary *) properties enablePushNotifications:(BOOL)answer failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ Method to register your device for Push Notifications.
+ 
+ @param token        device token for Push Notifications.
+ @param answer whether Push notifications should be enabled on current device.
+ @param successBlock block executed when the operation is successful.
+ @param failureBlock block executed when the operation fails.
+ */
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData*)token andProperties:(NSDictionary *) properties enablePushNotifications:(BOOL)answer successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+
+
+
+/**
  @see deregisterCurrentDeviceWithSuccessHandler:failureHandler:
  */
 + (void) deregisterCurrentDevice;

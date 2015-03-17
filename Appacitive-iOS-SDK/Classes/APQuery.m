@@ -341,7 +341,7 @@
             queryString = [queryString stringByAppendingFormat:@"orderBy=%@&isAsc=true&",self.orderBy];
     }
     if(self.freeText)
-        queryString = [queryString stringByAppendingFormat:@"%@&",self.freeText];
+        queryString = [queryString stringByAppendingFormat:@"freetext=%@&",self.freeText];
     if(self.filterQuery != nil)
         queryString = [queryString stringByAppendingFormat:@"query=%@",[self.filterQuery stringValue]];
     if([queryString hasSuffix:@"&"])

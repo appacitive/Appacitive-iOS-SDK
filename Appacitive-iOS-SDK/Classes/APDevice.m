@@ -54,14 +54,91 @@ static APDevice* currentDevice;
 #pragma mark - Register methods
 
 + (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer{
-    [self registerCurrentDeviceWithPushDeviceToken:token enablePushNotifications:answer successHandler:nil failureHandler:nil];
+    [self registerCurrentDeviceWithPushDeviceToken:token andProperties:nil enablePushNotifications:answer successHandler:nil failureHandler:nil];
 }
 
 + (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer failureHandler:(APFailureBlock)failureBlock {
-    [self registerCurrentDeviceWithPushDeviceToken:token enablePushNotifications:answer successHandler:nil failureHandler:failureBlock];
+    [self registerCurrentDeviceWithPushDeviceToken:token andProperties:nil enablePushNotifications:answer successHandler:nil failureHandler:failureBlock];
 }
 
 + (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token enablePushNotifications:(BOOL)answer successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
+    
+    
+    [self registerCurrentDeviceWithPushDeviceToken:token andProperties:nil enablePushNotifications:answer successHandler:nil failureHandler:failureBlock];
+//    NSString *cleanToken = [APDevice GetUUID];
+//    if(token != nil) {
+//        cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+//        cleanToken = [cleanToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    }
+//    if(currentDevice == nil) {
+//        currentDevice = [[APDevice alloc] initWithDeviceToken:cleanToken deviceType:@"ios"];
+//        currentDevice.isActive = @"false";
+//        if(answer == YES)
+//            currentDevice.isActive = @"true";
+//        NSString *path = HOST_NAME;
+//    path = [path stringByAppendingPathComponent:DEVICE_PATH];
+//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/register",path]];
+//    NSMutableDictionary *bodyDict = [currentDevice postParameters];
+//    [bodyDict addEntriesFromDictionary:[currentDevice createRequestBody]];
+//    NSError *jsonError = nil;
+//    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
+//    if(jsonError != nil)
+//        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
+//    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+//    [urlRequest setHTTPBody:requestBody];
+//    [urlRequest setAllHTTPHeaderFields:[APDevice getHeaderParams]];
+//    [urlRequest setHTTPMethod:@"PUT"];
+//    [currentDevice updateSnapshot];
+//    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+//        if (successBlock != nil) {
+//            [currentDevice setPropertyValuesFromDictionary:result];
+//            [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+//            successBlock();
+//        }
+//    } failureHandler:^(APError *error) {
+//        if (failureBlock != nil) {
+//            failureBlock(error);
+//        }
+//    }];
+//    } else {
+//        if([currentDevice.isActive isEqual:BooleanStringFromBOOL(answer)]) {
+//            if(answer == YES) {
+//                if(currentDevice.deviceToken != cleanToken) {
+//                    currentDevice.deviceToken = cleanToken;
+//                    currentDevice.isActive = BooleanStringFromBOOL(answer);
+//                    [currentDevice updateObjectWithSuccessHandler:^{
+//                        [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+//                        if (successBlock != nil) {
+//                            successBlock();
+//                        }
+//                    } failureHandler:failureBlock];
+//                }
+//            }
+//        } else {
+//            if(currentDevice.deviceToken != cleanToken)
+//                currentDevice.deviceToken = cleanToken;
+//            currentDevice.isActive = BooleanStringFromBOOL(answer);
+//            [currentDevice updateObjectWithSuccessHandler:^{
+//                [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+//                if (successBlock != nil) {
+//                    successBlock();
+//                }
+//            } failureHandler:failureBlock];
+//        }
+//    }
+}
+
+
+
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token andProperties:(NSDictionary *)properties enablePushNotifications:(BOOL)answer{
+    [self registerCurrentDeviceWithPushDeviceToken:token andProperties:properties enablePushNotifications:answer successHandler:nil failureHandler:nil];
+}
+
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token andProperties:(NSDictionary *)properties enablePushNotifications:(BOOL)answer failureHandler:(APFailureBlock)failureBlock {
+    [self registerCurrentDeviceWithPushDeviceToken:token andProperties:properties enablePushNotifications:answer successHandler:nil failureHandler:failureBlock];
+}
+
++ (void) registerCurrentDeviceWithPushDeviceToken:(NSData *)token andProperties:(NSDictionary *)properties enablePushNotifications:(BOOL)answer successHandler:(APSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     NSString *cleanToken = [APDevice GetUUID];
     if(token != nil) {
         cleanToken = [[token description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
@@ -73,30 +150,38 @@ static APDevice* currentDevice;
         if(answer == YES)
             currentDevice.isActive = @"true";
         NSString *path = HOST_NAME;
-    path = [path stringByAppendingPathComponent:DEVICE_PATH];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/register",path]];
-    NSMutableDictionary *bodyDict = [currentDevice postParameters];
-    [bodyDict addEntriesFromDictionary:[currentDevice createRequestBody]];
-    NSError *jsonError = nil;
-    NSData *requestBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
-    if(jsonError != nil)
-        [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPBody:requestBody];
-    [urlRequest setAllHTTPHeaderFields:[APDevice getHeaderParams]];
-    [urlRequest setHTTPMethod:@"PUT"];
-    [currentDevice updateSnapshot];
-    [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
-        if (successBlock != nil) {
-            [currentDevice setPropertyValuesFromDictionary:result];
-            [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
-            successBlock();
+        path = [path stringByAppendingPathComponent:DEVICE_PATH];
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/register",path]];
+        
+        if(properties != nil){
+            NSArray * keys = properties.allKeys;
+
+            for (NSString* key in keys ) {
+                [currentDevice addPropertyWithKey:key value:[properties valueForKey:key]];
+            }
         }
-    } failureHandler:^(APError *error) {
-        if (failureBlock != nil) {
-            failureBlock(error);
-        }
-    }];
+        NSMutableDictionary *bodyDict = [currentDevice postParameters];
+        [bodyDict addEntriesFromDictionary:[currentDevice createRequestBody]];
+        NSError *jsonError = nil;
+        NSData *requestBody = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:&jsonError];
+        if(jsonError != nil)
+            [[APLogger sharedLogger] log:[NSString stringWithFormat:@"\n––––––––––JSON-ERROR–––––––––\n%@", [jsonError description]] withType:APMessageTypeError];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+        [urlRequest setHTTPBody:requestBody];
+        [urlRequest setAllHTTPHeaderFields:[APDevice getHeaderParams]];
+        [urlRequest setHTTPMethod:@"PUT"];
+        [currentDevice updateSnapshot];
+        [APNetworking makeAsyncURLRequest:urlRequest callingSelector:__PRETTY_FUNCTION__ successHandler:^(NSDictionary *result) {
+            if (successBlock != nil) {
+                [currentDevice setPropertyValuesFromDictionary:result];
+                [APDevice saveCustomObject:currentDevice forKey:@"currentAPDevice"];
+                successBlock();
+            }
+        } failureHandler:^(APError *error) {
+            if (failureBlock != nil) {
+                failureBlock(error);
+            }
+        }];
     } else {
         if([currentDevice.isActive isEqual:BooleanStringFromBOOL(answer)]) {
             if(answer == YES) {
@@ -124,6 +209,8 @@ static APDevice* currentDevice;
         }
     }
 }
+
+
 
 + (void) deregisterCurrentDevice {
     [self deregisterCurrentDeviceWithSuccessHandler:nil failureHandler:nil];
