@@ -95,7 +95,7 @@ Appacitive is session-less. Therefore, every API call made to the Appacitive API
 
 To get the API keys for your Appacitive application, Log-in to the [Appacitive Portal](https://portal.appacitive.com) with your account credentials. You will be presented with a dashboard page where you will see some statistics about your account and your apps below the statistics. Select the application you are working on and you will be presented with the application details screen where you will find the Master and Client API keys.
 
-!["Getting your apikey"](http:\/\/appacitive.github.io\/images\/portal-apikey-small.png)
+!["Getting your apikey"](http://cdn.appacitive.com/devcenter/ios/gettingstarted/apikey.png)
 
 Make sure you add the import statement for AppacitiveSDK.
 

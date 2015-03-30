@@ -17,7 +17,14 @@
 
 
 - (void) addAPObject:(APObject *) object;
-- (void) addAPConnection :(APConnection *) connection;
+- (void) addAPObjectsFromArray:(NSArray *) objects;
+
+- (void) addAPConnection:(APConnection *) connection;
+- (void) addAPConnectionsFromArray:(NSArray *) connections;
+
+- (void) addForDeletionAPObjectOfType:(NSString *) type andId:(NSString *) objectId andDeleteConnections:(BOOL) deletecConnections;
+
+- (void) addForDeletionAPConnectionOfType:(NSString *) type andId:(NSString *) connectiondId;
 
 - (instancetype) initWithAPObjects:(NSArray *) objects;
 - (instancetype) initWithAPConnections:(NSArray *) connections;
@@ -59,8 +66,35 @@
 
 @property NSString * endpointAName ;
 @property NSString * endpointBName ;
+- (NSString *) getName;
 
--(instancetype) initWithConnection:(APConnection *) con;
+-(instancetype) initWithName:(NSString *) name andConnection:(APConnection *) con;
 - (NSMutableDictionary *) getPostObject;
 
 @end
+
+
+@interface APDeleteNode : NSObject
+
+@property NSString * type ;
+@property NSString * objectId ;
+@property BOOL deleteConnections;
+
+-(instancetype) initWithAPObjectId:(NSString *) objectId andType:(NSString *) type andDeleteConnections:(BOOL) deleteConnections;
+- (NSMutableDictionary *) getPostObject;
+
+@end
+
+
+@interface APDeleteEdge : NSObject
+
+@property NSString * type ;
+@property NSString * connectionId ;
+
+-(instancetype) initWithAPConnectionId:(NSString *) connectionId andType:(NSString *) type;
+- (NSMutableDictionary *) getPostObject;
+
+@end
+
+
+

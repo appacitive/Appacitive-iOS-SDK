@@ -221,10 +221,11 @@
 		61D62C0915F8857100C57AA3 /* APQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APQuery.m; path = "Appacitive-iOS-SDK/Classes/APQuery.m"; sourceTree = SOURCE_ROOT; };
 		61D62C0A15F8857100C57AA3 /* APResponseBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APResponseBlocks.h; path = "Appacitive-iOS-SDK/Classes/APResponseBlocks.h"; sourceTree = SOURCE_ROOT; };
 		61D62C1915F8858B00C57AA3 /* Appacitive-iOS-SDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Appacitive-iOS-SDK-Prefix.pch"; path = "Appacitive-iOS-SDK/Appacitive-iOS-SDK-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		84C6BF89E5A7B96C203FB171 /* Pods-Appacitive_iOS_SDK-NetworkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appacitive_iOS_SDK-NetworkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Appacitive_iOS_SDK-NetworkTests/Pods-Appacitive_iOS_SDK-NetworkTests.release.xcconfig"; sourceTree = "<group>"; };
 		B52E08C519AC8AFA0022E253 /* APMultiCallerFixture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMultiCallerFixture.m; path = "Appacitive_iOS_SDK-NetworkTests/APMultiCallerFixture.m"; sourceTree = SOURCE_ROOT; };
 		B58C2B8C19A7414700AFEB45 /* APMultiCaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APMultiCaller.h; path = "Appacitive-iOS-SDK/Classes/APMultiCaller.h"; sourceTree = SOURCE_ROOT; };
 		B58C2B8D19A7414700AFEB45 /* APMultiCaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APMultiCaller.m; path = "Appacitive-iOS-SDK/Classes/APMultiCaller.m"; sourceTree = SOURCE_ROOT; };
-		C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig"; path = "Pods/Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig"; sourceTree = "<group>"; };
+		E5CABABFEAF2C9017B9ED49B /* Pods-Appacitive_iOS_SDK-NetworkTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Appacitive_iOS_SDK-NetworkTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Appacitive_iOS_SDK-NetworkTests/Pods-Appacitive_iOS_SDK-NetworkTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -473,7 +474,7 @@
 				4C685B1A190E19560022A01B /* AppacitiveFramework */,
 				612E3E0C15EDF8FE00F98FB8 /* Frameworks */,
 				612E3E0B15EDF8FD00F98FB8 /* Products */,
-				C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */,
+				F88CA91737E7BB53FC32C7CA /* Pods */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
@@ -580,6 +581,15 @@
 				B58C2B8D19A7414700AFEB45 /* APMultiCaller.m */,
 			);
 			name = Multicaller;
+			sourceTree = "<group>";
+		};
+		F88CA91737E7BB53FC32C7CA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E5CABABFEAF2C9017B9ED49B /* Pods-Appacitive_iOS_SDK-NetworkTests.debug.xcconfig */,
+				84C6BF89E5A7B96C203FB171 /* Pods-Appacitive_iOS_SDK-NetworkTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -724,7 +734,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Appacitive Software Pvt. Ltd";
 				TargetAttributes = {
 					2CEB0E92162BD2AB0074DA50 = {
@@ -865,7 +875,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-Appacitive_iOS_SDK-NetworkTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Appacitive_iOS_SDK-NetworkTests/Pods-Appacitive_iOS_SDK-NetworkTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -981,7 +991,7 @@
 /* Begin XCBuildConfiguration section */
 		2CEB0EA2162BD2AB0074DA50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
+			baseConfigurationReference = E5CABABFEAF2C9017B9ED49B /* Pods-Appacitive_iOS_SDK-NetworkTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1006,7 +1016,7 @@
 		};
 		2CEB0EA3162BD2AB0074DA50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C57116D0B3AC4DE89EE641B0 /* Pods-Appacitive_iOS_SDK-NetworkTests.xcconfig */;
+			baseConfigurationReference = 84C6BF89E5A7B96C203FB171 /* Pods-Appacitive_iOS_SDK-NetworkTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1119,8 +1129,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1152,8 +1164,10 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

@@ -14,6 +14,8 @@
 
 @property NSMutableArray * nodes;
 @property NSMutableArray * edges;
+@property NSMutableArray * nodeDeletions;
+@property NSMutableArray * edgeDeletions;
 
 // Using map tables because we are using custom objects as keys
 @property NSMapTable * mapTables;
@@ -21,11 +23,13 @@
 
 @implementation APMultiCaller
 
-NSString *const MULTI_PATH = @"object/multi";
+NSString *const MULTI_PATH = @"multi/";
 -(instancetype) init{
     if(self = [super init]){
         self.nodes = [[NSMutableArray alloc] init];
         self.edges = [[NSMutableArray alloc] init];
+        self.nodeDeletions = [[NSMutableArray alloc] init];
+        self.edgeDeletions = [[NSMutableArray alloc] init];
         self.mapTables = [NSMapTable mapTableWithKeyOptions:NSMapTableStrongMemory valueOptions:NSMapTableStrongMemory];
     }
     return  self;
@@ -63,6 +67,16 @@ NSString *const MULTI_PATH = @"object/multi";
     return self;
 }
 
+- (void) addAPObjectsFromArray:(NSArray *)objects{
+    if(objects != nil){
+        for(APObject * obj in objects){
+            [self createAndAddNodeForAPObject:obj];
+        }
+    }
+}
+
+
+
 -(void) addAPObject:(APObject *)object{
     [self createAndAddNodeForAPObject:object];
     
@@ -93,9 +107,20 @@ NSString *const MULTI_PATH = @"object/multi";
 }
 
 
+- (void) addAPConnectionsFromArray:(NSArray *)connections{
+    if(connections != nil){
+        for(APConnection * obj in connections){
+            [self addAPConnection:obj];
+        }
+    }
+}
+
 -(void) addAPConnection:(APConnection *)connection{
-    APEdge * edge = [[APEdge alloc] initWithConnection:connection];
     
+    APEdge * edge = [self getEdgeForAPConnection:connection];
+    if(edge == nil){
+        edge = [[APEdge alloc] initWithName:[self getUniqueName] andConnection:connection];
+    }
     NSString * endpointAName = nil;
     NSString * endpointBName = nil;
 
@@ -116,6 +141,40 @@ NSString *const MULTI_PATH = @"object/multi";
     edge.endpointAName = endpointAName;
     edge.endpointBName = endpointBName;
     [self.edges addObject:edge];
+    [_mapTables setObject:edge forKey:connection];
+}
+
+- (APEdge *) getEdgeForAPConnection:(APConnection *) connection{
+    return [_mapTables objectForKey:connection];
+}
+
+
+- (APDeleteNode *) getAPDeleteNodeForObjectId:(NSString *)objectId{
+    return [_mapTables objectForKey:objectId];
+}
+
+
+- (APDeleteEdge *) getAPDeleteEdgeForConnectionId:(NSString *)connectionId{
+    return [_mapTables objectForKey:connectionId];
+}
+
+
+- (void) addForDeletionAPObjectOfType:(NSString *) type andId:(NSString *) objectId andDeleteConnections:(BOOL) deletecConnections{
+    APDeleteNode * node = [self getAPDeleteNodeForObjectId:objectId];
+    if(node == nil){
+        node = [[APDeleteNode alloc] initWithAPObjectId:objectId andType:type andDeleteConnections:deletecConnections];
+        [_mapTables setObject:node forKey:objectId];
+    }
+    [self.nodeDeletions addObject:node];
+}
+
+- (void) addForDeletionAPConnectionOfType:(NSString *) type andId:(NSString *) connectiondId{
+    APDeleteEdge * edge = [self getAPDeleteEdgeForConnectionId:connectiondId];
+    if(edge == nil){
+        edge = [[APDeleteEdge alloc] initWithAPConnectionId:connectiondId andType:type];
+        [_mapTables setObject:edge forKey:connectiondId];
+    }
+    [self.edgeDeletions addObject:edge];
 }
 
 
@@ -178,8 +237,20 @@ NSString *const MULTI_PATH = @"object/multi";
         [edges addObject:obj];
     }
     
+    NSMutableArray * nodeDeletions = [[NSMutableArray alloc] initWithCapacity:_nodeDeletions.count];
+    for (int i =0; i < _nodeDeletions.count; i++) {
+        [nodeDeletions addObject:[[_nodeDeletions objectAtIndex:i] getPostObject]];
+    }
+    
+    NSMutableArray * edgeDeletions = [[NSMutableArray alloc] initWithCapacity:_edgeDeletions.count];
+    for (int i =0; i < _edgeDeletions.count; i++) {
+        [edgeDeletions addObject:[[_edgeDeletions objectAtIndex:i] getPostObject]];
+    }
+    
     [dict setValue:nodes forKey:@"nodes"];
     [dict setValue:edges forKey:@"edges"];
+    [dict setValue:nodeDeletions forKey:@"nodedeletions"];
+    [dict setValue:edgeDeletions forKey:@"edgedeletions"];
     return dict;
 }
 
@@ -227,18 +298,25 @@ NSString *const MULTI_PATH = @"object/multi";
 
 @interface APEdge()
 @property (nonatomic,strong) APConnection * connection;
+@property (nonatomic,strong) NSString *name;
 
 @end
 
 @implementation APEdge
 
--(instancetype) initWithConnection:(APConnection *) con{
+-(instancetype) initWithName:(NSString *) name andConnection:(APConnection *) con{
     
     if(self = [self init]){
+        self.name = name;
         self.connection = con;
     }
     return self;
 }
+
+-(NSString *) getName{
+    return self.name;
+}
+
 - (NSMutableDictionary *) getPostObject{
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
     NSDictionary * objParams;
@@ -250,7 +328,62 @@ NSString *const MULTI_PATH = @"object/multi";
         objParams = [_connection postParamertersUpdate];
     }
     
+    [dict setValue:self.name forKey:@"name"];
     [dict setValue:objParams forKeyPath:@"connection"];
+    return dict;
+}
+
+
+@end
+
+
+
+
+
+@interface APDeleteNode()
+@end
+
+@implementation APDeleteNode
+
+- (instancetype) initWithAPObjectId:(NSString *)objectId andType:(NSString *)type andDeleteConnections:(BOOL)deleteConnections{
+    if(self = [self init]){
+        self.objectId = objectId;
+        self.type = type;
+        self.deleteConnections = deleteConnections;
+    }
+    return self;
+}
+
+- (NSMutableDictionary *) getPostObject{
+    NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+    [dict setValue:self.type forKey:@"type"];
+    [dict setValue:self.objectId forKeyPath:@"id"];
+    [dict setObject:@(self.deleteConnections) forKey:@"deleteConnections"];
+    return dict;
+}
+
+
+@end
+
+
+@interface APDeleteEdge()
+@end
+
+@implementation APDeleteEdge
+
+-(instancetype) initWithAPConnectionId:(NSString *) connectionId andType:(NSString *) type{
+    if(self = [self init]){
+        self.type = type;
+        self.connectionId = connectionId;
+    }
+    return self;
+}
+
+
+- (NSMutableDictionary *) getPostObject{
+    NSMutableDictionary * dict = [NSMutableDictionary dictionary];
+    [dict setValue:self.type forKey:@"type"];
+    [dict setValue:self.connectionId forKeyPath:@"id"];
     return dict;
 }
 

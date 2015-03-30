@@ -73,6 +73,22 @@
 /**
  @see authenticateUserWithFacebook:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
  */
++(void) authenticateUserWithFacebook:(NSString *) accessToken signUp:(BOOL)signUp;
+
+
+/**
+ @see authenticateUserWithFacebook:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
++(void) authenticateUserWithFacebook:(NSString *) accessToken signUp:(BOOL)signUp successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see authenticateUserWithFacebook:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
++(void) authenticateUserWithFacebook:(NSString *) accessToken signUp:(BOOL)signUp failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see authenticateUserWithFacebook:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
 + (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls;
 
 
@@ -87,12 +103,29 @@
  If successful the currentUser is set to the authenticated user.
  
  @param accessToken The access token retrieved after a successful facebook login.
+ @param signUp Should create a new user in case the user does not exist on Appacitive.
  @param minutes Timeout for token in minutes.
  @param calls The number of API calls that can be made using the authentication token.
  @param successBlock Block invoked when authentication with facebook is successful.
  @param failureBlock Block invoked when authentication with facebook is unsuccessful.
  */
 + (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see authenticateUserWithTwitter:oauthSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp;
+
+/**
+ @see authenticateUserWithTwitter:oauthSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp failureHandler:(APFailureBlock)failureHandler;
+
+/**
+ @see authenticateUserWithTwitter:oauthSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureHandler;
+
 
 /**
  @see authenticateUserWithTwitter:oauthSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
@@ -118,6 +151,21 @@
  @param failureBlock Block invoked when login with twitter is unsuccessful.
  */
 + (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp;
+
+/**
+ @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp failureHandler:(APFailureBlock)failureBlock;
+
+/**
+ @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:
+ */
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock;
 
 /**
  @see authenticateUserWithTwitter:oauthSecret:consumerKey:consumerSecret:signUp:sessionExpiresAfter:limitAPICallsTo:successHandler:failureHandler:

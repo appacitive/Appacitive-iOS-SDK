@@ -102,11 +102,24 @@ static NSDictionary *headerParams;
     [APUser authenticateUserWithFacebook:accessToken signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureBlock];
 }
 
++(void) authenticateUserWithFacebook:(NSString *) accessToken signUp:(BOOL)signUp{
+    [APUser authenticateUserWithFacebook:accessToken signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:nil failureHandler:nil];
+}
+
++(void) authenticateUserWithFacebook:(NSString *) accessToken signUp:(BOOL)signUp successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock{
+    [APUser authenticateUserWithFacebook:accessToken signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:successBlock failureHandler:failureBlock];
+}
+
++(void) authenticateUserWithFacebook:(NSString *) accessToken signUp:(BOOL)signUp failureHandler:(APFailureBlock)failureBlock{
+    [APUser authenticateUserWithFacebook:accessToken signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:nil failureHandler:failureBlock];
+}
+
 + (void) authenticateUserWithFacebook:(NSString *)accessToken signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock {
     
     NSString *path = [USER_PATH stringByAppendingString:@"authenticate"];
     path = [HOST_NAME stringByAppendingPathComponent:path];
     NSURL *url = [NSURL URLWithString:path];
+
     if (minutes == nil) {
         minutes = @86400000;
     }
@@ -115,7 +128,7 @@ static NSDictionary *headerParams;
     }
     NSError *jsonError = nil;
     NSData *requestBody = [NSJSONSerialization dataWithJSONObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   signUp?@"true":@"false",@"createnew",
+                                                                   signUp?@YES:@NO,@"createnew",
                                                                    @"facebook",@"type",
                                                                    accessToken, @"accesstoken",
                                                                    minutes, @"expiry",
@@ -148,9 +161,24 @@ static NSDictionary *headerParams;
 
 
 
+
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureHandler{
+        [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:successBlock failureHandler:failureHandler];
+}
+
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp failureHandler:(APFailureBlock)failureHandler{
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:nil failureHandler:failureHandler];
+}
+
+
++ (void) authenticateUserWithTwitter:(NSString*)oauthToken oauthSecret:(NSString*)oauthSecret signUp:(BOOL)signUp {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:nil failureHandler:nil];
+}
+
 + (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
     [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:nil];
 }
+
 
 + (void) authenticateUserWithTwitter:(NSString*) oauthToken oauthSecret:(NSString*) oauthSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls failureHandler:(APFailureBlock)failureHandler {
     [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret signUp:signUp sessionExpiresAfter:minutes limitAPICallsTo:calls successHandler:nil failureHandler:failureHandler];
@@ -200,6 +228,21 @@ static NSDictionary *headerParams;
                                       failureBlock(error);
                                   }
                               }];
+}
+
+
+
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp {
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:nil failureHandler:nil];
+}
+
+
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp failureHandler:(APFailureBlock)failureBlock{
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:nil failureHandler:failureBlock];
+}
+
++ (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*)consumerSecret signUp:(BOOL)signUp successHandler:(APUserSuccessBlock)successBlock failureHandler:(APFailureBlock)failureBlock{
+    [APUser authenticateUserWithTwitter:oauthToken oauthSecret:oauthSecret consumerKey:consumerKey consumerSecret:consumerSecret signUp:signUp sessionExpiresAfter:nil limitAPICallsTo:nil successHandler:successBlock failureHandler:failureBlock];
 }
 
 + (void) authenticateUserWithTwitter:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret consumerKey:(NSString*)consumerKey consumerSecret:(NSString*) consumerSecret signUp:(BOOL)signUp sessionExpiresAfter:(NSNumber*)minutes limitAPICallsTo:(NSNumber*)calls {
